@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/contentFrame">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="50dp"
+        android:text="_________________"
+        android:layout_below="@+id/datePicker"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listRecords"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/b_add"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/datePicker"
+        android:layout_marginTop="45dp" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/b_add"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:drawableRight="@drawable/ic_add_48dp"
+        android:onClick="btnAddClick"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-5dp"
+        android:background="#FFFFFF"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 июня 2015"
+        android:id="@+id/datePicker"
+        android:background="@drawable/search_edit"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btnDateNext"
+        android:layout_toRightOf="@+id/btnDatePrev"
+        android:layout_toEndOf="@+id/btnDatePrev" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDateNext"
+        android:src="@drawable/ic_next"
+        android:layout_marginRight="0dp"
+        android:layout_marginEnd="96dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDatePrev"
+        android:src="@drawable/ic_back"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+        />
+
+
+</RelativeLayout>
