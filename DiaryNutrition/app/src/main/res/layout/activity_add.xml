@@ -11,7 +11,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtSearch"
+        android:id="@+id/fl_txtSearch"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:hint="@string/tittle_search"
@@ -24,12 +24,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listFood"
-        android:layout_below="@+id/txtSearch"
+        android:layout_below="@+id/fl_txtSearch"
         android:layout_centerHorizontal="true"
         android:nestedScrollingEnabled="false"
         android:textFilterEnabled="true"
         android:layout_above="@+id/btnAddF"
-        android:background="@drawable/search_edit"/>
+        android:background="@drawable/search_edit"
+        android:layout_marginTop="4dp" />
 
     <Button
         android:layout_width="wrap_content"

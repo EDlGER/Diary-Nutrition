@@ -3,9 +3,12 @@ package ediger.diarynutrition;
 import ediger.diarynutrition.Fragments.diary_fragment;
 import ediger.diarynutrition.Fragments.food_fragment;
 import ediger.diarynutrition.Fragments.settings_fragment;
+import ediger.diarynutrition.adapters.ViewPagerAdapter;
+
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -33,6 +36,8 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,7 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
 
     @Override

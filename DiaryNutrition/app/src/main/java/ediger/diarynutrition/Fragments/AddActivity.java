@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,7 +69,7 @@ public class AddActivity extends ActionBarActivity implements
         Intent intent = getIntent();
         cal = intent.getLongExtra("CurrentCal",date.getTimeInMillis());
 
-        txtSearch = (EditText) findViewById(R.id.txtSearch);
+        txtSearch = (EditText) findViewById(R.id.fl_txtSearch);
         Button btnAddF = (Button) findViewById(R.id.btnAddF);
 
         //Данные для адаптера
