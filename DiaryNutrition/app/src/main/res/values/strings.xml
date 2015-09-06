@@ -7,6 +7,9 @@
     <string name="title_sec3_ru">Настройки</string>
     <string name="tittle_search">Поиск продукта</string>
 
+    <string name="food_tab1">Добавленные</string>
+    <string name="food_tab2">Избранные</string>
+
     <string name="record_carbo">У|</string>
     <string name="record_prot">Б|</string>
     <string name="record_fat">Ж|</string>
@@ -31,7 +34,8 @@
     <string name="dialog_prot_f">Белки</string>
     <string name="dialog_fat_f">Жиры</string>
 
-    <string name="context_menu_del">Удалить</string>>
+    <string name="context_menu_del">Удалить</string>
+    <string name="context_menu_change">Изменить</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

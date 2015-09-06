@@ -50,7 +50,8 @@ public class DbDiary {
     public static String ALIAS_CARBO="carbo";
     public static String ALIAS_PROT="prot";
     public static String ALIAS_FAT="fat";
-    public static String ALIAS_FAV="favor";
+    //public static String ALIAS_FAV="favor";
+
 
     public static String ALIAS_F_NAME="food_name";
     public static String ALIAS_F_CAL="cal";
@@ -58,6 +59,7 @@ public class DbDiary {
     public static String ALIAS_F_PROT="prot";
     public static String ALIAS_F_FAT="fat";
     public static String ALIAS_F_FAV="favor";
+    public static String ALIAS_F_USR="usr";
 
     public DbDiary(Context context) {
         this.context = context;
@@ -123,7 +125,23 @@ public class DbDiary {
                 + ",f.[prot] as "+ALIAS_F_PROT
                 + ",f.[fat] as "+ALIAS_F_FAT
                 + ",f.[favor] as "+ALIAS_F_FAV
+                + ",f.[usr] as "+ALIAS_F_USR
                 + " from food f ";
+        return  db.rawQuery(sql,null);
+    }
+
+    public Cursor getUserFood(){
+        String sql = "select "
+                + "f._id as "+ALIAS_ID_FOOD
+                + ",f.[food_name] as "+ALIAS_F_NAME
+                + ",f.[cal] as "+ALIAS_F_CAL
+                + ",f.[carbo] as "+ALIAS_F_CARBO
+                + ",f.[prot] as "+ALIAS_F_PROT
+                + ",f.[fat] as "+ALIAS_F_FAT
+                + ",f.[favor] as "+ALIAS_F_FAV
+                + ",f.[usr] as "+ALIAS_F_USR
+                + " from food f "
+                + " where f.[usr]=1 ";
         return  db.rawQuery(sql,null);
     }
 
@@ -166,12 +184,29 @@ public class DbDiary {
         cv.put(ALIAS_F_CARBO,carbo);
         cv.put(ALIAS_F_PROT,prot);
         cv.put(ALIAS_F_FAT,fat);
-        cv.put(ALIAS_F_FAV,1);
+        cv.put(ALIAS_F_USR,1);
         db.insert(TABLE_FOOD,null,cv);
     }
 
     public void delRec(long id){
-        db.delete(TABLE_RECORD,ALIAS_ID +" = "+ id,null);
+        db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);
+    }
+
+    public void delFood(long id){
+        db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);
+    }
+
+    public void editFood(long id, String name, float cal, float carbo,
+                         float prot, float fat){
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_F_NAME,name);
+        cv.put(ALIAS_F_CAL,cal);
+        cv.put(ALIAS_F_CARBO,carbo);
+        cv.put(ALIAS_F_PROT,prot);
+        cv.put(ALIAS_F_FAT,fat);
+        String where = ALIAS_ID_FOOD + " = " + id;
+        db.update(TABLE_FOOD,cv,where,null);
+
     }
 
     private class DbHelper extends SQLiteOpenHelper {

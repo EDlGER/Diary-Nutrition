@@ -69,7 +69,7 @@ public class AddActivity extends ActionBarActivity implements
         Intent intent = getIntent();
         cal = intent.getLongExtra("CurrentCal",date.getTimeInMillis());
 
-        txtSearch = (EditText) findViewById(R.id.fl_txtSearch);
+        txtSearch = (EditText) findViewById(R.id.txtSearch);
         Button btnAddF = (Button) findViewById(R.id.btnAddF);
 
         //Данные для адаптера
@@ -253,7 +253,6 @@ public class AddActivity extends ActionBarActivity implements
                                             Float.parseFloat(txtCarboF.getText().toString()),
                                             Float.parseFloat(txtProtF.getText().toString()),
                                             Float.parseFloat(txtFatF.getText().toString()));
-
                                     onRestart();
                                 }
                             }
