@@ -65,7 +65,6 @@ public class FoodTab extends Fragment implements
         listFood = (ListView) rootview.findViewById(R.id.fl_listFood);
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
-        listFood.setAdapter(foodAdapter);
         registerForContextMenu(listFood);
         //Поиск
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
@@ -131,6 +130,8 @@ public class FoodTab extends Fragment implements
             c.setArguments(args);
             c.show(getActivity().getFragmentManager(),"change_dialog");
             getLoaderManager().getLoader(0).forceLoad();
+            /////////////////// Надо отследить момент закрытия диалога и запустить обновление БД
+            ////////////////// Notify
             return true;
         }
         if(item.getItemId() == 2){
@@ -149,7 +150,10 @@ public class FoodTab extends Fragment implements
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {foodAdapter.swapCursor(data);}
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        foodAdapter.swapCursor(data);
+        listFood.setAdapter(foodAdapter);
+    }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {

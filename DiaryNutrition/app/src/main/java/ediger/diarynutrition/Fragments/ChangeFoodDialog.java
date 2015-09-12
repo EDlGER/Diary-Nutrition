@@ -22,7 +22,7 @@ import ediger.diarynutrition.objects.AppContext;
 public class ChangeFoodDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 
         View relative1 = getActivity().getLayoutInflater().inflate(R.layout.add_f_dialog, null);
         builder1.setView(relative1);
@@ -51,22 +51,23 @@ public class ChangeFoodDialog extends DialogFragment {
         builder1.setPositiveButton(R.string.context_menu_change,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (txtNameF.getText().toString().matches("") &&
-                                txtCalF.getText().toString().matches("") &&
-                                txtCarboF.getText().toString().matches("") &&
-                                txtProtF.getText().toString().matches("") &&
+                        if (txtNameF.getText().toString().matches("") ||
+                                txtCalF.getText().toString().matches("") ||
+                                txtCarboF.getText().toString().matches("") ||
+                                txtProtF.getText().toString().matches("") ||
                                 txtFatF.getText().toString().matches("") ){
                             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
                                     "Не все поля заполнены",Toast.LENGTH_SHORT);
                             toast.show();
                         }
                         else {
-                            AppContext.getDbDiary().editFood(id,txtNameF.getText().toString(),
+                            long food_id = getArguments().getLong("id");
+                            AppContext.getDbDiary().editFood(food_id,txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
                                     Float.parseFloat(txtCarboF.getText().toString()),
                                     Float.parseFloat(txtProtF.getText().toString()),
                                     Float.parseFloat(txtFatF.getText().toString()));
-                            //////////////////////////////////////////
+                            ///////////////// Сделать notify
                         }
                     }
                 });

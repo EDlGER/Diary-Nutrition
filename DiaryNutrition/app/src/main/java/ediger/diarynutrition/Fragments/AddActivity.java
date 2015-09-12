@@ -235,13 +235,19 @@ public class AddActivity extends ActionBarActivity implements
                 final EditText txtProtF = (EditText) relative1.findViewById(R.id.txtProtF);
                 final EditText txtFatF = (EditText) relative1.findViewById(R.id.txtFatF);
 
+                txtNameF.setText("");
+                txtCalF.setText("");
+                txtCarboF.setText("");
+                txtProtF.setText("");
+                txtFatF.setText("");
+
                 builder1.setPositiveButton(R.string.dialog_add_f,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (txtNameF.getText().toString().matches("") &&
-                                        txtCalF.getText().toString().matches("") &&
-                                        txtCarboF.getText().toString().matches("") &&
-                                        txtProtF.getText().toString().matches("") &&
+                                if (txtNameF.getText().toString().matches("") ||
+                                        txtCalF.getText().toString().matches("") ||
+                                        txtCarboF.getText().toString().matches("") ||
+                                        txtProtF.getText().toString().matches("") ||
                                         txtFatF.getText().toString().matches("") ){
                                     Toast toast = Toast.makeText(getApplicationContext(),
                                             "Не все поля заполнены",Toast.LENGTH_SHORT);
