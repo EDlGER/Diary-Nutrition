@@ -2,8 +2,11 @@ package ediger.diarynutrition.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
+//import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.Fragments.tabs.FoodTab;
 
 /**
  * Created by root on 06.09.15.
@@ -62,12 +66,13 @@ public class ChangeFoodDialog extends DialogFragment {
                         }
                         else {
                             long food_id = getArguments().getLong("id");
-                            AppContext.getDbDiary().editFood(food_id,txtNameF.getText().toString(),
+                            AppContext.getDbDiary().editFood(food_id, txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
                                     Float.parseFloat(txtCarboF.getText().toString()),
                                     Float.parseFloat(txtProtF.getText().toString()),
                                     Float.parseFloat(txtFatF.getText().toString()));
-                            ///////////////// Сделать notify
+
+                            getTargetFragment().onActivityResult(1,1,null);
                         }
                     }
                 });
@@ -80,4 +85,5 @@ public class ChangeFoodDialog extends DialogFragment {
         builder1.setCancelable(false);
         return builder1.create();
     }
+
 }

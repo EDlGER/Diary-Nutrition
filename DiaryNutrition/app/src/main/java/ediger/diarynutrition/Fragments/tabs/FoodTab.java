@@ -1,10 +1,15 @@
 package ediger.diarynutrition.Fragments.tabs;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+/*import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;*/
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -50,6 +55,26 @@ public class FoodTab extends Fragment implements
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
+    private static final int REQ_CODE = 1;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+                cursor = AppContext.getDbDiary().getUserFood();
+                from = AppContext.getDbDiary().getListFood();
+                foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+                listFood.setAdapter(foodAdapter);
+                listFood.setTextFilterEnabled(true);
+                foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+                    @Override
+                        public Cursor runQuery(CharSequence constraint) {
+                        return getFilterList(constraint);
+                    }
+                });
+                getLoaderManager().getLoader(0).forceLoad();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,7 +99,7 @@ public class FoodTab extends Fragment implements
             }
         });
         txtSearch.addTextChangedListener(TextChangedListener);
-        getLoaderManager().initLoader(0, null, this);
+        getLoaderManager().initLoader(0, null,this);
         return rootview;
     }
 
@@ -128,10 +153,9 @@ public class FoodTab extends Fragment implements
             Bundle args = new Bundle();
             args.putLong("id", acmi.id);
             c.setArguments(args);
-            c.show(getActivity().getFragmentManager(),"change_dialog");
+            c.setTargetFragment(FoodTab.this,REQ_CODE);
+            c.show(getFragmentManager(),"change_dialog");
             getLoaderManager().getLoader(0).forceLoad();
-            /////////////////// Надо отследить момент закрытия диалога и запустить обновление БД
-            ////////////////// Notify
             return true;
         }
         if(item.getItemId() == 2){
@@ -153,6 +177,7 @@ public class FoodTab extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         foodAdapter.swapCursor(data);
         listFood.setAdapter(foodAdapter);
+        listFood.setTextFilterEnabled(true);
     }
 
     @Override

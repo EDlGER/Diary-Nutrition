@@ -50,6 +50,13 @@ public class AddActivity extends ActionBarActivity implements
     private long addtime;
     private long addid;
     private int addserv;
+
+    private EditText txtNameF;
+    private EditText txtCalF;
+    private EditText txtCarboF;
+    private EditText txtProtF;
+    private EditText txtFatF;
+
     Calendar date = Calendar.getInstance();
     long cal;
     String[] from;
@@ -122,12 +129,6 @@ public class AddActivity extends ActionBarActivity implements
                     new String[]{value},null,null,null);
         }
     }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add, menu);
-        return true;
-    }*/
 
     @Override
     protected void onRestart() {
@@ -229,11 +230,11 @@ public class AddActivity extends ActionBarActivity implements
                 builder1.setView(relative1);
                 builder1.setTitle(R.string.dialog_tittle_f);
 
-                final EditText txtNameF = (EditText) relative1.findViewById(R.id.txtNameF);
-                final EditText txtCalF = (EditText) relative1.findViewById(R.id.txtCalF);
-                final EditText txtCarboF = (EditText) relative1.findViewById(R.id.txtCarboF);
-                final EditText txtProtF = (EditText) relative1.findViewById(R.id.txtProtF);
-                final EditText txtFatF = (EditText) relative1.findViewById(R.id.txtFatF);
+                txtNameF = (EditText) relative1.findViewById(R.id.txtNameF);
+                txtCalF = (EditText) relative1.findViewById(R.id.txtCalF);
+                txtCarboF = (EditText) relative1.findViewById(R.id.txtCarboF);
+                txtProtF = (EditText) relative1.findViewById(R.id.txtProtF);
+                txtFatF = (EditText) relative1.findViewById(R.id.txtFatF);
 
                 txtNameF.setText("");
                 txtCalF.setText("");
@@ -269,7 +270,7 @@ public class AddActivity extends ActionBarActivity implements
                                 dialog.dismiss();
                             }
                         });
-                builder1.setCancelable(false);
+                builder1.setCancelable(true);
                 return builder1.create();
 
             default: return null;
