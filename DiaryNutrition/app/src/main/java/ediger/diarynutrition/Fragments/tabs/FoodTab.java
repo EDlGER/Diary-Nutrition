@@ -22,13 +22,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import java.util.concurrent.TimeUnit;
 
+import ediger.diarynutrition.AddFoodDialog;
 import ediger.diarynutrition.Fragments.ChangeFoodDialog;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
@@ -46,6 +49,7 @@ public class FoodTab extends Fragment implements
     private Cursor cursor;
     private FoodAdapter foodAdapter;
     private EditText txtSearch;
+    private Button btnAdd;
 
     String[] from;
     int[] to = {
@@ -55,12 +59,13 @@ public class FoodTab extends Fragment implements
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
-    private static final int REQ_CODE = 1;
+    private static final int REQ_CODE_CHANGE = 1;
+    private static final int REQ_CODE_ADD = 2;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
+        if (requestCode == 1 || requestCode == 2){
                 cursor = AppContext.getDbDiary().getUserFood();
                 from = AppContext.getDbDiary().getListFood();
                 foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
@@ -81,6 +86,7 @@ public class FoodTab extends Fragment implements
         rootview = inflater.inflate(R.layout.food_tab, container, false);
 
         txtSearch = (EditText) rootview.findViewById(R.id.fl_txtSearch);
+        btnAdd = (Button) rootview.findViewById(R.id.fl_b_add);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getUserFood();
@@ -99,6 +105,16 @@ public class FoodTab extends Fragment implements
             }
         });
         txtSearch.addTextChangedListener(TextChangedListener);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment a = new AddFoodDialog();
+                a.setTargetFragment(FoodTab.this,REQ_CODE_ADD);
+                a.show(getFragmentManager(),"add_dialog");
+                getLoaderManager().getLoader(0).forceLoad();
+            }
+        });
         getLoaderManager().initLoader(0, null,this);
         return rootview;
     }
@@ -153,7 +169,7 @@ public class FoodTab extends Fragment implements
             Bundle args = new Bundle();
             args.putLong("id", acmi.id);
             c.setArguments(args);
-            c.setTargetFragment(FoodTab.this,REQ_CODE);
+            c.setTargetFragment(FoodTab.this,REQ_CODE_CHANGE);
             c.show(getFragmentManager(),"change_dialog");
             getLoaderManager().getLoader(0).forceLoad();
             return true;

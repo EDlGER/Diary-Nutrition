@@ -2,23 +2,16 @@ package ediger.diarynutrition.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-//import android.app.DialogFragment;
 import android.support.v4.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
-import ediger.diarynutrition.Fragments.tabs.FoodTab;
 
 /**
  * Created by root on 06.09.15.
@@ -26,7 +19,7 @@ import ediger.diarynutrition.Fragments.tabs.FoodTab;
 public class ChangeFoodDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 
         View relative1 = getActivity().getLayoutInflater().inflate(R.layout.add_f_dialog, null);
         builder1.setView(relative1);
@@ -39,7 +32,6 @@ public class ChangeFoodDialog extends DialogFragment {
         final EditText txtFatF = (EditText) relative1.findViewById(R.id.txtFatF);
 
         long id = getArguments().getLong("id");
-        String arg1 = ""+id;
         String[] asColumnsToResult = AppContext.getDbDiary().getListFood();
         String selections = "_id = "+id;
         Cursor c = AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
