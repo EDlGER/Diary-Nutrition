@@ -4,8 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +28,7 @@ public class DbDiary {
 
     public static final String DB_NAME = "diary.db";
     public static final int DB_VERSION = 1;
+    public static final String DB_PATH = "/data/data/ediger.diarynutrition/datebases/";
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
@@ -210,9 +217,49 @@ public class DbDiary {
     }
 
     private class DbHelper extends SQLiteOpenHelper {
+        private Context mycontext;
 
-        public DbHelper(Context context){
+        public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
+            this.mycontext = context;
+            boolean dbexist = checkDb();
+            if (!dbexist) createDb();
+        }
+
+        public void createDb() {
+            boolean dbexist = checkDb();
+            if (!dbexist) {
+                this.getReadableDatabase();
+                copyDb();
+            }
+        }
+
+        public boolean checkDb(){
+            boolean checkdb = false;
+            String myPath = DB_PATH + DB_NAME;
+            File dbfile = new File(myPath);
+            checkdb = dbfile.exists();
+            return checkdb;
+        }
+
+        public void copyDb(){
+            byte[] buffer = new byte[1024];
+            OutputStream myOutput = null;
+            int length;
+            InputStream myInput = null;
+            try {
+                myInput = mycontext.getAssets().open(DB_NAME);
+                myOutput = new FileOutputStream(DB_PATH + DB_NAME);
+                while((length = myInput.read(buffer)) > 0){
+                    myOutput.write(buffer, 0, length);
+                }
+                myOutput.close();
+                myOutput.flush();
+                myInput.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
