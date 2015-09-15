@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="ediger.diarynutrition.Fragments.AddActivity"
-    android:background="#FFFFFF">
+    android:background="@color/background_floating_material_light">
 
 
     <EditText
@@ -18,7 +18,7 @@
         android:singleLine="true"
         android:editable="true"
         android:drawableLeft="@drawable/ic_search1"
-        android:background="@drawable/search_edit"/>
+        android:background="@drawable/list_view"/>
 
     <ListView
         android:layout_width="fill_parent"
@@ -32,15 +32,13 @@
         android:background="@drawable/search_edit"
         android:layout_marginTop="4dp" />
 
+    "
     <Button
+        android:id="@+id/btnAddF"
+        android:onClick="btnAddClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnAddF"
-        android:drawableRight="@drawable/ic_add_48dp"
-        android:onClick="btnAddClick"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#00FFFFFF"
-        android:visibility="visible" />
+        android:text="@string/add_food"
+        style="@style/material_button"
+        android:layout_marginBottom="-5dp" />
 </RelativeLayout>

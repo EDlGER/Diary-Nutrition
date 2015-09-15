@@ -37,6 +37,8 @@
     <string name="context_menu_del">Удалить</string>
     <string name="context_menu_change">Изменить</string>
 
+    <string name="add_food">Добавить продукт</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
