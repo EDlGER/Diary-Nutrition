@@ -18,8 +18,13 @@ public class AppContext extends Application{
 
     }
 
-    private static DbDiary dbDiary;
 
+    private static DbDiary dbDiary;
+    private static AppContext instance;
+
+    public AppContext() {instance = this;}
+
+    public static AppContext getInstance(){return instance;}
 
     public static DbDiary getDbDiary(){
             return dbDiary;

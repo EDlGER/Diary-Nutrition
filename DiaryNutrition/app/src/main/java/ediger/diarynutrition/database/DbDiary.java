@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import ediger.diarynutrition.objects.AppContext;
 import ediger.diarynutrition.objects.Record;
 
 
@@ -26,9 +30,12 @@ import ediger.diarynutrition.objects.Record;
  */
 public class DbDiary {
 
-    public static final String DB_NAME = "diary.db";
-    public static final int DB_VERSION = 1;
-    public static final String DB_PATH = "/data/data/ediger.diarynutrition/datebases/";
+    private static final String LOG_TAG = DbDiary.class.getName();
+    private static final String DB_NAME = "diary.db";
+    private static final int DB_VERSION = 1;
+    private static final String DB_FOLDER = "/data/data/ediger.diarynutrition/databases/";
+    private static final String DB_PATH = DB_FOLDER + DB_NAME;
+    private static final int DB_FILES_COPY_BUFFER_SIZE = 1024;
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
@@ -180,7 +187,7 @@ public class DbDiary {
         cv.put(ALIAS_FOOD_ID,id);
         cv.put(ALIAS_SERVING,serv);
         cv.put(ALIAS_RECORD_DATETIME,datetime);
-        db.insert(TABLE_RECORD,null,cv);
+        db.insert(TABLE_RECORD, null, cv);
     }
 
     public void addFood(String name, float cal, float carbo,
@@ -192,7 +199,7 @@ public class DbDiary {
         cv.put(ALIAS_F_PROT,prot);
         cv.put(ALIAS_F_FAT,fat);
         cv.put(ALIAS_F_USR,1);
-        db.insert(TABLE_FOOD,null,cv);
+        db.insert(TABLE_FOOD, null, cv);
     }
 
     public void delRec(long id){
@@ -212,64 +219,104 @@ public class DbDiary {
         cv.put(ALIAS_F_PROT,prot);
         cv.put(ALIAS_F_FAT,fat);
         String where = ALIAS_ID_FOOD + " = " + id;
-        db.update(TABLE_FOOD,cv,where,null);
+        db.update(TABLE_FOOD, cv, where, null);
 
     }
+//========================================================
+
+
+        /*byte[] buffer = new byte[1024];
+        OutputStream myOutput = null;
+        int length;
+        InputStream myInput = null;
+        try {
+            myInput = mycontext.getAssets().open(DB_NAME);
+            myOutput = new FileOutputStream(DB_PATH + DB_NAME);
+            while((length = myInput.read(buffer)) > 0){
+                myOutput.write(buffer, 0, length);
+            }
+            myOutput.close();
+            myOutput.flush();
+            myInput.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
+
+
 
     private class DbHelper extends SQLiteOpenHelper {
-        private Context mycontext;
+        //private Context mycontext;
 
         public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
-            this.mycontext = context;
+            /*this.mycontext = context;
             boolean dbexist = checkDb();
-            if (!dbexist) createDb();
+            if (!dbexist) createDb();*/
+            initialize();
         }
 
-        public void createDb() {
-            boolean dbexist = checkDb();
-            if (!dbexist) {
-                this.getReadableDatabase();
-                copyDb();
+        public void initialize(){
+            if (isInitilize() == false) copyDb();
+        }
+
+        private boolean isInitilize(){
+            SQLiteDatabase checkDb = null;
+            Boolean correctVersion = false;
+            try{
+                checkDb = SQLiteDatabase.openDatabase(DB_PATH,null,
+                        SQLiteDatabase.OPEN_READONLY);
+                correctVersion = checkDb.getVersion() == DB_VERSION;
+            } catch (SQLiteException e){
+                Log.w(LOG_TAG, e.getMessage());
+            } finally {
+                if (checkDb != null) checkDb.close();
             }
+            return  checkDb != null && correctVersion;
         }
 
-        public boolean checkDb(){
-            boolean checkdb = false;
-            String myPath = DB_PATH + DB_NAME;
-            File dbfile = new File(myPath);
-            checkdb = dbfile.exists();
-            return checkdb;
-        }
+        private  void copyDb() {
 
-        public void copyDb(){
-            byte[] buffer = new byte[1024];
-            OutputStream myOutput = null;
-            int length;
-            InputStream myInput = null;
+            Context appContext = AppContext.getInstance().getApplicationContext();
+            InputStream inStream = null;
+            OutputStream outStream = null;
+
             try {
-                myInput = mycontext.getAssets().open(DB_NAME);
-                myOutput = new FileOutputStream(DB_PATH + DB_NAME);
-                while((length = myInput.read(buffer)) > 0){
-                    myOutput.write(buffer, 0, length);
+                inStream = new BufferedInputStream(appContext.getAssets().open(DB_NAME),
+                        DB_FILES_COPY_BUFFER_SIZE);
+                File dbDir = new File(DB_FOLDER);
+                if (dbDir.exists() == false) dbDir.mkdir();
+                outStream = new BufferedOutputStream(new FileOutputStream(DB_PATH),
+                        DB_FILES_COPY_BUFFER_SIZE);
+
+                byte[] buffer = new byte[DB_FILES_COPY_BUFFER_SIZE];
+                int length;
+                while ((length = inStream.read(buffer)) > 0) {
+                    outStream.write(buffer, 0, length);
                 }
-                myOutput.close();
-                myOutput.flush();
-                myInput.close();
-            }
-            catch (IOException e) {
+
+                outStream.flush();
+                outStream.close();
+                inStream.close();
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, e.getMessage());
                 e.printStackTrace();
             }
         }
 
+
         @Override
         public void onCreate(SQLiteDatabase db) {
-
+            throw  new SQLiteException(
+                    "Call DbDiary.Initialize first. This method should never be called.");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+            throw  new SQLiteException(
+                    "Call DbDiary.Initialize first. This method should never be called.");
         }
     }
 }
