@@ -70,13 +70,13 @@ public class diary_fragment extends Fragment implements
     };
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         cursor = AppContext.getDbDiary().getRecords(cal);
         recordAdapter = new RecordAdapter(getActivity(),
                 R.layout.record_item1,cursor, from,to,0);
         listRecord.setAdapter(recordAdapter);
-        getLoaderManager().getLoader(0).reset();
+        //getLoaderManager().getLoader(0).reset();
     }
 
 
@@ -185,12 +185,12 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,1,0,R.string.context_menu_del);
+        menu.add(0,3,0,R.string.context_menu_del);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getItemId() == 1){
+        if(item.getItemId() == 3){
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().delRec(acmi.id);

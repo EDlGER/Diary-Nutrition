@@ -202,13 +202,9 @@ public class DbDiary {
         db.insert(TABLE_FOOD, null, cv);
     }
 
-    public void delRec(long id){
-        db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);
-    }
+    public void delRec(long id){ db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);}
 
-    public void delFood(long id){
-        db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);
-    }
+    public void delFood(long id){ db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);}
 
     public void editFood(long id, String name, float cal, float carbo,
                          float prot, float fat){
@@ -222,38 +218,11 @@ public class DbDiary {
         db.update(TABLE_FOOD, cv, where, null);
 
     }
-//========================================================
-
-
-        /*byte[] buffer = new byte[1024];
-        OutputStream myOutput = null;
-        int length;
-        InputStream myInput = null;
-        try {
-            myInput = mycontext.getAssets().open(DB_NAME);
-            myOutput = new FileOutputStream(DB_PATH + DB_NAME);
-            while((length = myInput.read(buffer)) > 0){
-                myOutput.write(buffer, 0, length);
-            }
-            myOutput.close();
-            myOutput.flush();
-            myInput.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
-
 
     private class DbHelper extends SQLiteOpenHelper {
-        //private Context mycontext;
 
         public DbHelper(Context context) {
             super(context, DB_NAME, null, DB_VERSION);
-            /*this.mycontext = context;
-            boolean dbexist = checkDb();
-            if (!dbexist) createDb();*/
             initialize();
         }
 

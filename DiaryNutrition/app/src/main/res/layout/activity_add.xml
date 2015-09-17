@@ -18,7 +18,7 @@
         android:singleLine="true"
         android:editable="true"
         android:drawableLeft="@drawable/ic_search1"
-        android:background="@drawable/list_view"/>
+        android:background="@drawable/search_edit"/>
 
     <ListView
         android:layout_width="fill_parent"

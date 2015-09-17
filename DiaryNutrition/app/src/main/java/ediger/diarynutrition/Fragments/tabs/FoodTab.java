@@ -77,7 +77,7 @@ public class FoodTab extends Fragment implements
                         return getFilterList(constraint);
                     }
                 });
-                getLoaderManager().getLoader(0).forceLoad();
+                getLoaderManager().getLoader(1).forceLoad();
         }
     }
 
@@ -112,10 +112,10 @@ public class FoodTab extends Fragment implements
                 DialogFragment a = new AddFoodDialog();
                 a.setTargetFragment(FoodTab.this,REQ_CODE_ADD);
                 a.show(getFragmentManager(),"add_dialog");
-                getLoaderManager().getLoader(0).forceLoad();
+                getLoaderManager().getLoader(1).forceLoad();
             }
         });
-        getLoaderManager().initLoader(0, null,this);
+        getLoaderManager().initLoader(1, null,this);
         return rootview;
     }
 
@@ -171,14 +171,14 @@ public class FoodTab extends Fragment implements
             c.setArguments(args);
             c.setTargetFragment(FoodTab.this,REQ_CODE_CHANGE);
             c.show(getFragmentManager(),"change_dialog");
-            getLoaderManager().getLoader(0).forceLoad();
+            getLoaderManager().getLoader(1).forceLoad();
             return true;
         }
         if(item.getItemId() == 2){
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().delFood(acmi.id);
-            getLoaderManager().getLoader(0).forceLoad();
+            getLoaderManager().getLoader(1).forceLoad();
             return true;
         }
         return super.onContextItemSelected(item);
@@ -212,11 +212,11 @@ public class FoodTab extends Fragment implements
         @Override
         public  Cursor loadInBackground(){
             Cursor cursor = db.getUserFood();
-            try{
+            /*try{
                 TimeUnit.MILLISECONDS.sleep(1);
             } catch (InterruptedException e){
                 e.printStackTrace();
-            }
+            }*/
             return cursor;
         }
     }
