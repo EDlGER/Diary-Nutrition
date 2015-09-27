@@ -111,21 +111,22 @@ public class AddActivity extends ActionBarActivity implements
             }
         });
         txtSearch.addTextChangedListener(TextChangedListener);
-        getSupportLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(2, null, this);
     }
 
 
     //Поиск по введенным буквам
     public Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
+        String selections = "usr > -1";
 
         if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, null, null, null,
+            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null, null,
                     null, null);
         }
         else {
             String value = "%"+constraint.toString()+"%";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"food_name like ? ",
+            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name like ? ",
                     new String[]{value},null,null,null);
         }
     }

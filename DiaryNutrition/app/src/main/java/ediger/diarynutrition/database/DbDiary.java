@@ -140,7 +140,8 @@ public class DbDiary {
                 + ",f.[fat] as "+ALIAS_F_FAT
                 + ",f.[favor] as "+ALIAS_F_FAV
                 + ",f.[usr] as "+ALIAS_F_USR
-                + " from food f ";
+                + " from food f "
+                + "where f.[usr] > -1";
         return  db.rawQuery(sql,null);
     }
 
@@ -155,7 +156,7 @@ public class DbDiary {
                 + ",f.[favor] as "+ALIAS_F_FAV
                 + ",f.[usr] as "+ALIAS_F_USR
                 + " from food f "
-                + " where f.[usr]=1 ";
+                + " where f.[usr] > 0";
         return  db.rawQuery(sql,null);
     }
 
@@ -184,10 +185,28 @@ public class DbDiary {
 
     public void addRec(long id, int serv, long datetime){
         ContentValues cv = new ContentValues();
-        cv.put(ALIAS_FOOD_ID,id);
-        cv.put(ALIAS_SERVING,serv);
-        cv.put(ALIAS_RECORD_DATETIME,datetime);
+        cv.put(ALIAS_FOOD_ID, id);
+        cv.put(ALIAS_SERVING, serv);
+        cv.put(ALIAS_RECORD_DATETIME, datetime);
         db.insert(TABLE_RECORD, null, cv);
+
+        cv.clear();
+        String sql = "select "
+                + "f.[usr] "
+                + "from food f "
+                + "where f._id = ? ";
+        Cursor usr = db.rawQuery(sql,new String[]{""+id});
+        usr.moveToFirst();
+        if (usr.getInt(0) > 0){
+            cv.put(ALIAS_F_USR,usr.getInt(0) + 1);
+            String where = ALIAS_ID_FOOD + "=" + id;
+            db.update(TABLE_FOOD,cv,where,null);
+        }
+        usr.close();
+        //Нужно для определения использования пользовательского продукта записью
+        //f.usr = 0 - стандартный продукт
+        //f.usr > 0 - пользовательский
+        //f.usr = -1  - скрытый пользовательский
     }
 
     public void addFood(String name, float cal, float carbo,
@@ -198,13 +217,52 @@ public class DbDiary {
         cv.put(ALIAS_F_CARBO,carbo);
         cv.put(ALIAS_F_PROT,prot);
         cv.put(ALIAS_F_FAT,fat);
-        cv.put(ALIAS_F_USR,1);
+        cv.put(ALIAS_F_USR, 1);
         db.insert(TABLE_FOOD, null, cv);
     }
 
-    public void delRec(long id){ db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);}
+    public void delRec(long id){
+        String sql = "select "
+                + "r.food_id "
+                + "from record r "
+                + "where r._id = ?";
+        Cursor usr = db.rawQuery(sql, new String[]{"" + id});
+        usr.moveToFirst();
+        String food_id = usr.getString(0);
+        sql = "select "
+                + "f.usr "
+                + "from food f "
+                + "where f._id = ?";
+        usr = db.rawQuery(sql,new String[]{food_id});
+        usr.moveToFirst();
+        if (usr.getInt(0) > 0){
+            ContentValues cv = new ContentValues();
+            cv.put(ALIAS_F_USR, usr.getInt(0) - 1);
+            String where = ALIAS_ID_FOOD + "=" + usr.getString(0);;
+            db.update(TABLE_FOOD,cv,where,null);
+        }
+        db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);
+        usr.close();
+    }
 
-    public void delFood(long id){ db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);}
+    public void delFood(long id){
+        String sql = "select "
+                + "f.[usr] "
+                + "from food f "
+                + "where f._id = ? ";
+        Cursor usr = db.rawQuery(sql,new String[]{""+id});
+        usr.moveToFirst();
+        if (usr.getInt(0) > 1){
+            ContentValues cv = new ContentValues();
+            cv.put(ALIAS_F_USR, -1);
+            String where = ALIAS_ID_FOOD + "=" + id;
+            db.update(TABLE_FOOD, cv, where, null);
+        }
+        else {
+            db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);
+        }
+        usr.close();
+    }
 
     public void editFood(long id, String name, float cal, float carbo,
                          float prot, float fat){

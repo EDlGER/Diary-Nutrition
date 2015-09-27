@@ -122,7 +122,7 @@ public class FoodTab extends Fragment implements
     //Поиск по введенным буквам
     public Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
-        String selections = "usr = 1";
+        String selections = "usr > 0";
 
         if(constraint == null || constraint.length() == 0){
             return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null, null,
@@ -130,7 +130,7 @@ public class FoodTab extends Fragment implements
         }
         else {
             String value = "%"+constraint.toString()+"%";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr = 1 AND food_name like ? ",
+            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > 0 AND food_name like ? ",
                     new String[]{value},null,null,null);
         }
     }
