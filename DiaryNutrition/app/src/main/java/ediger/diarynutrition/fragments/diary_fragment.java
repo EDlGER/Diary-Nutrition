@@ -1,8 +1,6 @@
-package ediger.diarynutrition.Fragments;
+package ediger.diarynutrition.fragments;
 
 
-import android.app.Activity;
-import android.support.v4.app.DialogFragment;
 import android.content.Context;
 
 import android.content.Intent;
@@ -21,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 

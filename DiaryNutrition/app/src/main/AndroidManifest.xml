@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Fragments.AddActivity"
+            android:name=".fragments.AddActivity"
             android:label="@string/act_add"
             android:parentActivityName=".MainActivity">
             <intent-filter>

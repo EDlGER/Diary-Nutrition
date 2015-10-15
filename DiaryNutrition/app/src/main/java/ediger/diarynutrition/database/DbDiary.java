@@ -15,14 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import ediger.diarynutrition.objects.AppContext;
-import ediger.diarynutrition.objects.Record;
 
 
 /**
@@ -39,6 +33,7 @@ public class DbDiary {
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
+    private static final String TABLE_MEAL="meal";
 
     private DbHelper dbHelper;
     private Context context;
@@ -54,6 +49,7 @@ public class DbDiary {
     //Поля таблицы Record
     public static String ALIAS_ID="_id";
     public static String ALIAS_FOOD_ID="food_id";
+    public static String ALIAS_MEAL_ID="meal_id";
     public static String ALIAS_SERVING="serving";
     public static String ALIAS_RECORD_DATETIME="record_datetime";
 
@@ -74,6 +70,11 @@ public class DbDiary {
     public static String ALIAS_F_FAT="fat";
     public static String ALIAS_F_FAV="favor";
     public static String ALIAS_F_USR="usr";
+
+    //Поля таблицы Meal
+    public static String ALIAS_M_ID = "_id";
+    public static String ALIAS_M_NAME="name";
+
 
     public DbDiary(Context context) {
         this.context = context;
@@ -115,6 +116,35 @@ public class DbDiary {
                 + " where r.record_datetime between ? and ? "
                 + " order by r.record_datetime asc";
         return db.rawQuery(sql,new String[]{arg1,arg2});
+    }
+
+    public Cursor getMealData(){
+        return db.query(TABLE_MEAL,null,null,null,null,null,null);
+    }
+
+    public Cursor getRecordData(long date, long mealID){
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date+86356262);
+        String arg3 = Long.toString(mealID);
+        String sql = "select "
+                + "r._id as "+ALIAS_ID
+                + ",r.[serving] as "+ALIAS_SERVING
+                + ",r.[record_datetime] as "+ALIAS_RECORD_DATETIME
+                + ",r.[meal_id] as " +ALIAS_MEAL_ID
+                + ",f.[food_name] as "+ALIAS_FOOD_NAME
+                + ",(f.[cal]/100*r.[serving]) as "+ALIAS_CAL
+                + ",(f.[carbo]/100*r.[serving]) as "+ALIAS_CARBO
+                + ",(f.[prot]/100*r.[serving]) as "+ALIAS_PROT
+                + ",(f.[fat]/100*r.[serving]) as "+ALIAS_FAT
+                + ",m._id as " +ALIAS_M_ID
+                + ",m.[name] as " +ALIAS_M_NAME
+                + " from record r "
+                + " inner join food f on r.food_id=f.[_id] "
+                + " inner join meal m on r.meal_id=m.[_id] "
+                + " where r.record_datetime between ? and ?,"
+                + " r.[meal_id] = ? "
+                + " order by r.record_datetime asc";
+        return db.rawQuery(sql,new String[]{arg1,arg2,arg3});
     }
 
     public String[] getListRecords(){

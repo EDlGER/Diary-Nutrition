@@ -1,4 +1,4 @@
-package ediger.diarynutrition;
+package ediger.diarynutrition.fragments.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
 
 /**

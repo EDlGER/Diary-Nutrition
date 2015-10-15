@@ -1,21 +1,17 @@
 package ediger.diarynutrition;
 
-import ediger.diarynutrition.Fragments.diary_fragment;
-import ediger.diarynutrition.Fragments.food_fragment;
-import ediger.diarynutrition.Fragments.settings_fragment;
-import ediger.diarynutrition.adapters.ViewPagerAdapter;
+import ediger.diarynutrition.fragments.diary_fragment;
+import ediger.diarynutrition.fragments.food_fragment;
+import ediger.diarynutrition.fragments.settings_fragment;
 
 
 import android.app.Activity;
-import android.app.ListFragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;

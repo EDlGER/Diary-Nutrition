@@ -1,4 +1,4 @@
-package ediger.diarynutrition.Fragments.tabs;
+package ediger.diarynutrition.fragments.tabs;
 
 
 import android.os.Bundle;

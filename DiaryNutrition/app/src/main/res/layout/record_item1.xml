@@ -12,9 +12,10 @@
         android:text="11:30"
         android:id="@+id/txt_time"
         android:textSize="18dp"
-        android:layout_below="@+id/txt_food_name"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -22,10 +23,10 @@
         android:id="@+id/img_pipe"
         android:layout_toRightOf="@+id/txt_time"
         android:layout_marginLeft="0dp"
-        android:layout_marginStart="27dp"
         android:src="@drawable/record_pipe"
         android:layout_alignParentTop="false"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:layout_marginTop="1dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,7 +57,8 @@
         android:layout_alignBottom="@+id/txt_serving"
         android:layout_alignRight="@+id/txt_cal"
         android:layout_alignEnd="@+id/txt_cal"
-        android:layout_marginRight="55dp" />
+        android:layout_marginRight="55dp"
+        android:textColor="#e2e538" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +69,8 @@
         android:layout_alignBottom="@+id/txt_fat"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="110dp" />
+        android:layout_marginRight="110dp"
+        android:textColor="#21b932" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,12 +81,13 @@
         android:layout_alignBottom="@+id/txt_fat"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="165dp" />
+        android:layout_marginRight="165dp"
+        android:textColor="#ff311c" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="100"
+        android:text="100 гр"
         android:id="@+id/txt_serving"
         android:textSize="15dp"
         android:layout_below="@+id/txt_food_name"

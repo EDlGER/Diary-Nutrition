@@ -1,4 +1,4 @@
-package ediger.diarynutrition.Fragments;
+package ediger.diarynutrition.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

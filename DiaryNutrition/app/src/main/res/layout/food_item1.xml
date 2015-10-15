@@ -34,7 +34,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="50dp"
-        android:textColor="#f2f52c" />
+        android:textColor="#e2e528" />
 
     <TextView
         android:layout_width="wrap_content"

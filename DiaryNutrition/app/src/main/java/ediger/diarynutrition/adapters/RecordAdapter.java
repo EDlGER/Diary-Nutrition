@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -18,13 +19,14 @@ import ediger.diarynutrition.database.DbDiary;
 /**
  * Created by root on 19.05.15.
  */
-public class RecordAdapter extends SimpleCursorAdapter {
+public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     private  Context context;
 
-    public RecordAdapter(Context context, int layout, Cursor c,
-                         String[] from, int[] to, int flags) {
-        super(context, layout, c, from, to, flags);
+    public RecordAdapter(Context context, Cursor cursor, int groupLayout,
+                         String[] groupFrom, int[] groupTo, int childLayout,
+                         String[] childFrom, int[] childTo, Context context1) {
+        super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
         this.context = context;
         this.layoutInflater = layoutInflater.from(context);
     }
@@ -36,7 +38,18 @@ public class RecordAdapter extends SimpleCursorAdapter {
     private LayoutInflater layoutInflater;
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+    public View newGroupView(Context context, Cursor cursor, boolean isExpanded, ViewGroup parent) {
+        View view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
+
+        ViewHolder holder = new ViewHolder();
+        holder.meal_name = (TextView) view.findViewById(R.id.txt_meal);
+
+        view.setTag(holder);
+        return view;
+    }
+
+    @Override
+    public View newChildView(Context context, Cursor cursor,boolean isLastChild, ViewGroup parent) {
 
         View view = layoutInflater.inflate(R.layout.record_item1,parent,false);
 
@@ -55,7 +68,14 @@ public class RecordAdapter extends SimpleCursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    protected void bindGroupView(View view, Context context, Cursor cursor, boolean isExpanded) {
+        ViewHolder holder = (ViewHolder) view.getTag();
+
+        holder.meal_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_M_NAME)));
+    }
+
+    @Override
+    public void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
 
@@ -72,6 +92,12 @@ public class RecordAdapter extends SimpleCursorAdapter {
         holder.time.setText(timeFormatter.format(calendar.getTime()));
     }
 
+    @Override
+    protected Cursor getChildrenCursor(Cursor groupCursor) {
+        int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
+        return
+    }
+
     private class ViewHolder {
         public TextView food_name;
         public TextView cal;
@@ -80,5 +106,7 @@ public class RecordAdapter extends SimpleCursorAdapter {
         public TextView fat;
         public TextView time;
         public TextView serving;
+
+        public TextView meal_name;
     }
 }

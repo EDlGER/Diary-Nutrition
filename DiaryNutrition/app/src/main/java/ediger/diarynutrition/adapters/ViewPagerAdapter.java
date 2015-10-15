@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import ediger.diarynutrition.Fragments.tabs.FavorTab;
-import ediger.diarynutrition.Fragments.tabs.FoodTab;
+import ediger.diarynutrition.fragments.tabs.FavorTab;
+import ediger.diarynutrition.fragments.tabs.FoodTab;
 
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {

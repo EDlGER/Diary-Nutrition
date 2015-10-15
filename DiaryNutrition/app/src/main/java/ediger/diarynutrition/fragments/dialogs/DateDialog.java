@@ -1,4 +1,4 @@
-package ediger.diarynutrition.Fragments;
+package ediger.diarynutrition.fragments.dialogs;
 
 import android.support.v4.app.DialogFragment;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
 
 import java.util.Calendar;

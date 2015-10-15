@@ -1,4 +1,4 @@
-package ediger.diarynutrition.Fragments;
+package ediger.diarynutrition.fragments.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

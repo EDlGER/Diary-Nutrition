@@ -1,7 +1,6 @@
-package ediger.diarynutrition.Fragments.tabs;
+package ediger.diarynutrition.fragments.tabs;
 
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,17 +24,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import java.util.concurrent.TimeUnit;
-
-import ediger.diarynutrition.AddFoodDialog;
-import ediger.diarynutrition.Fragments.ChangeFoodDialog;
+import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
+import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
-import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
 
