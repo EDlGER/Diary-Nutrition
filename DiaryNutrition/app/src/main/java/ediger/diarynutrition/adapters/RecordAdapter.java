@@ -15,6 +15,7 @@ import java.util.TimeZone;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.objects.AppContext;
 
 /**
  * Created by root on 19.05.15.
@@ -25,7 +26,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     public RecordAdapter(Context context, Cursor cursor, int groupLayout,
                          String[] groupFrom, int[] groupTo, int childLayout,
-                         String[] childFrom, int[] childTo, Context context1) {
+                         String[] childFrom, int[] childTo) {
         super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
         this.context = context;
         this.layoutInflater = layoutInflater.from(context);
@@ -95,7 +96,10 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
         int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
-        return
+        Cursor cursor = AppContext.getDbDiary().getDate();
+        cursor.moveToFirst();
+        long date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_DATE));
+        return AppContext.getDbDiary().getRecordData(date, groupCursor.getInt(idColumn));
     }
 
     private class ViewHolder {

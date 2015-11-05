@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -39,7 +40,7 @@ public class diary_fragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>{
 
     View rootview;
-    private ListView listRecord;
+    private ExpandableListView listRecord;
     private Cursor cursor;
     private RecordAdapter recordAdapter;
     private Button btnAdd;
@@ -65,15 +66,14 @@ public class diary_fragment extends Fragment implements
             R.id.txt_serving
 
     };
-
+//      Сделать переключение даты и обновление данных
     @Override
     public void onResume() {
         super.onResume();
-        cursor = AppContext.getDbDiary().getRecords(cal);
+       /* cursor = AppContext.getDbDiary().getRecords(cal);
         recordAdapter = new RecordAdapter(getActivity(),
                 R.layout.record_item1,cursor, from,to,0);
-        listRecord.setAdapter(recordAdapter);
-        //getLoaderManager().getLoader(0).reset();
+        listRecord.setAdapter(recordAdapter);*/
     }
 
 
@@ -84,17 +84,18 @@ public class diary_fragment extends Fragment implements
         rootview = inflater.inflate(R.layout.diary_layout, container, false);
 
         Calendar now = Calendar.getInstance();
-        final Calendar nowto = Calendar.getInstance();
+        Calendar nowto = Calendar.getInstance();
 
 
         year = now.get(Calendar.YEAR);
         month = now.get(Calendar.MONTH);
         day = now.get(Calendar.DAY_OF_MONTH);
 
-        nowto.set(year,month,day,0,0);
+        nowto.set(year, month, day, 0, 0);
 
         cal = nowto.getTimeInMillis();
         now.setTimeInMillis(cal);
+        AppContext.getDbDiary().editDate(cal);
 
 
 
@@ -103,15 +104,28 @@ public class diary_fragment extends Fragment implements
         btnNext = (ImageButton) rootview.findViewById(R.id.btnDateNext);
         btnPrev = (ImageButton) rootview.findViewById(R.id.btnDatePrev);
 
-        cursor = AppContext.getDbDiary().getRecords(cal);
         formatDate = dateFormatter.format(now.getTime());
         btnDate.setText(formatDate);
 
-        
+        /*cursor = AppContext.getDbDiary().getRecords(cal);
         from = AppContext.getDbDiary().getListRecords();
         recordAdapter = new RecordAdapter(getActivity(),
-                R.layout.record_item1,cursor, from,to,0);
-        listRecord = (ListView) rootview.findViewById(R.id.listRecords);
+                R.layout.record_item1,cursor, from,to,0);*/
+
+        cursor = AppContext.getDbDiary().getMealData();
+        int[] groupTo = { android.R.id.text1 };
+        String[] groupFrom = AppContext.getDbDiary().getListMeal();
+        String[] childFrom = AppContext.getDbDiary().getListRecords();
+        int[] childTo = to;
+
+        recordAdapter = new RecordAdapter(getActivity(), cursor,
+                android.R.layout.simple_expandable_list_item_1, groupFrom,
+                groupTo, android.R.layout.simple_list_item_1, childFrom,
+                childTo);
+
+
+
+        listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
 
@@ -127,7 +141,7 @@ public class diary_fragment extends Fragment implements
         });
 
 
-        btnPrev.setOnClickListener(new View.OnClickListener(){
+       /* btnPrev.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 nowto.set(year,month,day-1);
@@ -142,9 +156,9 @@ public class diary_fragment extends Fragment implements
                 btnDate.setText(formatDate);
                 getLoaderManager().getLoader(0).reset();
             }
-        });
+        });*/
 
-        btnNext.setOnClickListener(new View.OnClickListener(){
+        /*btnNext.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 nowto.set(year,month,day+1);
@@ -159,7 +173,7 @@ public class diary_fragment extends Fragment implements
                 btnDate.setText(formatDate);
                 getLoaderManager().getLoader(0).reset();
             }
-        });
+        });*/
         getLoaderManager().initLoader(0, null, this);
         return rootview;
     }
@@ -192,10 +206,10 @@ public class diary_fragment extends Fragment implements
                     .getMenuInfo();
             AppContext.getDbDiary().delRec(acmi.id);
 
-            cursor = AppContext.getDbDiary().getRecords(cal);
+            /*cursor = AppContext.getDbDiary().getRecords(cal);
             recordAdapter = new RecordAdapter(getActivity(),
                     R.layout.record_item1,cursor, from,to,0);
-            listRecord.setAdapter(recordAdapter);
+            listRecord.setAdapter(recordAdapter);*/
 
             getLoaderManager().getLoader(0).forceLoad();
             return true;
@@ -210,7 +224,7 @@ public class diary_fragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        recordAdapter.swapCursor(data);
+        //recordAdapter.swapCursor(data);
     }
 
     @Override

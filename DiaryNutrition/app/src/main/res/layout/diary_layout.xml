@@ -13,19 +13,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listRecords"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/b_add"
-        android:background="@drawable/list_view"
-        android:layout_below="@+id/datePicker"
-        android:layout_marginTop="45dp" />
-
 
     <Button
         android:layout_width="wrap_content"
@@ -68,6 +55,18 @@
         android:layout_alignParentStart="true"
 
         />
+
+    <ExpandableListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listRecords"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
+        android:layout_above="@+id/b_add"
+        android:background="@drawable/list_view"
+        android:layout_marginTop="-15dp" />
 
 
 </RelativeLayout>

@@ -33,7 +33,8 @@ public class DbDiary {
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
-    private static final String TABLE_MEAL="meal";
+    private static final String TABLE_MEAL= "meal";
+    private static final String TABLE_DATE= "date";
 
     private DbHelper dbHelper;
     private Context context;
@@ -75,6 +76,8 @@ public class DbDiary {
     public static String ALIAS_M_ID = "_id";
     public static String ALIAS_M_NAME="name";
 
+    //Поля таблицы Date
+    public static String ALIAS_DATE="datetime";
 
     public DbDiary(Context context) {
         this.context = context;
@@ -119,7 +122,7 @@ public class DbDiary {
     }
 
     public Cursor getMealData(){
-        return db.query(TABLE_MEAL,null,null,null,null,null,null);
+        return db.query(TABLE_MEAL, null, null, null, null, null, null);
     }
 
     public Cursor getRecordData(long date, long mealID){
@@ -141,10 +144,21 @@ public class DbDiary {
                 + " from record r "
                 + " inner join food f on r.food_id=f.[_id] "
                 + " inner join meal m on r.meal_id=m.[_id] "
-                + " where r.record_datetime between ? and ?,"
-                + " r.[meal_id] = ? "
+                + " where (r.record_datetime between ? and ?) and"
+                + " (r.[meal_id] = ?) "
                 + " order by r.record_datetime asc";
-        return db.rawQuery(sql,new String[]{arg1,arg2,arg3});
+        return db.rawQuery(sql, new String[]{arg1, arg2, arg3});
+    }
+
+    /*public Cursor getDate() {
+        String sql = "select "
+                + "d.datetime as "+ALIAS_DATE
+                + " from date d";
+        return db.rawQuery(sql, null);
+    }*/
+
+    public Cursor getDate(){
+        return db.query(TABLE_DATE, null, null, null, null, null, null);
     }
 
     public String[] getListRecords(){
@@ -158,6 +172,13 @@ public class DbDiary {
                 ALIAS_SERVING
         };
         return listRecords;
+    }
+
+    public String[] getListMeal(){
+        String[] listMeal = {
+                ALIAS_M_NAME
+        };
+        return listMeal;
     }
 
     public Cursor getAllFood(){
@@ -245,8 +266,8 @@ public class DbDiary {
         cv.put(ALIAS_F_NAME,name);
         cv.put(ALIAS_F_CAL,cal);
         cv.put(ALIAS_F_CARBO,carbo);
-        cv.put(ALIAS_F_PROT,prot);
-        cv.put(ALIAS_F_FAT,fat);
+        cv.put(ALIAS_F_PROT, prot);
+        cv.put(ALIAS_F_FAT, fat);
         cv.put(ALIAS_F_USR, 1);
         db.insert(TABLE_FOOD, null, cv);
     }
@@ -301,10 +322,17 @@ public class DbDiary {
         cv.put(ALIAS_F_CAL,cal);
         cv.put(ALIAS_F_CARBO,carbo);
         cv.put(ALIAS_F_PROT,prot);
-        cv.put(ALIAS_F_FAT,fat);
+        cv.put(ALIAS_F_FAT, fat);
         String where = ALIAS_ID_FOOD + " = " + id;
         db.update(TABLE_FOOD, cv, where, null);
 
+    }
+
+    public void editDate(long date){
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_DATE,date);
+        String where = "_id = 1";
+        db.update(TABLE_DATE,cv,where,null);
     }
 
     private class DbHelper extends SQLiteOpenHelper {

@@ -207,11 +207,6 @@ public class FoodTab extends Fragment implements
         @Override
         public  Cursor loadInBackground(){
             Cursor cursor = db.getUserFood();
-            /*try{
-                TimeUnit.MILLISECONDS.sleep(1);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }*/
             return cursor;
         }
     }
