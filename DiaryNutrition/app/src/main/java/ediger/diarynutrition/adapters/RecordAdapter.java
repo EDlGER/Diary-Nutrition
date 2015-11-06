@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.diary_fragment;
 import ediger.diarynutrition.objects.AppContext;
 
 /**
@@ -22,13 +24,16 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class RecordAdapter extends SimpleCursorTreeAdapter {
 
-    private  Context context;
+    private Context context;
+    private diary_fragment mFragment;
+    protected final HashMap<Integer,Integer> mGroupMap;
 
     public RecordAdapter(Context context, Cursor cursor, int groupLayout,
                          String[] groupFrom, int[] groupTo, int childLayout,
                          String[] childFrom, int[] childTo) {
         super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
         this.context = context;
+        mGroupMap = new HashMap<Integer,Integer>();
         this.layoutInflater = layoutInflater.from(context);
     }
 
