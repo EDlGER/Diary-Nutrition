@@ -51,6 +51,7 @@ public class AddActivity extends ActionBarActivity implements
     private long addid;
     private int addserv;
 
+
     private EditText txtNameF;
     private EditText txtCalF;
     private EditText txtCarboF;
@@ -210,7 +211,8 @@ public class AddActivity extends ActionBarActivity implements
                                             date.get(Calendar.DAY_OF_MONTH),
                                             hourPicker.getValue(), minPicker.getValue());
                                     addtime = date.getTimeInMillis();
-                                    AppContext.getDbDiary().addRec(addid, addserv, addtime);
+                                    //Временно добавляем все продукты в категорию "Завтрак"
+                                    AppContext.getDbDiary().addRec(addid, addserv, addtime, 1);
                                     finish();
                                 }
                             }

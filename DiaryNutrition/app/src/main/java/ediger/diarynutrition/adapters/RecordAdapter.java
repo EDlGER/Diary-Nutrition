@@ -2,6 +2,7 @@ package ediger.diarynutrition.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.diary_fragment;
@@ -24,17 +26,21 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class RecordAdapter extends SimpleCursorTreeAdapter {
 
-    private Context context;
+   // private Context context;
     private diary_fragment mFragment;
-    protected final HashMap<Integer,Integer> mGroupMap;
+    private MainActivity mActivity;
 
-    public RecordAdapter(Context context, Cursor cursor, int groupLayout,
+    protected final HashMap<Integer, Integer> mGroupMap;
+
+    public RecordAdapter(Context context,diary_fragment df, Cursor cursor, int groupLayout,
                          String[] groupFrom, int[] groupTo, int childLayout,
                          String[] childFrom, int[] childTo) {
         super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
-        this.context = context;
-        mGroupMap = new HashMap<Integer,Integer>();
+        //this.context = context;
+        mActivity = (MainActivity) context;
+        mFragment = df;
         this.layoutInflater = layoutInflater.from(context);
+        mGroupMap = new HashMap<Integer, Integer>();
     }
 
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm");
@@ -100,11 +106,29 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
-        int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
+        /*int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
         long date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_DATE));
-        return AppContext.getDbDiary().getRecordData(date, groupCursor.getInt(idColumn));
+        return AppContext.getDbDiary().getRecordData(date, groupCursor.getInt(idColumn));*/
+
+        int groupPos = groupCursor.getPosition();
+        int groupId = groupCursor.getInt(groupCursor.
+                getColumnIndex(DbDiary.ALIAS_M_ID));
+        mGroupMap.put(groupId, groupPos);
+
+        Loader loader = mFragment.getLoaderManager().getLoader(groupId);
+        if (loader != null && !loader.isReset()){
+            mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
+        }
+        else {
+            mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+        }
+        return null;
+    }
+
+    public HashMap<Integer,Integer> getGroupMap(){
+        return mGroupMap;
     }
 
     private class ViewHolder {

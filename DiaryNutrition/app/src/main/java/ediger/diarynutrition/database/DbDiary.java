@@ -234,11 +234,12 @@ public class DbDiary {
     }
 
 
-    public void addRec(long id, int serv, long datetime){
+    public void addRec(long id, int serv, long datetime, int meal){
         ContentValues cv = new ContentValues();
         cv.put(ALIAS_FOOD_ID, id);
         cv.put(ALIAS_SERVING, serv);
         cv.put(ALIAS_RECORD_DATETIME, datetime);
+        cv.put(ALIAS_MEAL_ID, meal);
         db.insert(TABLE_RECORD, null, cv);
 
         cv.clear();
