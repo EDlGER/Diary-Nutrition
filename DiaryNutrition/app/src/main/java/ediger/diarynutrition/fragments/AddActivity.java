@@ -22,6 +22,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -47,6 +48,7 @@ public class AddActivity extends ActionBarActivity implements
     private EditText servPicker;
     private NumberPicker hourPicker;
     private NumberPicker minPicker;
+    private Spinner mealPicker;
     private long addtime;
     private long addid;
     private int addserv;
@@ -112,7 +114,7 @@ public class AddActivity extends ActionBarActivity implements
             }
         });
         txtSearch.addTextChangedListener(TextChangedListener);
-        getSupportLoaderManager().initLoader(2, null, this);
+        getSupportLoaderManager().initLoader(-2, null, this);
     }
 
 
@@ -182,10 +184,11 @@ public class AddActivity extends ActionBarActivity implements
 
                 View relative = getLayoutInflater().inflate(R.layout.add_dialog, null);
                 builder.setView(relative);
-                builder.setTitle(R.string.dialog_title);
+                //builder.setTitle(R.string.dialog_title);
                 servPicker = (EditText) relative.findViewById(R.id.txtAddServ);
                 hourPicker = (NumberPicker) relative.findViewById(R.id.hourPicker);
                 minPicker = (NumberPicker) relative.findViewById(R.id.minutePicker);
+                mealPicker = (Spinner) relative.findViewById(R.id.spMeal);
 
                 servPicker.setText(R.string.dialog_serv_std);
 
@@ -196,6 +199,24 @@ public class AddActivity extends ActionBarActivity implements
                 minPicker.setMaxValue(59);
                 minPicker.setMinValue(0);
                 minPicker.setValue(nowMin);
+
+                Cursor meal = AppContext.getDbDiary().getMealData();
+                String[] columns = AppContext.getDbDiary().getListMeal();
+                int[] to = new int[] {android.R.id.text1};
+
+                SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(this,
+                        android.R.layout.simple_spinner_item,meal,columns,to,0);
+                mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mealPicker.setAdapter(mAdapter);
+
+                int hour = hourPicker.getValue();
+                if (0 <= hour && hour < 10) mealPicker.setSelection(0);
+                if (9 < hour && hour < 12) mealPicker.setSelection(1);
+                if (11 < hour && hour < 15) mealPicker.setSelection(2);
+                if (14 < hour && hour < 18) mealPicker.setSelection(3);
+                if (17 < hour && hour < 24) mealPicker.setSelection(4);
+
+
                 builder.setPositiveButton(R.string.dialog_add,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -211,8 +232,9 @@ public class AddActivity extends ActionBarActivity implements
                                             date.get(Calendar.DAY_OF_MONTH),
                                             hourPicker.getValue(), minPicker.getValue());
                                     addtime = date.getTimeInMillis();
-                                    //Временно добавляем все продукты в категорию "Завтрак"
-                                    AppContext.getDbDiary().addRec(addid, addserv, addtime, 1);
+
+                                    int mealId = mealPicker.getSelectedItemPosition();
+                                    AppContext.getDbDiary().addRec(addid,addserv,addtime,mealId+1);
                                     finish();
                                 }
                             }

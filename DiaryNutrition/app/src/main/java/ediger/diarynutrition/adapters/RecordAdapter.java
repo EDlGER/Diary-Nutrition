@@ -105,6 +105,11 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     }
 
     @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
         /*int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
         Cursor cursor = AppContext.getDbDiary().getDate();

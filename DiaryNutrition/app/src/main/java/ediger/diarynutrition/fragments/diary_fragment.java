@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -66,10 +66,19 @@ public class diary_fragment extends Fragment implements
             listRecord.expandGroup(i);
         }
         super.onResume();
-       /* cursor = AppContext.getDbDiary().getRecords(cal);
-        recordAdapter = new RecordAdapter(getActivity(),
-                R.layout.record_item1,cursor, from,to,0);
-        listRecord.setAdapter(recordAdapter);*/
+    }
+    // Проверить работоспособность CursorLoader в FoodTab (!!!!!)
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Loader loader = getLoaderManager().initLoader(-1, null, this);
+        if (loader != null && !loader.isReset()){
+            getLoaderManager().restartLoader(-1,null,this);
+        }
+        else {
+            getLoaderManager().initLoader(-1,null,this);
+        }
     }
 
     @Nullable
@@ -144,14 +153,6 @@ public class diary_fragment extends Fragment implements
             }
         });
 
-
-        Loader loader = getLoaderManager().initLoader(-1, null, this);
-        if (loader != null && !loader.isReset()){
-            getLoaderManager().restartLoader(-1,null,this);
-        }
-        else {
-            getLoaderManager().initLoader(-1,null,this);
-        }
         return rootview;
     }
 
@@ -203,22 +204,35 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,3,0,R.string.context_menu_del);
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
+                ExpandableListContextMenuInfo) menuInfo;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+
+
+        // Show context menu for childs
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+            menu.add(0,3,0,R.string.context_menu_del);
+        }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getItemId() == 3){
-            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
-                    .getMenuInfo();
-            AppContext.getDbDiary().delRec(acmi.id);
+        if(item.getItemId() == 3) {
+            ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
+                    ExpandableListContextMenuInfo) item.getMenuInfo();
+            int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+            int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+            Cursor child = this.recordAdapter.getChild(groupPos, childPos);
+            child.moveToFirst();
+            long id = child.getLong(0);
+            AppContext.getDbDiary().delRec(id);
 
-            /*cursor = AppContext.getDbDiary().getRecords(cal);
-            recordAdapter = new RecordAdapter(getActivity(),
-                    R.layout.record_item1,cursor, from,to,0);
-            listRecord.setAdapter(recordAdapter);*/
+            for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+                listRecord.collapseGroup(i);
+                listRecord.expandGroup(i);
+            }
 
-            //getLoaderManager().getLoader(0).forceLoad();
             return true;
         }
         return super.onContextItemSelected(item);
@@ -258,7 +272,7 @@ public class diary_fragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        int id = loader.getId();
+        /*int id = loader.getId();
         if (id != -1){
             try {
                 recordAdapter.setChildrenCursor(id,null);
@@ -268,7 +282,7 @@ public class diary_fragment extends Fragment implements
         }
         else {
             recordAdapter.setGroupCursor(null);
-        }
+        }*/
     }
 
     /*private static class MyCursorLoader extends CursorLoader{

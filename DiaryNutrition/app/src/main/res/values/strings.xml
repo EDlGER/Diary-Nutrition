@@ -20,6 +20,7 @@
     <string name="dialog_add">Добавить</string>
     <string name="dialog_time">Время</string>
     <string name="dialog_serv">Порция</string>
+    <string name="dialog_meal">Прием пищи</string>
 
     <string name="dialog_serv_std">100</string>
     <string name="dialog_change_date">Выбрать</string>

@@ -67,7 +67,7 @@
         android:layout_above="@+id/b_add"
         android:background="@drawable/list_view"
         android:layout_marginTop="-15dp"
-        android:choiceMode="multipleChoiceModal" />
+        android:longClickable="true" />
 
 
 </RelativeLayout>

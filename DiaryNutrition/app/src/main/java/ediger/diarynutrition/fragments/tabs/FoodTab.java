@@ -54,6 +54,7 @@ public class FoodTab extends Fragment implements
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
+    private static final int LOADER_ID = -3;
     private static final int REQ_CODE_CHANGE = 1;
     private static final int REQ_CODE_ADD = 2;
 
@@ -72,7 +73,7 @@ public class FoodTab extends Fragment implements
                         return getFilterList(constraint);
                     }
                 });
-                getLoaderManager().getLoader(1).forceLoad();
+                getLoaderManager().getLoader(LOADER_ID).forceLoad();
         }
     }
 
@@ -107,10 +108,10 @@ public class FoodTab extends Fragment implements
                 DialogFragment a = new AddFoodDialog();
                 a.setTargetFragment(FoodTab.this,REQ_CODE_ADD);
                 a.show(getFragmentManager(),"add_dialog");
-                getLoaderManager().getLoader(1).forceLoad();
+                getLoaderManager().getLoader(-3).forceLoad();
             }
         });
-        getLoaderManager().initLoader(1, null,this);
+        getLoaderManager().initLoader(LOADER_ID, null,this);
         return rootview;
     }
 
@@ -166,14 +167,14 @@ public class FoodTab extends Fragment implements
             c.setArguments(args);
             c.setTargetFragment(FoodTab.this,REQ_CODE_CHANGE);
             c.show(getFragmentManager(),"change_dialog");
-            getLoaderManager().getLoader(1).forceLoad();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
         }
         if(item.getItemId() == 2){
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().delFood(acmi.id);
-            getLoaderManager().getLoader(1).forceLoad();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
         }
         return super.onContextItemSelected(item);
