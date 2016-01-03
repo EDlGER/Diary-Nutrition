@@ -67,7 +67,7 @@ public class diary_fragment extends Fragment implements
         }
         super.onResume();
     }
-    // Проверить работоспособность CursorLoader в FoodTab (!!!!!)
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -242,7 +242,7 @@ public class diary_fragment extends Fragment implements
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //return new MyCursorLoader(getActivity(),AppContext.getDbDiary(),cal);
         CursorLoader cl;
-        if (id != -1){
+        if (id > -1){
             cl = new ChildCursorLoader(getActivity(),AppContext.getDbDiary(),cal,id);
         }
         else {
@@ -254,7 +254,7 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         int id = loader.getId();
-        if (id != -1){
+        if (id > -1){
             if (!data.isClosed()){
                 HashMap<Integer,Integer> groupMap = recordAdapter.getGroupMap();
                 try {

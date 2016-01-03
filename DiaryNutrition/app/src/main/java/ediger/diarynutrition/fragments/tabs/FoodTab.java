@@ -78,6 +78,12 @@ public class FoodTab extends Fragment implements
     }
 
     @Override
+    public void onResume() {
+        getLoaderManager().restartLoader(LOADER_ID,null,this);
+        super.onResume();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.food_tab, container, false);
 
@@ -106,12 +112,12 @@ public class FoodTab extends Fragment implements
             @Override
             public void onClick(View v) {
                 DialogFragment a = new AddFoodDialog();
-                a.setTargetFragment(FoodTab.this,REQ_CODE_ADD);
-                a.show(getFragmentManager(),"add_dialog");
-                getLoaderManager().getLoader(-3).forceLoad();
+                a.setTargetFragment(FoodTab.this, REQ_CODE_ADD);
+                a.show(getFragmentManager(), "add_dialog");
+                getLoaderManager().getLoader(LOADER_ID).forceLoad();
             }
         });
-        getLoaderManager().initLoader(LOADER_ID, null,this);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootview;
     }
 
