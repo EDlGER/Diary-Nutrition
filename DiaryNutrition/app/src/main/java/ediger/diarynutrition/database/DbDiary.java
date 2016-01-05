@@ -45,8 +45,6 @@ public class DbDiary {
         return db;
     }
 
-    //private ArrayList<Record> listRecords = new ArrayList<Record>();
-
     //Поля таблицы Record
     public static String ALIAS_ID="_id";
     public static String ALIAS_FOOD_ID="food_id";
@@ -101,28 +99,24 @@ public class DbDiary {
         return db.rawQuery(sql,null);
     }
 
-    public Cursor getRecords(long date){
-
-        String arg1 = Long.toString(date);
-        String arg2 = Long.toString(date+86356262);
-        String sql = "select "
-                + "r._id as "+ALIAS_ID
-                + ",r.[serving] as "+ALIAS_SERVING
-                + ",r.[record_datetime] as "+ALIAS_RECORD_DATETIME
-                + ",f.[food_name] as "+ALIAS_FOOD_NAME
-                + ",(f.[cal]/100*r.[serving]) as "+ALIAS_CAL
-                + ",(f.[carbo]/100*r.[serving]) as "+ALIAS_CARBO
-                + ",(f.[prot]/100*r.[serving]) as "+ALIAS_PROT
-                + ",(f.[fat]/100*r.[serving]) as "+ALIAS_FAT
-                + " from record r "
-                + " inner join food f on r.food_id=f.[_id] "
-                + " where r.record_datetime between ? and ? "
-                + " order by r.record_datetime asc";
-        return db.rawQuery(sql,new String[]{arg1,arg2});
-    }
-
     public Cursor getMealData(){
         return db.query(TABLE_MEAL, null, null, null, null, null, null);
+    }
+
+    public Cursor getGroupData(long date){
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date+86356262);
+        String sql = "SELECT "
+                + "r.meal_id as " +ALIAS_M_ID
+                + ",sum(f.cal/100*r.serving) as " +ALIAS_CAL
+                + ",sum(f.[carbo]/100*r.[serving]) as " +ALIAS_CARBO
+                + ",sum(f.[prot]/100*r.[serving]) as " +ALIAS_PROT
+                + ",sum(f.[fat]/100*r.[serving]) as " +ALIAS_FAT
+                + " FROM record r"
+                + " inner join food f on r.food_id=f._id"
+                + " where r.record_datetime between ? and ?"
+                + "group by r.meal_id";
+        return db.rawQuery(sql,new String[]{arg1,arg2});
     }
 
     public Cursor getRecordData(long date, long mealID){
@@ -149,13 +143,6 @@ public class DbDiary {
                 + " order by r.record_datetime asc";
         return db.rawQuery(sql, new String[]{arg1, arg2, arg3});
     }
-
-    /*public Cursor getDate() {
-        String sql = "select "
-                + "d.datetime as "+ALIAS_DATE
-                + " from date d";
-        return db.rawQuery(sql, null);
-    }*/
 
     public Cursor getDate(){
         return db.query(TABLE_DATE, null, null, null, null, null, null);

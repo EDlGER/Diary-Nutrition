@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TimeZone;
+import java.util.zip.Inflater;
 
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
@@ -50,20 +51,9 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     private LayoutInflater layoutInflater;
 
     @Override
-    public View newGroupView(Context context, Cursor cursor, boolean isExpanded, ViewGroup parent) {
-        View view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
-
-        ViewHolder holder = new ViewHolder();
-        holder.meal_name = (TextView) view.findViewById(R.id.txt_meal);
-
-        view.setTag(holder);
-        return view;
-    }
-
-    @Override
     public View newChildView(Context context, Cursor cursor,boolean isLastChild, ViewGroup parent) {
 
-        View view = layoutInflater.inflate(R.layout.record_item1,parent,false);
+        View view = layoutInflater.inflate(R.layout.record_item1, parent, false);
 
         ViewHolder holder = new ViewHolder();
         holder.food_name = (TextView) view.findViewById(R.id.txt_food_name);
@@ -80,10 +70,49 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     }
 
     @Override
-    protected void bindGroupView(View view, Context context, Cursor cursor, boolean isExpanded) {
-        ViewHolder holder = (ViewHolder) view.getTag();
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        View view = convertView;
 
-        holder.meal_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_M_NAME)));
+        Cursor cursor = AppContext.getDbDiary().getDate();
+        cursor.moveToFirst();
+        long date = cursor.getLong(0);
+
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
+        }
+
+        TextView group_name = (TextView) view.findViewById(R.id.txt_meal);
+        TextView group_cal = (TextView) view.findViewById(R.id.txtGroupCal);
+        TextView group_carbo = (TextView) view.findViewById(R.id.txtGroupCarbo);
+        TextView group_prot = (TextView) view.findViewById(R.id.txtGroupProt);
+        TextView group_fat = (TextView) view.findViewById(R.id.txtGroupFat);
+
+        Cursor c = AppContext.getDbDiary().getMealData();
+        c.moveToPosition(groupPosition);
+
+        group_name.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_M_NAME)));
+
+        c = AppContext.getDbDiary().getGroupData(date);
+        int mealID;
+
+        group_cal.setText("0");
+        group_carbo.setText("0");
+        group_prot.setText("0");
+        group_fat.setText("0");
+
+        if (c.moveToFirst()) {
+            do {
+                mealID = c.getInt(0);
+                if ( mealID == groupPosition+1){
+                    group_cal.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_CAL)));
+                    group_carbo.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_CARBO)));
+                    group_prot.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_PROT)));
+                    group_fat.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_FAT)));
+                }
+            } while (c.moveToNext());
+        }
+
+        return view;
     }
 
     @Override
@@ -111,12 +140,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
-        /*int idColumn = groupCursor.getColumnIndex(DbDiary.ALIAS_M_ID);
-        Cursor cursor = AppContext.getDbDiary().getDate();
-        cursor.moveToFirst();
-        long date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_DATE));
-        return AppContext.getDbDiary().getRecordData(date, groupCursor.getInt(idColumn));*/
-
         int groupPos = groupCursor.getPosition();
         int groupId = groupCursor.getInt(groupCursor.
                 getColumnIndex(DbDiary.ALIAS_M_ID));
@@ -144,7 +167,5 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         public TextView fat;
         public TextView time;
         public TextView serving;
-
-        public TextView meal_name;
     }
 }

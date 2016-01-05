@@ -33,6 +33,7 @@ import ediger.diarynutrition.objects.AppContext;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.widget.TextView;
 
 /**
  * Created by Ediger on 03.05.2015.
@@ -67,7 +68,7 @@ public class diary_fragment extends Fragment implements
         }
         super.onResume();
     }
-
+    //                  header для ELV, подсчет БЖУ за день
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -116,7 +117,13 @@ public class diary_fragment extends Fragment implements
 
 
         cursor = AppContext.getDbDiary().getMealData();
-        int[] groupTo = { android.R.id.text1 };
+        int[] groupTo = {
+                R.id.txt_meal,
+                R.id.txtGroupCal,
+                R.id.txtGroupCarbo,
+                R.id.txtGroupProt,
+                R.id.txtGroupFat
+        };
         String[] groupFrom = AppContext.getDbDiary().getListMeal();
         String[] childFrom = AppContext.getDbDiary().getListRecords();
         int[] childTo = {
@@ -152,7 +159,6 @@ public class diary_fragment extends Fragment implements
                 startActivity(addIntent);
             }
         });
-
         return rootview;
     }
 
@@ -224,7 +230,6 @@ public class diary_fragment extends Fragment implements
             int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
             int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
             Cursor child = this.recordAdapter.getChild(groupPos, childPos);
-            child.moveToFirst();
             long id = child.getLong(0);
             AppContext.getDbDiary().delRec(id);
 
@@ -285,22 +290,6 @@ public class diary_fragment extends Fragment implements
         }*/
     }
 
-    /*private static class MyCursorLoader extends CursorLoader{
-        DbDiary db;
-        long cal;
-
-        public MyCursorLoader(Context context, DbDiary db,long cal) {
-            super(context);
-            this.db = db;
-            this.cal = cal;
-        }
-
-        @Override
-        public  Cursor loadInBackground(){
-            Cursor cursor = db.getRecords(cal);
-            return cursor;
-        }
-    }*/
     private static class ChildCursorLoader extends CursorLoader{
         DbDiary db;
         long cal;
