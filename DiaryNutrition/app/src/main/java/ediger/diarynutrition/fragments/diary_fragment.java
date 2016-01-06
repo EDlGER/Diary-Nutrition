@@ -18,12 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
@@ -59,6 +57,7 @@ public class diary_fragment extends Fragment implements
     int[] arr;
     long cal;
     Calendar nowto;
+    TextView txt; ///////
 
     @Override
     public void onResume() {
@@ -66,9 +65,10 @@ public class diary_fragment extends Fragment implements
             listRecord.collapseGroup(i);
             listRecord.expandGroup(i);
         }
+        setTxt();//////////
         super.onResume();
     }
-    //                  header для ELV, подсчет БЖУ за день
+    //                  header для ELV, подсчет БЖУ за день, дизайн
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -87,6 +87,9 @@ public class diary_fragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootview = inflater.inflate(R.layout.diary_layout, container, false);
+
+        txt = (TextView) rootview.findViewById(R.id.textView2);//////////
+        setTxt();                                             /////////
 
         Calendar now = Calendar.getInstance();
         nowto = Calendar.getInstance();
@@ -142,8 +145,6 @@ public class diary_fragment extends Fragment implements
                 groupTo, android.R.layout.simple_list_item_1, childFrom,
                 childTo);
 
-
-
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
@@ -176,6 +177,7 @@ public class diary_fragment extends Fragment implements
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
                 }
+                setTxt();                   ///////
                 break;
             case R.id.btnDatePrev:
                 nowto.set(year,month,day-1);
@@ -188,6 +190,7 @@ public class diary_fragment extends Fragment implements
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
                 }
+                setTxt();                   //////
                 break;
         }
     }
@@ -237,10 +240,25 @@ public class diary_fragment extends Fragment implements
                 listRecord.collapseGroup(i);
                 listRecord.expandGroup(i);
             }
+            setTxt();                       /////////
 
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    public void setTxt() {                  /////////
+        Cursor cursor = AppContext.getDbDiary().getDate();
+        cursor.moveToFirst();
+        long date = cursor.getLong(0);
+        cursor.close();
+        txt.setText("0");
+        cursor = AppContext.getDbDiary().getDayData(date);
+        cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+            txt.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
+        }
+        cursor.close();
     }
 
     @Override
@@ -277,7 +295,7 @@ public class diary_fragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        /*int id = loader.getId();
+        int id = loader.getId();
         if (id != -1){
             try {
                 recordAdapter.setChildrenCursor(id,null);
@@ -287,7 +305,7 @@ public class diary_fragment extends Fragment implements
         }
         else {
             recordAdapter.setGroupCursor(null);
-        }*/
+        }
     }
 
     private static class ChildCursorLoader extends CursorLoader{

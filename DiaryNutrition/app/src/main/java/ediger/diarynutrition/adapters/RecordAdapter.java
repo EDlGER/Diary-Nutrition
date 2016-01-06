@@ -76,6 +76,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
         long date = cursor.getLong(0);
+        cursor.close();
 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
@@ -111,6 +112,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                 }
             } while (c.moveToNext());
         }
+        c.close();
 
         return view;
     }

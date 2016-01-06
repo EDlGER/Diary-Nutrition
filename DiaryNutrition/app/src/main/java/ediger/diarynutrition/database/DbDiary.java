@@ -103,6 +103,19 @@ public class DbDiary {
         return db.query(TABLE_MEAL, null, null, null, null, null, null);
     }
 
+    public Cursor getDayData(long date) {
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date+86356262);
+        String sql = "select "
+                + "sum(f.cal/100*r.serving) as " +ALIAS_CAL
+                + ",sum(f.[carbo]/100*r.[serving]) as " +ALIAS_CARBO
+                + ",sum(f.[prot]/100*r.[serving]) as " +ALIAS_PROT
+                + ",sum(f.[fat]/100*r.[serving]) as " +ALIAS_FAT
+                + " FROM record r"
+                + " inner join food f on r.food_id=f._id"
+                + " where r.record_datetime between ? and ?";
+        return db.rawQuery(sql,new String[]{arg1,arg2});
+    }
     public Cursor getGroupData(long date){
         String arg1 = Long.toString(date);
         String arg2 = Long.toString(date+86356262);
