@@ -76,7 +76,7 @@
         android:layout_alignParentEnd="false"
         android:layout_above="@+id/b_add"
         android:background="@drawable/list_view"
-        android:longClickable="true" />
+        android:longClickable="true"/>
 
 
 </RelativeLayout>

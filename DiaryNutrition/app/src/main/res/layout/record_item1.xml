@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="60dp"
     android:weightSum="1"
     android:touchscreenBlocksFocus="false"
     android:id="@+id/Relative">
+
+
 
 
     <TextView
@@ -11,24 +13,21 @@
         android:layout_height="wrap_content"
         android:text="11:30"
         android:id="@+id/txt_time"
-        android:textSize="18dp"
+        android:textSize="@dimen/abc_text_size_medium_material"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="19dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <View
+        android:layout_width="1dp"
         android:layout_height="50dp"
-        android:id="@+id/img_pipe"
+        android:background="?android:attr/listDivider"
         android:layout_toRightOf="@+id/txt_time"
-        android:layout_marginLeft="0dp"
-        android:src="@drawable/record_pipe"
-        android:layout_alignParentTop="false"
-        android:scaleType="fitXY"
-        android:layout_marginTop="1dp" />
+        android:layout_marginLeft="2dp"
+        android:layout_centerInParent="true" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -36,62 +35,102 @@
         android:id="@+id/txt_food_name"
         android:maxLength="25"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/img_pipe"
-        android:layout_toEndOf="@+id/img_pipe" />
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/txt_time"
+        android:layout_toLeftOf="@+id/txt_cal"
+        android:layout_toStartOf="@+id/txt_cal"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="350"
         android:id="@+id/txt_cal"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_fat"
-        android:textSize="20dp"
-        android:layout_alignBottom="@+id/txt_serving"
-        android:layout_alignRight="@+id/txt_cal"
-        android:layout_alignEnd="@+id/txt_cal"
-        android:layout_marginRight="55dp"
-        android:textColor="#e2e538" />
+        android:textSize="20sp"
+        android:textColor="#ff9800"
+        android:textAlignment="center"
+        android:layout_alignTop="@+id/view"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_marginLeft="5dp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="23dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="110dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/view"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_prot"
-        android:textSize="20dp"
-        android:layout_alignBottom="@+id/txt_fat"
+        android:textSize="20sp"
+        android:textColor="#4caf50"
+        android:textAlignment="center"
+        android:layout_alignTop="@+id/view2"
+        android:layout_alignLeft="@+id/view2"
+        android:layout_alignStart="@+id/view2"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/view"
+        android:layout_toStartOf="@+id/view"
+        android:gravity="center_horizontal"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="23dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="165dp"
+        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="110dp"
-        android:textColor="#21b932" />
+        android:id="@+id/view2"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_carbo"
-        android:textSize="20dp"
-        android:layout_alignBottom="@+id/txt_fat"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="165dp"
-        android:textColor="#ff311c" />
+        android:textSize="20sp"
+        android:textColor="#f44336"
+        android:textAlignment="center"
+        android:layout_alignTop="@+id/view2"
+        android:layout_toLeftOf="@+id/view2"
+        android:layout_toStartOf="@+id/view2"
+        android:layout_marginRight="5dp" />
 
-    <TextView
+    <TextView style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100 гр"
         android:id="@+id/txt_serving"
-        android:textSize="15dp"
-        android:layout_below="@+id/txt_food_name"
-        android:layout_alignLeft="@+id/txt_food_name"
-        android:layout_alignStart="@+id/txt_food_name"
-        android:layout_marginTop="5dp" />
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/txt_cal"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentTop="false"
+        android:layout_toRightOf="@+id/txt_time"
+        android:layout_marginLeft="5dp" />
+
 </RelativeLayout>

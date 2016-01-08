@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="40dp"
     android:background="@color/background_floating_material_light">
 
     <TextView
@@ -11,9 +11,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="27sp"
+        android:textSize="18sp"
         android:layout_marginLeft="25dp" />
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,40 +21,74 @@
         android:id="@+id/txtGroupCal"
         android:textSize="25dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:maxLength="4" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="99.9"
+        android:text="4"
         android:id="@+id/txtGroupFat"
         android:textSize="20dp"
-        android:textColor="#e2e538"
+        android:textColor="#ff9800"
+        android:maxLength="4"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignTop="@+id/txtGroupProt"
+        android:layout_marginLeft="5dp"
+         />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="110dp"
+        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="55dp" />
+        android:id="@+id/view"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="99.9"
+        android:text="0"
         android:id="@+id/txtGroupProt"
         android:textSize="20dp"
-        android:layout_alignBottom="@+id/txt_fat"
+        android:textColor="#4caf50"
+        android:maxLength="4"
+        android:layout_alignTop="@+id/txtGroupCarbo"
+        android:layout_alignLeft="@+id/view2"
+        android:layout_alignStart="@+id/view2"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/txtGroupFat"
+        android:layout_toStartOf="@+id/txtGroupFat"
+        android:gravity="center_horizontal" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:background="?android:attr/listDivider"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="165dp"
+        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="110dp"
-        android:textColor="#21b932" />
+        android:id="@+id/view2"
+        android:layout_marginBottom="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="99.9"
+        android:text="99999"
         android:id="@+id/txtGroupCarbo"
         android:textSize="20dp"
-        android:layout_alignBottom="@+id/txt_fat"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="165dp"
-        android:textColor="#ff311c" />
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginRight="5dp"
+        android:textColor="#f44336"
+        android:maxLength="4"
+        android:layout_alignRight="@+id/view2"
+        android:layout_marginTop="15dp" />
 </RelativeLayout>
