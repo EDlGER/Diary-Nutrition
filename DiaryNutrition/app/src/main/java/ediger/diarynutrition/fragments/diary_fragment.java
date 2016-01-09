@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.dialogs.DateDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 import android.support.v4.app.LoaderManager;
@@ -58,6 +60,7 @@ public class diary_fragment extends Fragment implements
     long cal;
     Calendar nowto;
     TextView txt; ///////
+    private static int REQ_CODE_DATE = 1;
 
     @Override
     public void onResume() {
@@ -114,6 +117,7 @@ public class diary_fragment extends Fragment implements
 
         btnNext.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
+        btnDate.setOnClickListener(this);
 
         formatDate = dateFormatter.format(now.getTime());
         btnDate.setText(formatDate);
@@ -192,22 +196,33 @@ public class diary_fragment extends Fragment implements
                 }
                 setTxt();                   //////
                 break;
+            case R.id.datePicker:
+                DialogFragment dialog = new DateDialog();
+                dialog.setTargetFragment(diary_fragment.this, REQ_CODE_DATE);
+                dialog.show(getFragmentManager(), "date_dialog");
         }
     }
 
-  /*  @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1){
-            arr = data.getIntArrayExtra("dateFromDialog");
-            year = arr[0];
-            month = arr[1];
-            day = arr[2];
-            changeDate.set(year,month,day);
-            formatDate = dateFormatter.format(changeDate.getTime());
+            int year = data.getIntExtra("year",0);
+            int month = data.getIntExtra("month",0);
+            int day = data.getIntExtra("day",0);
+            this.day = day;
+            nowto.set(year,month,day);
+            cal = nowto.getTimeInMillis();
+            AppContext.getDbDiary().editDate(cal);
+            formatDate = dateFormatter.format(nowto.getTime());
             btnDate.setText(formatDate);
+            for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+                listRecord.collapseGroup(i);
+                listRecord.expandGroup(i);
+            }
+            setTxt();                   //////
         }
-    }*/
+    }
 
 
     @Override
@@ -321,7 +336,7 @@ public class diary_fragment extends Fragment implements
         }
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getRecordData(cal,groupId);
+            Cursor cursor = db.getRecordData(cal, groupId);
             return cursor;
         }
     }
@@ -339,5 +354,6 @@ public class diary_fragment extends Fragment implements
             return cursor;
         }
     }
+
 }
 

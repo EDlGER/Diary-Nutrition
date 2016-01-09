@@ -32,7 +32,8 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnDateNext"
         android:layout_toRightOf="@+id/btnDatePrev"
-        android:layout_toEndOf="@+id/btnDatePrev" />
+        android:layout_toEndOf="@+id/btnDatePrev"
+        android:clickable="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
