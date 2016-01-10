@@ -1,8 +1,8 @@
 package ediger.diarynutrition;
 
-import ediger.diarynutrition.fragments.diary_fragment;
-import ediger.diarynutrition.fragments.food_fragment;
-import ediger.diarynutrition.fragments.settings_fragment;
+import ediger.diarynutrition.fragments.DiaryFragment;
+import ediger.diarynutrition.fragments.FoodFragment;
+import ediger.diarynutrition.fragments.SettingsFragment;
 
 
 import android.app.Activity;
@@ -56,13 +56,13 @@ public class MainActivity extends ActionBarActivity
         Fragment objFragment = null;
         switch (position){
             case 0:
-                objFragment = new diary_fragment();
+                objFragment = new DiaryFragment();
                 break;
             case 1:
-                objFragment = new food_fragment();
+                objFragment = new FoodFragment();
                 break;
             case 2:
-                objFragment = new settings_fragment();
+                objFragment = new SettingsFragment();
                 break;
         }
         FragmentManager fragmentManager = getSupportFragmentManager();

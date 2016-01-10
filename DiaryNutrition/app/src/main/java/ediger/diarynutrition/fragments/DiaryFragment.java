@@ -39,28 +39,30 @@ import android.widget.TextView;
  * Created by Ediger on 03.05.2015.
  *
  */
-public class diary_fragment extends Fragment implements
+public class DiaryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
 
+    private final int REQ_CODE_DATE = 1;
+
     View rootview;
-    private ExpandableListView listRecord;
-    private Cursor cursor;
+    private long date;
+    private String formatDate;
+    private Calendar nowto;
+    SimpleDateFormat dateFormatter;
     private RecordAdapter recordAdapter;
-    private Button btnAdd;
+    private ExpandableListView listRecord;
     private Button btnDate;
+
+    //Удалить все btn. Год,месяц,день перенести в локальные
+    private Button btnAdd;
     private ImageButton btnNext;
     private ImageButton btnPrev;
-    String formatDate;
-    public Calendar changeDate;
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
     int year;
     int month;
     int day;
-    int[] arr;
-    long cal;
-    Calendar nowto;
+
     TextView txt; ///////
-    private static int REQ_CODE_DATE = 1;
+
 
     @Override
     public void onResume() {
@@ -79,36 +81,23 @@ public class diary_fragment extends Fragment implements
         Loader loader = getLoaderManager().initLoader(-1, null, this);
         if (loader != null && !loader.isReset()){
             getLoaderManager().restartLoader(-1,null,this);
-        }
-        else {
+        } else {
             getLoaderManager().initLoader(-1,null,this);
         }
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        Cursor cursor;
+        Calendar now = Calendar.getInstance();
+
         rootview = inflater.inflate(R.layout.diary_layout, container, false);
 
         txt = (TextView) rootview.findViewById(R.id.textView2);//////////
         setTxt();                                             /////////
-
-        Calendar now = Calendar.getInstance();
-        nowto = Calendar.getInstance();
-
-
-        year = now.get(Calendar.YEAR);
-        month = now.get(Calendar.MONTH);
-        day = now.get(Calendar.DAY_OF_MONTH);
-
-        nowto.set(year, month, day, 0, 0);
-
-        cal = nowto.getTimeInMillis();
-        now.setTimeInMillis(cal);
-        AppContext.getDbDiary().editDate(cal);
-
-
 
         btnAdd = (Button) rootview.findViewById(R.id.b_add);
         btnDate = (Button) rootview.findViewById(R.id.datePicker);
@@ -119,9 +108,22 @@ public class diary_fragment extends Fragment implements
         btnPrev.setOnClickListener(this);
         btnDate.setOnClickListener(this);
 
+        nowto = Calendar.getInstance();
+
+        year = now.get(Calendar.YEAR);
+        month = now.get(Calendar.MONTH);
+        day = now.get(Calendar.DAY_OF_MONTH);
+
+        nowto.set(year, month, day, 0, 0);
+
+        date = nowto.getTimeInMillis();
+        now.setTimeInMillis(date);
+        AppContext.getDbDiary().editDate(date);
+
+
+        dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
         formatDate = dateFormatter.format(now.getTime());
         btnDate.setText(formatDate);
-
 
         cursor = AppContext.getDbDiary().getMealData();
         int[] groupTo = {
@@ -132,7 +134,6 @@ public class diary_fragment extends Fragment implements
                 R.id.txtGroupFat
         };
         String[] groupFrom = AppContext.getDbDiary().getListMeal();
-        String[] childFrom = AppContext.getDbDiary().getListRecords();
         int[] childTo = {
                 R.id.txt_food_name,
                 R.id.txt_cal,
@@ -143,24 +144,26 @@ public class diary_fragment extends Fragment implements
                 R.id.txt_serving
 
         };
+        String[] childFrom = AppContext.getDbDiary().getListRecords();
 
         recordAdapter = new RecordAdapter(getActivity(),this, cursor,
-                android.R.layout.simple_expandable_list_item_1, groupFrom,
-                groupTo, android.R.layout.simple_list_item_1, childFrom,
-                childTo);
+                android.R.layout.simple_expandable_list_item_1,
+                groupFrom, groupTo,
+                android.R.layout.simple_list_item_1,
+                childFrom, childTo);
 
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
-        for(int i=0; i < recordAdapter.getGroupCount(); i++)
+        for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.expandGroup(i);
-
+        }
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
-                addIntent.putExtra("CurrentCal", cal);
+                addIntent.putExtra("CurrentCal", date);
                 startActivity(addIntent);
             }
         });
@@ -169,12 +172,12 @@ public class diary_fragment extends Fragment implements
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch(v.getId()) {
             case R.id.btnDateNext:
                 nowto.set(year,month,day+1);
                 day++;
-                cal = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(cal);
+                date = nowto.getTimeInMillis();
+                AppContext.getDbDiary().editDate(date);
                 formatDate = dateFormatter.format(nowto.getTime());
                 btnDate.setText(formatDate);
                 for(int i=0; i < recordAdapter.getGroupCount(); i++) {
@@ -186,8 +189,8 @@ public class diary_fragment extends Fragment implements
             case R.id.btnDatePrev:
                 nowto.set(year,month,day-1);
                 day--;
-                cal = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(cal);
+                date = nowto.getTimeInMillis();
+                AppContext.getDbDiary().editDate(date);
                 formatDate = dateFormatter.format(nowto.getTime());
                 btnDate.setText(formatDate);
                 for(int i=0; i < recordAdapter.getGroupCount(); i++) {
@@ -198,7 +201,7 @@ public class diary_fragment extends Fragment implements
                 break;
             case R.id.datePicker:
                 DialogFragment dialog = new DateDialog();
-                dialog.setTargetFragment(diary_fragment.this, REQ_CODE_DATE);
+                dialog.setTargetFragment(DiaryFragment.this, REQ_CODE_DATE);
                 dialog.show(getFragmentManager(), "date_dialog");
         }
     }
@@ -206,14 +209,14 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1){
+        if (requestCode == 1) {
             int year = data.getIntExtra("year",0);
             int month = data.getIntExtra("month",0);
             int day = data.getIntExtra("day",0);
             this.day = day;
             nowto.set(year,month,day);
-            cal = nowto.getTimeInMillis();
-            AppContext.getDbDiary().editDate(cal);
+            date = nowto.getTimeInMillis();
+            AppContext.getDbDiary().editDate(date);
             formatDate = dateFormatter.format(nowto.getTime());
             btnDate.setText(formatDate);
             for(int i=0; i < recordAdapter.getGroupCount(); i++) {
@@ -233,10 +236,9 @@ public class diary_fragment extends Fragment implements
 
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
 
-
         // Show context menu for childs
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            menu.add(0,3,0,R.string.context_menu_del);
+            menu.add(0, 3, 0, R.string.context_menu_del);
         }
     }
 
@@ -278,10 +280,10 @@ public class diary_fragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //return new MyCursorLoader(getActivity(),AppContext.getDbDiary(),cal);
         CursorLoader cl;
+
         if (id > -1){
-            cl = new ChildCursorLoader(getActivity(),AppContext.getDbDiary(),cal,id);
+            cl = new ChildCursorLoader(getActivity(),AppContext.getDbDiary(), date,id);
         }
         else {
             cl = new GroupCursorLoader(getActivity(),AppContext.getDbDiary());
@@ -292,8 +294,9 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         int id = loader.getId();
+
         if (id > -1){
-            if (!data.isClosed()){
+            if (!data.isClosed()) {
                 HashMap<Integer,Integer> groupMap = recordAdapter.getGroupMap();
                 try {
                     int groupPos = groupMap.get(id);
@@ -302,8 +305,7 @@ public class diary_fragment extends Fragment implements
                     Log.w("DEBUG",e.getMessage());
                 }
             }
-        }
-        else {
+        } else {
             recordAdapter.setGroupCursor(data);
         }
     }
@@ -311,19 +313,19 @@ public class diary_fragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         int id = loader.getId();
+
         if (id != -1){
             try {
                 recordAdapter.setChildrenCursor(id,null);
             } catch (NullPointerException e) {
                 Log.w("TAG",e.getMessage());
             }
-        }
-        else {
+        } else {
             recordAdapter.setGroupCursor(null);
         }
     }
 
-    private static class ChildCursorLoader extends CursorLoader{
+    private static class ChildCursorLoader extends CursorLoader {
         DbDiary db;
         long cal;
         int groupId;
@@ -334,6 +336,7 @@ public class diary_fragment extends Fragment implements
             this.cal = cal;
             this.groupId = groupId;
         }
+
         @Override
         public  Cursor loadInBackground(){
             Cursor cursor = db.getRecordData(cal, groupId);
@@ -341,15 +344,16 @@ public class diary_fragment extends Fragment implements
         }
     }
 
-    private static class GroupCursorLoader extends CursorLoader{
+    private static class GroupCursorLoader extends CursorLoader {
         DbDiary db;
 
         public GroupCursorLoader(Context context,DbDiary db) {
             super(context);
             this.db = db;
         }
+
         @Override
-        public  Cursor loadInBackground(){
+        public  Cursor loadInBackground() {
             Cursor cursor = db.getMealData();
             return cursor;
         }

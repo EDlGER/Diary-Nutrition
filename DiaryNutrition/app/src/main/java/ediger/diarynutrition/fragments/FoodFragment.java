@@ -16,14 +16,14 @@ import ediger.diarynutrition.adapters.ViewPagerAdapter;
 /**
  * Created by Ediger on 03.05.2015.
  */
-public class food_fragment extends Fragment {
+public class FoodFragment extends Fragment {
     View rootview;
 
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]= {"Добавленные","Избранные"};
-    int Numboftabs =2;
+    CharSequence Titles[]= { "Добавленные", "Избранные" };
+    int Numboftabs = 2;
 
     @Nullable
     @Override
@@ -32,7 +32,7 @@ public class food_fragment extends Fragment {
         rootview = inflater.inflate(R.layout.food_layout,container,false);
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getFragmentManager(),Titles,Numboftabs);
+        adapter =  new ViewPagerAdapter(getFragmentManager(), Titles, Numboftabs);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) rootview.findViewById(R.id.pager);

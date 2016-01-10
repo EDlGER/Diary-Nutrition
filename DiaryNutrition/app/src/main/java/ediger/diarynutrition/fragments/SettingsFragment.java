@@ -12,8 +12,9 @@ import ediger.diarynutrition.R;
 /**
  * Created by Ediger on 03.05.2015.
  */
-public class settings_fragment extends Fragment {
+public class SettingsFragment extends Fragment {
     View rootview;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
