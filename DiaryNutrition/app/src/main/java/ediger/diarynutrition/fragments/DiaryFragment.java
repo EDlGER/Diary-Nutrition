@@ -48,7 +48,8 @@ public class DiaryFragment extends Fragment implements
     private long date;
     private String formatDate;
     private Calendar nowto;
-    SimpleDateFormat dateFormatter;
+    private Calendar today = Calendar.getInstance();
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private Button btnDate;
@@ -108,7 +109,14 @@ public class DiaryFragment extends Fragment implements
         btnPrev.setOnClickListener(this);
         btnDate.setOnClickListener(this);
 
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MILLISECOND,0);
+
         nowto = Calendar.getInstance();
+        nowto.clear(Calendar.MILLISECOND);
+        nowto.clear(Calendar.SECOND);
 
         year = now.get(Calendar.YEAR);
         month = now.get(Calendar.MONTH);
@@ -119,11 +127,7 @@ public class DiaryFragment extends Fragment implements
         date = nowto.getTimeInMillis();
         now.setTimeInMillis(date);
         AppContext.getDbDiary().editDate(date);
-
-
-        dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
-        formatDate = dateFormatter.format(now.getTime());
-        btnDate.setText(formatDate);
+        btnDate.setText(getString(R.string.diary_date_today));
 
         cursor = AppContext.getDbDiary().getMealData();
         int[] groupTo = {
@@ -170,6 +174,18 @@ public class DiaryFragment extends Fragment implements
         return rootview;
     }
 
+    private void setBtnDate() {
+
+        if (today.equals(nowto)) {
+
+            btnDate.setText(getString(R.string.diary_date_today));
+
+        } else {
+            formatDate = dateFormatter.format(nowto.getTime());
+            btnDate.setText(formatDate);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
@@ -178,8 +194,9 @@ public class DiaryFragment extends Fragment implements
                 day++;
                 date = nowto.getTimeInMillis();
                 AppContext.getDbDiary().editDate(date);
-                formatDate = dateFormatter.format(nowto.getTime());
-                btnDate.setText(formatDate);
+
+                setBtnDate();
+
                 for(int i=0; i < recordAdapter.getGroupCount(); i++) {
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
@@ -191,8 +208,9 @@ public class DiaryFragment extends Fragment implements
                 day--;
                 date = nowto.getTimeInMillis();
                 AppContext.getDbDiary().editDate(date);
-                formatDate = dateFormatter.format(nowto.getTime());
-                btnDate.setText(formatDate);
+
+                setBtnDate();
+
                 for(int i=0; i < recordAdapter.getGroupCount(); i++) {
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
@@ -213,12 +231,14 @@ public class DiaryFragment extends Fragment implements
             int year = data.getIntExtra("year",0);
             int month = data.getIntExtra("month",0);
             int day = data.getIntExtra("day",0);
+
             this.day = day;
             nowto.set(year,month,day);
             date = nowto.getTimeInMillis();
             AppContext.getDbDiary().editDate(date);
-            formatDate = dateFormatter.format(nowto.getTime());
-            btnDate.setText(formatDate);
+
+            setBtnDate();
+
             for(int i=0; i < recordAdapter.getGroupCount(); i++) {
                 listRecord.collapseGroup(i);
                 listRecord.expandGroup(i);
