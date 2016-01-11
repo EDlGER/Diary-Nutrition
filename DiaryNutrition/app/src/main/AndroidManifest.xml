@@ -6,16 +6,19 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".fragments.AddActivity"
             android:label="@string/act_add"
@@ -24,8 +27,8 @@
                 <action android:name="android.intent.action.SEARCH"></action>
             </intent-filter>
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                        android:value=".MainActivity"/>
+                android:value=".MainActivity"/>
         </activity>
-    </application>
 
+    </application>
 </manifest>

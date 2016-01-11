@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/fl_b_add"
         android:text="@string/add_food"
-        style="@style/material_button" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
