@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        displayView(R.id.nav_camera);
+        displayView(R.id.nav_diary);
     }
 
     @Override
@@ -69,16 +68,18 @@ public class MainActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         switch (viewId) {
-            case R.id.nav_camera:
+            case R.id.nav_diary:
                 fragment = new DiaryFragment();
-                title  = "Дневник";
-
+                title  = getString(R.string.title_sec1);
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_food:
                 fragment = new FoodFragment();
-                title = "Продукты";
+                title = getString(R.string.title_sec2);
                 break;
-
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
+                title = getString(R.string.title_sec3);
+                break;
         }
 
         if (fragment != null) {
@@ -101,26 +102,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         displayView(item.getItemId());
+
         return true;
-        /*
-        if (id == R.id.nav_camera) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);*/
-
     }
 
 

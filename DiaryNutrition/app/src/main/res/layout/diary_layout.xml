@@ -17,17 +17,17 @@
         android:maxLines="1" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="2 июня 2015"
         android:id="@+id/datePicker"
         android:background="@drawable/search_edit"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_alignParentTop="true"
         android:clickable="true"
+        android:layout_centerHorizontal="true"
         android:layout_toLeftOf="@+id/btnDateNext"
-        android:layout_toRightOf="@+id/btnDatePrev"
-        android:layout_toEndOf="@+id/btnDatePrev" />
+        android:layout_toRightOf="@+id/btnDatePrev" />
 
     <ImageButton
         android:layout_width="50dp"

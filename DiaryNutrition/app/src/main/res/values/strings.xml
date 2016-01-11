@@ -2,9 +2,9 @@
     <string name="app_name">Diary Nutrition</string>
     <string name="act_add">Добавление продукта</string>
 
-    <string name="title_sec1_ru">Дневник</string>
-    <string name="title_sec2_ru">Мои продукты</string>
-    <string name="title_sec3_ru">Настройки</string>
+    <string name="title_sec1">Дневник</string>
+    <string name="title_sec2">Мои продукты</string>
+    <string name="title_sec3">Настройки</string>
     <string name="tittle_search">Поиск продукта</string>
 
     <string name="diary_date_today">Сегодня</string>
