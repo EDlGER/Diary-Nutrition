@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="40dp"
-    android:background="@color/background_floating_material_light">
+    android:layout_width="match_parent" android:layout_height="60dp"
+    android:background="#EEEEEE">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="#FFFFFF">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Завтрак"
         android:id="@+id/txt_meal"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textSize="18sp"
-        android:layout_marginLeft="25dp" />
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +36,8 @@
         android:textSize="25dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:maxLength="4" />
+        android:maxLength="4"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,7 +46,7 @@
         android:id="@+id/txtGroupFat"
         android:textSize="20dp"
         android:textColor="#ff9800"
-        android:maxLength="4"
+        android:maxLength="5"
         android:layout_alignLeft="@+id/view"
         android:layout_alignStart="@+id/view"
         android:layout_alignTop="@+id/txtGroupProt"
@@ -53,11 +68,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="99999"
         android:id="@+id/txtGroupProt"
         android:textSize="20dp"
         android:textColor="#4caf50"
-        android:maxLength="4"
+        android:maxLength="5"
         android:layout_alignTop="@+id/txtGroupCarbo"
         android:layout_alignLeft="@+id/view2"
         android:layout_alignStart="@+id/view2"
@@ -88,7 +103,16 @@
         android:layout_alignParentEnd="false"
         android:layout_marginRight="5dp"
         android:textColor="#f44336"
-        android:maxLength="4"
+        android:maxLength="5"
         android:layout_alignRight="@+id/view2"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="35dp" />
+
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/shadow_drawable"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>
