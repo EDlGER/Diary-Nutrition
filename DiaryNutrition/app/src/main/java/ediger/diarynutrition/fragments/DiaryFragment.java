@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
@@ -55,7 +56,6 @@ public class DiaryFragment extends Fragment implements
     private Button btnDate;
 
     //Удалить все btn. Год,месяц,день перенести в локальные
-    private Button btnAdd;
     private ImageButton btnNext;
     private ImageButton btnPrev;
     int year;
@@ -66,13 +66,41 @@ public class DiaryFragment extends Fragment implements
 
 
     @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
     public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint())
+        {
+            return;
+        }
+
+        MainActivity mainActivity = (MainActivity)getActivity();
+        mainActivity.fab.show();
+        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("CurrentCal", date);
+                startActivity(addIntent);
+            }
+        });
+
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.collapseGroup(i);
             listRecord.expandGroup(i);
         }
         setTxt();//////////
-        super.onResume();
+
     }
     //                  header для ELV, подсчет БЖУ за день, дизайн
     @Override
@@ -100,7 +128,7 @@ public class DiaryFragment extends Fragment implements
         txt = (TextView) rootview.findViewById(R.id.textView2);//////////
         setTxt();                                             /////////
 
-        btnAdd = (Button) rootview.findViewById(R.id.b_add);
+
         btnDate = (Button) rootview.findViewById(R.id.datePicker);
         btnNext = (ImageButton) rootview.findViewById(R.id.btnDateNext);
         btnPrev = (ImageButton) rootview.findViewById(R.id.btnDatePrev);
@@ -162,15 +190,6 @@ public class DiaryFragment extends Fragment implements
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.expandGroup(i);
         }
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addIntent = new Intent(getActivity(), AddActivity.class);
-                addIntent.putExtra("CurrentCal", date);
-                startActivity(addIntent);
-            }
-        });
         return rootview;
     }
 

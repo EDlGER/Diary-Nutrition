@@ -28,13 +28,6 @@
         android:background="@drawable/list_view"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="false"
-        android:layout_above="@+id/fl_b_add" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fl_b_add"
-        android:text="@string/add_food"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

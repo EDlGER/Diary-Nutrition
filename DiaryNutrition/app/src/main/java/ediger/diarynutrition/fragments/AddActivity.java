@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -33,7 +35,7 @@ import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
 
-public class AddActivity extends ActionBarActivity implements
+public class AddActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private final int DIALOG = 1;
@@ -76,11 +78,19 @@ public class AddActivity extends ActionBarActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                showDialog(DIALOG_ADD);
+            }
+        });
+
         Intent intent = getIntent();
         cal = intent.getLongExtra("CurrentCal",date.getTimeInMillis());
 
         txtSearch = (EditText) findViewById(R.id.txtSearch);
-        Button btnAddF = (Button) findViewById(R.id.btnAddF);
+        //Button btnAddF = (Button) findViewById(R.id.btnAddF);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getAllFood();
@@ -107,12 +117,12 @@ public class AddActivity extends ActionBarActivity implements
                 return getFilterList(constraint);
             }
         });
-        btnAddF.setOnClickListener(new View.OnClickListener(){
+        /*btnAddF.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showDialog(DIALOG_ADD);
             }
-        });
+        });*/
         txtSearch.addTextChangedListener(TextChangedListener);
         getSupportLoaderManager().initLoader(-2, null, this);
     }

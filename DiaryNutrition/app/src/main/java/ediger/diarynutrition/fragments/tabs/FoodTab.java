@@ -27,6 +27,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
@@ -44,7 +45,6 @@ public class FoodTab extends Fragment implements
     private Cursor cursor;
     private FoodAdapter foodAdapter;
     private EditText txtSearch;
-    private Button btnAdd;
 
     String[] from;
     int[] to = {
@@ -76,11 +76,37 @@ public class FoodTab extends Fragment implements
                 getLoaderManager().getLoader(LOADER_ID).forceLoad();
         }
     }
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
 
     @Override
     public void onResume() {
-        getLoaderManager().restartLoader(LOADER_ID,null,this);
         super.onResume();
+
+        if (!getUserVisibleHint())
+        {
+            return;
+        }
+
+        MainActivity mainActivity = (MainActivity)getActivity();
+        mainActivity.fab.show();
+        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment a = new AddFoodDialog();
+                a.setTargetFragment(FoodTab.this, REQ_CODE_ADD);
+                a.show(getFragmentManager(), "add_dialog");
+            }
+        });
+        getLoaderManager().restartLoader(LOADER_ID,null,this);
+
     }
 
     @Override
@@ -88,7 +114,6 @@ public class FoodTab extends Fragment implements
         rootview = inflater.inflate(R.layout.food_tab, container, false);
 
         txtSearch = (EditText) rootview.findViewById(R.id.fl_txtSearch);
-        btnAdd = (Button) rootview.findViewById(R.id.fl_b_add);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getUserFood();
@@ -108,15 +133,6 @@ public class FoodTab extends Fragment implements
         });
         txtSearch.addTextChangedListener(TextChangedListener);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment a = new AddFoodDialog();
-                a.setTargetFragment(FoodTab.this, REQ_CODE_ADD);
-                a.show(getFragmentManager(), "add_dialog");
-                getLoaderManager().getLoader(LOADER_ID).forceLoad();
-            }
-        });
         getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootview;
     }

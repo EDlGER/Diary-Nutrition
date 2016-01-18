@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentFrame"
@@ -78,19 +79,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
-        android:layout_above="@+id/b_add"
         android:background="@drawable/list_view"
         android:longClickable="true"
-        android:divider="@android:color/transparent"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="btnAddClick"
-        android:id="@+id/b_add"
-        android:text="@string/add_food"
+        android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
+        />
 
 </RelativeLayout>

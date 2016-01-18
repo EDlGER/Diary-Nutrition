@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 
 /**
@@ -14,6 +15,28 @@ import ediger.diarynutrition.R;
  */
 public class SettingsFragment extends Fragment {
     View rootview;
+
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.fab.hide();
+    }
 
     @Nullable
     @Override
