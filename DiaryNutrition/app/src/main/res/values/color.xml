@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#BDBDBD</color>
     <color name="colorAccent">#009688</color>
     <color name="tabsScrollColor">#004D40</color>
+    <color name="cardview_initial_background">#FFFFFF</color>
 </resources>

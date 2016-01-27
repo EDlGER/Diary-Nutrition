@@ -207,7 +207,8 @@ public class DbDiary {
                 + ",f.[favor] as "+ALIAS_F_FAV
                 + ",f.[usr] as "+ALIAS_F_USR
                 + " from food f "
-                + " where f.[usr] > 0";
+                + " where f.[usr] > 0"
+                + " order by f.food_name asc";
         return  db.rawQuery(sql,null);
     }
 

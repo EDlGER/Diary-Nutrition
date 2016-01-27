@@ -14,10 +14,10 @@
     <string name="food_tab1">Добавленные</string>
     <string name="food_tab2">Избранные</string>
 
-    <string name="record_carbo">У|</string>
-    <string name="record_prot">Б|</string>
-    <string name="record_fat">Ж|</string>
-    <string name="record_cal">К|</string>
+    <string name="record_carbo">УГЛ</string>
+    <string name="record_prot">БЛК</string>
+    <string name="record_fat">ЖИР</string>
+    <string name="record_cal">ККАЛ</string>
 
     <string name="dialog_title">Выберите размер порции и время</string>
     <string name="dialog_cancel">Назад</string>

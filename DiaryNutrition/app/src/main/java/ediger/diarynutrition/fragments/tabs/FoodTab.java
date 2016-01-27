@@ -143,12 +143,13 @@ public class FoodTab extends Fragment implements
         String selections = "usr > 0";
 
         if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null, null,
-                    null, null);
+            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
+                    null, null, null, null);
         }
         else {
             String value = "%"+constraint.toString()+"%";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > 0 AND food_name like ? ",
+            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
+                    "usr > 0 AND food_name like ? ",
                     new String[]{value},null,null,null);
         }
     }

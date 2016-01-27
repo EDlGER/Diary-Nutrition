@@ -32,16 +32,6 @@
         android:layout_marginTop="4dp"
         android:layout_alignParentBottom="true" />
 
-    "
-    <!--<Button
-        android:id="@+id/btnAddF"
-        android:onClick="btnAddClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_food"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" /> -->
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

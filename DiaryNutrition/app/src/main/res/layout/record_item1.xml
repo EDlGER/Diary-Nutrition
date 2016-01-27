@@ -45,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="350"
+        android:textColor="@color/colorAccent"
         android:id="@+id/txt_cal"
         android:textSize="25sp"
         android:layout_alignParentRight="true"
@@ -56,8 +57,7 @@
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_fat"
-        android:textSize="20sp"
-        android:textColor="#ff9800"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:layout_alignTop="@+id/view"
         android:layout_alignLeft="@+id/view"
@@ -66,7 +66,7 @@
 
     <View
         android:layout_width="1dp"
-        android:layout_height="23dp"
+        android:layout_height="20dp"
         android:background="?android:attr/listDivider"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="true"
@@ -81,8 +81,7 @@
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_prot"
-        android:textSize="20sp"
-        android:textColor="#4caf50"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:layout_alignTop="@+id/view2"
         android:layout_alignLeft="@+id/view2"
@@ -94,23 +93,22 @@
 
     <View
         android:layout_width="1dp"
-        android:layout_height="23dp"
+        android:layout_height="20dp"
         android:background="?android:attr/listDivider"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="165dp"
-        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
         android:id="@+id/view2"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:layout_centerInParent="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
         android:id="@+id/txt_carbo"
-        android:textSize="20sp"
-        android:textColor="#f44336"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:layout_alignTop="@+id/view2"
         android:layout_toLeftOf="@+id/view2"

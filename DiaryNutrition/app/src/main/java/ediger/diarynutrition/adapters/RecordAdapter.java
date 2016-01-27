@@ -25,7 +25,6 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class RecordAdapter extends SimpleCursorTreeAdapter {
 
-   // private Context context;
     private DiaryFragment mFragment;
     private MainActivity mActivity;
 
@@ -35,7 +34,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                          String[] groupFrom, int[] groupTo, int childLayout,
                          String[] childFrom, int[] childTo) {
         super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
-        //this.context = context;
         mActivity = (MainActivity) context;
         mFragment = df;
         this.layoutInflater = layoutInflater.from(context);
@@ -94,10 +92,10 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         c = AppContext.getDbDiary().getGroupData(date);
         int mealID;
 
-        group_cal.setText("0");
-        group_carbo.setText("0");
-        group_prot.setText("0");
-        group_fat.setText("0");
+        group_cal.setText("");
+        group_carbo.setText("");
+        group_prot.setText("");
+        group_fat.setText("");
 
         if (c.moveToFirst()) {
             do {

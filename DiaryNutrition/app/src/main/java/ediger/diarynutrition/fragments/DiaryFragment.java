@@ -34,6 +34,7 @@ import ediger.diarynutrition.objects.AppContext;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.CardView;
 import android.widget.TextView;
 
 /**
@@ -54,8 +55,9 @@ public class DiaryFragment extends Fragment implements
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private Button btnDate;
+    private CardView dayStat;
 
-    //Удалить все btn. Год,месяц,день перенести в локальные
+    // Год,месяц,день перенести в локальные
     private ImageButton btnNext;
     private ImageButton btnPrev;
     int year;
