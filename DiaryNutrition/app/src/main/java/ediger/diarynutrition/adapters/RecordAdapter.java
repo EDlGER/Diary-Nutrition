@@ -46,24 +46,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     private LayoutInflater layoutInflater;
 
-    @Override
-    public View newChildView(Context context, Cursor cursor,boolean isLastChild, ViewGroup parent) {
-
-        View view = layoutInflater.inflate(R.layout.record_item1, parent, false);
-
-        ViewHolder holder = new ViewHolder();
-        holder.food_name = (TextView) view.findViewById(R.id.txt_food_name);
-        holder.carbo = (TextView) view.findViewById(R.id.txt_carbo);
-        holder.prot = (TextView) view.findViewById(R.id.txt_prot);
-        holder.fat = (TextView) view.findViewById(R.id.txt_fat);
-        holder.cal = (TextView) view.findViewById(R.id.txt_cal);
-        holder.time = (TextView) view.findViewById(R.id.txt_time);
-        holder.serving = (TextView) view.findViewById(R.id.txt_serving);
-
-        view.setTag(holder);
-
-        return view;
-    }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
@@ -112,6 +94,27 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
         return view;
     }
+
+    @Override
+    public View newChildView(Context context, Cursor cursor,boolean isLastChild, ViewGroup parent) {
+
+        View view = layoutInflater.inflate(R.layout.record_item1, parent, false);
+
+        ViewHolder holder = new ViewHolder();
+        holder.food_name = (TextView) view.findViewById(R.id.txt_food_name);
+        holder.carbo = (TextView) view.findViewById(R.id.txt_carbo);
+        holder.prot = (TextView) view.findViewById(R.id.txt_prot);
+        holder.fat = (TextView) view.findViewById(R.id.txt_fat);
+        holder.cal = (TextView) view.findViewById(R.id.txt_cal);
+        holder.time = (TextView) view.findViewById(R.id.txt_time);
+        holder.serving = (TextView) view.findViewById(R.id.txt_serving);
+
+        view.setTag(holder);
+
+        return view;
+    }
+
+
 
     @Override
     public void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {

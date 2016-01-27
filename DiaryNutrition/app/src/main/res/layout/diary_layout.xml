@@ -70,7 +70,6 @@
                 android:textColor="#FFFFFF"/>
 
         </android.support.v7.widget.CardView>
-    <!--card_view:cardBackgroundColor="@color/cardview_initial_background"-->
     </LinearLayout>
 
     <View
@@ -136,6 +135,7 @@
         android:longClickable="true"
         android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/linearLayout" />
+        android:layout_below="@+id/linearLayout"
+        android:nestedScrollingEnabled="false" />
 
 </RelativeLayout>
