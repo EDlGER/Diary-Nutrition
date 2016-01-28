@@ -57,6 +57,11 @@ public class DiaryFragment extends Fragment implements
     private Button btnDate;
     private CardView dayStat;
 
+    private TextView cardCal;
+    private TextView cardCarbo;
+    private TextView cardProt;
+    private TextView cardFat;
+
     // Год,месяц,день перенести в локальные
     private ImageButton btnNext;
     private ImageButton btnPrev;
@@ -64,7 +69,9 @@ public class DiaryFragment extends Fragment implements
     int month;
     int day;
 
-    TextView txt; ///////
+
+
+
 
 
     @Override
@@ -101,10 +108,10 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(i);
             listRecord.expandGroup(i);
         }
-        setTxt();//////////
+        setCardData();
 
     }
-    //                  header для ELV, подсчет БЖУ за день, дизайн
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -127,8 +134,12 @@ public class DiaryFragment extends Fragment implements
 
         rootview = inflater.inflate(R.layout.diary_layout, container, false);
 
-        txt = (TextView) rootview.findViewById(R.id.textView2);//////////
-        setTxt();                                             /////////
+        cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
+        cardCarbo = (TextView) rootview.findViewById(R.id.cardCarbo2);
+        cardProt = (TextView) rootview.findViewById(R.id.cardProt2);
+        cardFat = (TextView) rootview.findViewById(R.id.cardFat2);
+
+        setCardData();
 
 
         btnDate = (Button) rootview.findViewById(R.id.datePicker);
@@ -222,7 +233,7 @@ public class DiaryFragment extends Fragment implements
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
                 }
-                setTxt();                   ///////
+                setCardData();
                 break;
             case R.id.btnDatePrev:
                 nowto.set(year,month,day-1);
@@ -236,7 +247,7 @@ public class DiaryFragment extends Fragment implements
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
                 }
-                setTxt();                   //////
+                setCardData();
                 break;
             case R.id.datePicker:
                 DialogFragment dialog = new DateDialog();
@@ -264,7 +275,7 @@ public class DiaryFragment extends Fragment implements
                 listRecord.collapseGroup(i);
                 listRecord.expandGroup(i);
             }
-            setTxt();                   //////
+            setCardData();
         }
     }
 
@@ -298,23 +309,39 @@ public class DiaryFragment extends Fragment implements
                 listRecord.collapseGroup(i);
                 listRecord.expandGroup(i);
             }
-            setTxt();                       /////////
+            setCardData();
 
             return true;
         }
         return super.onContextItemSelected(item);
     }
 
-    public void setTxt() {                  /////////
+    public void setCardData() {
+        //Число без дробной части
+        int res;
+
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
         long date = cursor.getLong(0);
         cursor.close();
-        txt.setText("0");
+
+        cardCal.setText("0");
+        cardCarbo.setText("0");
+        cardProt.setText("0");
+        cardFat.setText("0");
+
         cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
         if (cursor.moveToFirst()) {
-            txt.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
+            res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
+            cardCal.setText(Integer.toString(res));
+            res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO));
+            cardCarbo.setText(Integer.toString(res));
+            res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT));
+            cardProt.setText(Integer.toString(res));
+            res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT));
+            cardFat.setText(Integer.toString(res));
+
         }
         cursor.close();
     }

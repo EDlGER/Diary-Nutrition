@@ -51,6 +51,9 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         View view = convertView;
 
+        //Калории без дробной части
+        int cal;
+
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
         long date = cursor.getLong(0);
@@ -83,7 +86,9 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
             do {
                 mealID = c.getInt(0);
                 if ( mealID == groupPosition+1){
-                    group_cal.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_CAL)));
+                    cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
+
+                    group_cal.setText(Integer.toString(cal));
                     group_carbo.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_CARBO)));
                     group_prot.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_PROT)));
                     group_fat.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_FAT)));
@@ -120,9 +125,11 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     public void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
+        //Калории без дробной части
+        int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
 
         holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME)));
-        holder.cal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
+        holder.cal.setText(Integer.toString(cal));
         holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
         holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
         holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
