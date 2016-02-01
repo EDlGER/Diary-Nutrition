@@ -24,7 +24,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 
 import ediger.diarynutrition.MainActivity;
@@ -105,7 +108,11 @@ public class FoodTab extends Fragment implements
                 a.show(getFragmentManager(), "add_dialog");
             }
         });
-        getLoaderManager().restartLoader(LOADER_ID,null,this);
+
+        mainActivity.datePicker.setVisibility(View.GONE);
+        mainActivity.title.setPadding(0,25,0,0);
+
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
 
     }
 

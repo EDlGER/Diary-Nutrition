@@ -70,10 +70,6 @@ public class DiaryFragment extends Fragment implements
     int day;
 
 
-
-
-
-
     @Override
     public void setUserVisibleHint(boolean visible)
     {
@@ -103,6 +99,9 @@ public class DiaryFragment extends Fragment implements
                 startActivity(addIntent);
             }
         });
+
+        mainActivity.datePicker.setVisibility(View.VISIBLE);
+        mainActivity.title.setPadding(0,0,0,0);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.collapseGroup(i);

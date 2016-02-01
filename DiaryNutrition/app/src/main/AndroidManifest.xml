@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ediger.diarynutrition" >
+
+    <uses-sdk tools:overrideLibrary="com.github.sundeepk.compactcalendarview"/>
 
     <application
         android:name=".objects.AppContext"
