@@ -5,55 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentFrame"
-    android:background="#F5F5F5">
+    android:background="@color/colorPrimary">
 
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="2 июня 2015"
-        android:id="@+id/datePicker"
-        android:background="@drawable/search_edit"
-        android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:clickable="true"
-        android:layout_centerHorizontal="true"
-        android:layout_toLeftOf="@+id/btnDateNext"
-        android:layout_toRightOf="@+id/btnDatePrev"
-        android:layout_marginTop="6dp" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnDateNext"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/ic_next"
-        android:layout_alignBottom="@+id/datePicker" />
-
-    <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnDatePrev"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/ic_back"
-        android:layout_alignBottom="@+id/datePicker" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:orientation="vertical"
         android:id="@+id/cardLayout"
-        android:layout_below="@+id/datePicker">
+        android:layout_marginTop="5dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:elevation="150dp"
-            card_view:cardBackgroundColor="@color/colorAccent"
+            card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="4dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -73,7 +40,7 @@
                 android:shrinkColumns="*"
                 android:stretchColumns="*"
 
-                android:background="#FFFFFF"
+                android:background="@color/colorPrimary"
                 android:layout_margin="1dp"
                 android:measureWithLargestChild="false">
 
@@ -87,9 +54,9 @@
                         android:id="@+id/cardInfo1"
                         android:text="@string/record_card_info1"
                         android:textSize="15sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:layout_span="9"
-                        android:background="@color/colorAccent"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:gravity="center_vertical" />
@@ -100,8 +67,8 @@
                         android:id="@+id/cardCarbo1"
                         android:text="999"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
-                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:gravity="center_horizontal"
@@ -113,8 +80,8 @@
                         android:id="@+id/cardProt1"
                         android:text="30"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
-                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:gravity="center_horizontal"
@@ -126,9 +93,9 @@
                         android:id="@+id/cardFat1"
                         android:text="20"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:gravity="center_horizontal"
-                        android:background="@color/colorAccent"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:maxLength="4" />
@@ -138,9 +105,9 @@
                         android:id="@+id/cardCal1"
                         android:text="2000"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:gravity="right"
-                        android:background="@color/colorAccent"
+                        android:background="#FFFFFF"
                         android:maxLength="5" />
 
                 </TableRow>
@@ -155,9 +122,9 @@
                         android:id="@+id/cardInfo2"
                         android:text="@string/record_card_info2"
                         android:textSize="15sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:layout_span="9"
-                        android:background="@color/colorAccent"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp" />
 
                     <TextView
@@ -166,8 +133,8 @@
                         android:id="@+id/cardCarbo2"
                         android:text="50"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
-                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:maxLength="4"
                         android:gravity="center" />
@@ -178,8 +145,8 @@
                         android:id="@+id/cardProt2"
                         android:text="30"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
-                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:maxLength="4"
                         android:gravity="center" />
@@ -190,8 +157,8 @@
                         android:id="@+id/cardFat2"
                         android:text="20"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
-                        android:background="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
+                        android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:gravity="center" />
 
@@ -201,9 +168,9 @@
                         android:id="@+id/cardCal2"
                         android:text="2000"
                         android:textSize="20sp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorPrimary"
                         android:gravity="right"
-                        android:background="@color/colorAccent" />
+                        android:background="#FFFFFF" />
 
                 </TableRow>
             </TableLayout>
@@ -211,7 +178,7 @@
             <View
                 android:layout_width="6dp"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent"
+                android:background="#FFFFFF"
                 />
             </LinearLayout>
 
@@ -220,8 +187,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
+        android:layout_height="3dp"
+        android:background="@drawable/shadow_drawable"
         android:id="@+id/cardDivider"
         android:layout_below="@+id/cardLayout" />
 

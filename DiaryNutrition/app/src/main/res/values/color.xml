@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#BDBDBD</color>
+    <color name="colorPrimaryDark">#00796b</color>
     <color name="colorAccent">#009688</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="cardview_initial_background">#FFFFFF</color>

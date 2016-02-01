@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -41,19 +42,22 @@ public class MainActivity extends AppCompatActivity
 
     public TextView title;
 
+    public CompactCalendarView mCompactCalendarView;
+
+    public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+
     private AppBarLayout mAppBarLayout;
-
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
-
-    private CompactCalendarView mCompactCalendarView;
 
     private boolean isExpanded = false;
     private float mCurrentRotation = 360.0f;
+    private ImageView arrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -95,8 +99,9 @@ public class MainActivity extends AppCompatActivity
 
         // Set current date to today
         setCurrentDate(new Date());
+        setSubtitle(getString(R.string.diary_date_today));
 
-        final ImageView arrow = (ImageView) findViewById(R.id.date_picker_arrow);
+        arrow = (ImageView) findViewById(R.id.date_picker_arrow);
 
         RelativeLayout datePickerButton = (RelativeLayout) findViewById(R.id.date_picker_button);
 
@@ -136,6 +141,23 @@ public class MainActivity extends AppCompatActivity
         });
 
         displayView(R.id.nav_diary);
+    }
+
+    public void hideCalendarView() {
+
+        RotateAnimation anim = new RotateAnimation(mCurrentRotation,
+                mCurrentRotation + 180.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+
+        mCurrentRotation = (mCurrentRotation + 180.0f) % 360.0f;
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setFillAfter(true);
+        anim.setFillEnabled(true);
+        anim.setDuration(300);
+        arrow.startAnimation(anim);
+        mAppBarLayout.setExpanded(false, true);
+        isExpanded = false;
     }
 
     public void setCurrentDate(Date date) {

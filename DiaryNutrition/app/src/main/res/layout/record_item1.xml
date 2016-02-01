@@ -3,34 +3,35 @@
     android:layout_width="match_parent" android:layout_height="60dp"
     android:weightSum="1"
     android:touchscreenBlocksFocus="false"
-    android:background="#FFFFFF"
+    android:background="#F5F5F5"
     android:id="@+id/Relative">
 
 
 
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    <View
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:id="@+id/padding_view1"/>
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="?android:attr/listDivider" />
+        android:background="?android:attr/listDivider"
+        android:layout_marginLeft="5dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="11:30"
         android:id="@+id/txt_time"
-        android:textSize="@dimen/abc_text_size_medium_material"
-        android:layout_alignParentTop="true"
+        android:textSize="@dimen/abc_text_size_small_material"
+        android:layout_alignParentTop="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="19dp"
-        android:layout_marginLeft="1dp" />
+        android:layout_marginLeft="7dp"
+        android:layout_centerInParent="true" />
 
     <View
         android:layout_width="1dp"
@@ -64,7 +65,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="2dp" />
+        android:layout_marginRight="7dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,7 +85,7 @@
         android:background="?android:attr/listDivider"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="110dp"
+        android:layout_marginRight="115dp"
         android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
         android:id="@+id/view"
@@ -111,7 +112,7 @@
         android:background="?android:attr/listDivider"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="165dp"
+        android:layout_marginRight="170dp"
         android:layout_alignParentRight="true"
         android:id="@+id/view2"
         android:layout_marginBottom="10dp"
@@ -148,6 +149,14 @@
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="?android:attr/listDivider"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp" />
+
+    <View
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:id="@+id/padding_view2"
         android:layout_alignParentRight="true" />
 
     <View
@@ -155,7 +164,9 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/listDivider"/>
-</RelativeLayout>
+        android:background="?android:attr/listDivider"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
 
 </RelativeLayout>

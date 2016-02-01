@@ -141,10 +141,10 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.time.setText(timeFormatter.format(calendar.getTime()));
     }
 
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
-    }
+    //@Override
+    //public boolean isChildSelectable(int groupPosition, int childPosition) {
+    // return true;
+    //}
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {

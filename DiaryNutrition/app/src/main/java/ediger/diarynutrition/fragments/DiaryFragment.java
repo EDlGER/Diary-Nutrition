@@ -22,7 +22,9 @@ import android.widget.ImageButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
@@ -37,37 +39,28 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.CardView;
 import android.widget.TextView;
 
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+
 /**
  * Created by Ediger on 03.05.2015.
  *
  */
 public class DiaryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, View.OnClickListener {
-
-    private final int REQ_CODE_DATE = 1;
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     View rootview;
     private long date;
-    private String formatDate;
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    //private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
-    private Button btnDate;
     private CardView dayStat;
 
     private TextView cardCal;
     private TextView cardCarbo;
     private TextView cardProt;
     private TextView cardFat;
-
-    // Год,месяц,день перенести в локальные
-    private ImageButton btnNext;
-    private ImageButton btnPrev;
-    int year;
-    int month;
-    int day;
 
 
     @Override
@@ -84,12 +77,14 @@ public class DiaryFragment extends Fragment implements
     public void onResume() {
         super.onResume();
 
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+
         if (!getUserVisibleHint())
         {
             return;
         }
 
-        MainActivity mainActivity = (MainActivity)getActivity();
+        final MainActivity mainActivity = (MainActivity)getActivity();
         mainActivity.fab.show();
         mainActivity.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +96,37 @@ public class DiaryFragment extends Fragment implements
         });
 
         mainActivity.datePicker.setVisibility(View.VISIBLE);
+
+        mainActivity.mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+
+            @Override
+            public void onDayClick (Date dateClicked) {
+
+                nowto.setTime(dateClicked);
+                date = nowto.getTimeInMillis();
+                AppContext.getDbDiary().editDate(date);
+
+                if (today.equals(nowto)) {
+                    mainActivity.setSubtitle(getString(R.string.diary_date_today));
+                } else {
+                    mainActivity.setSubtitle(dateFormat.format(dateClicked));
+                }
+
+                for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+                    listRecord.collapseGroup(i);
+                    listRecord.expandGroup(i);
+                }
+                setCardData();
+
+                mainActivity.hideCalendarView();
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                mainActivity.setSubtitle(dateFormat.format(firstDayOfNewMonth));
+            }
+        });
+
         mainActivity.title.setPadding(0,0,0,0);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
@@ -140,15 +166,6 @@ public class DiaryFragment extends Fragment implements
 
         setCardData();
 
-
-        btnDate = (Button) rootview.findViewById(R.id.datePicker);
-        btnNext = (ImageButton) rootview.findViewById(R.id.btnDateNext);
-        btnPrev = (ImageButton) rootview.findViewById(R.id.btnDatePrev);
-
-        btnNext.setOnClickListener(this);
-        btnPrev.setOnClickListener(this);
-        btnDate.setOnClickListener(this);
-
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND,0);
@@ -158,16 +175,12 @@ public class DiaryFragment extends Fragment implements
         nowto.clear(Calendar.MILLISECOND);
         nowto.clear(Calendar.SECOND);
 
-        year = now.get(Calendar.YEAR);
-        month = now.get(Calendar.MONTH);
-        day = now.get(Calendar.DAY_OF_MONTH);
-
-        nowto.set(year, month, day, 0, 0);
+        nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                  now.get(Calendar.DAY_OF_MONTH), 0, 0);
 
         date = nowto.getTimeInMillis();
         now.setTimeInMillis(date);
         AppContext.getDbDiary().editDate(date);
-        btnDate.setText(getString(R.string.diary_date_today));
 
         cursor = AppContext.getDbDiary().getMealData();
         int[] groupTo = {
@@ -205,77 +218,11 @@ public class DiaryFragment extends Fragment implements
         return rootview;
     }
 
-    private void setBtnDate() {
-
-        if (today.equals(nowto)) {
-
-            btnDate.setText(getString(R.string.diary_date_today));
-
-        } else {
-            formatDate = dateFormatter.format(nowto.getTime());
-            btnDate.setText(formatDate);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.btnDateNext:
-                nowto.set(year,month,day+1);
-                day++;
-                date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(date);
-
-                setBtnDate();
-
-                for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-                    listRecord.collapseGroup(i);
-                    listRecord.expandGroup(i);
-                }
-                setCardData();
-                break;
-            case R.id.btnDatePrev:
-                nowto.set(year,month,day-1);
-                day--;
-                date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(date);
-
-                setBtnDate();
-
-                for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-                    listRecord.collapseGroup(i);
-                    listRecord.expandGroup(i);
-                }
-                setCardData();
-                break;
-            case R.id.datePicker:
-                DialogFragment dialog = new DateDialog();
-                dialog.setTargetFragment(DiaryFragment.this, REQ_CODE_DATE);
-                dialog.show(getFragmentManager(), "date_dialog");
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            int year = data.getIntExtra("year",0);
-            int month = data.getIntExtra("month",0);
-            int day = data.getIntExtra("day",0);
 
-            this.day = day;
-            nowto.set(year,month,day);
-            date = nowto.getTimeInMillis();
-            AppContext.getDbDiary().editDate(date);
-
-            setBtnDate();
-
-            for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-                listRecord.collapseGroup(i);
-                listRecord.expandGroup(i);
-            }
-            setCardData();
-        }
     }
 
 

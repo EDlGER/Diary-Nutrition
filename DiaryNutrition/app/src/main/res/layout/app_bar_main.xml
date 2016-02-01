@@ -67,7 +67,7 @@
                     android:paddingRight="10dp"
                     app:compactCalendarBackgroundColor="?attr/colorPrimary"
                     app:compactCalendarCurrentDayBackgroundColor="#FFC107"
-                    app:compactCalendarCurrentSelectedDayBackgroundColor="#BBDEFB"
+                    app:compactCalendarCurrentSelectedDayBackgroundColor="#00796b"
                     app:compactCalendarTextColor="#fff"
                     app:compactCalendarTextSize="12sp" />
             </LinearLayout>
