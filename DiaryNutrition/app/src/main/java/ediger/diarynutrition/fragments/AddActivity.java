@@ -2,6 +2,7 @@ package ediger.diarynutrition.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,11 +11,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,7 +47,6 @@ public class AddActivity extends AppCompatActivity implements
     private ListView listFood;
     private Cursor cursor;
     private FoodAdapter foodAdapter;
-    private EditText txtSearch;
     private Calendar now = Calendar.getInstance();
     private int nowHour = now.get(Calendar.HOUR_OF_DAY);
     private int nowMin = now.get(Calendar.MINUTE);
@@ -89,8 +92,6 @@ public class AddActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         cal = intent.getLongExtra("CurrentCal",date.getTimeInMillis());
 
-        txtSearch = (EditText) findViewById(R.id.txtSearch);
-        //Button btnAddF = (Button) findViewById(R.id.btnAddF);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getAllFood();
@@ -117,13 +118,7 @@ public class AddActivity extends AppCompatActivity implements
                 return getFilterList(constraint);
             }
         });
-        /*btnAddF.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                showDialog(DIALOG_ADD);
-            }
-        });*/
-        txtSearch.addTextChangedListener(TextChangedListener);
+
         getSupportLoaderManager().initLoader(-2, null, this);
     }
 
@@ -151,6 +146,33 @@ public class AddActivity extends AppCompatActivity implements
         foodAdapter = new FoodAdapter(this, R.layout.food_item1, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.activity_add_search, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listFood.getAdapter();
+                filterAdapter.getFilter().filter(newText.toString());
+                return true;
+            }
+        });
+
+        return true;
     }
 
     @Override

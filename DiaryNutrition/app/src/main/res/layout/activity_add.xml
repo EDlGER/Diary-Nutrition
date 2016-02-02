@@ -1,42 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     tools:context="ediger.diarynutrition.fragments.AddActivity"
     android:background="@color/background_floating_material_light">
 
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtSearch"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/tittle_search"
-        android:singleLine="true"
-        android:editable="true"
-        android:drawableLeft="@drawable/ic_search1"
-        android:background="@drawable/search_edit"/>
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/listFood"
-        android:layout_below="@+id/txtSearch"
-        android:layout_centerHorizontal="true"
         android:nestedScrollingEnabled="false"
         android:textFilterEnabled="true"
-        android:background="@drawable/search_edit"
-        android:layout_marginTop="4dp"
-        android:layout_alignParentBottom="true" />
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="false" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_plus"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/listFood"

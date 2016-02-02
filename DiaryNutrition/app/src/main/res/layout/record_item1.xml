@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/shadow_left"
         android:layout_marginLeft="5dp"
-        android:layout_marginBottom="1dp"/>
+        android:layout_marginBottom="1dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -160,7 +160,7 @@
     <View
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#FAFAFA"
         android:id="@+id/padding_view2"
         android:layout_alignParentRight="true" />
 
