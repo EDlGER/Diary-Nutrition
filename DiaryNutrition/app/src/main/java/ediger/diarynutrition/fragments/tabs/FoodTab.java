@@ -109,7 +109,7 @@ public class FoodTab extends Fragment implements
             }
         });
 
-        mainActivity.datePicker.setVisibility(View.GONE);
+        mainActivity.datePicker.setVisibility(View.INVISIBLE);
         mainActivity.title.setPadding(0,25,0,0);
 
         getLoaderManager().restartLoader(LOADER_ID, null, this);

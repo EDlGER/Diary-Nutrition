@@ -113,6 +113,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.cal = (TextView) view.findViewById(R.id.txt_cal);
         holder.time = (TextView) view.findViewById(R.id.txt_time);
         holder.serving = (TextView) view.findViewById(R.id.txt_serving);
+        holder.shadow = view.findViewById(R.id.shadow);
 
         view.setTag(holder);
 
@@ -124,6 +125,12 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     @Override
     public void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {
         ViewHolder holder = (ViewHolder) view.getTag();
+
+        if (isLastChild) {
+            holder.shadow.setVisibility(View.VISIBLE);
+        } else {
+            holder.shadow.setVisibility(View.INVISIBLE);
+        }
 
         //Калории без дробной части
         int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
@@ -141,10 +148,11 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.time.setText(timeFormatter.format(calendar.getTime()));
     }
 
-    //@Override
-    //public boolean isChildSelectable(int groupPosition, int childPosition) {
-    // return true;
-    //}
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+     return true;
+    }
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
@@ -175,5 +183,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         public TextView fat;
         public TextView time;
         public TextView serving;
+        public View shadow;
     }
 }

@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="60dp"
-    android:background="#FFFFFF">
+    android:background="#F5F5F5">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="15dp"
         android:id="@+id/group_divider"
-        android:background="#FFFFFF">
+        android:background="#F5F5F5">
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shadow_left"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginBottom="2dp"
+        />
+
     <RelativeLayout
+        android:id="@+id/group_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/group_divider"
         android:background="@drawable/list_group_item"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Завтрак"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txt_meal"
         android:layout_alignParentLeft="true"
         android:textSize="18sp"
@@ -34,13 +46,13 @@
         android:layout_height="wrap_content"
         android:text="350"
         android:id="@+id/txtGroupCal"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:textSize="25dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:maxLength="4" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4"
@@ -64,7 +76,7 @@
         android:id="@+id/view"
         android:layout_marginBottom="5dp" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99999"
@@ -89,7 +101,7 @@
         android:layout_alignParentRight="true"
         android:id="@+id/view2" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99999"
@@ -110,4 +122,14 @@
         android:background="@drawable/shadow_drawable"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shadow_right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginBottom="2dp"
+        />
 </RelativeLayout>

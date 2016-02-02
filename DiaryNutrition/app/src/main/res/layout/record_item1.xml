@@ -3,22 +3,25 @@
     android:layout_width="match_parent" android:layout_height="60dp"
     android:weightSum="1"
     android:touchscreenBlocksFocus="false"
-    android:background="#F5F5F5"
-    android:id="@+id/Relative">
+    android:background="#FFFFFF"
+    android:id="@+id/Relative"
+    android:longClickable="false">
 
 
 
     <View
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="#FAFAFA"
         android:id="@+id/padding_view1"/>
 
+    <!--android:background="?android:attr/listDivider"-->
     <View
-        android:layout_width="1dp"
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:background="?android:attr/listDivider"
-        android:layout_marginLeft="5dp" />
+        android:background="@drawable/shadow_left"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="1dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,7 +33,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="19dp"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="8dp"
         android:layout_centerInParent="true" />
 
     <View
@@ -59,15 +62,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="350"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/txt_cal"
         android:textSize="25sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="7dp" />
+        android:layout_marginRight="8dp" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
@@ -91,7 +94,7 @@
         android:id="@+id/view"
         android:layout_marginBottom="10dp" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
@@ -118,10 +121,11 @@
         android:layout_marginBottom="10dp"
         android:layout_centerInParent="true" />
 
-    <TextView
+    <TextView style="?android:textAppearanceListItemSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99.9"
+
         android:id="@+id/txt_carbo"
         android:textSize="18sp"
         android:textAlignment="center"
@@ -146,11 +150,12 @@
         android:layout_marginLeft="5dp" />
 
     <View
-        android:layout_width="1dp"
+        android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:background="?android:attr/listDivider"
+        android:background="@drawable/shadow_right"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp" />
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="1dp"/>
 
     <View
         android:layout_width="5dp"
@@ -160,13 +165,22 @@
         android:layout_alignParentRight="true" />
 
     <View
-        android:id="@+id/shadow"
+        android:id="@+id/list_item_divider"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/listDivider"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp" />
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shadow_drawable"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp" />
 
 
 </RelativeLayout>

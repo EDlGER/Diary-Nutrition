@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00796b</color>
-    <color name="colorAccent">#009688</color>
+    <color name="colorAccent">#FFC107</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="cardview_initial_background">#FFFFFF</color>
 </resources>
