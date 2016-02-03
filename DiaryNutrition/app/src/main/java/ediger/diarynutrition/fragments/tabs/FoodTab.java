@@ -1,5 +1,6 @@
 package ediger.diarynutrition.fragments.tabs;
 
+import android.app.SearchManager;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +14,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +115,7 @@ public class FoodTab extends Fragment implements
         });
 
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
-        mainActivity.title.setPadding(0,25,0,0);
+        mainActivity.title.setPadding(0, 25, 0, 0);
 
         getLoaderManager().restartLoader(LOADER_ID, null, this);
 
@@ -178,6 +183,30 @@ public class FoodTab extends Fragment implements
 
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        getActivity().getMenuInflater().inflate(R.menu.activity_add_search, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listFood.getAdapter();
+                filterAdapter.getFilter().filter(newText.toString());
+                return true;
+            }
+        });
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

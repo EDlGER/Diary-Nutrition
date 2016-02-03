@@ -53,6 +53,7 @@ public class DiaryFragment extends Fragment implements
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
     //private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private CardView dayStat;
@@ -61,6 +62,7 @@ public class DiaryFragment extends Fragment implements
     private TextView cardCarbo;
     private TextView cardProt;
     private TextView cardFat;
+
 
 
     @Override
@@ -85,6 +87,7 @@ public class DiaryFragment extends Fragment implements
         }
 
         final MainActivity mainActivity = (MainActivity)getActivity();
+
         mainActivity.fab.show();
         mainActivity.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,9 +140,18 @@ public class DiaryFragment extends Fragment implements
 
     }
 
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        final MainActivity mainActivity = (MainActivity)getActivity();
+
+        mainActivity.setSubtitle(getString(R.string.diary_date_today));
+        if (mainActivity.mCompactCalendarView != null) {
+            mainActivity.mCompactCalendarView.setCurrentDate(new Date());
+        }
 
         Loader loader = getLoaderManager().initLoader(-1, null, this);
         if (loader != null && !loader.isReset()){
@@ -326,6 +338,7 @@ public class DiaryFragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        /*
         int id = loader.getId();
 
         if (id != -1){
@@ -336,7 +349,7 @@ public class DiaryFragment extends Fragment implements
             }
         } else {
             recordAdapter.setGroupCursor(null);
-        }
+        }*/
     }
 
     private static class ChildCursorLoader extends CursorLoader {

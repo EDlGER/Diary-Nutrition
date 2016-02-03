@@ -92,6 +92,7 @@ public class AddActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         cal = intent.getLongExtra("CurrentCal",date.getTimeInMillis());
 
+        getSupportActionBar().setElevation(0);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getAllFood();
@@ -148,33 +149,6 @@ public class AddActivity extends AppCompatActivity implements
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.activity_add_search, menu);
-        // Retrieve the SearchView and plug it into SearchManager
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listFood.getAdapter();
-                filterAdapter.getFilter().filter(newText.toString());
-                return true;
-            }
-        });
-
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -190,23 +164,6 @@ public class AddActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    private TextWatcher TextChangedListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listFood.getAdapter();
-            filterAdapter.getFilter().filter(s.toString());
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
     //Диалоги
     @Override
     protected Dialog onCreateDialog(int id){

@@ -4,8 +4,7 @@
     android:weightSum="1"
     android:touchscreenBlocksFocus="false"
     android:background="#FFFFFF"
-    android:id="@+id/Relative"
-    android:longClickable="false">
+    android:id="@+id/Relative">
 
 
 
