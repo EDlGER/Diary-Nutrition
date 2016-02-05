@@ -1,6 +1,7 @@
 package ediger.diarynutrition.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -89,9 +90,18 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                     cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
 
                     group_cal.setText(Integer.toString(cal));
-                    group_carbo.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_CARBO)));
-                    group_prot.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_PROT)));
-                    group_fat.setText(c.getString(c.getColumnIndex(DbDiary.ALIAS_FAT)));
+
+                    String carbo = String.format("%.1f",c.getFloat(
+                            c.getColumnIndex(DbDiary.ALIAS_CARBO)));
+                    String prot = String.format("%.1f", c.getFloat(
+                            c.getColumnIndex(DbDiary.ALIAS_PROT)));
+                    String fat = String.format("%.1f", c.getFloat(
+                            c.getColumnIndex(DbDiary.ALIAS_FAT)));
+
+
+                    group_carbo.setText(carbo);
+                    group_prot.setText(prot);
+                    group_fat.setText(fat);
                 }
             } while (c.moveToNext());
         }
@@ -135,12 +145,26 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         //Калории без дробной части
         int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
 
+        String carbo = String.format("%.1f",cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
+        String prot = String.format("%.1f", cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
+        String fat = String.format("%.1f", cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+
         holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME)));
         holder.cal.setText(Integer.toString(cal));
-        holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
-        holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
-        holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
-        holder.serving.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))+" гр");
+        holder.carbo.setText(carbo);
+        holder.prot.setText(prot);
+        holder.fat.setText(fat);
+
+        holder.serving.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
+                + " гр.");
+
+        //holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
+        //holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
+        //holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+
 
         long dateTime = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_RECORD_DATETIME));
         calendar.setTimeInMillis(dateTime);

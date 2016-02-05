@@ -50,12 +50,13 @@
         android:textSize="25dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:maxLength="4" />
+        android:layout_marginRight="5dp" />
 
-    <TextView style="?android:textAppearanceListItemSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="4"
+        android:textColor="#424242"
         android:id="@+id/txtGroupFat"
         android:textSize="18dp"
         android:maxLength="5"
@@ -76,10 +77,11 @@
         android:id="@+id/view"
         android:layout_marginBottom="5dp" />
 
-    <TextView style="?android:textAppearanceListItemSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99999"
+        android:textColor="#424242"
         android:id="@+id/txtGroupProt"
         android:textSize="18dp"
         android:maxLength="5"
@@ -101,10 +103,11 @@
         android:layout_alignParentRight="true"
         android:id="@+id/view2" />
 
-    <TextView style="?android:textAppearanceListItemSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="99999"
+        android:textColor="#424242"
         android:id="@+id/txtGroupCarbo"
         android:textSize="18dp"
         android:layout_alignParentRight="false"

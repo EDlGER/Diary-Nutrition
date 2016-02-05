@@ -146,8 +146,36 @@ public class AddActivity extends AppCompatActivity implements
         cursor = AppContext.getDbDiary().getAllFood();
         foodAdapter = new FoodAdapter(this, R.layout.food_item1, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
+        invalidateOptionsMenu();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.activity_add_search, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter) listFood.getAdapter();
+                filterAdapter.getFilter().filter(newText.toString());
+                return true;
+            }
+        });
+
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -259,16 +287,25 @@ public class AddActivity extends AppCompatActivity implements
                 builder1.setPositiveButton(R.string.dialog_add_f,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                Toast toast;
+
                                 if (txtNameF.getText().toString().matches("") ||
                                         txtCalF.getText().toString().matches("") ||
                                         txtCarboF.getText().toString().matches("") ||
                                         txtProtF.getText().toString().matches("") ||
-                                        txtFatF.getText().toString().matches("") ){
-                                    Toast toast = Toast.makeText(getApplicationContext(),
+                                        txtFatF.getText().toString().matches("") ) {
+                                    toast = Toast.makeText(getApplicationContext(),
                                             "Не все поля заполнены",Toast.LENGTH_SHORT);
                                     toast.show();
-                                }
-                                else {
+                                } else if ((txtCalF.getText().toString().compareTo(".") == 0) ||
+                                        (txtCarboF.getText().toString().compareTo(".") == 0) ||
+                                        (txtProtF.getText().toString().compareTo(".") == 0) ||
+                                        (txtFatF.getText().toString().compareTo(".") == 0)) {
+                                    toast = Toast.makeText(getApplicationContext(),
+                                            "Одно или несколько полей содежат неправильный формат числа",
+                                            Toast.LENGTH_SHORT);
+                                    toast.show();
+                                } else {
                                     AppContext.getDbDiary().addFood(txtNameF.getText().toString(),
                                             Float.parseFloat(txtCalF.getText().toString()),
                                             Float.parseFloat(txtCarboF.getText().toString()),

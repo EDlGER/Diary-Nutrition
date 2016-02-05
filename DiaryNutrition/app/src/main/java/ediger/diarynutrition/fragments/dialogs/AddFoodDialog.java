@@ -36,16 +36,25 @@ public class AddFoodDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Toast toast;
+
                         if (txtNameF.getText().toString().matches("") ||
                                 txtCalF.getText().toString().matches("") ||
                                 txtCarboF.getText().toString().matches("") ||
                                 txtProtF.getText().toString().matches("") ||
-                                txtFatF.getText().toString().matches("") ){
-                            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                                txtFatF.getText().toString().matches("") ) {
+                            toast = Toast.makeText(getActivity().getApplicationContext(),
                                     "Не все поля заполнены",Toast.LENGTH_SHORT);
                             toast.show();
-                        }
-                        else {
+                        } else if ((txtCalF.getText().toString().compareTo(".") == 0) ||
+                                (txtCarboF.getText().toString().compareTo(".") == 0) ||
+                                (txtProtF.getText().toString().compareTo(".") == 0) ||
+                                (txtFatF.getText().toString().compareTo(".") == 0)) {
+                            toast = Toast.makeText(getActivity().getApplicationContext(),
+                                    "Одно или несколько полей содежат неправильный формат числа",
+                                    Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else {
                             AppContext.getDbDiary().addFood(txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
                                     Float.parseFloat(txtCarboF.getText().toString()),

@@ -1,17 +1,24 @@
 package ediger.diarynutrition.fragments;
 
 
+import android.app.SearchManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SimpleCursorAdapter;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
+import ediger.diarynutrition.fragments.tabs.FoodTab;
 
 /**
  * Created by Ediger on 03.05.2015.
@@ -55,4 +62,5 @@ public class FoodFragment extends Fragment {
 
         return rootview;
     }
+
 }

@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity
         anim.setInterpolator(new LinearInterpolator());
         anim.setFillAfter(true);
         anim.setFillEnabled(true);
-        anim.setDuration(300);
+        anim.setDuration(150);
         arrow.startAnimation(anim);
         mAppBarLayout.setExpanded(false, true);
         isExpanded = false;

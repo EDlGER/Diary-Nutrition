@@ -1,6 +1,7 @@
 package ediger.diarynutrition.fragments.tabs;
 
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +20,12 @@ import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -49,7 +52,7 @@ import ediger.diarynutrition.objects.AppContext;
 public class FoodTab extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>{
     View rootview;
-    private ListView listFood;
+    public ListView listFood;
     private Cursor cursor;
     private FoodAdapter foodAdapter;
     private EditText txtSearch;
@@ -183,7 +186,7 @@ public class FoodTab extends Fragment implements
 
         }
     };
-
+/*
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -206,7 +209,7 @@ public class FoodTab extends Fragment implements
                 return true;
             }
         });
-    }
+    }*/
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
