@@ -23,7 +23,6 @@ public class ChangeFoodDialog extends DialogFragment {
 
         View relative1 = getActivity().getLayoutInflater().inflate(R.layout.add_f_dialog, null);
         builder1.setView(relative1);
-        builder1.setTitle(R.string.dialog_tittle_f);
 
         final EditText txtNameF = (EditText) relative1.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative1.findViewById(R.id.txtCalF);

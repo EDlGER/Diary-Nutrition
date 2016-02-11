@@ -73,10 +73,10 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fl_listFood"
+        android:id="@+id/listFood"
         android:nestedScrollingEnabled="false"
         android:textFilterEnabled="true"
-        android:background="@drawable/list_view"
+        android:background="#FFFFFF"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/infoDivider"/>
 
@@ -88,7 +88,7 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_plus"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/fl_listFood"
-        android:layout_alignEnd="@+id/fl_listFood"/>
+        android:layout_alignRight="@+id/listFood"
+        android:layout_alignEnd="@+id/listFood" />
 
 </RelativeLayout>

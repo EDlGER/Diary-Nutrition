@@ -3,8 +3,7 @@
     <string name="act_add">Добавление продукта</string>
 
     <string name="title_sec1">Дневник</string>
-    <string name="title_sec2">Мои продукты</string>
-    <string name="title_sec3">Настройки</string>
+    <string name="title_sec2">Настройки</string>
     <string name="tittle_search">Поиск продукта</string>
 
     <string name="record_card_info1">Запланировано</string>

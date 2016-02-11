@@ -33,5 +33,17 @@
                 android:value=".MainActivity"/>
         </activity>
 
+        <activity
+            android:name=".fragments.AddActivityNew"
+            android:label="@string/act_add"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"></action>
+            </intent-filter>
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
+
     </application>
 </manifest>

@@ -219,13 +219,9 @@ public class MainActivity extends AppCompatActivity
                 fragment = new DiaryFragment();
                 setTitle(getString(R.string.title_sec1));
                 break;
-            case R.id.nav_food:
-                fragment = new FoodFragment();
-                setTitle(getString(R.string.title_sec2));
-                break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
-                setTitle(getString(R.string.title_sec3));
+                setTitle(getString(R.string.title_sec2));
                 break;
         }
 

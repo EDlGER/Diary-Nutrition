@@ -146,7 +146,14 @@ public class AddActivity extends AppCompatActivity implements
         cursor = AppContext.getDbDiary().getAllFood();
         foodAdapter = new FoodAdapter(this, R.layout.food_item1, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
-        invalidateOptionsMenu();
+        listFood.setTextFilterEnabled(true);
+        //Поиск
+        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getFilterList(constraint);
+            }
+        });
 
     }
 
@@ -355,11 +362,6 @@ public class AddActivity extends AppCompatActivity implements
         @Override
         public  Cursor loadInBackground(){
             Cursor cursor = db.getAllFood();
-            try{
-                TimeUnit.MILLISECONDS.sleep(1);
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
             return cursor;
         }
     }

@@ -24,7 +24,6 @@ public class AddFoodDialog extends DialogFragment {
 
         View relative = getActivity().getLayoutInflater().inflate(R.layout.add_f_dialog,null);
         builder.setView(relative);
-        builder.setTitle(R.string.dialog_tittle_f);
 
         final EditText txtNameF = (EditText) relative.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative.findViewById(R.id.txtCalF);
