@@ -1,14 +1,16 @@
 package ediger.diarynutrition.adapters;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import ediger.diarynutrition.fragments.tabs.FavorTab;
 import ediger.diarynutrition.fragments.tabs.FoodTab;
+import ediger.diarynutrition.fragments.tabs.SearchTab;
 
-
+/**
+ * Created by root on 07.02.16.
+ */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
@@ -18,10 +20,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public ViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb) {
         super(fm);
-
         this.Titles = mTitles;
         this.NumbOfTabs = mNumbOfTabsumb;
-
     }
 
     //This method return the fragment for the every position in the View Pager
@@ -30,14 +30,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            FoodTab tab1 = new FoodTab();
-
+            SearchTab tab1 = new SearchTab();
             return tab1;
-        }
-        else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-        {
-            FavorTab tab2 = new FavorTab();
+        } else if(position == 1) {
+            FoodTab tab2 = new FoodTab();
             return tab2;
+        } else {
+            FavorTab tab3 = new FavorTab();
+            return tab3;
         }
 
     }

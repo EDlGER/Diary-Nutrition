@@ -1,85 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ediger.diarynutrition.fragments.AddActivity"
-    android:background="@color/colorPrimary">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation = "horizontal"
+    <ediger.diarynutrition.SlidingTabLayout
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:id="@+id/linearLayout"
-        android:gravity="right"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="56dp"
+        android:translationZ="0.5dp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:id="@+id/info_carbo"
-            android:text="@string/record_carbo"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_prot"
-            android:text="@string/record_prot"
-            android:layout_gravity="right"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_fat"
-            android:text="@string/record_fat"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="30dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_cal"
-            android:text="@string/record_cal"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-    </LinearLayout>
-
-    <View
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/shadow_bottom"
-        android:id="@+id/infoDivider"
-        android:layout_below="@+id/linearLayout" />
+        android:layout_weight="1"
+        ></android.support.v4.view.ViewPager>
 
-    <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listFood"
-        android:nestedScrollingEnabled="false"
-        android:textFilterEnabled="true"
-        android:background="#FFFFFF"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/infoDivider"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_plus"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/listFood"
-        android:layout_alignEnd="@+id/listFood" />
-
-</RelativeLayout>
+</FrameLayout>

@@ -27,7 +27,8 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import ediger.diarynutrition.fragments.AddActivityNew;
+import ediger.diarynutrition.fragments.AddActivity;
+import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
@@ -44,6 +45,7 @@ public class FoodTab extends Fragment implements
     public ListView listFood;
     private Cursor cursor;
     private FoodAdapter foodAdapter;
+    private long addid;
 
     String[] from;
     int[] to = {
@@ -54,13 +56,18 @@ public class FoodTab extends Fragment implements
             R.id.txt_f_fat
     };
     private static final int LOADER_ID = -3;
-    private static final int REQ_CODE_CHANGE = 1;
+    private static final int REQ_CODE_ADD = 1;
     private static final int REQ_CODE_ADD_FOOD = 2;
+    private static final int REQ_CODE_CHANGE = 3;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 || requestCode == 2){
+
+        if (requestCode == 1) {
+            AddActivity addActivity = (AddActivity)getActivity();
+            addActivity.finish();
+        } else if (requestCode == 2 || requestCode == 3){
                 cursor = AppContext.getDbDiary().getUserFood();
                 from = AppContext.getDbDiary().getListFood();
                 foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
@@ -73,7 +80,6 @@ public class FoodTab extends Fragment implements
                     }
                 });
                 getLoaderManager().getLoader(LOADER_ID).forceLoad();
-
         }
     }
 
@@ -95,7 +101,7 @@ public class FoodTab extends Fragment implements
         toolbar.setElevation(0);
         setHasOptionsMenu(true);
 
-        AddActivityNew activity = (AddActivityNew) getActivity();
+        AddActivity activity = (AddActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -116,6 +122,23 @@ public class FoodTab extends Fragment implements
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
         listFood = (ListView) rootview.findViewById(R.id.fl_listFood);
+
+        listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                addid = id;
+                Bundle bundle = new Bundle();
+                bundle.putLong("id", addid);
+
+                DialogFragment a = new AddDialog();
+                a.setTargetFragment(FoodTab.this, REQ_CODE_ADD);
+                a.setArguments(bundle);
+                a.show(getFragmentManager(), "add_dialog");
+            }
+        });
+
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
         registerForContextMenu(listFood);

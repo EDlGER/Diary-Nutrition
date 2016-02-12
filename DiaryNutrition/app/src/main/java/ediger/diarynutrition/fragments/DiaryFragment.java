@@ -5,7 +5,6 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,7 +27,6 @@ import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.fragments.dialogs.DateDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 import android.support.v4.app.LoaderManager;
@@ -93,7 +89,7 @@ public class DiaryFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 //Intent addIntent = new Intent(getActivity(), AddActivity.class);
-                Intent addIntent = new Intent(getActivity(), AddActivityNew.class);
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 addIntent.putExtra("CurrentCal", date);
                 startActivity(addIntent);
             }

@@ -63,7 +63,7 @@ public class ChangeFoodDialog extends DialogFragment {
                                     Float.parseFloat(txtProtF.getText().toString()),
                                     Float.parseFloat(txtFatF.getText().toString()));
 
-                            getTargetFragment().onActivityResult(1,1,null);
+                            getTargetFragment().onActivityResult(3,1,null);
                         }
                     }
                 });

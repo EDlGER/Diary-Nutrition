@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -24,21 +22,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
 
-
-import java.util.Calendar;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.AddActivity;
-import ediger.diarynutrition.fragments.AddActivityNew;
 import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
@@ -76,7 +68,7 @@ public class SearchTab extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            AddActivityNew addActivity = (AddActivityNew)getActivity();
+            AddActivity addActivity = (AddActivity)getActivity();
             addActivity.finish();
         } else if (requestCode == 2){
             cursor = AppContext.getDbDiary().getAllFood();
@@ -106,7 +98,7 @@ public class SearchTab extends Fragment implements
         toolbar.setElevation(0);
         setHasOptionsMenu(true);
 
-        AddActivityNew activity = (AddActivityNew) getActivity();
+        AddActivity activity = (AddActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

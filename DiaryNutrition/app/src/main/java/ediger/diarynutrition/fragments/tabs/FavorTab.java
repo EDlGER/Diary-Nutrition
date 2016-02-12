@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 
 import ediger.diarynutrition.R;
-import ediger.diarynutrition.fragments.AddActivityNew;
+import ediger.diarynutrition.fragments.AddActivity;
 
 /**
  * Created by root on 05.09.15.
@@ -28,7 +28,7 @@ public class FavorTab extends Fragment {
         toolbar.setElevation(0);
         setHasOptionsMenu(true);
 
-        AddActivityNew activity = (AddActivityNew) getActivity();
+        AddActivity activity = (AddActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
