@@ -2,18 +2,18 @@ package ediger.diarynutrition.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 
-import java.util.Locale;
-
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.objects.AppContext;
 
 /**
  * Created by root on 30.05.15.
@@ -37,11 +37,12 @@ public class FoodAdapter extends SimpleCursorAdapter {
         View view = layoutInflater.inflate(R.layout.food_item1,parent,false);
 
         ViewHolder holder = new ViewHolder();
-        holder.food_name1 = (TextView) view.findViewById(R.id.txt_f_name);
-        holder.carbo1 = (TextView) view.findViewById(R.id.txt_f_carbo);
-        holder.prot1 = (TextView) view.findViewById(R.id.txt_f_prot);
-        holder.fat1 = (TextView) view.findViewById(R.id.txt_f_fat);
-        holder.cal1 = (TextView) view.findViewById(R.id.txt_f_cal);
+        holder.food_name = (TextView) view.findViewById(R.id.txt_f_name);
+        holder.carbo = (TextView) view.findViewById(R.id.txt_f_carbo);
+        holder.prot = (TextView) view.findViewById(R.id.txt_f_prot);
+        holder.fat = (TextView) view.findViewById(R.id.txt_f_fat);
+        holder.cal = (TextView) view.findViewById(R.id.txt_f_cal);
+        holder.favor = (ImageView) view.findViewById(R.id.star_view);
 
         view.setTag(holder);
 
@@ -52,20 +53,29 @@ public class FoodAdapter extends SimpleCursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        holder.food_name1.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_NAME)));
-        holder.cal1.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CAL)));
-        holder.carbo1.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CARBO)));
-        holder.prot1.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_PROT)));
-        holder.fat1.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_FAT)));
+        int fav = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_F_FAV));
+
+        if (fav == 1) {
+            holder.favor.setVisibility(View.VISIBLE);
+        } else {
+            holder.favor.setVisibility(View.INVISIBLE);
+        }
+
+        holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_NAME)));
+        holder.cal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CAL)));
+        holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CARBO)));
+        holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_PROT)));
+        holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_FAT)));
 
     }
 
     private class ViewHolder {
-        public TextView food_name1;
-        public TextView cal1;
-        public TextView carbo1;
-        public TextView prot1;
-        public TextView fat1;
+        public TextView food_name;
+        public TextView cal;
+        public TextView carbo;
+        public TextView prot;
+        public TextView fat;
+        public ImageView favor;
     }
 
 }

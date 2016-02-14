@@ -59,7 +59,7 @@ public class DbDiary {
     public static String ALIAS_CARBO="carbo";
     public static String ALIAS_PROT="prot";
     public static String ALIAS_FAT="fat";
-    //public static String ALIAS_FAV="favor";
+    public static String ALIAS_FAV="favor";
 
 
     public static String ALIAS_F_NAME="food_name";
@@ -114,7 +114,7 @@ public class DbDiary {
                 + " FROM record r"
                 + " inner join food f on r.food_id=f._id"
                 + " where r.record_datetime between ? and ?";
-        return db.rawQuery(sql,new String[]{arg1,arg2});
+        return db.rawQuery(sql, new String[]{arg1, arg2});
     }
     public Cursor getGroupData(long date){
         String arg1 = Long.toString(date);
@@ -212,13 +212,30 @@ public class DbDiary {
         return  db.rawQuery(sql,null);
     }
 
+    public Cursor getFavorFood(){
+        String sql = "select "
+                + "f._id as "+ALIAS_ID_FOOD
+                + ",f.[food_name] as "+ALIAS_F_NAME
+                + ",f.[cal] as "+ALIAS_F_CAL
+                + ",f.[carbo] as "+ALIAS_F_CARBO
+                + ",f.[prot] as "+ALIAS_F_PROT
+                + ",f.[fat] as "+ALIAS_F_FAT
+                + ",f.[favor] as "+ALIAS_F_FAV
+                + ",f.[usr] as "+ALIAS_F_USR
+                + " from food f "
+                + " where f.[favor] = 1"
+                + " order by f.food_name asc";
+        return  db.rawQuery(sql,null);
+    }
+
     public String[] getListFood() {
         String[] listFood = {
                 ALIAS_F_NAME,
                 ALIAS_F_CAL,
                 ALIAS_F_CARBO,
                 ALIAS_F_PROT,
-                ALIAS_FAT
+                ALIAS_FAT,
+                ALIAS_F_FAV
         };
         return listFood;
     }
@@ -229,7 +246,8 @@ public class DbDiary {
                 ALIAS_F_CAL,
                 ALIAS_F_CARBO,
                 ALIAS_F_PROT,
-                ALIAS_FAT
+                ALIAS_FAT,
+                ALIAS_F_FAV
         };
         return listFood;
     }
@@ -312,7 +330,7 @@ public class DbDiary {
             db.update(TABLE_FOOD, cv, where, null);
         }
         else {
-            db.delete(TABLE_FOOD,ALIAS_ID_FOOD +" = "+ id,null);
+            db.delete(TABLE_FOOD,ALIAS_ID_FOOD + " = " + id,null);
         }
         usr.close();
     }
@@ -335,6 +353,28 @@ public class DbDiary {
         cv.put(ALIAS_DATE,date);
         String where = "_id = 1";
         db.update(TABLE_DATE,cv,where,null);
+    }
+
+    public int getFavor(long id) {
+        int res = 0;
+
+        String sql = "select "
+                + "f.favor "
+                + "from food f "
+                + "where r._id = ?";
+        Cursor fav = db.rawQuery(sql, new String[]{"" + id});
+        fav.moveToFirst();
+        res = fav.getInt(0);
+        fav.close();
+
+        return res;
+    }
+
+    public void setFavor(long id, int state) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_FAV,state);
+        String where = ALIAS_ID_FOOD + " = " + id;
+        db.update(TABLE_FOOD,cv,where,null);
     }
 
     private class DbHelper extends SQLiteOpenHelper {

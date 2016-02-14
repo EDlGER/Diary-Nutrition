@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import ediger.diarynutrition.fragments.AddActivity;
 import ediger.diarynutrition.fragments.dialogs.AddDialog;
@@ -40,7 +41,7 @@ import ediger.diarynutrition.objects.AppContext;
  * Created by root on 05.09.15.
  */
 public class FoodTab extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<Cursor> {
     View rootview;
     public ListView listFood;
     private Cursor cursor;
@@ -87,8 +88,8 @@ public class FoodTab extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-
-        getLoaderManager().restartLoader(LOADER_ID, null, this);
+        getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        //getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -208,13 +209,14 @@ public class FoodTab extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,1,0,R.string.context_menu_change);
+        menu.add(0, 1, 0, R.string.context_menu_change);
         menu.add(0,2,0,R.string.context_menu_del);
+        menu.add(0,3,0,R.string.context_menu_favor);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getItemId() == 1){
+        if(item.getItemId() == 1) {
             DialogFragment c = new ChangeFoodDialog();
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
@@ -226,12 +228,21 @@ public class FoodTab extends Fragment implements
             getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
         }
-        if(item.getItemId() == 2){
+        if(item.getItemId() == 2) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().delFood(acmi.id);
             getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
+        }
+        if (item.getItemId() == 3) {
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
+                    .getMenuInfo();
+
+            AppContext.getDbDiary().setFavor(acmi.id,1);
+            getLoaderManager().getLoader(-2).forceLoad();
+            return true;
+
         }
         return super.onContextItemSelected(item);
     }

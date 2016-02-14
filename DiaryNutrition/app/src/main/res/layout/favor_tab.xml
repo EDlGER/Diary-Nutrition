@@ -70,27 +70,15 @@
         android:id="@+id/infoDivider"
         android:layout_below="@+id/linearLayout" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:id="@+id/test"
-        android:layout_below = "@+id/infoDivider"
-        android:layout_alignParentRight="false">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="В разработке"
-            android:id="@+id/textView3"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/white"
-            android:textSize="40sp"
-            android:layout_gravity="center" />
-
-    </FrameLayout>
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fl_listFood"
+        android:nestedScrollingEnabled="false"
+        android:textFilterEnabled="true"
+        android:background="@drawable/list_view"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/infoDivider"/>
 
 
 </RelativeLayout>

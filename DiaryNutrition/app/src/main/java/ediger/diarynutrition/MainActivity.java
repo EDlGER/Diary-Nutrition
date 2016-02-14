@@ -69,6 +69,13 @@ public class MainActivity extends AppCompatActivity
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 hideKeyboard();
             }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                if (isExpanded) {
+                    hideCalendarView();
+                }
+            }
         };
         drawer.setDrawerListener(toggle);
         toggle.syncState();

@@ -27,6 +27,10 @@ public class AddDialog extends DialogFragment {
     private Calendar now = Calendar.getInstance();
     private int nowHour = now.get(Calendar.HOUR_OF_DAY);
     private int nowMin = now.get(Calendar.MINUTE);
+    private EditText servPicker;
+    private NumberPicker hourPicker;
+    private NumberPicker minPicker;
+    private Spinner mealPicker;
 
     @NonNull
     @Override
@@ -36,11 +40,12 @@ public class AddDialog extends DialogFragment {
 
         View relative = getActivity().getLayoutInflater().inflate(R.layout.add_dialog, null);
         builder.setView(relative);
-        //builder.setTitle(R.string.dialog_title);
-        final EditText servPicker = (EditText) relative.findViewById(R.id.txtAddServ);
-        final NumberPicker hourPicker = (NumberPicker) relative.findViewById(R.id.hourPicker);
-        final NumberPicker minPicker = (NumberPicker) relative.findViewById(R.id.minutePicker);
-        final Spinner mealPicker = (Spinner) relative.findViewById(R.id.spMeal);
+
+        servPicker = (EditText) relative.findViewById(R.id.txtAddServ);
+        hourPicker = (NumberPicker) relative.findViewById(R.id.hourPicker);
+        minPicker = (NumberPicker) relative.findViewById(R.id.minutePicker);
+        mealPicker = (Spinner) relative.findViewById(R.id.spMeal);
+
 
         servPicker.setText(R.string.dialog_serv_std);
 
@@ -73,19 +78,26 @@ public class AddDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Cursor cursor = AppContext.getDbDiary().getDate();
-                        cursor.moveToFirst();
-                        long cal = cursor.getLong(0);
-                        Calendar date = Calendar.getInstance();
-                        Bundle bundle = getArguments();
-                        long addtime;
                         int addserv;
-                        long addid = bundle.getLong("id");
+                        long cal;
+                        long addtime;
+                        long addid;
+                        Calendar date;
+                        Cursor cursor = AppContext.getDbDiary().getDate();
+
+                        cursor.moveToFirst();
+                        cal = cursor.getLong(0);
+                        cursor.close();
+
+                        date = Calendar.getInstance();
+                        Bundle bundle = getArguments();
+
+                        addid = bundle.getLong("id");
 
 
-                        if (servPicker.getText().toString().matches("")){
+                        if (servPicker.getText().toString().matches("")) {
                             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Значение порции не введено",Toast.LENGTH_SHORT);
+                                    R.string.message_serving,Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             date.setTimeInMillis(cal);

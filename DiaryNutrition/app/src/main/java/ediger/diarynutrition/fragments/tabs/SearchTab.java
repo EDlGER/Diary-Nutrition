@@ -15,6 +15,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 
 import ediger.diarynutrition.R;
@@ -141,6 +143,7 @@ public class SearchTab extends Fragment implements
         });
         listFood.setTextFilterEnabled(true);
         listFood.setAdapter(foodAdapter);
+        registerForContextMenu(listFood);
         //Поиск
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
@@ -169,6 +172,27 @@ public class SearchTab extends Fragment implements
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name like ? ",
                     new String[]{value},null,null,null);
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0,5,0,R.string.context_menu_favor);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == 5) {
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
+                    .getMenuInfo();
+
+            AppContext.getDbDiary().setFavor(acmi.id,1);
+            getLoaderManager().getLoader(-2).forceLoad();
+            return true;
+
+
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override

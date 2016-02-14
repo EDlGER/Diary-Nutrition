@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:paddingLeft="16dp"
+    android:paddingLeft="8dp"
     android:paddingRight="16dp"
     android:paddingTop="5dp"
     android:background="@android:color/white">
@@ -15,9 +15,8 @@
         android:maxLength="25"
         android:id="@+id/txt_f_name"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_toRightOf="@+id/star_view"
         android:layout_toLeftOf="@+id/txt_f_cal" />
 
     <TextView
@@ -86,5 +85,15 @@
         android:layout_toLeftOf="@+id/view2"
         android:layout_toStartOf="@+id/view2"
         android:layout_marginRight="5dp" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/star_view"
+        android:src="@mipmap/ic_star"
+        android:layout_alignBottom="@+id/txt_f_cal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-5dp" />
 
 </RelativeLayout>

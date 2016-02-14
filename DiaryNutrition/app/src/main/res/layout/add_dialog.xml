@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/txtLTime"
         android:layout_alignStart="@+id/txtLTime"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/accent_material_light" />
 
     <TextView

@@ -43,6 +43,10 @@
 
     <string name="context_menu_del">Удалить</string>
     <string name="context_menu_change">Изменить</string>
+    <string name="context_menu_favor">В избранное</string>
+    <string name="context_menu_favor_del">Убрать</string>
+    
+    <string name="message_serving">Значение порции не введено</string>
 
     <string name="add_food">Добавить продукт</string>
 
