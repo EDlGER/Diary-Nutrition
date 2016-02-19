@@ -55,7 +55,7 @@
                         android:text="@string/record_card_info1"
                         android:textSize="15sp"
                         android:textColor="@color/colorPrimary"
-                        android:layout_span="9"
+                        android:layout_span="8"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
@@ -72,33 +72,33 @@
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:gravity="center_horizontal"
-                        android:maxLength="4" />
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cardProt1"
-                        android:text="30"
+                        android:text="999"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
                         android:gravity="center_horizontal"
-                        android:maxLength="4" />
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/cardFat1"
-                        android:text="20"
+                        android:text="999"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
                         android:gravity="center_horizontal"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
                         android:layout_marginBottom="1dp"
-                        android:maxLength="4" />
+                        android:maxLength="3" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,9 +123,9 @@
                         android:text="@string/record_card_info2"
                         android:textSize="15sp"
                         android:textColor="@color/colorPrimary"
-                        android:layout_span="9"
                         android:background="#FFFFFF"
-                        android:layout_marginRight="1dp" />
+                        android:layout_marginRight="1dp"
+                        android:layout_span="8" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                         android:textColor="@color/colorPrimary"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
-                        android:maxLength="4"
+                        android:maxLength="3"
                         android:gravity="center" />
 
                     <TextView
@@ -148,7 +148,7 @@
                         android:textColor="@color/colorPrimary"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
-                        android:maxLength="4"
+                        android:maxLength="3"
                         android:gravity="center" />
 
                     <TextView
@@ -160,7 +160,8 @@
                         android:textColor="@color/colorPrimary"
                         android:background="#FFFFFF"
                         android:layout_marginRight="1dp"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        android:maxLength="3" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -201,7 +202,7 @@
                 android:text="@string/record_carbo"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="23dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -211,7 +212,7 @@
                 android:layout_gravity="right"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="30dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -220,7 +221,7 @@
                 android:text="@string/record_fat"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="30dp" />
+                android:layout_marginRight="35dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -250,7 +251,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
-        android:background="@drawable/list_view"
+        android:background="@color/listview_background"
         android:longClickable="true"
         android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"

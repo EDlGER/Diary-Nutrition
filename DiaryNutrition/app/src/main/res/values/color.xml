@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFC107</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="cardview_initial_background">#FFFFFF</color>
+    <color name="listview_background">#EEEEEE</color>
 </resources>

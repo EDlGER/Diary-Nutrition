@@ -42,6 +42,12 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class FoodTab extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int LOADER_ID = -3;
+    private static final int REQ_CODE_ADD = 1;
+    private static final int REQ_CODE_ADD_FOOD = 2;
+    private static final int REQ_CODE_CHANGE = 3;
+
     View rootview;
     public ListView listFood;
     private Cursor cursor;
@@ -56,10 +62,7 @@ public class FoodTab extends Fragment implements
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
-    private static final int LOADER_ID = -3;
-    private static final int REQ_CODE_ADD = 1;
-    private static final int REQ_CODE_ADD_FOOD = 2;
-    private static final int REQ_CODE_CHANGE = 3;
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -210,8 +213,8 @@ public class FoodTab extends Fragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, 1, 0, R.string.context_menu_change);
-        menu.add(0,2,0,R.string.context_menu_del);
-        menu.add(0,3,0,R.string.context_menu_favor);
+        menu.add(0, 2, 0, R.string.context_menu_del);
+        menu.add(0, 3, 0, R.string.context_menu_favor);
     }
 
     @Override
@@ -240,7 +243,7 @@ public class FoodTab extends Fragment implements
                     .getMenuInfo();
 
             AppContext.getDbDiary().setFavor(acmi.id,1);
-            getLoaderManager().getLoader(-2).forceLoad();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
 
         }

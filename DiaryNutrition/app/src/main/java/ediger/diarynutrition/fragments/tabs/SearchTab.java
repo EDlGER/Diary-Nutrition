@@ -47,6 +47,7 @@ public class SearchTab extends Fragment implements
 
     private static final int REQ_CODE_ADD = 1;
     private static final int REQ_CODE_ADD_FOOD = 2;
+    private static final int LOADER_ID = -2;
 
     private ListView listFood;
     private Cursor cursor;
@@ -84,7 +85,7 @@ public class SearchTab extends Fragment implements
                     return getFilterList(constraint);
                 }
             });
-            getLoaderManager().getLoader(-2).forceLoad();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
         }
     }
 
@@ -152,7 +153,7 @@ public class SearchTab extends Fragment implements
             }
         });
 
-        getLoaderManager().initLoader(-2, null, this);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         
 
         return rootview;
@@ -177,17 +178,17 @@ public class SearchTab extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,5,0,R.string.context_menu_favor);
+        menu.add(0,1,0,R.string.context_menu_favor);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == 5) {
+        if (item.getItemId() == 1) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
 
             AppContext.getDbDiary().setFavor(acmi.id,1);
-            getLoaderManager().getLoader(-2).forceLoad();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
 
 

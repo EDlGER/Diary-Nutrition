@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.content.Loader;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     private DiaryFragment mFragment;
     private MainActivity mActivity;
+    private Context mContext;
 
     protected final HashMap<Integer, Integer> mGroupMap;
 
@@ -35,6 +38,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                          String[] groupFrom, int[] groupTo, int childLayout,
                          String[] childFrom, int[] childTo) {
         super(context, cursor, groupLayout, groupFrom, groupTo, childLayout, childFrom, childTo);
+        mContext = context;
         mActivity = (MainActivity) context;
         mFragment = df;
         this.layoutInflater = layoutInflater.from(context);
@@ -60,8 +64,32 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         long date = cursor.getLong(0);
         cursor.close();
 
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
+        if (view == null ) {
+                view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
+        }
+
+        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.group_layout);
+        View divider = view.findViewById(R.id.child_divider);
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) relative.getLayoutParams();
+
+        Resources r = mContext.getResources();
+        int pxSide = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 8,
+                r.getDisplayMetrics() );
+        int pxBottomCol = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 4,
+                r.getDisplayMetrics() );
+        int pxBottomExp = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, -3,
+                r.getDisplayMetrics() );
+
+
+        if((!isExpanded) || (getChildrenCount(groupPosition) == 0)) {
+            params.setMargins(pxSide,0,pxSide,pxBottomCol);
+            relative.setLayoutParams(params);
+            divider.setVisibility(View.INVISIBLE);
+        } else if ((isExpanded) && (getChildrenCount(groupPosition) != 0)) {
+            params.setMargins(pxSide,0,pxSide,pxBottomExp);
+            relative.setLayoutParams(params);
+            divider.setVisibility(View.VISIBLE);
         }
 
         TextView group_name = (TextView) view.findViewById(R.id.txt_meal);
@@ -110,6 +138,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         return view;
     }
 
+
     @Override
     public View newChildView(Context context, Cursor cursor,boolean isLastChild, ViewGroup parent) {
 
@@ -123,7 +152,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.cal = (TextView) view.findViewById(R.id.txt_cal);
         holder.time = (TextView) view.findViewById(R.id.txt_time);
         holder.serving = (TextView) view.findViewById(R.id.txt_serving);
-        holder.shadow = view.findViewById(R.id.shadow);
 
         view.setTag(holder);
 
@@ -136,11 +164,20 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
     public void bindChildView(View view, Context context, Cursor cursor, boolean isLastChild) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        if (isLastChild) {
-            holder.shadow.setVisibility(View.VISIBLE);
-        } else {
-            holder.shadow.setVisibility(View.INVISIBLE);
-        }
+        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.list_item_layout);
+        View divider = view.findViewById(R.id.child_divider2);
+
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) relative.getLayoutParams();
+
+        Resources r = mContext.getResources();
+        int pxSide = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, 8,
+                r.getDisplayMetrics() );
+        int pxTop = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, -2,
+                r.getDisplayMetrics() );
+        int pxBottom = (int) TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, -2,
+                r.getDisplayMetrics() );
+        int pxBottomLast = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
+                r.getDisplayMetrics());
 
         //Калории без дробной части
         int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
@@ -151,6 +188,16 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                 cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
         String fat = String.format("%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+
+        if (isLastChild) {
+            params.setMargins(pxSide,pxTop,pxSide,pxBottomLast);
+            relative.setLayoutParams(params);
+            divider.setVisibility(View.INVISIBLE);
+        } else {
+            params.setMargins(pxSide,pxTop,pxSide,pxBottom);
+            relative.setLayoutParams(params);
+            divider.setVisibility(View.VISIBLE);
+        }
 
         holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME)));
         holder.cal.setText(Integer.toString(cal));
@@ -207,6 +254,5 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         public TextView fat;
         public TextView time;
         public TextView serving;
-        public View shadow;
     }
 }

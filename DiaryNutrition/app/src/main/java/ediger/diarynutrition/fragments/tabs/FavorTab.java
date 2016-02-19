@@ -38,6 +38,10 @@ import ediger.diarynutrition.objects.AppContext;
  * Created by root on 05.09.15.
  */
 public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int LOADER_ID = -4;
+    private static final int REQ_CODE_ADD = 1;
+
     View rootview;
 
     public ListView listFood;
@@ -53,9 +57,6 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
-
-    private static final int LOADER_ID = -4;
-    private static final int REQ_CODE_ADD = 1;
 
 
     @Override
@@ -148,12 +149,12 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, 4, 0, R.string.context_menu_favor_del);
+        menu.add(0, 1, 0, R.string.context_menu_favor_del);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == 4) {
+        if (item.getItemId() == 1) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().setFavor(acmi.id,0);
