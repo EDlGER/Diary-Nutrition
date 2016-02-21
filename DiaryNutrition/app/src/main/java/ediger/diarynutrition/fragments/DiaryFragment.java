@@ -88,7 +88,6 @@ public class DiaryFragment extends Fragment implements
         mainActivity.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 addIntent.putExtra("CurrentCal", date);
                 startActivity(addIntent);

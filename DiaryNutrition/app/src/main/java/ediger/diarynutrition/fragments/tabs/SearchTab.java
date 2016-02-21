@@ -13,6 +13,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -26,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 
 import ediger.diarynutrition.R;
@@ -96,24 +96,14 @@ public class SearchTab extends Fragment implements
         rootview = inflater.inflate(R.layout.search_tab, container, false);
 
         Toolbar toolbar = (Toolbar) rootview.findViewById(R.id.toolbar1);
-
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         toolbar.setElevation(0);
+
         setHasOptionsMenu(true);
 
         AddActivity activity = (AddActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        FloatingActionButton fab = (FloatingActionButton) rootview.findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                DialogFragment a = new AddFoodDialog();
-                a.setTargetFragment(SearchTab.this, REQ_CODE_ADD_FOOD);
-                a.show(getFragmentManager(), "add_dialog");
-            }
-        });
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
@@ -201,18 +191,24 @@ public class SearchTab extends Fragment implements
         switch(item.getItemId()){
             case android.R.id.home:
                 getActivity().onBackPressed();
+                break;
+            case R.id.action_add:
+                DialogFragment a = new AddFoodDialog();
+                a.setTargetFragment(SearchTab.this, REQ_CODE_ADD_FOOD);
+                a.show(getFragmentManager(), "add_dialog");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        getActivity().getMenuInflater().inflate(R.menu.activity_add_search, menu);
+        getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        searchView.setSearchableInfo (searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

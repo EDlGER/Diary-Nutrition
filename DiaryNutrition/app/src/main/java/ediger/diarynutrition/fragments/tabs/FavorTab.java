@@ -132,7 +132,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     //Поиск по введенным буквам
     public Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
-        String selections = "favor = 1";
+        String selections = "favor = 1 AND usr > 0";
 
         if(constraint == null || constraint.length() == 0){
             return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
@@ -141,7 +141,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         else {
             String value = "%"+constraint.toString()+"%";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
-                    "favor = 1 AND food_name like ? ",
+                    "favor = 1 AND usr > 0 AND food_name like ? ",
                     new String[]{value},null,null,null);
         }
     }
@@ -149,12 +149,12 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, 1, 0, R.string.context_menu_favor_del);
+        menu.add(0, 4, 0, R.string.context_menu_favor_del);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == 1) {
+        if (item.getItemId() == 4) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().setFavor(acmi.id,0);
@@ -176,7 +176,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        getActivity().getMenuInflater().inflate(R.menu.activity_add_search, menu);
+        getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);

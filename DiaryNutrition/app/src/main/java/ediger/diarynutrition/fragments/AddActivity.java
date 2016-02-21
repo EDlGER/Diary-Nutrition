@@ -3,6 +3,7 @@ package ediger.diarynutrition.fragments;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
