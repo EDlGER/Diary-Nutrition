@@ -35,7 +35,8 @@ public class SettingsFragment extends Fragment {
         }
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.fab.hide();
+        //mainActivity.fab.hide();
+        mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
 
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
         mainActivity.title.setPadding(0,25,0,0);

@@ -2,6 +2,9 @@
     <string name="app_name">Diary Nutrition</string>
     <string name="act_add">Продукты</string>
 
+    <string name="menu_action_food">Еда</string>
+    <string name="menu_action_weight">Вес</string>
+
     <string name="title_sec1">Дневник</string>
     <string name="title_sec2">Настройки</string>
     <string name="tittle_search">Поиск продукта</string>

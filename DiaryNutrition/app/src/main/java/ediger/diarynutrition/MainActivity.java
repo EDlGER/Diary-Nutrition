@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import java.text.SimpleDateFormat;
@@ -36,6 +37,12 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public FloatingActionButton fab;
+
+    public FloatingActionsMenu menuMultipleActions;
+
+    public View actionA;
+
+    public View actionB;
 
     public RelativeLayout datePicker;
 
@@ -60,7 +67,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        actionA = findViewById(R.id.action_a);
+        actionB = findViewById(R.id.action_b);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

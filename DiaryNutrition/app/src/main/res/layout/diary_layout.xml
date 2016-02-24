@@ -243,10 +243,10 @@
         android:layout_below="@+id/cardLayout" />
 
 
-
     <ExpandableListView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/listRecords"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -255,7 +255,7 @@
         android:longClickable="true"
         android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/cardDivider"
-        android:nestedScrollingEnabled="false" />
+        android:layout_below="@+id/cardDivider" />
+
 
 </RelativeLayout>

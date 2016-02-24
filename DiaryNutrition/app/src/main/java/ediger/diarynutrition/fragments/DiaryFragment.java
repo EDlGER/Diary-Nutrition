@@ -54,11 +54,12 @@ public class DiaryFragment extends Fragment implements
     private ExpandableListView listRecord;
     private CardView dayStat;
 
+    View footerView;
+
     private TextView cardCal;
     private TextView cardCarbo;
     private TextView cardProt;
     private TextView cardFat;
-
 
 
     @Override
@@ -84,8 +85,9 @@ public class DiaryFragment extends Fragment implements
 
         final MainActivity mainActivity = (MainActivity)getActivity();
 
-        mainActivity.fab.show();
-        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+        mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
+        mainActivity.menuMultipleActions.collapseImmediately();
+        mainActivity.actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
@@ -93,6 +95,16 @@ public class DiaryFragment extends Fragment implements
                 startActivity(addIntent);
             }
         });
+
+        /*mainActivity.fab.show();
+        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("CurrentCal", date);
+                startActivity(addIntent);
+            }
+        });*/
 
         mainActivity.datePicker.setVisibility(View.VISIBLE);
 
@@ -167,6 +179,7 @@ public class DiaryFragment extends Fragment implements
 
         rootview = inflater.inflate(R.layout.diary_layout, container, false);
 
+
         cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
         cardCarbo = (TextView) rootview.findViewById(R.id.cardCarbo2);
         cardProt = (TextView) rootview.findViewById(R.id.cardProt2);
@@ -218,8 +231,11 @@ public class DiaryFragment extends Fragment implements
                 childFrom, childTo);
 
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
+        footerView = inflater.inflate(R.layout.footer,listRecord,false);
+        listRecord.addFooterView(footerView,null,false);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
+
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.expandGroup(i);
         }
