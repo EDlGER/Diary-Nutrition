@@ -5,6 +5,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.dialogs.AddWeightDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 import android.support.v4.app.LoaderManager;
@@ -93,6 +95,13 @@ public class DiaryFragment extends Fragment implements
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 addIntent.putExtra("CurrentCal", date);
                 startActivity(addIntent);
+            }
+        });
+        mainActivity.actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment a = new AddWeightDialog();
+                a.show(getFragmentManager(),"add_weight_dialog");
             }
         });
 

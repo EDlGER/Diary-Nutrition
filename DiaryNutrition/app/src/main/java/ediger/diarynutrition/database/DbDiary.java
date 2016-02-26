@@ -33,8 +33,9 @@ public class DbDiary {
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
-    private static final String TABLE_MEAL= "meal";
-    private static final String TABLE_DATE= "date";
+    private static final String TABLE_MEAL = "meal";
+    private static final String TABLE_DATE = "date";
+    private static final String TABLE_WEIGHT = "weight";
 
     private DbHelper dbHelper;
     private Context context;
@@ -72,10 +73,13 @@ public class DbDiary {
 
     //Поля таблицы Meal
     public static String ALIAS_M_ID = "_id";
-    public static String ALIAS_M_NAME="name";
+    public static String ALIAS_M_NAME = "name";
 
     //Поля таблицы Date
-    public static String ALIAS_DATE="datetime";
+    public static String ALIAS_DATETIME = "datetime";
+
+    //Поля таблицы Weight
+    public static String ALIAS_WEIGHT = "weight";
 
     public DbDiary(Context context) {
         this.context = context;
@@ -129,7 +133,7 @@ public class DbDiary {
                 + " inner join food f on r.food_id=f._id"
                 + " where r.record_datetime between ? and ?"
                 + "group by r.meal_id";
-        return db.rawQuery(sql,new String[]{arg1,arg2});
+        return db.rawQuery(sql, new String[]{arg1, arg2});
     }
 
     public Cursor getRecordData(long date, long mealID){
@@ -157,28 +161,44 @@ public class DbDiary {
         return db.rawQuery(sql, new String[]{arg1, arg2, arg3});
     }
 
+    public Cursor getAllWeight() {
+        String sql = "select "
+                + "w._id as " + ALIAS_ID
+                + ",w.weight as " + ALIAS_WEIGHT
+                + ",w.datetime as " + ALIAS_DATETIME
+                + " from weight w "
+                + "order by w.datetime dec";
+        return db.rawQuery(sql,null);
+    }
+
+    public Cursor getWeight(long date){
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date+86356262);
+        String sql = "select "
+                + "w._id as " + ALIAS_ID
+                + ",w.weight as " + ALIAS_WEIGHT
+                + ",w.datetime as " + ALIAS_DATETIME
+                + " from weight w "
+                + "where w.datetime between ? and ?";
+        return db.rawQuery(sql,new String[] {arg1,arg2});
+    }
+
+    public void addWeight(long date, float weight) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_DATETIME,date);
+        cv.put(ALIAS_WEIGHT,weight);
+        db.insert(TABLE_WEIGHT,null,cv);
+    }
+
     public Cursor getDate(){
         return db.query(TABLE_DATE, null, null, null, null, null, null);
     }
 
-    public String[] getListRecords(){
-        String[] listRecords = {
-                ALIAS_FOOD_NAME,
-                ALIAS_CAL,
-                ALIAS_CARBO,
-                ALIAS_PROT,
-                ALIAS_FAT,
-                ALIAS_RECORD_DATETIME,
-                ALIAS_SERVING
-        };
-        return listRecords;
-    }
-
-    public String[] getListMeal(){
-        String[] listMeal = {
-                ALIAS_M_NAME
-        };
-        return listMeal;
+    public void editDate(long date){
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_DATETIME,date);
+        String where = "_id = 1";
+        db.update(TABLE_DATE, cv, where, null);
     }
 
     public Cursor getAllFood(){
@@ -193,7 +213,7 @@ public class DbDiary {
                 + ",f.[usr] as "+ALIAS_F_USR
                 + " from food f "
                 + "where f.[usr] > -1";
-        return  db.rawQuery(sql,null);
+        return  db.rawQuery(sql, null);
     }
 
     public Cursor getUserFood(){
@@ -252,6 +272,34 @@ public class DbDiary {
         return listFood;
     }
 
+    public String[] getListRecords(){
+        String[] listRecords = {
+                ALIAS_FOOD_NAME,
+                ALIAS_CAL,
+                ALIAS_CARBO,
+                ALIAS_PROT,
+                ALIAS_FAT,
+                ALIAS_RECORD_DATETIME,
+                ALIAS_SERVING
+        };
+        return listRecords;
+    }
+
+    public String[] getListMeal(){
+        String[] listMeal = {
+                ALIAS_M_NAME
+        };
+        return listMeal;
+    }
+
+    public String[] getListWeight() {
+        String[] listWeight = {
+                ALIAS_DATETIME,
+                ALIAS_WEIGHT
+        };
+        return listWeight;
+    }
+
 
     public void addRec(long id, int serv, long datetime, int meal){
         ContentValues cv = new ContentValues();
@@ -266,7 +314,7 @@ public class DbDiary {
                 + "f.[usr] "
                 + "from food f "
                 + "where f._id = ? ";
-        Cursor usr = db.rawQuery(sql,new String[]{""+id});
+        Cursor usr = db.rawQuery(sql, new String[]{"" + id});
         usr.moveToFirst();
         if (usr.getInt(0) > 0){
             cv.put(ALIAS_F_USR,usr.getInt(0) + 1);
@@ -278,18 +326,6 @@ public class DbDiary {
         //f.usr = 0 - стандартный продукт
         //f.usr > 0 - пользовательский
         //f.usr = -1  - скрытый пользовательский
-    }
-
-    public void addFood(String name, float cal, float carbo,
-                        float prot, float fat){
-        ContentValues cv = new ContentValues();
-        cv.put(ALIAS_F_NAME,name);
-        cv.put(ALIAS_F_CAL,cal);
-        cv.put(ALIAS_F_CARBO,carbo);
-        cv.put(ALIAS_F_PROT, prot);
-        cv.put(ALIAS_F_FAT, fat);
-        cv.put(ALIAS_F_USR, 1);
-        db.insert(TABLE_FOOD, null, cv);
     }
 
     public void delRec(long id){
@@ -315,6 +351,20 @@ public class DbDiary {
         db.delete(TABLE_RECORD, ALIAS_ID + " = " + id, null);
         usr.close();
     }
+
+
+    public void addFood(String name, float cal, float carbo,
+                        float prot, float fat){
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_F_NAME,name);
+        cv.put(ALIAS_F_CAL, cal);
+        cv.put(ALIAS_F_CARBO,carbo);
+        cv.put(ALIAS_F_PROT, prot);
+        cv.put(ALIAS_F_FAT, fat);
+        cv.put(ALIAS_F_USR, 1);
+        db.insert(TABLE_FOOD, null, cv);
+    }
+
 
     public void delFood(long id){
         String sql = "select "
@@ -346,13 +396,6 @@ public class DbDiary {
         String where = ALIAS_ID_FOOD + " = " + id;
         db.update(TABLE_FOOD, cv, where, null);
 
-    }
-
-    public void editDate(long date){
-        ContentValues cv = new ContentValues();
-        cv.put(ALIAS_DATE,date);
-        String where = "_id = 1";
-        db.update(TABLE_DATE,cv,where,null);
     }
 
     public int getFavor(long id) {
@@ -413,7 +456,9 @@ public class DbDiary {
                 inStream = new BufferedInputStream(appContext.getAssets().open(DB_NAME),
                         DB_FILES_COPY_BUFFER_SIZE);
                 File dbDir = new File(DB_FOLDER);
-                if (dbDir.exists() == false) dbDir.mkdir();
+                if (!dbDir.exists()) {
+                    dbDir.mkdir();
+                }
                 outStream = new BufferedOutputStream(new FileOutputStream(DB_PATH),
                         DB_FILES_COPY_BUFFER_SIZE);
 

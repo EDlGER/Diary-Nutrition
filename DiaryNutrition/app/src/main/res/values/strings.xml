@@ -63,4 +63,14 @@
     <string name="action_back">Назад</string>
 
     <string name="hello_world">Hello world!</string>
+    
+    <string-array name="values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
 </resources>
