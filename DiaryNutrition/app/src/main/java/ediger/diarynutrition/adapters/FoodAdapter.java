@@ -20,6 +20,7 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class FoodAdapter extends SimpleCursorAdapter {
     private Context context;
+    private LayoutInflater layoutInflater;
 
     public FoodAdapter(Context context, int layout, Cursor c,
                          String[] from, int[] to, int flags) {
@@ -29,7 +30,7 @@ public class FoodAdapter extends SimpleCursorAdapter {
     }
 
 
-    private LayoutInflater layoutInflater;
+
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {

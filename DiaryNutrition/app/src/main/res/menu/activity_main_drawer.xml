@@ -8,9 +8,15 @@
             android:title="@string/title_sec1" />
 
         <item
+            android:id="@+id/nav_weight"
+            android:icon="@drawable/ic_scale_grey600"
+            android:title="@string/title_sec3"/>
+
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/title_sec2" />
+
     </group>
 
 </menu>

@@ -168,12 +168,12 @@ public class SearchTab extends Fragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,1,0,R.string.context_menu_favor);
+        menu.add(0,3,0,R.string.context_menu_favor);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getItemId() == 1) {
+        if (item.getItemId() == 3) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
 

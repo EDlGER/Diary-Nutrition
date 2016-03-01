@@ -167,7 +167,7 @@ public class DbDiary {
                 + ",w.weight as " + ALIAS_WEIGHT
                 + ",w.datetime as " + ALIAS_DATETIME
                 + " from weight w "
-                + "order by w.datetime dec";
+                + "order by w.datetime desc";
         return db.rawQuery(sql,null);
     }
 
@@ -188,6 +188,13 @@ public class DbDiary {
         cv.put(ALIAS_DATETIME,date);
         cv.put(ALIAS_WEIGHT,weight);
         db.insert(TABLE_WEIGHT,null,cv);
+    }
+
+    public void setWeight(long date,float weight) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_WEIGHT,weight);
+        String where = ALIAS_DATETIME + " = " + date;
+        db.update(TABLE_WEIGHT,cv,where,null);
     }
 
     public Cursor getDate(){

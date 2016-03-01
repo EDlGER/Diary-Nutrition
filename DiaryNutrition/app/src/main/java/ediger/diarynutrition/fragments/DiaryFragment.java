@@ -101,7 +101,7 @@ public class DiaryFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 DialogFragment a = new AddWeightDialog();
-                a.show(getFragmentManager(),"add_weight_dialog");
+                a.show(getFragmentManager(), "add_weight_dialog");
             }
         });
 
@@ -120,7 +120,7 @@ public class DiaryFragment extends Fragment implements
         mainActivity.mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
 
             @Override
-            public void onDayClick (Date dateClicked) {
+            public void onDayClick(Date dateClicked) {
 
                 nowto.setTime(dateClicked);
                 date = nowto.getTimeInMillis();
@@ -132,7 +132,7 @@ public class DiaryFragment extends Fragment implements
                     mainActivity.setSubtitle(dateFormat.format(dateClicked));
                 }
 
-                for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+                for (int i = 0; i < recordAdapter.getGroupCount(); i++) {
                     listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
                 }
@@ -147,12 +147,13 @@ public class DiaryFragment extends Fragment implements
             }
         });
 
-        mainActivity.title.setPadding(0,0,0,0);
+        mainActivity.title.setPadding(0, 0, 0, 0);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.collapseGroup(i);
             listRecord.expandGroup(i);
         }
+        //getLoaderManager().restartLoader(-1,null,this);
         setCardData();
 
     }
@@ -174,9 +175,8 @@ public class DiaryFragment extends Fragment implements
         if (loader != null && !loader.isReset()){
             getLoaderManager().restartLoader(-1,null,this);
         } else {
-            getLoaderManager().initLoader(-1,null,this);
+            getLoaderManager().initLoader(-1, null, this);
         }
-
     }
 
     @Nullable
@@ -240,14 +240,15 @@ public class DiaryFragment extends Fragment implements
                 childFrom, childTo);
 
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
-        footerView = inflater.inflate(R.layout.footer,listRecord,false);
-        listRecord.addFooterView(footerView,null,false);
+        footerView = inflater.inflate(R.layout.footer,listRecord, false);
+        listRecord.addFooterView(footerView, null, false);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.expandGroup(i);
         }
+
         return rootview;
     }
 
@@ -359,7 +360,7 @@ public class DiaryFragment extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        /*
+
         int id = loader.getId();
 
         if (id != -1){
@@ -370,7 +371,7 @@ public class DiaryFragment extends Fragment implements
             }
         } else {
             recordAdapter.setGroupCursor(null);
-        }*/
+        }
     }
 
     private static class ChildCursorLoader extends CursorLoader {

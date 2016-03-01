@@ -2,6 +2,7 @@ package ediger.diarynutrition;
 
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -237,6 +238,11 @@ public class MainActivity extends AppCompatActivity
                 fragment = new SettingsFragment();
                 setTitle(getString(R.string.title_sec2));
                 break;
+            case R.id.nav_weight:
+                fragment = new WeightFragment();
+                setTitle(getString(R.string.title_sec3));
+                break;
+
         }
 
         if (fragment != null) {

@@ -41,7 +41,6 @@ public class AddWeightDialog extends DialogFragment {
 
                         cursor.moveToFirst();
                         date = cursor.getLong(0);
-                        cursor.close();
 
 
                         if (editText.getText().toString().matches("")) {
@@ -49,9 +48,16 @@ public class AddWeightDialog extends DialogFragment {
                                     "Вес не введен", Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
-                            AppContext.getDbDiary().addWeight(date,
-                                    Float.parseFloat(editText.getText().toString()));
+                            cursor = AppContext.getDbDiary().getWeight(date);
+                            if (cursor.moveToFirst()) {
+                                AppContext.getDbDiary().setWeight(date,
+                                        Float.parseFloat(editText.getText().toString()));
+                            } else {
+                                AppContext.getDbDiary().addWeight(date,
+                                        Float.parseFloat(editText.getText().toString()));
+                            }
                         }
+                        cursor.close();
                     }
                 });
 
