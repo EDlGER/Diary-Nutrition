@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 
 import ediger.diarynutrition.objects.AppContext;
 
@@ -171,9 +172,24 @@ public class DbDiary {
         return db.rawQuery(sql,null);
     }
 
+    public Cursor getWeekWeight() {
+        Calendar calendar = Calendar.getInstance();
+        long date = calendar.getTimeInMillis();
+        String arg1 = Long.toString(date - 604800017);
+        String arg2 = Long.toString(date);
+        String sql = "select "
+                + "w._id as " + ALIAS_ID
+                + ",w.weight as " + ALIAS_WEIGHT
+                + ",w.datetime as " + ALIAS_DATETIME
+                + " from weight w"
+                + " where w.datetime between ? and ?"
+                + " order by w.datetime asc";
+        return db.rawQuery(sql,new String[] {arg1,arg2});
+    }
+
     public Cursor getWeight(long date){
         String arg1 = Long.toString(date);
-        String arg2 = Long.toString(date+86356262);
+        String arg2 = Long.toString(date + 86356262);
         String sql = "select "
                 + "w._id as " + ALIAS_ID
                 + ",w.weight as " + ALIAS_WEIGHT

@@ -51,7 +51,7 @@ public class WeightAdapter extends SimpleCursorAdapter{
         ViewHolder holder = (ViewHolder) view.getTag();
 
         holder.date.setText(dateFormat.format(calendar.getTime()));
-        holder.weight.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_WEIGHT)));
+        holder.weight.setText(String.format("%.1f",cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_WEIGHT))));
 
     }
 

@@ -102,6 +102,7 @@ public class DiaryFragment extends Fragment implements
             public void onClick(View v) {
                 DialogFragment a = new AddWeightDialog();
                 a.show(getFragmentManager(), "add_weight_dialog");
+                mainActivity.menuMultipleActions.collapse();
             }
         });
 
