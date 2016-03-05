@@ -25,6 +25,9 @@
     <string name="record_fat">ЖИР</string>
     <string name="record_cal">ККАЛ</string>
 
+    <string name="weight_week">Неделя</string>
+    <string name="weight_month">Месяц</string>
+
     <string name="dialog_title">Выберите размер порции и время</string>
     <string name="dialog_cancel">Назад</string>
     <string name="dialog_add">Добавить</string>

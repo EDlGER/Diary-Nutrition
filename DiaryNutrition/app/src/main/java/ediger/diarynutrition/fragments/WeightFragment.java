@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,6 @@ import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.WeightAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
-import lecho.lib.hellocharts.formatter.AxisValueFormatter;
-import lecho.lib.hellocharts.formatter.LineChartValueFormatter;
-import lecho.lib.hellocharts.formatter.ValueFormatterHelper;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
@@ -30,8 +28,6 @@ import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.util.FloatUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 
 /**
@@ -47,13 +43,17 @@ public class WeightFragment extends Fragment {
             R.id.txtWeight
     };
 
+    private AppCompatRadioButton rbWeek;
+    private AppCompatRadioButton rbMonth;
+
     private LineChartView chart;
     private LineChartData data;
     private int numberOfPoints = 7;
     private float maxWeightViewport = 40;
     private float minWeightViewport = 150;
 
-
+    private boolean isWeek = true;
+    private boolean isMonth = false;
     private boolean hasLines = true;
     private boolean hasPoints = true;
     private ValueShape shape = ValueShape.CIRCLE;
@@ -94,10 +94,42 @@ public class WeightFragment extends Fragment {
         rootview = inflater.inflate(R.layout.weight_layout, container, false);
 
         ListView listWeight = (ListView) rootview.findViewById(R.id.listWeight);
+        rbWeek = (AppCompatRadioButton) rootview.findViewById(R.id.rb_week);
+        rbMonth = (AppCompatRadioButton) rootview.findViewById(R.id.rb_month);
         chart = (LineChartView) rootview.findViewById(R.id.weight_chart);
+
+        rbWeek.setChecked(isWeek);
+        rbMonth.setChecked(isMonth);
 
         generateData();
         resetViewport();
+
+        rbWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isWeek) {
+                    isWeek = !isWeek;
+                    isMonth = !isMonth;
+                    rbWeek.setChecked(isWeek);
+                    rbMonth.setChecked(isMonth);
+                    generateData();
+                    resetViewport() ;
+                }
+            }
+        });
+        rbMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isMonth) {
+                    isWeek = !isWeek;
+                    isMonth = !isMonth;
+                    rbWeek.setChecked(isWeek);
+                    rbMonth.setChecked(isMonth);
+                    generateData();
+                    resetViewport();
+                }
+            }
+        });
 
         cursor = AppContext.getDbDiary().getAllWeight();
         from = AppContext.getDbDiary().getListWeight();
@@ -112,7 +144,6 @@ public class WeightFragment extends Fragment {
 
 
     private void resetViewport() {
-        // Reset viewport height range to (0,100)
         final Viewport v = new Viewport(chart.getMaximumViewport());
         v.bottom = 40;
         v.top = 150;
@@ -128,10 +159,19 @@ public class WeightFragment extends Fragment {
     private void generateData() {
         float weight;
         long date;
+        int monthMarker = 7;
+        Cursor cursor = null;
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM");
 
-        Cursor cursor = AppContext.getDbDiary().getWeekWeight();
+
+        if (isWeek) {
+            cursor = AppContext.getDbDiary().getWeekWeight();
+            numberOfPoints = 7;
+        } else if (isMonth) {
+            cursor = AppContext.getDbDiary().getMonthWeight();
+            numberOfPoints = 30;
+        }
 
         Axis axisX = new Axis();
         Axis axisY = new Axis().setHasLines(true);
@@ -153,7 +193,12 @@ public class WeightFragment extends Fragment {
                     date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_DATETIME));
                     calendar.setTimeInMillis(date);
                     values.add(new PointValue(i+1,weight).setTarget(i+1,weight).setLabel(String.format("%.1f", weight)));
-                    axisValues.add(new AxisValue(i+1).setLabel(dateFormatter.format(calendar.getTime())));
+                    if (numberOfPoints == 7) {
+                        axisValues.add(new AxisValue(i+1).setLabel(dateFormatter.format(calendar.getTime())));
+                    } else if (numberOfPoints == 30 && i == monthMarker) {
+                        axisValues.add(new AxisValue(i+1).setLabel(dateFormatter.format(calendar.getTime())));
+                        monthMarker = monthMarker + 7;
+                    }
 
                     if (maxWeightViewport < weight) {
                         maxWeightViewport = weight;
@@ -176,17 +221,12 @@ public class WeightFragment extends Fragment {
         line.setHasPoints(hasPoints);
         lines.add(line);
 
-
         data = new LineChartData(lines);
-
-
 
         axisX.setValues(axisValues);
 
         data.setAxisXBottom(axisX);
         data.setAxisYLeft(axisY);
-
-
         data.setBaseValue(Float.NEGATIVE_INFINITY);
         chart.setLineChartData(data);
 
