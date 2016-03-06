@@ -1,14 +1,21 @@
 package ediger.diarynutrition.fragments;
 
+import android.content.Context;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
@@ -33,8 +40,12 @@ import lecho.lib.hellocharts.view.LineChartView;
 /**
  * Created by root on 27.02.16.
  */
-public class WeightFragment extends Fragment {
+public class WeightFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+
+    private static final int LOADER_ID = -6;
+
     View rootview;
+    ListView listWeight;
     Cursor cursor;
     String[] from;
     WeightAdapter weightAdapter;
@@ -93,7 +104,7 @@ public class WeightFragment extends Fragment {
 
         rootview = inflater.inflate(R.layout.weight_layout, container, false);
 
-        ListView listWeight = (ListView) rootview.findViewById(R.id.listWeight);
+        listWeight = (ListView) rootview.findViewById(R.id.listWeight);
         rbWeek = (AppCompatRadioButton) rootview.findViewById(R.id.rb_week);
         rbMonth = (AppCompatRadioButton) rootview.findViewById(R.id.rb_month);
         chart = (LineChartView) rootview.findViewById(R.id.weight_chart);
@@ -113,7 +124,7 @@ public class WeightFragment extends Fragment {
                     rbWeek.setChecked(isWeek);
                     rbMonth.setChecked(isMonth);
                     generateData();
-                    resetViewport() ;
+                    resetViewport();
                 }
             }
         });
@@ -136,12 +147,32 @@ public class WeightFragment extends Fragment {
         weightAdapter = new WeightAdapter(getActivity(), R.layout.weight_layout, cursor, from, to, 0);
 
         listWeight.setAdapter(weightAdapter);
+        registerForContextMenu(listWeight);
 
-
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootview;
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, 1, 0, R.string.context_menu_del);
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getItemId() == 1) {
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
+                    .getMenuInfo();
+            AppContext.getDbDiary().delWeight(acmi.id);
+            generateData();
+            resetViewport();
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            return true;
+        }
+
+        return super.onContextItemSelected(item);
+    }
 
     private void resetViewport() {
         final Viewport v = new Viewport(chart.getMaximumViewport());
@@ -186,6 +217,8 @@ public class WeightFragment extends Fragment {
 
             values.add(new PointValue(1, weight).setTarget(1, weight).setLabel(String.format("%.1f",weight)));
             axisValues.add(new AxisValue(1).setLabel(dateFormatter.format(calendar.getTime())));
+            maxWeightViewport = weight;
+            minWeightViewport = weight;
 
             for (int i = 1; i < numberOfPoints; i++) {
                 if (cursor.moveToNext()) {
@@ -230,5 +263,36 @@ public class WeightFragment extends Fragment {
         data.setBaseValue(Float.NEGATIVE_INFINITY);
         chart.setLineChartData(data);
 
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new MyCursorLoader(getActivity(),AppContext.getDbDiary());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        weightAdapter.swapCursor(data);
+        listWeight.setAdapter(weightAdapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
+    private static class MyCursorLoader extends CursorLoader {
+        DbDiary db;
+
+        public MyCursorLoader(Context context, DbDiary db) {
+            super(context);
+            this.db = db;
+        }
+
+        @Override
+        public  Cursor loadInBackground(){
+            Cursor cursor = db.getAllWeight();
+            return cursor;
+        }
     }
 }

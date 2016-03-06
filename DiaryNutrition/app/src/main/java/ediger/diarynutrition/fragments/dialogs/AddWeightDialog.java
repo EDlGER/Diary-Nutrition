@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.support.design.widget.TextInputLayout;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
@@ -24,11 +25,13 @@ public class AddWeightDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative = getActivity().getLayoutInflater().inflate(R.layout.add_w_dialog1,null);
+        View relative = getActivity().getLayoutInflater().inflate(R.layout.add_w_dialog,null);
         builder.setView(relative);
         builder.setTitle("Введите Ваш вес");
 
-        final EditText editText = (EditText) relative.findViewById(R.id.editText);
+        TextInputLayout til = (TextInputLayout) relative.findViewById(R.id.weightImputLayout);
+        final EditText editWeight = (EditText) til.findViewById(R.id.editWeight);
+        til.setHint("Вес");
 
         builder.setPositiveButton(R.string.dialog_add,
                 new DialogInterface.OnClickListener() {
@@ -43,7 +46,7 @@ public class AddWeightDialog extends DialogFragment {
                         date = cursor.getLong(0);
 
 
-                        if (editText.getText().toString().matches("")) {
+                        if (editWeight.getText().toString().matches("")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
                                     "Вес не введен", Toast.LENGTH_SHORT);
                             toast.show();
@@ -51,10 +54,10 @@ public class AddWeightDialog extends DialogFragment {
                             cursor = AppContext.getDbDiary().getWeight(date);
                             if (cursor.moveToFirst()) {
                                 AppContext.getDbDiary().setWeight(date,
-                                        Float.parseFloat(editText.getText().toString()));
+                                        Float.parseFloat(editWeight.getText().toString()));
                             } else {
                                 AppContext.getDbDiary().addWeight(date,
-                                        Float.parseFloat(editText.getText().toString()));
+                                        Float.parseFloat(editWeight.getText().toString()));
                             }
                         }
                         cursor.close();

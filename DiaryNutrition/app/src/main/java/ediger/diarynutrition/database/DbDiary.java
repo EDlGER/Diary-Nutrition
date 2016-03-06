@@ -228,6 +228,10 @@ public class DbDiary {
         db.update(TABLE_WEIGHT,cv,where,null);
     }
 
+    public void delWeight(long id) {
+        db.delete(TABLE_WEIGHT, ALIAS_ID + " = " + id, null);
+    }
+
     public Cursor getDate(){
         return db.query(TABLE_DATE, null, null, null, null, null, null);
     }

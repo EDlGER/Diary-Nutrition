@@ -42,12 +42,21 @@
         android:id="@+id/weight_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/chart_divider" />
+        android:layout_below="@+id/chart_divider"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/list_divider"
+        android:layout_below="@+id/weight_chart"
+        android:background="?android:attr/listDivider"/>
 
     <ListView
         android:id="@+id/listWeight"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/weight_chart" />
+        android:layout_below="@id/list_divider" />
 
 </RelativeLayout>

@@ -239,7 +239,6 @@ public class FoodTab extends Fragment implements
             AppContext.getDbDiary().setFavor(acmi.id,1);
             getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
-
         }
         return super.onContextItemSelected(item);
     }
