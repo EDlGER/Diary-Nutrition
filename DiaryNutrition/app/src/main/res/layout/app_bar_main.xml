@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:fitsSystemWindows="false"
     tools:context="ediger.diarynutrition.MainActivity">
 
     <!--<android.support.design.widget.AppBarLayout
@@ -21,6 +21,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
     -->
 
     <FrameLayout
@@ -34,10 +35,10 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:expanded="false"
         app:layout_behavior="ediger.diarynutrition.ScrollingCalendarBehavior">
+
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
@@ -85,50 +86,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize">
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?attr/actionBarSize"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                    android:textColor="@android:color/white" />
-
-                <RelativeLayout
-                    android:id="@+id/date_picker_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/title">
-
-                    <View
-                        android:id="@+id/centerInParent"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_centerVertical="true" />
-
                     <TextView
-                        android:id="@+id/date_picker_text_view"
+                        android:id="@+id/title"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/centerInParent"
+                        android:layout_height="?attr/actionBarSize"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                         android:textColor="@android:color/white" />
 
-                    <ImageView
-                        android:id="@+id/date_picker_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/date_picker_text_view"
-                        android:layout_toRightOf="@id/date_picker_text_view"
-                        android:src="@drawable/ic_arrow_drop_down_white_24dp" />
+                    <RelativeLayout
+                        android:id="@+id/date_picker_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/title">
 
-                </RelativeLayout>
+                        <View
+                            android:id="@+id/centerInParent"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_centerVertical="true" />
+
+                        <TextView
+                            android:id="@+id/date_picker_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/centerInParent"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
+                            android:textColor="@android:color/white" />
+
+                        <ImageView
+                            android:id="@+id/date_picker_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/date_picker_text_view"
+                            android:layout_toRightOf="@id/date_picker_text_view"
+                            android:src="@drawable/ic_arrow_drop_down_white_24dp" />
+
+                    </RelativeLayout>
+
                 </FrameLayout>
+
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
