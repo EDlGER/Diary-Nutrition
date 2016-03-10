@@ -25,11 +25,11 @@ public class AddWeightDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative = getActivity().getLayoutInflater().inflate(R.layout.add_w_dialog,null);
+        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_weight,null);
         builder.setView(relative);
         builder.setTitle("Введите Ваш вес");
 
-        TextInputLayout til = (TextInputLayout) relative.findViewById(R.id.weightImputLayout);
+        TextInputLayout til = (TextInputLayout) relative.findViewById(R.id.weightInputLayout);
         final EditText editWeight = (EditText) til.findViewById(R.id.editWeight);
         til.setHint("Вес");
 

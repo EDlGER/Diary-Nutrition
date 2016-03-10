@@ -50,7 +50,6 @@ public class DiaryFragment extends Fragment implements
     private long date;
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
-    //private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
@@ -106,16 +105,6 @@ public class DiaryFragment extends Fragment implements
             }
         });
 
-        /*mainActivity.fab.show();
-        mainActivity.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addIntent = new Intent(getActivity(), AddActivity.class);
-                addIntent.putExtra("CurrentCal", date);
-                startActivity(addIntent);
-            }
-        });*/
-
         mainActivity.datePicker.setVisibility(View.VISIBLE);
 
         mainActivity.mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -151,15 +140,13 @@ public class DiaryFragment extends Fragment implements
         mainActivity.title.setPadding(0, 0, 0, 0);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            listRecord.collapseGroup(i);
             listRecord.expandGroup(i);
+            listRecord.collapseGroup(i);
         }
         //getLoaderManager().restartLoader(-1,null,this);
         setCardData();
 
     }
-
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -187,7 +174,7 @@ public class DiaryFragment extends Fragment implements
         Cursor cursor;
         Calendar now = Calendar.getInstance();
 
-        rootview = inflater.inflate(R.layout.diary_layout, container, false);
+        rootview = inflater.inflate(R.layout.fragment_diary, container, false);
 
 
         cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
@@ -247,7 +234,7 @@ public class DiaryFragment extends Fragment implements
         registerForContextMenu(listRecord);
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            listRecord.expandGroup(i);
+            listRecord.collapseGroup(i);
         }
 
         return rootview;

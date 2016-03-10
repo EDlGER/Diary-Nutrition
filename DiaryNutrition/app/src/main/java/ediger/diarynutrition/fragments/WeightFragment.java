@@ -5,7 +5,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -102,7 +101,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootview = inflater.inflate(R.layout.weight_layout, container, false);
+        rootview = inflater.inflate(R.layout.fragment_weight, container, false);
 
         listWeight = (ListView) rootview.findViewById(R.id.listWeight);
         rbWeek = (AppCompatRadioButton) rootview.findViewById(R.id.rb_week);
@@ -144,7 +143,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
 
         cursor = AppContext.getDbDiary().getAllWeight();
         from = AppContext.getDbDiary().getListWeight();
-        weightAdapter = new WeightAdapter(getActivity(), R.layout.weight_layout, cursor, from, to, 0);
+        weightAdapter = new WeightAdapter(getActivity(), R.layout.fragment_weight, cursor, from, to, 0);
 
         listWeight.setAdapter(weightAdapter);
         registerForContextMenu(listWeight);

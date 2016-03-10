@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="62dp"
+    android:layout_height="62.5dp"
     android:background="@color/listview_background">
 
 
@@ -42,7 +42,7 @@
             android:text="350"
             android:id="@+id/txtGroupCal"
             android:textColor="@color/colorPrimary"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="5dp" />
@@ -51,9 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4"
-            android:textColor="#424242"
+            android:textColor="@color/listview_second_text"
             android:id="@+id/txtGroupFat"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:maxLength="5"
             android:layout_alignLeft="@+id/view"
             android:layout_alignStart="@+id/view"
@@ -75,9 +75,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="99999"
-            android:textColor="#424242"
+            android:textColor="@color/listview_second_text"
             android:id="@+id/txtGroupProt"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:maxLength="5"
             android:layout_alignTop="@+id/txtGroupCarbo"
             android:layout_alignLeft="@+id/view2"
@@ -101,9 +101,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="99999"
-            android:textColor="#424242"
+            android:textColor="@color/listview_second_text"
             android:id="@+id/txtGroupCarbo"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:layout_alignParentRight="false"
             android:layout_alignParentEnd="false"
             android:layout_marginRight="5dp"
@@ -113,7 +113,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1.5dp"
             android:id="@+id/child_divider"
             android:background="?android:attr/listDivider"
             android:layout_marginTop="46dp" />

@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ public class AddDialog extends DialogFragment {
     private Calendar now = Calendar.getInstance();
     private int nowHour = now.get(Calendar.HOUR_OF_DAY);
     private int nowMin = now.get(Calendar.MINUTE);
+    private TextInputLayout servLayout;
     private EditText servPicker;
     private NumberPicker hourPicker;
     private NumberPicker minPicker;
@@ -38,10 +41,11 @@ public class AddDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative = getActivity().getLayoutInflater().inflate(R.layout.add_dialog, null);
+        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_rec, null);
         builder.setView(relative);
 
-        servPicker = (EditText) relative.findViewById(R.id.txtAddServ);
+        servLayout = (TextInputLayout) relative.findViewById(R.id.servInputLayout);
+        servPicker = (EditText) servLayout.findViewById(R.id.txtAddServ);
         hourPicker = (NumberPicker) relative.findViewById(R.id.hourPicker);
         minPicker = (NumberPicker) relative.findViewById(R.id.minutePicker);
         mealPicker = (Spinner) relative.findViewById(R.id.spMeal);

@@ -19,10 +19,11 @@ import ediger.diarynutrition.objects.AppContext;
 public class ChangeFoodDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative1 = getActivity().getLayoutInflater().inflate(R.layout.add_f_dialog, null);
-        builder1.setView(relative1);
+        View relative1 = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
+        builder.setView(relative1);
+        builder.setTitle(getString(R.string.dialog_tittle_change));
 
         final EditText txtNameF = (EditText) relative1.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative1.findViewById(R.id.txtCalF);
@@ -43,19 +44,18 @@ public class ChangeFoodDialog extends DialogFragment {
         txtProtF.setText(c.getString(3));
         txtFatF.setText(c.getString(4));
 
-        builder1.setPositiveButton(R.string.context_menu_change,
+        builder.setPositiveButton(R.string.context_menu_change,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (txtNameF.getText().toString().matches("") ||
                                 txtCalF.getText().toString().matches("") ||
                                 txtCarboF.getText().toString().matches("") ||
                                 txtProtF.getText().toString().matches("") ||
-                                txtFatF.getText().toString().matches("") ){
+                                txtFatF.getText().toString().matches("")) {
                             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Не все поля заполнены",Toast.LENGTH_SHORT);
+                                    "Не все поля заполнены", Toast.LENGTH_SHORT);
                             toast.show();
-                        }
-                        else {
+                        } else {
                             long food_id = getArguments().getLong("id");
                             AppContext.getDbDiary().editFood(food_id, txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
@@ -63,18 +63,18 @@ public class ChangeFoodDialog extends DialogFragment {
                                     Float.parseFloat(txtProtF.getText().toString()),
                                     Float.parseFloat(txtFatF.getText().toString()));
 
-                            getTargetFragment().onActivityResult(3,1,null);
+                            getTargetFragment().onActivityResult(3, 1, null);
                         }
                     }
                 });
-        builder1.setNegativeButton(R.string.dialog_cancel_f,
+        builder.setNegativeButton(R.string.dialog_cancel_f,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
                     }
                 });
-        builder1.setCancelable(false);
-        return builder1.create();
+        builder.setCancelable(false);
+        return builder.create();
     }
 
 }

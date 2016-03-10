@@ -72,7 +72,7 @@ public class AddActivity extends AppCompatActivity implements ViewPager.OnPageCh
         for(int i = 0; i < adapter.getCount(); i++){
             adapter.getItem(i).setHasOptionsMenu(i == position);
         }
-        invalidateOptionsMenu(); //or respectively its support method.
+        invalidateOptionsMenu();
     }
 
     @Override

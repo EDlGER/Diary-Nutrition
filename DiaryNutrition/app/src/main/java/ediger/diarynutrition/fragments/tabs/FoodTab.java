@@ -3,7 +3,6 @@ package ediger.diarynutrition.fragments.tabs;
 import android.app.Activity;
 import android.app.SearchManager;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -120,7 +118,7 @@ public class FoodTab extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.food_tab, container, false);
+        rootview = inflater.inflate(R.layout.fragment_tab_food, container, false);
 
         setHasOptionsMenu(true);
 

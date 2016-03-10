@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameInputLayout"
+        android:hint="@string/dialog_name_f"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNameF"
+            android:maxLength="25"
+            android:width="250dp"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:layout_marginTop="10dp"
+            android:shadowColor="@color/colorPrimary" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calInputLayout"
+        android:hint="@string/dialog_cal_f"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="5"
+            android:id="@+id/txtCalF"
+            android:maxLength="4"
+            android:textSize="18sp"
+            android:gravity="center"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/carboInputLayout"
+        android:hint="@string/dialog_carbo_f"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="5"
+            android:id="@+id/txtCarboF"
+            android:textSize="18sp"
+            android:maxLength="4"
+            android:gravity="center" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/protInputLayout"
+        android:hint="@string/dialog_prot_f"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="5"
+            android:id="@+id/txtProtF"
+            android:textSize="18sp"
+            android:maxLength="4"
+            android:gravity="center"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fatInputLayout"
+        android:hint="@string/dialog_fat_f"
+        android:textColorHint="@color/colorPrimary"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="5"
+            android:id="@+id/txtFatF"
+            android:textSize="18sp"
+            android:maxLength="4"
+            android:gravity="center"/>
+
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>
