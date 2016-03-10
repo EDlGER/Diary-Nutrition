@@ -1,5 +1,6 @@
 package ediger.diarynutrition.fragments.tabs;
 
+import android.app.Activity;
 import android.app.SearchManager;
 
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
@@ -86,10 +88,32 @@ public class FoodTab extends Fragment implements
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
+        hideKeyboard();
+
+        cursor = AppContext.getDbDiary().getUserFood();
+        from = AppContext.getDbDiary().getListFood();
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        listFood.setAdapter(foodAdapter);
+        listFood.setTextFilterEnabled(true);
+        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getFilterList(constraint);
+            }
+        });
         getLoaderManager().getLoader(LOADER_ID).forceLoad();
         //getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
@@ -98,22 +122,15 @@ public class FoodTab extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.food_tab, container, false);
 
-        Toolbar toolbar = (Toolbar) rootview.findViewById(R.id.toolbar1);
-
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        toolbar.setElevation(0);
         setHasOptionsMenu(true);
-
-        AddActivity activity = (AddActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getUserFood();
         from = AppContext.getDbDiary().getListFood();
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
-        listFood = (ListView) rootview.findViewById(R.id.fl_listFood);
+
+        listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
 
         listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -241,6 +258,11 @@ public class FoodTab extends Fragment implements
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
     }
 
     @Override

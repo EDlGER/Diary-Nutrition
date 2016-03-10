@@ -5,25 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:theme="@style/ToolbarTextColor"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        android:background="?attr/colorPrimary"/>
-
-
     <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fl_listFood"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ft_listFood"
         android:nestedScrollingEnabled="false"
         android:textFilterEnabled="true"
-        android:background="@drawable/list_view"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/toolbar1"
-        android:layout_marginTop="79dp"/>
+        android:background="@drawable/list_view" />
 
 </RelativeLayout>

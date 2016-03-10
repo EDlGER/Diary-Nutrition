@@ -1,5 +1,6 @@
 package ediger.diarynutrition.fragments.tabs;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
@@ -89,21 +91,42 @@ public class SearchTab extends Fragment implements
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboard();
+
+        cursor = AppContext.getDbDiary().getAllFood();
+        from = AppContext.getDbDiary().getListFood();
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        listFood.setAdapter(foodAdapter);
+        listFood.setTextFilterEnabled(true);
+        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getFilterList(constraint);
+            }
+        });
+        getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        //getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.search_tab, container, false);
 
-        Toolbar toolbar = (Toolbar) rootview.findViewById(R.id.toolbar1);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        toolbar.setElevation(0);
-
         setHasOptionsMenu(true);
-
-        AddActivity activity = (AddActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
@@ -116,7 +139,7 @@ public class SearchTab extends Fragment implements
 
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
-        listFood = (ListView) rootview.findViewById(R.id.listFood);
+        listFood = (ListView) rootview.findViewById(R.id.st_listFood);
         listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -178,7 +201,8 @@ public class SearchTab extends Fragment implements
                     .getMenuInfo();
 
             AppContext.getDbDiary().setFavor(acmi.id,1);
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            //getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID,null,this);
             return true;
 
 
@@ -222,6 +246,15 @@ public class SearchTab extends Fragment implements
                 return true;
             }
         });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().
+                getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager.isAcceptingText()) {
+            inputMethodManager.hideSoftInputFromWindow(getActivity().
+                    getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
     //Обновление данных

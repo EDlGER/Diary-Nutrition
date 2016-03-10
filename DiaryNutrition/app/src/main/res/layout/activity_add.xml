@@ -1,15 +1,16 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-
-    </android.support.v4.view.ViewPager>
-
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/ToolbarTextColor"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        android:background="?attr/colorPrimary"/>
 
 
     <ediger.diarynutrition.SlidingTabLayout
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:layout_marginTop="56dp" />
+        android:layout_below="@id/toolbar1"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -26,7 +27,7 @@
         android:background="@color/colorPrimary"
         android:id="@+id/linearLayout"
         android:gravity="right"
-        android:layout_marginTop="117dp">
+        android:layout_below="@+id/tabs">
 
 
         <TextView
@@ -72,7 +73,14 @@
         android:layout_height="3dp"
         android:background="@drawable/shadow_bottom"
         android:id="@+id/infoDivider"
-        android:layout_marginTop="132dp" />
+        android:layout_below="@+id/linearLayout" />
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/infoDivider">
 
-</FrameLayout>
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>
