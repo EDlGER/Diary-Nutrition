@@ -27,7 +27,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import ediger.diarynutrition.fragments.AddActivity;
+import ediger.diarynutrition.FoodActivity;
 import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
@@ -68,8 +68,8 @@ public class FoodTab extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            AddActivity addActivity = (AddActivity)getActivity();
-            addActivity.finish();
+            FoodActivity foodActivity = (FoodActivity)getActivity();
+            foodActivity.finish();
         } else if (requestCode == 2 || requestCode == 3){
                 cursor = AppContext.getDbDiary().getUserFood();
                 from = AppContext.getDbDiary().getListFood();

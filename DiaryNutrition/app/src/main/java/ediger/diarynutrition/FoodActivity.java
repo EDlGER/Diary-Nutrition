@@ -1,18 +1,16 @@
-package ediger.diarynutrition.fragments;
+package ediger.diarynutrition;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import ediger.diarynutrition.R;
-import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
 
 /**
  * Created by root on 07.02.16.
  */
-public class AddActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
     ViewPager pager;
     ViewPagerAdapter adapter;
@@ -24,7 +22,7 @@ public class AddActivity extends AppCompatActivity implements ViewPager.OnPageCh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_food);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

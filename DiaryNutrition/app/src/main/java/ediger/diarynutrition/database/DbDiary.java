@@ -225,7 +225,7 @@ public class DbDiary {
         ContentValues cv = new ContentValues();
         cv.put(ALIAS_WEIGHT,weight);
         String where = ALIAS_DATETIME + " = " + date;
-        db.update(TABLE_WEIGHT,cv,where,null);
+        db.update(TABLE_WEIGHT, cv, where, null);
     }
 
     public void delWeight(long id) {
@@ -288,6 +288,10 @@ public class DbDiary {
                 + " where f.[favor] = 1"
                 + " order by f.food_name asc";
         return  db.rawQuery(sql,null);
+    }
+
+    public Cursor getNameFood(long id) {
+        return db.query(TABLE_FOOD,new String[]{ALIAS_FOOD_NAME},ALIAS_ID + "=" + id,null,null,null,null);
     }
 
     public String[] getListFood() {

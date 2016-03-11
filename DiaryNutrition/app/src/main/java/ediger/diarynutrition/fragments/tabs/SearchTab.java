@@ -28,10 +28,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 
+import ediger.diarynutrition.AddActivity;
+import ediger.diarynutrition.FoodActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.fragments.AddActivity;
 import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
@@ -70,8 +71,8 @@ public class SearchTab extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            AddActivity addActivity = (AddActivity)getActivity();
-            addActivity.finish();
+            FoodActivity foodActivity = (FoodActivity)getActivity();
+            foodActivity.finish();
         } else if (requestCode == 2){
             cursor = AppContext.getDbDiary().getAllFood();
             from = AppContext.getDbDiary().getListFood();
@@ -143,13 +144,18 @@ public class SearchTab extends Fragment implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 addid = id;
-                Bundle bundle = new Bundle();
+
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("FoodId", addid);
+                startActivity(addIntent);
+
+                /*Bundle bundle = new Bundle();
                 bundle.putLong("id", addid);
 
                 DialogFragment a = new AddDialog();
                 a.setTargetFragment(SearchTab.this, REQ_CODE_ADD);
                 a.setArguments(bundle);
-                a.show(getFragmentManager(), "add_dialog");
+                a.show(getFragmentManager(), "add_dialog");*/
             }
         });
         listFood.setTextFilterEnabled(true);
@@ -248,10 +254,10 @@ public class SearchTab extends Fragment implements
     private void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().
                 getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if(inputMethodManager.isAcceptingText()) {
+        /*if(inputMethodManager.isAcceptingText()) {
             inputMethodManager.hideSoftInputFromWindow(getActivity().
                     getCurrentFocus().getWindowToken(), 0);
-        }
+        }*/
     }
 
     //Обновление данных

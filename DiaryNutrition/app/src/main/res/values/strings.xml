@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Diary Nutrition</string>
-    <string name="act_add">Продукты</string>
+    <string name="act_food">Продукты</string>
 
     <string name="menu_action_food">Еда</string>
     <string name="menu_action_weight">Вес</string>
@@ -27,6 +27,13 @@
 
     <string name="weight_week">Неделя</string>
     <string name="weight_month">Месяц</string>
+
+    <string name="meal1">Завтрак</string>
+    <string name="meal2">Второй завтрак</string>
+    <string name="meal3">Обед</string>
+    <string name="meal4">Полдник</string>
+    <string name="meal5">Ужин</string>
+    <string name="meal_choose">Выберите прием пищи</string>
 
     <string name="dialog_title">Выберите размер порции и время</string>
     <string name="dialog_cancel">Назад</string>

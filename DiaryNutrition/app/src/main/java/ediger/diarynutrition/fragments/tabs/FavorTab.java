@@ -28,10 +28,10 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 
+import ediger.diarynutrition.FoodActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.fragments.AddActivity;
 import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.objects.AppContext;
 
@@ -65,8 +65,8 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) {
-            AddActivity addActivity = (AddActivity)getActivity();
-            addActivity.finish();
+            FoodActivity foodActivity = (FoodActivity)getActivity();
+            foodActivity.finish();
         }
     }
 

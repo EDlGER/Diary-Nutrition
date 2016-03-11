@@ -14,7 +14,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "ediger.diarynutrition.fragments.AddActivity"/>
+        className = "ediger.diarynutrition.FoodActivity"/>
       <point      
         x = "452"      
         y = "128"/>

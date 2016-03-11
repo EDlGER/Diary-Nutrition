@@ -1,86 +1,46 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true"
+    tools:context=".AddActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar1"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:theme="@style/ToolbarTextColor"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        android:background="?attr/colorPrimary"/>
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_done"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end" />
 
-
-    <ediger.diarynutrition.SlidingTabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:layout_below="@id/toolbar1"/>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/colorPrimary"
-        android:id="@+id/linearLayout"
-        android:gravity="right"
-        android:layout_below="@+id/tabs">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:id="@+id/info_carbo"
-            android:text="@string/record_carbo"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_prot"
-            android:text="@string/record_prot"
-            android:layout_gravity="right"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_fat"
-            android:text="@string/record_fat"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="30dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/info_cal"
-            android:text="@string/record_cal"
-            android:textSize="12sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginRight="20dp" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/shadow_bottom"
-        android:id="@+id/infoDivider"
-        android:layout_below="@+id/linearLayout" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/infoDivider">
-
-    </android.support.v4.view.ViewPager>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

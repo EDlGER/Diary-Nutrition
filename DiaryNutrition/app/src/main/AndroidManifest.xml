@@ -24,8 +24,8 @@
         </activity>
 
         <activity
-            android:name=".fragments.AddActivity"
-            android:label="@string/act_add"
+            android:name=".FoodActivity"
+            android:label="@string/act_food"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -33,6 +33,13 @@
             </intent-filter>
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
+        </activity>
+
+        <activity android:name=".AddActivity"
+            android:parentActivityName=".FoodActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".FoodActivity"/>
         </activity>
 
     </application>

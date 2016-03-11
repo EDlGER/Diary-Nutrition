@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import ediger.diarynutrition.FoodActivity;
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
@@ -91,7 +92,7 @@ public class DiaryFragment extends Fragment implements
         mainActivity.actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                Intent addIntent = new Intent(getActivity(), FoodActivity.class);
                 addIntent.putExtra("CurrentCal", date);
                 startActivity(addIntent);
             }
