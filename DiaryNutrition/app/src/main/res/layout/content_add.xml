@@ -9,7 +9,6 @@
     tools:context=".AddActivity"
     tools:showIn="@layout/activity_add">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,14 +27,12 @@
                 android:inputType="number"
                 android:ems="4"
                 android:id="@+id/txtServ"
-                android:maxLength="3"
                 android:textSize="25sp"
                 android:singleLine="true"
+                android:gravity="center_horizontal"
                 android:text="@string/dialog_serv_std" />
 
         </android.support.design.widget.TextInputLayout>
-
-
 
         <android.support.v7.widget.AppCompatSpinner
             android:layout_width="wrap_content"
@@ -43,15 +40,39 @@
             android:id="@+id/spServ"
             android:layout_alignBottom="@+id/servInputLayout"
             android:layout_toRightOf="@+id/servInputLayout"
-            android:layout_marginLeft="16dp">
-
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="12dp">
         </android.support.v7.widget.AppCompatSpinner>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeInputLayout"
+            android:hint="@string/dialog_time"
+            android:layout_toRightOf="@+id/spServ"
+            android:layout_marginLeft="16dp"
+            android:layout_alignBottom="@+id/servInputLayout">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:id="@+id/txtTime"
+                android:maxLength="5"
+                android:textSize="25sp"
+                android:singleLine="true"
+                android:text="00:00"
+                android:editable="false"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:id="@+id/meal_divider"
             android:background="?android:attr/listDivider"
-            android:layout_below="@id/servInputLayout"
+            android:layout_below="@id/timeInputLayout"
             android:layout_marginTop="12dp"/>
 
         <LinearLayout
@@ -59,8 +80,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/rbLayout"
-            android:layout_below="@+id/servInputLayout"
-            android:paddingTop="32dp"
+            android:layout_below="@+id/meal_divider"
+            android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="16dp">

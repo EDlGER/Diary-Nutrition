@@ -63,6 +63,9 @@
     
     <string name="message_serving">Значение порции не введено</string>
 
+    <string name="add_rec_gram1">г</string>
+    <string name="add_rec_gram100">100г</string>
+
     <string name="add_food">Добавить продукт</string>
 
     <string name="elv_gram"> гр.</string>

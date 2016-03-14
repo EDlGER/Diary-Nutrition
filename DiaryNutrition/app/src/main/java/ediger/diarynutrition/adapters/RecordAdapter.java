@@ -206,7 +206,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.fat.setText(fat);
 
         holder.serving.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
-                + " гр.");
+                + " г");
 
         //holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
         //holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));

@@ -102,7 +102,7 @@ public class SearchTab extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        hideKeyboard();
+        //hideKeyboard();
 
         cursor = AppContext.getDbDiary().getAllFood();
         from = AppContext.getDbDiary().getListFood();
@@ -254,10 +254,10 @@ public class SearchTab extends Fragment implements
     private void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().
                 getSystemService(Activity.INPUT_METHOD_SERVICE);
-        /*if(inputMethodManager.isAcceptingText()) {
+        if(inputMethodManager.isAcceptingText()) {
             inputMethodManager.hideSoftInputFromWindow(getActivity().
                     getCurrentFocus().getWindowToken(), 0);
-        }*/
+        }
     }
 
     //Обновление данных
