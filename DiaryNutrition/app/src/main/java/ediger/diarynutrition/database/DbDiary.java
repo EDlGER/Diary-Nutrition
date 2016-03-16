@@ -285,13 +285,18 @@ public class DbDiary {
                 + ",f.[favor] as "+ALIAS_F_FAV
                 + ",f.[usr] as "+ALIAS_F_USR
                 + " from food f "
-                + " where f.[favor] = 1"
+                + " where f.[favor] = 1 AND f.[usr] > -1"
                 + " order by f.food_name asc";
         return  db.rawQuery(sql,null);
     }
 
     public Cursor getNameFood(long id) {
         return db.query(TABLE_FOOD,new String[]{ALIAS_FOOD_NAME},ALIAS_ID + "=" + id,null,null,null,null);
+    }
+
+    public Cursor getFood(long id) {
+        String[] selections = {ALIAS_FOOD_NAME,ALIAS_CAL,ALIAS_CARBO,ALIAS_PROT,ALIAS_FAT};
+        return db.query(TABLE_FOOD,selections,ALIAS_ID + "=" + id,null,null,null,null);
     }
 
     public String[] getListFood() {

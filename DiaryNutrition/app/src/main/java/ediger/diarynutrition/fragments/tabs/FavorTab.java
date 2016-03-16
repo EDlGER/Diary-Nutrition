@@ -10,7 +10,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -28,11 +27,10 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 
-import ediger.diarynutrition.FoodActivity;
+import ediger.diarynutrition.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.fragments.dialogs.AddDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 /**
@@ -41,7 +39,6 @@ import ediger.diarynutrition.objects.AppContext;
 public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = -4;
-    private static final int REQ_CODE_ADD = 1;
 
     View rootview;
 
@@ -59,16 +56,6 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             R.id.txt_f_fat
     };
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1) {
-            FoodActivity foodActivity = (FoodActivity)getActivity();
-            foodActivity.finish();
-        }
-    }
 
     @Override
     public void setUserVisibleHint(boolean visible)
@@ -119,13 +106,10 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 addid = id;
-                Bundle bundle = new Bundle();
-                bundle.putLong("id", addid);
 
-                DialogFragment a = new AddDialog();
-                a.setTargetFragment(FavorTab.this, REQ_CODE_ADD);
-                a.setArguments(bundle);
-                a.show(getFragmentManager(), "add_dialog");
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("FoodId", addid);
+                startActivity(addIntent);
             }
         });
 

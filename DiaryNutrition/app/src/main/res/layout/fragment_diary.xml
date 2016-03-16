@@ -33,153 +33,153 @@
                 android:layout_marginRight="3dp">
 
 
-            <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:shrinkColumns="*"
-                android:stretchColumns="*"
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*"
 
-                android:background="@color/colorPrimary"
-                android:layout_margin="1dp"
-                android:measureWithLargestChild="false">
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="1dp"
+                    android:measureWithLargestChild="false">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardInfo1"
-                        android:text="@string/record_card_info1"
-                        android:textSize="15sp"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_span="8"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:gravity="center_vertical" />
+                        android:layout_height="match_parent">
 
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardInfo1"
+                            android:text="@string/record_card_info1"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_span="8"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_vertical" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cardCarbo1"
+                            android:text="999"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:maxLength="3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cardProt1"
+                            android:text="999"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:maxLength="3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cardFat1"
+                            android:text="999"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:gravity="center_horizontal"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:maxLength="3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cardCal1"
+                            android:text="2000"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:gravity="right"
+                            android:background="#FFFFFF"
+                            android:maxLength="5" />
+
+                    </TableRow>
+
+                    <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cardCarbo1"
-                        android:text="999"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:gravity="center_horizontal"
-                        android:maxLength="3" />
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cardProt1"
-                        android:text="999"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:gravity="center_horizontal"
-                        android:maxLength="3" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardInfo2"
+                            android:text="@string/record_card_info2"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:layout_span="8" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cardFat1"
-                        android:text="999"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:gravity="center_horizontal"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:maxLength="3" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cardCal1"
-                        android:text="2000"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:gravity="right"
-                        android:background="#FFFFFF"
-                        android:maxLength="5" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardCarbo2"
+                            android:text="50"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:maxLength="3"
+                            android:gravity="center" />
 
-                </TableRow>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardProt2"
+                            android:text="30"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:maxLength="3"
+                            android:gravity="center" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardFat2"
+                            android:text="20"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:background="#FFFFFF"
+                            android:layout_marginRight="1dp"
+                            android:gravity="center"
+                            android:maxLength="3" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardInfo2"
-                        android:text="@string/record_card_info2"
-                        android:textSize="15sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:layout_span="8" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/cardCal2"
+                            android:text="2000"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorPrimary"
+                            android:gravity="right"
+                            android:background="#FFFFFF" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardCarbo2"
-                        android:text="50"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:maxLength="3"
-                        android:gravity="center" />
+                    </TableRow>
+                </TableLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardProt2"
-                        android:text="30"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:maxLength="3"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardFat2"
-                        android:text="20"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:background="#FFFFFF"
-                        android:layout_marginRight="1dp"
-                        android:gravity="center"
-                        android:maxLength="3" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/cardCal2"
-                        android:text="2000"
-                        android:textSize="20sp"
-                        android:textColor="@color/colorPrimary"
-                        android:gravity="right"
-                        android:background="#FFFFFF" />
-
-                </TableRow>
-            </TableLayout>
-
-            <View
-                android:layout_width="6dp"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF"
-                />
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    />
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

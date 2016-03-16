@@ -27,8 +27,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import ediger.diarynutrition.FoodActivity;
-import ediger.diarynutrition.fragments.dialogs.AddDialog;
+import ediger.diarynutrition.AddActivity;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
@@ -43,7 +42,6 @@ public class FoodTab extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = -3;
-    private static final int REQ_CODE_ADD = 1;
     private static final int REQ_CODE_ADD_FOOD = 2;
     private static final int REQ_CODE_CHANGE = 3;
 
@@ -67,10 +65,7 @@ public class FoodTab extends Fragment implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1) {
-            FoodActivity foodActivity = (FoodActivity)getActivity();
-            foodActivity.finish();
-        } else if (requestCode == 2 || requestCode == 3){
+            if (requestCode == REQ_CODE_ADD_FOOD || requestCode == REQ_CODE_CHANGE){
                 cursor = AppContext.getDbDiary().getUserFood();
                 from = AppContext.getDbDiary().getListFood();
                 foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
@@ -136,13 +131,10 @@ public class FoodTab extends Fragment implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 addid = id;
-                Bundle bundle = new Bundle();
-                bundle.putLong("id", addid);
 
-                DialogFragment a = new AddDialog();
-                a.setTargetFragment(FoodTab.this, REQ_CODE_ADD);
-                a.setArguments(bundle);
-                a.show(getFragmentManager(), "add_dialog");
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("FoodId", addid);
+                startActivity(addIntent);
             }
         });
 

@@ -28,7 +28,7 @@
                 android:ems="4"
                 android:id="@+id/txtServ"
                 android:textSize="25sp"
-                android:singleLine="true"
+                android:maxLength="3"
                 android:gravity="center_horizontal"
                 android:text="@string/dialog_serv_std" />
 
@@ -135,9 +135,11 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:id="@+id/radio_divider"
             android:background="?android:attr/listDivider"
             android:layout_below="@+id/rbLayout"/>
-
+        
+        
     </RelativeLayout>
 
 
