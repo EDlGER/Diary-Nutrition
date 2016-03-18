@@ -51,7 +51,6 @@ public class DiaryFragment extends Fragment implements
     private long date;
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private CardView dayStat;
@@ -80,8 +79,7 @@ public class DiaryFragment extends Fragment implements
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
-        if (!getUserVisibleHint())
-        {
+        if (!getUserVisibleHint()) {
             return;
         }
 

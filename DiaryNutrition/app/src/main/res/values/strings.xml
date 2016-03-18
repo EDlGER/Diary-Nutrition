@@ -8,6 +8,7 @@
     <string name="title_sec1">Дневник</string>
     <string name="title_sec2">Настройки</string>
     <string name="title_sec3">Котроль веса</string>
+    <string name="title_sec4">Сводка дня</string>
     <string name="tittle_search">Поиск продукта</string>
 
     <string name="record_card_info1">Запланировано</string>

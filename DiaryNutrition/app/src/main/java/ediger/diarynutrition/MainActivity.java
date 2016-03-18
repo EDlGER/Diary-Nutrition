@@ -2,12 +2,12 @@ package ediger.diarynutrition;
 
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.fragments.SummaryFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -37,7 +37,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public FloatingActionButton fab;
 
     public FloatingActionsMenu menuMultipleActions;
 
@@ -67,8 +66,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //fab = (FloatingActionButton) findViewById(R.id.fab);
 
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
         actionA = findViewById(R.id.action_a);
@@ -241,6 +238,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_weight:
                 fragment = new WeightFragment();
                 setTitle(getString(R.string.title_sec3));
+                break;
+            case R.id.nav_stat:
+                fragment = new SummaryFragment();
+                setTitle(getString(R.string.title_sec4));
                 break;
 
         }
