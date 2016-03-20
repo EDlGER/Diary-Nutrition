@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
@@ -34,6 +35,12 @@ public class SummaryFragment extends Fragment {
     View rootview;
 
     private long date;
+
+    private TextView txtCal;
+    private TextView txtCarbo;
+    private TextView txtProt;
+    private TextView txtFat;
+
     private PieChartView chart;
     private PieChartView chartEmpty;
     private PieChartData data;
@@ -101,6 +108,11 @@ public class SummaryFragment extends Fragment {
 
         rootview = inflater.inflate(R.layout.fragment_summary,container,false);
 
+        txtCal = (TextView) rootview.findViewById(R.id.txt_sum_cal);
+        txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
+        txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
+        txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
+
         chart = (PieChartView) rootview.findViewById(R.id.pie_chart);
         chartEmpty = (PieChartView) rootview.findViewById(R.id.pie_chart_empty);
 
@@ -128,6 +140,11 @@ public class SummaryFragment extends Fragment {
         Cursor cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
 
+        txtCal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
+        txtCarbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
+        txtProt.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
+        txtFat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+
         float cal = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
         float carbo = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)) * 4;
         float prot = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT)) * 4;
@@ -135,11 +152,11 @@ public class SummaryFragment extends Fragment {
 
         List<SliceValue> values = new ArrayList<>();
 
-        SliceValue carboSliceValue = new SliceValue(carbo,ChartUtils.COLOR_RED);
+        SliceValue carboSliceValue = new SliceValue(carbo,ChartUtils.COLOR_ORANGE);
         carboSliceValue.setLabel((int) (carbo / cal * 100) + "%");
         SliceValue protSliceValue = new SliceValue(prot,ChartUtils.COLOR_GREEN);
         protSliceValue.setLabel((int) (prot / cal * 100) + "%");
-        SliceValue fatSliceValue = new SliceValue(fat,ChartUtils.COLOR_ORANGE);
+        SliceValue fatSliceValue = new SliceValue(fat,ChartUtils.COLOR_RED);
         fatSliceValue.setLabel((int) (fat / cal * 100) + "%");
 
         values.add(carboSliceValue);

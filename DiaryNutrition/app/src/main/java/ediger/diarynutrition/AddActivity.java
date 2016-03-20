@@ -31,6 +31,7 @@ import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
@@ -127,6 +128,7 @@ public class AddActivity extends AppCompatActivity {
         txtTime.setText(timeFormatter.format(calendar.getTime()));
         date = calendar.getTimeInMillis();
 
+
         txtTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +179,15 @@ public class AddActivity extends AppCompatActivity {
                     AppContext.getDbDiary().addRec(foodId,
                             Integer.parseInt(txtServ.getText().toString()) * gram,
                             date, mealId);
+                    calendar.set(calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH), 0, 0);
+                    calendar.clear(Calendar.SECOND);
+                    calendar.clear(Calendar.MILLISECOND);
+                    date = calendar.getTimeInMillis();
+
                     Intent intent1 = new Intent(AddActivity.this, MainActivity.class);
+                    intent1.putExtra("date",date);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent1);
                 }

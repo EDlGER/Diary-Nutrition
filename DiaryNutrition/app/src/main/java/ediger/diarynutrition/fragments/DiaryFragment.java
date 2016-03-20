@@ -51,12 +51,12 @@ public class DiaryFragment extends Fragment implements
     private long date;
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
+    private Date currentDate = new Date();
+    private  SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private CardView dayStat;
-
-    View footerView;
-
+    private View footerView;
     private TextView cardCal;
     private TextView cardCarbo;
     private TextView cardProt;
@@ -76,8 +76,6 @@ public class DiaryFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
         if (!getUserVisibleHint()) {
             return;
@@ -122,8 +120,8 @@ public class DiaryFragment extends Fragment implements
                 }
 
                 for (int i = 0; i < recordAdapter.getGroupCount(); i++) {
-                    listRecord.collapseGroup(i);
                     listRecord.expandGroup(i);
+                    listRecord.collapseGroup(i);
                 }
                 setCardData();
 
@@ -151,19 +149,14 @@ public class DiaryFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final MainActivity mainActivity = (MainActivity)getActivity();
+        /*final MainActivity mainActivity = (MainActivity)getActivity();
 
         mainActivity.setSubtitle(getString(R.string.diary_date_today));
         if (mainActivity.mCompactCalendarView != null) {
             mainActivity.mCompactCalendarView.setCurrentDate(new Date());
-        }
+        }*/
 
-        Loader loader = getLoaderManager().initLoader(-1, null, this);
-        if (loader != null && !loader.isReset()){
-            getLoaderManager().restartLoader(-1,null,this);
-        } else {
-            getLoaderManager().initLoader(-1, null, this);
-        }
+
     }
 
     @Nullable
@@ -172,6 +165,7 @@ public class DiaryFragment extends Fragment implements
 
         Cursor cursor;
         Calendar now = Calendar.getInstance();
+        final MainActivity mainActivity = (MainActivity)getActivity();
 
         rootview = inflater.inflate(R.layout.fragment_diary, container, false);
 
@@ -193,10 +187,19 @@ public class DiaryFragment extends Fragment implements
         nowto.clear(Calendar.SECOND);
 
         nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
-                  now.get(Calendar.DAY_OF_MONTH), 0, 0);
+                now.get(Calendar.DAY_OF_MONTH), 0, 0);
 
-        date = nowto.getTimeInMillis();
+        Intent intent = getActivity().getIntent();
+        date = intent.getLongExtra("date", nowto.getTimeInMillis());
+
+        intent.removeExtra("date");
         now.setTimeInMillis(date);
+
+        mainActivity.setCurrentDate(now.getTime());
+        if (today.equals(now)) {
+            mainActivity.setSubtitle(getString(R.string.diary_date_today));
+        }
+
         AppContext.getDbDiary().editDate(date);
 
         cursor = AppContext.getDbDiary().getMealData();
@@ -236,6 +239,13 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(i);
         }
 
+        Loader loader = getLoaderManager().initLoader(-1, null, this);
+        if (loader != null && !loader.isReset()){
+            getLoaderManager().restartLoader(-1,null,this);
+        } else {
+            getLoaderManager().initLoader(-1, null, this);
+        }
+
         return rootview;
     }
 
@@ -272,10 +282,12 @@ public class DiaryFragment extends Fragment implements
             long id = child.getLong(0);
             AppContext.getDbDiary().delRec(id);
 
-            for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-                listRecord.collapseGroup(i);
-                listRecord.expandGroup(i);
-            }
+            listRecord.collapseGroup(groupPos);
+            listRecord.expandGroup(groupPos);
+            //for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+            //    listRecord.collapseGroup(i);
+            //    listRecord.expandGroup(i);
+            //}
             setCardData();
 
             return true;

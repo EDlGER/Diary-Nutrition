@@ -6,6 +6,7 @@ import ediger.diarynutrition.fragments.SummaryFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
     public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
+    private Date current = new Date();
     private AppBarLayout mAppBarLayout;
 
     private boolean isExpanded = false;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        long date;
 
         setContentView(R.layout.activity_main);
 
