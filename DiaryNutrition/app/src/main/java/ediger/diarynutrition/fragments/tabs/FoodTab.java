@@ -124,6 +124,7 @@ public class FoodTab extends Fragment implements
 
 
         listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
+        listFood.setEmptyView(rootview.findViewById(R.id.empty_ft_list));
 
         listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -251,8 +252,11 @@ public class FoodTab extends Fragment implements
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override

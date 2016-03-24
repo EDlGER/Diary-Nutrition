@@ -57,6 +57,10 @@
     <string name="dialog_prot_f">Белки</string>
     <string name="dialog_fat_f">Жиры</string>
 
+    <string name="empty_list_weight">Добавьте текущий вес</string>
+    <string name="empty_list_food">Нет добавленных продутов</string>
+    <string name="empty_list_favor">Нет избранных продуктов</string>
+
     <string name="context_menu_del">Удалить</string>
     <string name="context_menu_change">Изменить</string>
     <string name="context_menu_favor">В избранное</string>

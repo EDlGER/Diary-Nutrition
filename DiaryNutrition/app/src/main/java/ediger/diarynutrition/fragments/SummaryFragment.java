@@ -174,6 +174,11 @@ public class SummaryFragment extends Fragment {
         } else {
             chart.setVisibility(View.GONE);
             chartEmpty.setVisibility(View.VISIBLE);
+
+            txtCal.setText("0");
+            txtCarbo.setText("0");
+            txtProt.setText("0");
+            txtFat.setText("0");
         }
         cursor.close();
     }

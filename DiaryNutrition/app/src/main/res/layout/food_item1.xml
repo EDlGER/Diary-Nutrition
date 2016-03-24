@@ -12,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Овсяная каша"
-        android:maxLength="25"
         android:id="@+id/txt_f_name"
         android:layout_alignParentTop="true"
         android:textAppearance="?android:attr/textAppearanceMedium"

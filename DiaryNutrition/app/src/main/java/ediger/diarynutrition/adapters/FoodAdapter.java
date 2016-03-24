@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.objects.AppContext;
 
 /**
  * Created by root on 30.05.15.
@@ -54,7 +52,14 @@ public class FoodAdapter extends SimpleCursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        int fav = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_F_FAV));
+        int fav = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_FAV));
+
+        String name = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
+        if (name.length() > 25) {
+            holder.food_name.setTextSize(12);
+        } else {
+            holder.food_name.setTextSize(16);
+        }
 
         if (fav == 1) {
             holder.favor.setVisibility(View.VISIBLE);
@@ -62,11 +67,11 @@ public class FoodAdapter extends SimpleCursorAdapter {
             holder.favor.setVisibility(View.INVISIBLE);
         }
 
-        holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_NAME)));
-        holder.cal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CAL)));
-        holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_CARBO)));
-        holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_PROT)));
-        holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_F_FAT)));
+        holder.food_name.setText(name);
+        holder.cal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
+        holder.carbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
+        holder.prot.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
+        holder.fat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
 
     }
 

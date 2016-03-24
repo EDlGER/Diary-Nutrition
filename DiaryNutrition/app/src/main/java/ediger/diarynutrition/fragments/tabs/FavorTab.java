@@ -99,6 +99,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
         listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
+        listFood.setEmptyView(rootview.findViewById(R.id.empty_ft_list));
 
         listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -199,8 +200,11 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override

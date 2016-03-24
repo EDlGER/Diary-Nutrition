@@ -189,17 +189,24 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         String fat = String.format("%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
 
+        String name = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
+        if (name.length() > 25) {
+            holder.food_name.setTextSize(12);
+        } else {
+            holder.food_name.setTextSize(16);
+        }
+
         if (isLastChild) {
             params.setMargins(pxSide,pxTop,pxSide,pxBottomLast);
             relative.setLayoutParams(params);
             divider.setVisibility(View.INVISIBLE);
         } else {
-            params.setMargins(pxSide,pxTop,pxSide,pxBottom);
+            params.setMargins(pxSide, pxTop, pxSide, pxBottom);
             relative.setLayoutParams(params);
             divider.setVisibility(View.VISIBLE);
         }
 
-        holder.food_name.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME)));
+        holder.food_name.setText(name);
         holder.cal.setText(Integer.toString(cal));
         holder.carbo.setText(carbo);
         holder.prot.setText(prot);
@@ -227,17 +234,21 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
+        Loader loader = null;
         int groupPos = groupCursor.getPosition();
         int groupId = groupCursor.getInt(groupCursor.
-                getColumnIndex(DbDiary.ALIAS_M_ID));
+                getColumnIndex(DbDiary.ALIAS_ID));
+
         mGroupMap.put(groupId, groupPos);
 
-        Loader loader = mFragment.getLoaderManager().getLoader(groupId);
-        if (loader != null && !loader.isReset()){
-            mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
-        }
-        else {
-            mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+        if (mFragment != null && mFragment.isAdded()) {
+            loader = mFragment.getLoaderManager().getLoader(groupId);
+            if (loader != null && !loader.isReset()){
+                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
+            }
+            else {
+                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+            }
         }
         return null;
     }

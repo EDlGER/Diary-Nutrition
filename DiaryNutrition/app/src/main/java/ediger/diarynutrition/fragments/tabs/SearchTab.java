@@ -96,7 +96,7 @@ public class SearchTab extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        //hideKeyboard();
+        hideKeyboard();
 
         cursor = AppContext.getDbDiary().getAllFood();
         from = AppContext.getDbDiary().getListFood();
@@ -167,8 +167,8 @@ public class SearchTab extends Fragment implements
         String selections = "usr > -1";
 
         if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null, null,
-                    null, null);
+            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
+                    null, null, null);
         }
         else {
             String value = "%"+constraint.toString()+"%";
@@ -238,11 +238,10 @@ public class SearchTab extends Fragment implements
     }
 
     private void hideKeyboard() {
-        InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().
-                getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if(inputMethodManager.isAcceptingText()) {
-            inputMethodManager.hideSoftInputFromWindow(getActivity().
-                    getCurrentFocus().getWindowToken(), 0);
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

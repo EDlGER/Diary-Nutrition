@@ -41,20 +41,22 @@
             android:layout_marginLeft="2dp"
             android:layout_centerInParent="true" />
 
+        <!--
+            android:maxLength="25"
+            android:singleLine="true"
+            -->
         <TextView style="?android:textAppearanceListItemSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Овсяная каша"
             android:id="@+id/txt_food_name"
-            android:maxLength="25"
             android:layout_alignParentTop="true"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/txt_time"
             android:layout_toLeftOf="@+id/txt_cal"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="5dp"
-            android:singleLine="true" />
+            android:layout_marginLeft="5dp" />
 
         <TextView
             android:layout_width="wrap_content"

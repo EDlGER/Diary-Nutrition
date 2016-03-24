@@ -64,10 +64,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
 
     private boolean isWeek = true;
     private boolean isMonth = false;
-    private boolean hasLines = true;
-    private boolean hasPoints = true;
     private ValueShape shape = ValueShape.CIRCLE;
-    private boolean isFilled = false;
     private boolean hasLabels = true;
 
 
@@ -107,6 +104,8 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
         rbWeek = (AppCompatRadioButton) rootview.findViewById(R.id.rb_week);
         rbMonth = (AppCompatRadioButton) rootview.findViewById(R.id.rb_month);
         chart = (LineChartView) rootview.findViewById(R.id.weight_chart);
+
+        listWeight.setEmptyView(rootview.findViewById(R.id.empty_list_weight));
 
         rbWeek.setChecked(isWeek);
         rbMonth.setChecked(isMonth);
@@ -247,10 +246,10 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
         Line line = new Line(values);
         line.setColor(getResources().getColor(R.color.colorAccent));
         line.setShape(shape);
-        line.setFilled(isFilled);
+        line.setFilled(false);
         line.setHasLabels(hasLabels);
-        line.setHasLines(hasLines);
-        line.setHasPoints(hasPoints);
+        line.setHasLines(true);
+        line.setHasPoints(true);
         lines.add(line);
 
         data = new LineChartData(lines);

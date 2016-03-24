@@ -1,9 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FoodActivity"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary">
+    android:background="#FAFAFA">
 
     <ListView
         android:layout_width="match_parent"
@@ -13,4 +12,12 @@
         android:textFilterEnabled="true"
         android:background="@drawable/list_view" />
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_ft_list"
+        android:text="@string/empty_list_food"
+        android:layout_gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+</FrameLayout>
