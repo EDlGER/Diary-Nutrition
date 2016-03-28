@@ -51,8 +51,7 @@ public class DiaryFragment extends Fragment implements
     private long date;
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
-    private Date currentDate = new Date();
-    private  SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private CardView dayStat;
@@ -142,20 +141,6 @@ public class DiaryFragment extends Fragment implements
         }
         //getLoaderManager().restartLoader(-1,null,this);
         setCardData();
-
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        /*final MainActivity mainActivity = (MainActivity)getActivity();
-
-        mainActivity.setSubtitle(getString(R.string.diary_date_today));
-        if (mainActivity.mCompactCalendarView != null) {
-            mainActivity.mCompactCalendarView.setCurrentDate(new Date());
-        }*/
-
 
     }
 
@@ -284,10 +269,7 @@ public class DiaryFragment extends Fragment implements
 
             listRecord.collapseGroup(groupPos);
             listRecord.expandGroup(groupPos);
-            //for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            //    listRecord.collapseGroup(i);
-            //    listRecord.expandGroup(i);
-            //}
+
             setCardData();
 
             return true;
@@ -387,8 +369,7 @@ public class DiaryFragment extends Fragment implements
 
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getRecordData(cal, groupId);
-            return cursor;
+            return db.getRecordData(cal, groupId);
         }
     }
 
@@ -402,8 +383,7 @@ public class DiaryFragment extends Fragment implements
 
         @Override
         public  Cursor loadInBackground() {
-            Cursor cursor = db.getMealData();
-            return cursor;
+            return db.getMealData();
         }
     }
 

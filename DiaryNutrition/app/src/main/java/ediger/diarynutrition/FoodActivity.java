@@ -12,11 +12,11 @@ import ediger.diarynutrition.adapters.ViewPagerAdapter;
  */
 public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
-    ViewPager pager;
-    ViewPagerAdapter adapter;
-    SlidingTabLayout tabs;
-    CharSequence Titles[]= { "База данных","Добавленные", "Избранные" };
-    int Numboftabs = 3;
+    private int Numboftabs = 3;
+    private ViewPager pager;
+    private ViewPagerAdapter adapter;
+    private SlidingTabLayout tabs;
+    private CharSequence Titles[]= { "База данных","Добавленные", "Избранные" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +66,8 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         invalidateFragmentMenus(position);
     }
 
-    private void invalidateFragmentMenus(int position){
-        for(int i = 0; i < adapter.getCount(); i++){
+    private void invalidateFragmentMenus(int position) {
+        for(int i = 0; i < adapter.getCount(); i++) {
             adapter.getItem(i).setHasOptionsMenu(i == position);
         }
         invalidateOptionsMenu();

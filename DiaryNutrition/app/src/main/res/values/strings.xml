@@ -73,7 +73,7 @@
 
     <string name="add_food">Добавить продукт</string>
 
-    <string name="elv_gram"> гр.</string>
+    <string name="elv_gram"> г</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -53,12 +53,10 @@ public class MainActivity extends AppCompatActivity
 
     public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
-    private Date current = new Date();
-    private AppBarLayout mAppBarLayout;
-
     private boolean isExpanded = false;
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
+    private AppBarLayout mAppBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

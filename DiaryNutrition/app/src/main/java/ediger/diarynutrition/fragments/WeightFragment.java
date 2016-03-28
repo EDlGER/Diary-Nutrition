@@ -44,29 +44,29 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
     private static final int LOADER_ID = -6;
 
     View rootview;
-    ListView listWeight;
-    Cursor cursor;
-    String[] from;
-    WeightAdapter weightAdapter;
-    int[] to = {
-            R.id.txtDate,
-            R.id.txtWeight
-    };
 
-    private AppCompatRadioButton rbWeek;
-    private AppCompatRadioButton rbMonth;
-
-    private LineChartView chart;
-    private LineChartData data;
+    /** Параметры графика */
     private int numberOfPoints = 7;
     private float maxWeightViewport = 40;
     private float minWeightViewport = 150;
-
     private boolean isWeek = true;
     private boolean isMonth = false;
-    private ValueShape shape = ValueShape.CIRCLE;
     private boolean hasLabels = true;
 
+
+    private int[] to = {
+            R.id.txtDate,
+            R.id.txtWeight
+    };
+    private Cursor cursor;
+    private String[] from;
+    private ListView listWeight;
+    private LineChartView chart;
+    private LineChartData data;
+    private WeightAdapter weightAdapter;
+    private AppCompatRadioButton rbWeek;
+    private AppCompatRadioButton rbMonth;
+    private ValueShape shape = ValueShape.CIRCLE;
 
     @Override
     public void setUserVisibleHint(boolean visible)
@@ -242,7 +242,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
         }
         cursor.close();
 
-        List<Line> lines = new ArrayList<Line>();
+        List<Line> lines = new ArrayList<>();
         Line line = new Line(values);
         line.setColor(getResources().getColor(R.color.colorAccent));
         line.setShape(shape);
@@ -289,8 +289,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
 
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getAllWeight();
-            return cursor;
+            return db.getAllWeight();
         }
     }
 }

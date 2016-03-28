@@ -28,8 +28,6 @@ public class FoodAdapter extends SimpleCursorAdapter {
     }
 
 
-
-
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
