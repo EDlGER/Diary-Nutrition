@@ -68,31 +68,6 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
     private AppCompatRadioButton rbMonth;
     private ValueShape shape = ValueShape.CIRCLE;
 
-    @Override
-    public void setUserVisibleHint(boolean visible)
-    {
-        super.setUserVisibleHint(visible);
-        if (visible && isResumed())
-        {
-            onResume();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (!getUserVisibleHint()) {
-            return;
-        }
-
-        MainActivity mainActivity = (MainActivity) getActivity();
-
-        mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
-
-        mainActivity.datePicker.setVisibility(View.INVISIBLE);
-        mainActivity.title.setPadding(0, 25, 0, 0);
-    }
 
     @Nullable
     @Override
@@ -150,6 +125,33 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
         getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootview;
     }
+
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+        mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
+
+        mainActivity.datePicker.setVisibility(View.INVISIBLE);
+        mainActivity.title.setPadding(0, 25, 0, 0);
+    }
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

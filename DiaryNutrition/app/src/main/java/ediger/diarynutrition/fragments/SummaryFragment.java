@@ -47,6 +47,42 @@ public class SummaryFragment extends Fragment {
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
 
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        Calendar now = Calendar.getInstance();
+
+        rootview = inflater.inflate(R.layout.fragment_summary,container,false);
+
+        txtCal = (TextView) rootview.findViewById(R.id.txt_sum_cal);
+        txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
+        txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
+        txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
+
+        chart = (PieChartView) rootview.findViewById(R.id.pie_chart);
+        chartEmpty = (PieChartView) rootview.findViewById(R.id.pie_chart_empty);
+
+        //Set current date
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND,0);
+        today.set(Calendar.MILLISECOND,0);
+        nowto = Calendar.getInstance();
+        nowto.clear(Calendar.MILLISECOND);
+        nowto.clear(Calendar.SECOND);
+        nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH), 0, 0);
+        date = nowto.getTimeInMillis();
+        AppContext.getDbDiary().editDate(date);
+
+
+        generateData();
+
+        return rootview;
+    }
+
     @Override
     public void setUserVisibleHint(boolean visible)
     {
@@ -98,41 +134,6 @@ public class SummaryFragment extends Fragment {
         });
 
         mainActivity.title.setPadding(0, 0, 0, 0);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Calendar now = Calendar.getInstance();
-
-        rootview = inflater.inflate(R.layout.fragment_summary,container,false);
-
-        txtCal = (TextView) rootview.findViewById(R.id.txt_sum_cal);
-        txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
-        txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
-        txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
-
-        chart = (PieChartView) rootview.findViewById(R.id.pie_chart);
-        chartEmpty = (PieChartView) rootview.findViewById(R.id.pie_chart_empty);
-
-        //Set current date
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND,0);
-        today.set(Calendar.MILLISECOND,0);
-        nowto = Calendar.getInstance();
-        nowto.clear(Calendar.MILLISECOND);
-        nowto.clear(Calendar.SECOND);
-        nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH), 0, 0);
-        date = nowto.getTimeInMillis();
-        AppContext.getDbDiary().editDate(date);
-
-
-        generateData();
-
-        return rootview;
     }
 
     private void generateData() {

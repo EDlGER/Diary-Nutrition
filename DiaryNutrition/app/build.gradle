@@ -29,5 +29,6 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
 
 }

@@ -65,6 +65,13 @@
     <string name="context_menu_change">Изменить</string>
     <string name="context_menu_favor">В избранное</string>
     <string name="context_menu_favor_del">Убрать</string>
+
+    <string name="pref_title_user">Личные данные</string>
+    <string name="pref_gender">Пол</string>
+    <string name="pref_birthday">Дата рождения</string>
+    <string name="pref_height">Рост</string>
+    <string name="pref_activity">Активность</string>
+    <string name="pref_purpose">Цель</string>
     
     <string name="message_serving">Значение порции не введено</string>
 
@@ -91,6 +98,42 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+    </string-array>
+
+    <string-array name="pref_gender_array">
+        <item>Мужской</item>
+        <item>Женский</item>
+    </string-array>
+
+    <string-array name="pref_gender_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_activity_array">
+        <item>Сидячий</item>
+        <item>Малоактивный</item>
+        <item>Активный</item>
+        <item>Очень активный</item>
+    </string-array>
+
+    <string-array name="pref_activity_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="pref_purpose_array">
+        <item>Сбросить вес</item>
+        <item>Поддерживать вес</item>
+        <item>Набрать вес</item>
+    </string-array>
+
+    <string-array name="pref_purpose_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
 
 </resources>

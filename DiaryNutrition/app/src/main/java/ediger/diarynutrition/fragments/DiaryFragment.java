@@ -62,88 +62,6 @@ public class DiaryFragment extends Fragment implements
     private TextView cardFat;
 
 
-    @Override
-    public void setUserVisibleHint(boolean visible)
-    {
-        super.setUserVisibleHint(visible);
-        if (visible && isResumed())
-        {
-            onResume();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (!getUserVisibleHint()) {
-            return;
-        }
-
-        final MainActivity mainActivity = (MainActivity)getActivity();
-
-        mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
-        mainActivity.menuMultipleActions.collapseImmediately();
-        mainActivity.actionA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addIntent = new Intent(getActivity(), FoodActivity.class);
-                addIntent.putExtra("CurrentCal", date);
-                startActivity(addIntent);
-            }
-        });
-        mainActivity.actionB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment a = new AddWeightDialog();
-                a.show(getFragmentManager(), "add_weight_dialog");
-                mainActivity.menuMultipleActions.collapse();
-            }
-        });
-
-        mainActivity.datePicker.setVisibility(View.VISIBLE);
-
-        mainActivity.mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
-
-            @Override
-            public void onDayClick(Date dateClicked) {
-
-                nowto.setTime(dateClicked);
-                date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(date);
-
-                if (today.equals(nowto)) {
-                    mainActivity.setSubtitle(getString(R.string.diary_date_today));
-                } else {
-                    mainActivity.setSubtitle(dateFormat.format(dateClicked));
-                }
-
-                for (int i = 0; i < recordAdapter.getGroupCount(); i++) {
-                    listRecord.expandGroup(i);
-                    listRecord.collapseGroup(i);
-                }
-                setCardData();
-
-                mainActivity.hideCalendarView();
-            }
-
-            @Override
-            public void onMonthScroll(Date firstDayOfNewMonth) {
-                mainActivity.setSubtitle(dateFormat.format(firstDayOfNewMonth));
-            }
-        });
-
-        mainActivity.title.setPadding(0, 0, 0, 0);
-
-        for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            listRecord.expandGroup(i);
-            listRecord.collapseGroup(i);
-        }
-        //getLoaderManager().restartLoader(-1,null,this);
-        setCardData();
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -234,10 +152,85 @@ public class DiaryFragment extends Fragment implements
         return rootview;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        final MainActivity mainActivity = (MainActivity)getActivity();
+
+        mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
+        mainActivity.menuMultipleActions.collapseImmediately();
+        mainActivity.actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addIntent = new Intent(getActivity(), FoodActivity.class);
+                addIntent.putExtra("CurrentCal", date);
+                startActivity(addIntent);
+            }
+        });
+        mainActivity.actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment a = new AddWeightDialog();
+                a.show(getFragmentManager(), "add_weight_dialog");
+                mainActivity.menuMultipleActions.collapse();
+            }
+        });
+
+        mainActivity.datePicker.setVisibility(View.VISIBLE);
+
+        mainActivity.mCompactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
+
+            @Override
+            public void onDayClick(Date dateClicked) {
+
+                nowto.setTime(dateClicked);
+                date = nowto.getTimeInMillis();
+                AppContext.getDbDiary().editDate(date);
+
+                if (today.equals(nowto)) {
+                    mainActivity.setSubtitle(getString(R.string.diary_date_today));
+                } else {
+                    mainActivity.setSubtitle(dateFormat.format(dateClicked));
+                }
+
+                for (int i = 0; i < recordAdapter.getGroupCount(); i++) {
+                    listRecord.expandGroup(i);
+                    listRecord.collapseGroup(i);
+                }
+                setCardData();
+
+                mainActivity.hideCalendarView();
+            }
+
+            @Override
+            public void onMonthScroll(Date firstDayOfNewMonth) {
+                mainActivity.setSubtitle(dateFormat.format(firstDayOfNewMonth));
+            }
+        });
+
+        mainActivity.title.setPadding(0, 0, 0, 0);
+
+        for(int i=0; i < recordAdapter.getGroupCount(); i++) {
+            listRecord.expandGroup(i);
+            listRecord.collapseGroup(i);
+        }
+        //getLoaderManager().restartLoader(-1,null,this);
+        setCardData();
 
     }
 

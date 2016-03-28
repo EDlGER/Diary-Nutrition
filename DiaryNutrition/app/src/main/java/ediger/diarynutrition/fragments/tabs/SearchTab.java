@@ -46,22 +46,61 @@ public class SearchTab extends Fragment implements
     private static final int REQ_CODE_ADD_FOOD = 2;
     private static final int LOADER_ID = -2;
 
-    private ListView listFood;
-    private Cursor cursor;
-    private FoodAdapter foodAdapter;
-
-    private long addid;
-
-    long cal;
-    String[] from;
-    int[] to = {
+    private int[] to = {
             R.id.txt_f_name,
             R.id.txt_f_cal,
             R.id.txt_f_carbo,
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
+    private long addid;
+    private String[] from;
+    private ListView listFood;
+    private Cursor cursor;
+    private FoodAdapter foodAdapter;
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootview = inflater.inflate(R.layout.fragment_tab_search, container, false);
+
+        setHasOptionsMenu(true);
+
+        //Данные для адаптера
+        cursor = AppContext.getDbDiary().getAllFood();
+        from = AppContext.getDbDiary().getListFood();
+
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+
+        listFood = (ListView) rootview.findViewById(R.id.st_listFood);
+        listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                addid = id;
+
+                Intent addIntent = new Intent(getActivity(), AddActivity.class);
+                addIntent.putExtra("FoodId", addid);
+                startActivity(addIntent);
+            }
+        });
+        listFood.setTextFilterEnabled(true);
+        listFood.setAdapter(foodAdapter);
+        registerForContextMenu(listFood);
+        //Поиск
+        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getFilterList(constraint);
+            }
+        });
+
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+        
+
+        return rootview;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -111,54 +150,6 @@ public class SearchTab extends Fragment implements
         });
         getLoaderManager().getLoader(LOADER_ID).forceLoad();
         //getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootview = inflater.inflate(R.layout.fragment_tab_search, container, false);
-
-        setHasOptionsMenu(true);
-
-        Cursor cursor = AppContext.getDbDiary().getDate();
-        cursor.moveToFirst();
-        cal = cursor.getLong(0);
-        cursor.close();
-
-        //Данные для адаптера
-        cursor = AppContext.getDbDiary().getAllFood();
-        from = AppContext.getDbDiary().getListFood();
-
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
-
-        listFood = (ListView) rootview.findViewById(R.id.st_listFood);
-        listFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                addid = id;
-
-                Intent addIntent = new Intent(getActivity(), AddActivity.class);
-                addIntent.putExtra("FoodId", addid);
-                startActivity(addIntent);
-            }
-        });
-        listFood.setTextFilterEnabled(true);
-        listFood.setAdapter(foodAdapter);
-        registerForContextMenu(listFood);
-        //Поиск
-        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return getFilterList(constraint);
-            }
-        });
-
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-        
-
-        return rootview;
     }
 
     //Поиск по введенным буквам
@@ -273,8 +264,7 @@ public class SearchTab extends Fragment implements
 
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getAllFood();
-            return cursor;
+            return db.getAllFood();
         }
     }
 }

@@ -47,69 +47,17 @@ public class FoodTab extends Fragment implements
 
     View rootview;
     public ListView listFood;
-    private Cursor cursor;
-    private FoodAdapter foodAdapter;
-    private long addid;
-
-    String[] from;
-    int[] to = {
+    private int[] to = {
             R.id.txt_f_name,
             R.id.txt_f_cal,
             R.id.txt_f_carbo,
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-            if (requestCode == REQ_CODE_ADD_FOOD || requestCode == REQ_CODE_CHANGE){
-                cursor = AppContext.getDbDiary().getUserFood();
-                from = AppContext.getDbDiary().getListFood();
-                foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
-                listFood.setAdapter(foodAdapter);
-                listFood.setTextFilterEnabled(true);
-                foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-                    @Override
-                        public Cursor runQuery(CharSequence constraint) {
-                        return getFilterList(constraint);
-                    }
-                });
-                getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean visible)
-    {
-        super.setUserVisibleHint(visible);
-        if (visible && isResumed())
-        {
-            onResume();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        hideKeyboard();
-
-        cursor = AppContext.getDbDiary().getUserFood();
-        from = AppContext.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
-        listFood.setAdapter(foodAdapter);
-        listFood.setTextFilterEnabled(true);
-        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return getFilterList(constraint);
-            }
-        });
-        getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        //getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
+    private long addid;
+    private String[] from;
+    private Cursor cursor;
+    private FoodAdapter foodAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -152,6 +100,56 @@ public class FoodTab extends Fragment implements
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootview;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_CODE_ADD_FOOD || requestCode == REQ_CODE_CHANGE){
+            cursor = AppContext.getDbDiary().getUserFood();
+            from = AppContext.getDbDiary().getListFood();
+            foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+            listFood.setAdapter(foodAdapter);
+            listFood.setTextFilterEnabled(true);
+            foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+                @Override
+                public Cursor runQuery(CharSequence constraint) {
+                    return getFilterList(constraint);
+                }
+            });
+            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean visible)
+    {
+        super.setUserVisibleHint(visible);
+        if (visible && isResumed())
+        {
+            onResume();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        hideKeyboard();
+
+        cursor = AppContext.getDbDiary().getUserFood();
+        from = AppContext.getDbDiary().getListFood();
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        listFood.setAdapter(foodAdapter);
+        listFood.setTextFilterEnabled(true);
+        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                return getFilterList(constraint);
+            }
+        });
+        getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        //getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     //Поиск по введенным буквам
