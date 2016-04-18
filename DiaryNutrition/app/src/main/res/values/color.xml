@@ -4,8 +4,8 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00796b</color>
-    <color name="colorAccent">#ffb300</color>
-    <color name="colorAccentPressed">#ffa000</color>
+    <color name="colorAccent">#ffa000</color>
+    <color name="colorAccentPressed">#ff8f00</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="cardview_initial_background">#FFFFFF</color>
     <color name="listview_background">#EEEEEE</color>
@@ -16,3 +16,5 @@
     <color name="pie_chart_orange">#FFBB33</color>
 
 </resources>
+
+<!-- #ffb300 -->

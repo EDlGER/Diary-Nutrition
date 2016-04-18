@@ -9,7 +9,8 @@
             android:title="@string/pref_gender"
             android:entries="@array/pref_gender_array"
             android:entryValues="@array/pref_gender_values"
-            android:defaultValue="1"/>
+            android:defaultValue="1"
+            android:summary="%s"/>
 
         <Preference
             android:key="birthday"
@@ -18,21 +19,23 @@
         <EditTextPreference
             android:key="height"
             android:title="@string/pref_height"
-            android:defaultValue="170"/>
+            android:defaultValue="170" />
 
         <ListPreference
             android:key="activity"
             android:title="@string/pref_activity"
             android:entries="@array/pref_activity_array"
             android:entryValues="@array/pref_activity_values"
-            android:defaultValue="1"/>
+            android:defaultValue="1"
+            android:summary="%s"/>
 
         <ListPreference
             android:key="purpose"
             android:title="@string/pref_purpose"
             android:entries="@array/pref_purpose_array"
             android:entryValues="@array/pref_purpose_values"
-            android:defaultValue="1"/>
+            android:defaultValue="1"
+            android:summary="%s"/>
 
     </PreferenceCategory>
 
