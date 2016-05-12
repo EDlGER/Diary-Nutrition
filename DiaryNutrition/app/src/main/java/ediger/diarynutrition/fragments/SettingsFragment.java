@@ -1,18 +1,11 @@
 package ediger.diarynutrition.fragments;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.Preference;
-//import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.annotation.StringDef;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
@@ -23,7 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import ediger.diarynutrition.MainActivity;
+import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 
 /**
@@ -66,7 +59,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
     }
-
 
     @Override
     public void setUserVisibleHint(boolean visible)

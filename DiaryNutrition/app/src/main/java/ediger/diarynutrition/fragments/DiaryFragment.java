@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import java.text.SimpleDateFormat;
@@ -24,8 +25,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-import ediger.diarynutrition.FoodActivity;
-import ediger.diarynutrition.MainActivity;
+import ediger.diarynutrition.activity.FoodActivity;
+import ediger.diarynutrition.activity.IntroActivity;
+import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
@@ -72,6 +74,18 @@ public class DiaryFragment extends Fragment implements
 
         rootview = inflater.inflate(R.layout.fragment_diary, container, false);
 
+        //---------------------------------------------------
+
+        Button btn = (Button) rootview.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //---------------------------------------------------
 
         cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
         cardCarbo = (TextView) rootview.findViewById(R.id.cardCarbo2);

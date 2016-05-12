@@ -1,6 +1,5 @@
 package ediger.diarynutrition.fragments.tabs;
 
-import android.app.Activity;
 import android.app.SearchManager;
 
 import android.support.v4.app.DialogFragment;
@@ -27,7 +26,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import ediger.diarynutrition.AddActivity;
+import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;

@@ -1,5 +1,6 @@
-package ediger.diarynutrition;
+package ediger.diarynutrition.activity;
 
+import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
 import ediger.diarynutrition.fragments.SummaryFragment;
@@ -7,7 +8,9 @@ import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -34,12 +37,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     public FloatingActionsMenu menuMultipleActions;
+
+    public Boolean isFirstRun;
 
     public View actionA;
 
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity
 
     public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
+    private static String PREF_FIRST_RUN = "first_run";
+
     private boolean isExpanded = false;
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
@@ -62,7 +67,19 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long date;
+        //First app start
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        isFirstRun = pref.getBoolean(PREF_FIRST_RUN, true);
+
+        //startActivity
+        if (isFirstRun) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+        }
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_RUN, false);
+        editor.apply();
 
         setContentView(R.layout.activity_main);
 
@@ -272,8 +289,6 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
-
-
 
 }
 

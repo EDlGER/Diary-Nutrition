@@ -1,10 +1,12 @@
-package ediger.diarynutrition;
+package ediger.diarynutrition.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import ediger.diarynutrition.R;
+import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
 
 /**

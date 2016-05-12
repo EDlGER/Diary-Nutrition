@@ -18,11 +18,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import ediger.diarynutrition.MainActivity;
+import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
-import lecho.lib.hellocharts.listener.DummyVieportChangeListener;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.util.ChartUtils;

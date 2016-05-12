@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import ediger.diarynutrition.MainActivity;
+import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.WeightAdapter;
 import ediger.diarynutrition.database.DbDiary;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/scrollView"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".AddActivity"
+    tools:context=".activity.AddActivity"
     tools:showIn="@layout/activity_add">
 
     <RelativeLayout
