@@ -72,6 +72,8 @@
     <string name="pref_height">Рост</string>
     <string name="pref_activity">Активность</string>
     <string name="pref_purpose">Цель</string>
+
+    <string name="intro_done">Готово</string>
     
     <string name="message_serving">Значение порции не введено</string>
 
