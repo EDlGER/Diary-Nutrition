@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.FoodActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary">
+    android:background="#FAFAFA">
 
     <ListView
         android:layout_width="match_parent"

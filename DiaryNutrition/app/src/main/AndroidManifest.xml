@@ -26,7 +26,8 @@
 
         <activity
             android:name=".activity.IntroActivity"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity

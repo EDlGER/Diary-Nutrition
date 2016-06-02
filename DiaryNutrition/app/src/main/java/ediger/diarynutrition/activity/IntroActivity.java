@@ -3,6 +3,8 @@ package ediger.diarynutrition.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroViewPager;
@@ -16,19 +18,17 @@ import ediger.diarynutrition.fragments.intro.SecondSlide;
  */
 public class IntroActivity extends AppIntro {
 
-
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
 
         showSkipButton(false);
-        setBarColor(getColor(R.color.intro_bar));
-        setIndicatorColor(getColor(R.color.intro_dark),
-                getColor(R.color.intro_light));
-        setColorDoneText(getColor(R.color.intro_dark));
-        setImageNextButton(getDrawable(R.drawable.ic_next_black));
+        setBarColor(ContextCompat.getColor(this,R.color.intro_bar));
+        setIndicatorColor(ContextCompat.getColor(this, R.color.intro_dark),
+                ContextCompat.getColor(this, R.color.intro_light));
+        setColorDoneText(ContextCompat.getColor(this, R.color.intro_dark));
+        setImageNextButton(getDrawable(R.drawable.ic_next));
 
         setDoneText(getString(R.string.intro_done));
-
 
         addSlide(new FirstSlide());
         addSlide(new SecondSlide());

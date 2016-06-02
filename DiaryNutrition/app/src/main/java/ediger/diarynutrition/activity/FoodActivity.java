@@ -1,6 +1,8 @@
 package ediger.diarynutrition.activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +29,10 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_food);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        toolbar.setElevation(0);
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        if (Build.VERSION.SDK_INT >= 21) {
+            toolbar.setElevation(0);
+        }
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,7 +53,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.tabsScrollColor);
+                return ContextCompat.getColor(FoodActivity.this ,R.color.tabsScrollColor);
             }
         });
 

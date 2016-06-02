@@ -36,6 +36,9 @@
     <string name="meal5">Ужин</string>
     <string name="meal_choose">Выберите прием пищи</string>
 
+    <string name="radio_gender_male">Мужской</string>
+    <string name="radio_gender_female">Женский</string>
+
     <string name="dialog_title">Выберите размер порции и время</string>
     <string name="dialog_cancel">Назад</string>
     <string name="dialog_add">Добавить</string>
@@ -74,6 +77,10 @@
     <string name="pref_purpose">Цель</string>
 
     <string name="intro_done">Готово</string>
+    <string name="intro_title">Программа питания</string>
+    <string name="intro_gender">Выберите пол</string>
+    <string name="intro_birthday">День рождения</string>
+    <string name="intro_height">Ваш вес (см)</string>
     
     <string name="message_serving">Значение порции не введено</string>
 

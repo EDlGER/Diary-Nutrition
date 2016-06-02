@@ -9,7 +9,6 @@
             android:title="@string/pref_gender"
             android:entries="@array/pref_gender_array"
             android:entryValues="@array/pref_gender_values"
-            android:defaultValue="1"
             android:summary="%s"/>
 
         <Preference
@@ -18,8 +17,7 @@
 
         <EditTextPreference
             android:key="height"
-            android:title="@string/pref_height"
-            android:defaultValue="170" />
+            android:title="@string/pref_height" />
 
         <ListPreference
             android:key="activity"
