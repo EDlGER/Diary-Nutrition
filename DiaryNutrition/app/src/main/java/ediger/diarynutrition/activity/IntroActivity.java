@@ -1,17 +1,15 @@
 package ediger.diarynutrition.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import com.github.paolorotolo.appintro.AppIntro;
-import com.github.paolorotolo.appintro.AppIntroViewPager;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.intro.FirstSlide;
 import ediger.diarynutrition.fragments.intro.SecondSlide;
+import ediger.diarynutrition.fragments.intro.ThirdSlide;
 
 /**
  * Created by root on 12.05.16.
@@ -26,12 +24,13 @@ public class IntroActivity extends AppIntro {
         setIndicatorColor(ContextCompat.getColor(this, R.color.intro_dark),
                 ContextCompat.getColor(this, R.color.intro_light));
         setColorDoneText(ContextCompat.getColor(this, R.color.intro_dark));
-        setImageNextButton(getDrawable(R.drawable.ic_next));
+        setImageNextButton(ContextCompat.getDrawable(this, R.drawable.ic_next));
 
         setDoneText(getString(R.string.intro_done));
 
         addSlide(new FirstSlide());
         addSlide(new SecondSlide());
+        addSlide(new ThirdSlide());
     }
 
     @Override

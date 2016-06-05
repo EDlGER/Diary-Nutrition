@@ -349,7 +349,7 @@ public class DiaryFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
-        int id = loader.getId();
+        /*int id = loader.getId();
 
         if (id != -1){
             try {
@@ -359,7 +359,7 @@ public class DiaryFragment extends Fragment implements
             }
         } else {
             recordAdapter.setGroupCursor(null);
-        }
+        }*/
     }
 
     private static class ChildCursorLoader extends CursorLoader {

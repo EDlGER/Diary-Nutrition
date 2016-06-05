@@ -1,12 +1,9 @@
 package ediger.diarynutrition.fragments.intro;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -17,14 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import ediger.diarynutrition.R;
@@ -56,7 +49,7 @@ public class FirstSlide extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intro_1, container, false);
 
-        radioGender = (RadioGroup) view.findViewById(R.id.rgGender);
+        radioGender = (RadioGroup) view.findViewById(R.id.rg_gender);
         radioGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -65,7 +58,7 @@ public class FirstSlide extends Fragment {
             }
         });
 
-        txtBirthday = (EditText) view.findViewById(R.id.edBirthday);
+        txtBirthday = (EditText) view.findViewById(R.id.ed_birthday);
         txtBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +66,7 @@ public class FirstSlide extends Fragment {
             }
         });
 
-        txtHeight = (EditText) view.findViewById(R.id.edHeight);
+        txtHeight = (EditText) view.findViewById(R.id.ed_height);
         txtHeight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -104,7 +97,7 @@ public class FirstSlide extends Fragment {
         savePreference();
     }
 
-    public void savePreference() {
+    private void savePreference() {
         calendar.set(year,month,day);
 
         SharedPreferences.Editor editor = pref.edit();

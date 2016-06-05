@@ -38,6 +38,9 @@
 
     <string name="radio_gender_male">Мужской</string>
     <string name="radio_gender_female">Женский</string>
+    <string name="radio_purpose_lose">Сбросить вес</string>
+    <string name="radio_purpose_hold">Удерживать вес</string>
+    <string name="radio_purpose_gain">Набирать вес</string>
 
     <string name="dialog_title">Выберите размер порции и время</string>
     <string name="dialog_cancel">Назад</string>
@@ -80,7 +83,9 @@
     <string name="intro_title">Программа питания</string>
     <string name="intro_gender">Выберите пол</string>
     <string name="intro_birthday">День рождения</string>
-    <string name="intro_height">Ваш вес (см)</string>
+    <string name="intro_height">Ваш рост (см)</string>
+    <string name="intro_weight">Ваш вес (кг)</string>
+    <string name="intro_purpose">Выберите вашу цель</string>
     
     <string name="message_serving">Значение порции не введено</string>
 

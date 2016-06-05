@@ -22,19 +22,64 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выберите пол"
+            android:text="@string/intro_title"
             android:textSize="28sp"
             android:textColor="@android:color/white"
             android:layout_gravity="center" />
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F5F5F5">
+        android:orientation="vertical"
+        android:background="#F5F5F5"
+        android:padding="32dp">
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Какой ваш образ жизни?"
+            android:textSize="16sp"
+            android:paddingBottom="16dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rg_activity">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_activity1"
+                android:text="Сидячий"
+                android:textSize="16sp"
+                android:checked="true"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_activity2"
+                android:text="Малоактивный"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_activity3"
+                android:text="Активный"
+                android:textSize="16sp"/>
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_activity4"
+                android:text="Очень активный"
+                android:textSize="16sp"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
 
 
 </LinearLayout>

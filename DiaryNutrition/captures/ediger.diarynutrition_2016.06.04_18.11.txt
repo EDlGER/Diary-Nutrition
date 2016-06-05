@@ -1,0 +1,36 @@
+Applications Memory Usage (kB):
+Uptime: 2479559 Realtime: 2479559
+
+** MEMINFO in pid 16815 [ediger.diarynutrition] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     2243     2184        0        0     8560     8021      126
+  Dalvik Heap     4264     4024        0        0     6676     6598       78
+ Dalvik Other     2023     1740        0        0                           
+        Stack       88       88        0        0                           
+       Cursor       72       72        0        0                           
+    Other dev        5        0        4        0                           
+     .so mmap      898      276       40        0                           
+    .apk mmap      189        0       20        0                           
+    .ttf mmap       38        0       16        0                           
+    .dex mmap     3240      160     2348        0                           
+   Other mmap       31        4        0        0                           
+      Unknown      668      664        0        0                           
+        TOTAL    13759     9212     2428        0    15236    14619      204
+ 
+ Objects
+               Views:      175         ViewRootImpl:        2
+         AppContexts:        4           Activities:        2
+              Assets:        2        AssetManagers:        2
+       Local Binders:        7        Proxy Binders:       17
+    Death Recipients:        0
+     OpenSSL Sockets:        0
+ 
+ SQL
+         MEMORY_USED:      106
+  PAGECACHE_OVERFLOW:       10          MALLOC_SIZE:       62
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b)          cache  Dbname
+         1        9             94       352/24/9  /data/data/ediger.diarynutrition/databases/diary.db

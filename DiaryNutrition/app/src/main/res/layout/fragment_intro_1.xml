@@ -54,7 +54,7 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rgGender">
+                android:id="@+id/rg_gender">
 
                 <android.support.v7.widget.AppCompatRadioButton
                     android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                 android:ems="5"
                 android:text="01.01.1990"
                 android:editable="false"
-                android:id="@+id/edBirthday" />
+                android:id="@+id/ed_birthday" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -113,11 +113,11 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="4"
+                android:ems="5"
                 android:maxLength="3"
                 android:text="170"
                 android:inputType="number"
-                android:id="@+id/edHeight" />
+                android:id="@+id/ed_height" />
 
         </android.support.design.widget.TextInputLayout>
 
