@@ -15,18 +15,19 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import ediger.diarynutrition.R;
-
+import com.github.paolorotolo.appintro.ISlidePolicy;
 
 /**
  * Created by root on 12.05.16.
  */
-public class FirstSlide extends Fragment {
+public class PersonSlide extends Fragment implements ISlidePolicy {
 
     private static final String KEY_PREF_GENDER = "gender";
     private static final String KEY_PREF_BIRTHDAY = "birthday";
@@ -47,7 +48,7 @@ public class FirstSlide extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_intro_1, container, false);
+        View view = inflater.inflate(R.layout.fragment_intro_person, container, false);
 
         radioGender = (RadioGroup) view.findViewById(R.id.rg_gender);
         radioGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -67,24 +68,6 @@ public class FirstSlide extends Fragment {
         });
 
         txtHeight = (EditText) view.findViewById(R.id.ed_height);
-        txtHeight.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (txtHeight.getText().toString().equals("")) {
-                    txtHeight.setText("170");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
@@ -102,8 +85,8 @@ public class FirstSlide extends Fragment {
 
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(KEY_PREF_GENDER,String.valueOf(genderId));
-        editor.putString(KEY_PREF_HEIGHT,txtHeight.getText().toString());
         editor.putLong(KEY_PREF_BIRTHDAY,calendar.getTimeInMillis());
+        editor.putString(KEY_PREF_HEIGHT,txtHeight.getText().toString());
 
         editor.apply();
 
@@ -112,7 +95,7 @@ public class FirstSlide extends Fragment {
     private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            FirstSlide.this.year = year;
+            PersonSlide.this.year = year;
             month = monthOfYear;
             day = dayOfMonth;
 
@@ -121,4 +104,16 @@ public class FirstSlide extends Fragment {
         }
     };
 
+    @Override
+    public boolean isPolicyRespected() {
+        if (txtHeight.getText().toString().equals("") || txtHeight.getText().toString().equals("0")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onUserIllegallyRequestedNextPage() {
+        Toast.makeText(getContext(), R.string.intro_height_error, Toast.LENGTH_SHORT).show();
+    }
 }

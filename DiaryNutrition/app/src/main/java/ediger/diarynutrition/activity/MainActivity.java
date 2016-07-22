@@ -142,9 +142,9 @@ public class MainActivity extends AppCompatActivity
 
         arrow = (ImageView) findViewById(R.id.date_picker_arrow);
 
-        RelativeLayout datePickerButton = (RelativeLayout) findViewById(R.id.date_picker_button);
+        //RelativeLayout datePickerButton = (RelativeLayout) findViewById(R.id.date_picker_button);
 
-        datePickerButton.setOnClickListener(new View.OnClickListener() {
+        datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isExpanded) {

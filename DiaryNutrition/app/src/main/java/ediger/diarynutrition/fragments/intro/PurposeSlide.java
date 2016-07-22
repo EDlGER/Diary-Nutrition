@@ -11,16 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
+import com.github.paolorotolo.appintro.ISlidePolicy;
 
 /**
  * Created by root on 12.05.16.
  */
-public class SecondSlide extends Fragment {
+public class PurposeSlide extends Fragment implements ISlidePolicy {
 
     private static final String KEY_PREF_PURPOSE = "purpose";
 
@@ -34,7 +36,7 @@ public class SecondSlide extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_intro_2, container, false);
+        View view = inflater.inflate(R.layout.fragment_intro_purpose, container, false);
 
         txtWeight = (EditText) view.findViewById(R.id.ed_weight);
 
@@ -56,14 +58,6 @@ public class SecondSlide extends Fragment {
     public void onPause() {
         super.onPause();
 
-        if (!txtWeight.getText().toString().equals("") ||
-                !txtWeight.getText().toString().equals("0")) {
-            AppContext.getDbDiary().addWeight(calendar.getTimeInMillis(),
-                    Float.parseFloat(txtWeight.getText().toString()));
-        } else {
-            txtWeight.setText("70");
-        }
-
         savePreference();
     }
 
@@ -73,4 +67,16 @@ public class SecondSlide extends Fragment {
         editor.apply();
     }
 
+    @Override
+    public boolean isPolicyRespected() {
+        if (txtWeight.getText().toString().equals("") || txtWeight.getText().toString().equals("0")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onUserIllegallyRequestedNextPage() {
+        Toast.makeText(getContext(), R.string.intro_weight_error, Toast.LENGTH_SHORT).show();
+    }
 }

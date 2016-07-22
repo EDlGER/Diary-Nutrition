@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/intro_purpose"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:paddingBottom="16dp"/>
 
         <RadioGroup
@@ -84,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/intro_weight"
-            app:hintTextAppearance="?android:textAppearanceListItemSmall"
             android:paddingTop="16dp">
 
             <EditText

@@ -16,7 +16,7 @@ import ediger.diarynutrition.R;
 /**
  * Created by root on 12.05.16.
  */
-public class ThirdSlide extends Fragment {
+public class ActivitySlide extends Fragment {
 
     private static final String KEY_PREF_ACTIVITY = "activity";
 
@@ -28,7 +28,7 @@ public class ThirdSlide extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_intro_3, container, false);
+        View view = inflater.inflate(R.layout.fragment_intro_activity, container, false);
 
 
         radioActivity = (RadioGroup) view.findViewById(R.id.rg_activity);
