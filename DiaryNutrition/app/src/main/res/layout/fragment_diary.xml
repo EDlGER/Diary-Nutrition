@@ -28,7 +28,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="65dp"
                 android:orientation="horizontal"
                 android:layout_marginRight="3dp">
 
@@ -52,7 +52,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/cardInfo1"
                             android:text="@string/record_card_info1"
-                            android:textSize="15sp"
+                            android:textSize="16sp"
                             android:textColor="@color/colorPrimary"
                             android:layout_span="8"
                             android:background="#FFFFFF"
@@ -90,7 +90,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/cardFat1"
-                            android:text="999"
+                            android:text="99"
                             android:textSize="20sp"
                             android:textColor="@color/colorPrimary"
                             android:gravity="center_horizontal"
@@ -117,21 +117,23 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/cardInfo2"
                             android:text="@string/record_card_info2"
-                            android:textSize="15sp"
+                            android:textSize="16sp"
                             android:textColor="@color/colorPrimary"
                             android:background="#FFFFFF"
                             android:layout_marginRight="1dp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="0.5dp"
                             android:layout_span="8" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/cardCarbo2"
                             android:text="50"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/colorPrimary"
                             android:background="#FFFFFF"
                             android:layout_marginRight="1dp"
@@ -140,10 +142,10 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/cardProt2"
                             android:text="30"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/colorPrimary"
                             android:background="#FFFFFF"
                             android:layout_marginRight="1dp"
@@ -152,10 +154,10 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/cardFat2"
                             android:text="20"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/colorPrimary"
                             android:background="#FFFFFF"
                             android:layout_marginRight="1dp"
@@ -164,10 +166,10 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:id="@+id/cardCal2"
                             android:text="2000"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/colorPrimary"
                             android:gravity="right"
                             android:background="#FFFFFF" />
@@ -201,7 +203,7 @@
                 android:text="@string/record_carbo"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="23dp" />
+                android:layout_marginRight="25dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -211,7 +213,7 @@
                 android:layout_gravity="right"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="30dp" />
+                android:layout_marginRight="25dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -255,17 +257,5 @@
         android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/cardDivider" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Run Intro"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp" />
-
 
 </RelativeLayout>

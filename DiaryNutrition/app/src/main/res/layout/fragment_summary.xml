@@ -24,68 +24,120 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="32dp"
-        android:paddingBottom="16dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <View
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:background="@color/pie_chart_orange"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_carbo_f"
-                android:layout_marginLeft="32dp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="32dp"
+            android:paddingBottom="16dp">
 
-            <View
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:background="@color/pie_chart_green"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@color/pie_chart_orange"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_carbo_f"
+                    android:layout_marginLeft="32dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dialog_prot_f"
-                android:layout_marginLeft="32dp"/>
+                android:layout_marginTop="4dp">
 
-        </RelativeLayout>
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@color/pie_chart_green"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_prot_f"
+                    android:layout_marginLeft="32dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@color/pie_chart_red"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_fat_f"
+                    android:layout_marginLeft="32dp"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-
-            <View
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:background="@color/pie_chart_red"/>
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="32dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dialog_fat_f"
-                android:layout_marginLeft="32dp"/>
+                android:textSize="12sp"
+                android:text="Рекомендуется" />
 
-        </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_carbo_rec"
+                android:layout_marginTop="2dp"
+                android:textColor="@android:color/background_dark"
+                android:text="50%"
+                android:layout_gravity="center_horizontal" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_prot_rec"
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/background_dark"
+                android:text="25%"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_fat_rec"
+                android:layout_marginTop="4dp"
+                android:textColor="@android:color/background_dark"
+                android:text="25%"
+                android:layout_gravity="center_horizontal" />
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
     
     <View
         android:layout_width="match_parent"
@@ -95,6 +147,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:gravity="center_vertical">
@@ -103,6 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_cal_f"
+            android:textColor="#ff212121"
             android:textSize="16sp"/>
 
         <TextView
@@ -116,10 +170,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -132,6 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_carbo_f"
+            android:textColor="#ff212121"
             android:textSize="16sp"/>
 
         <TextView
@@ -145,10 +196,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -161,6 +208,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_prot_f"
+            android:textColor="#ff212121"
             android:textSize="16sp"/>
 
         <TextView
@@ -174,11 +222,6 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -190,6 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_fat_f"
+            android:textColor="@android:color/background_dark"
             android:textSize="16sp"/>
 
         <TextView
@@ -202,10 +246,5 @@
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"/>
 
 </LinearLayout>

@@ -200,7 +200,7 @@ public class DbDiary {
         return db.query(TABLE_DATE, null, null, null, null, null, null);
     }
 
-    public void editDate(long date){
+    public void setDate(long date){
         ContentValues cv = new ContentValues();
         cv.put(ALIAS_DATETIME,date);
         String where = "_id = 1";

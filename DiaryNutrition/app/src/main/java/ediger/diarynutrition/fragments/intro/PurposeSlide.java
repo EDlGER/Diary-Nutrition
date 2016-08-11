@@ -1,6 +1,7 @@
 package ediger.diarynutrition.fragments.intro;
 
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -18,13 +19,15 @@ import java.util.Calendar;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
 import com.github.paolorotolo.appintro.ISlidePolicy;
+import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
 /**
  * Created by root on 12.05.16.
  */
-public class PurposeSlide extends Fragment implements ISlidePolicy {
+public class PurposeSlide extends Fragment implements ISlidePolicy, ISlideSelectionListener {
 
     private static final String KEY_PREF_PURPOSE = "purpose";
+    private static final String KEY_PREF_WEIGHT = "weight";
 
     private int purposeId = 1;
 
@@ -54,17 +57,32 @@ public class PurposeSlide extends Fragment implements ISlidePolicy {
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        savePreference();
-    }
-
     private void savePreference() {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString(KEY_PREF_PURPOSE,String.valueOf(purposeId));
+        editor.putFloat(KEY_PREF_WEIGHT,Float.parseFloat(txtWeight.getText().toString()));
         editor.apply();
+    }
+
+    private void saveWeight() {
+        long date;
+
+        calendar.clear(Calendar.HOUR);
+        calendar.clear(Calendar.HOUR_OF_DAY);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.MILLISECOND);
+
+        date = calendar.getTimeInMillis();
+
+        Cursor cursor = AppContext.getDbDiary().getWeight(date);
+
+        if (cursor.moveToFirst()) {
+            AppContext.getDbDiary().setWeight(date, Float.parseFloat(txtWeight.getText().toString()));
+        } else {
+            AppContext.getDbDiary().addWeight(date, Float.parseFloat(txtWeight.getText().toString()));
+        }
+        cursor.close();
     }
 
     @Override
@@ -78,5 +96,16 @@ public class PurposeSlide extends Fragment implements ISlidePolicy {
     @Override
     public void onUserIllegallyRequestedNextPage() {
         Toast.makeText(getContext(), R.string.intro_weight_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSlideSelected() {
+
+    }
+
+    @Override
+    public void onSlideDeselected() {
+        saveWeight();
+        savePreference();
     }
 }

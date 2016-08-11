@@ -23,11 +23,13 @@ import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import com.github.paolorotolo.appintro.ISlidePolicy;
+import com.github.paolorotolo.appintro.ISlideSelectionListener;
+
 
 /**
  * Created by root on 12.05.16.
  */
-public class PersonSlide extends Fragment implements ISlidePolicy {
+public class PersonSlide extends Fragment implements ISlidePolicy,ISlideSelectionListener {
 
     private static final String KEY_PREF_GENDER = "gender";
     private static final String KEY_PREF_BIRTHDAY = "birthday";
@@ -74,12 +76,6 @@ public class PersonSlide extends Fragment implements ISlidePolicy {
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        savePreference();
-    }
-
     private void savePreference() {
         calendar.set(year,month,day);
 
@@ -115,5 +111,15 @@ public class PersonSlide extends Fragment implements ISlidePolicy {
     @Override
     public void onUserIllegallyRequestedNextPage() {
         Toast.makeText(getContext(), R.string.intro_height_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSlideSelected() {
+
+    }
+
+    @Override
+    public void onSlideDeselected() {
+        savePreference();
     }
 }

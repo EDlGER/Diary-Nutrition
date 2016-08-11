@@ -87,7 +87,17 @@
     <string name="intro_height_error">Введите Ваш рост</string>
     <string name="intro_weight">Ваш вес (кг)</string>
     <string name="intro_weight_error">Введите Ваш вес</string>
+    <string name="intro_activity_1">Офисная работа, длительное пребывание в сидячем положении,
+        минимальное количество движения, нет занятий спортом</string>
+    <string name="intro_activity_2">Недолгое пребываение в стоячем положении, недлительная ходьба или
+        легкие занятия спортом 1-2 раза в неделю</string>
+    <string name="intro_activity_3">Длительное пребывание в стоячем положении, небольшая физическая работа или
+        умеренные занятия спортом 2-3 раза в неделю</string>
+    <string name="intro_activity_4">Тяжелая физическая работа или интенсивные занятия спортом более 3 раз в неделю</string>
     <string name="intro_purpose">Выберите вашу цель</string>
+    <string name="intro_nutrition_cal">ккал</string>
+    <string name="intro_nutrition_consume">Вам необходимо потреблять</string>
+    <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
     
     <string name="message_serving">Значение порции не введено</string>
 

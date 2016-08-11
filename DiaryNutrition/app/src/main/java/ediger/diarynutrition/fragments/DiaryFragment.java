@@ -4,7 +4,9 @@ package ediger.diarynutrition.fragments;
 import android.content.Context;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -42,6 +44,8 @@ import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Ediger on 03.05.2015.
  *
@@ -51,6 +55,9 @@ public class DiaryFragment extends Fragment implements
 
     View rootview;
     private long date;
+
+    private SharedPreferences pref;
+
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
@@ -62,6 +69,10 @@ public class DiaryFragment extends Fragment implements
     private TextView cardCarbo;
     private TextView cardProt;
     private TextView cardFat;
+    private TextView cardCalRec;
+    private TextView cardProtRec;
+    private TextView cardFatRec;
+    private TextView cardCarboRec;
 
 
     @Nullable
@@ -74,23 +85,18 @@ public class DiaryFragment extends Fragment implements
 
         rootview = inflater.inflate(R.layout.fragment_diary, container, false);
 
-        //---------------------------------------------------
-
-        Button btn = (Button) rootview.findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), IntroActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //---------------------------------------------------
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
         cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
         cardCarbo = (TextView) rootview.findViewById(R.id.cardCarbo2);
         cardProt = (TextView) rootview.findViewById(R.id.cardProt2);
         cardFat = (TextView) rootview.findViewById(R.id.cardFat2);
+
+        cardCalRec = (TextView) rootview.findViewById(R.id.cardCal1);
+        cardProtRec = (TextView) rootview.findViewById(R.id.cardProt1);
+        cardFatRec = (TextView) rootview.findViewById(R.id.cardFat1);
+        cardCarboRec = (TextView) rootview.findViewById(R.id.cardCarbo1);
+
 
         setCardData();
 
@@ -117,7 +123,7 @@ public class DiaryFragment extends Fragment implements
             mainActivity.setSubtitle(getString(R.string.diary_date_today));
         }
 
-        AppContext.getDbDiary().editDate(date);
+        AppContext.getDbDiary().setDate(date);
 
         cursor = AppContext.getDbDiary().getMealData();
         int[] groupTo = {
@@ -214,7 +220,7 @@ public class DiaryFragment extends Fragment implements
 
                 nowto.setTime(dateClicked);
                 date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(date);
+                AppContext.getDbDiary().setDate(date);
 
                 if (today.equals(nowto)) {
                     mainActivity.setSubtitle(getString(R.string.diary_date_today));
@@ -287,6 +293,12 @@ public class DiaryFragment extends Fragment implements
     public void setCardData() {
         //Число без дробной части
         int res;
+
+        cardCalRec.setText(String.valueOf(pref.getInt("calories", 0)));
+        cardProtRec.setText(String.valueOf(pref.getInt("prot", 0)));
+        cardFatRec.setText(String.valueOf(pref.getInt("fat", 0)));
+        cardCarboRec.setText(String.valueOf(pref.getInt("carbo", 0)));
+
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();

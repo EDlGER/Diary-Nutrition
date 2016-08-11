@@ -1,7 +1,9 @@
 package ediger.diarynutrition.fragments;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,10 +37,16 @@ public class SummaryFragment extends Fragment {
 
     private long date;
 
+    SharedPreferences pref;
+
     private TextView txtCal;
     private TextView txtCarbo;
     private TextView txtProt;
     private TextView txtFat;
+
+    private TextView txtCarboRecPersent;
+    private TextView txtProtRecPersent;
+    private TextView txtFatRecPersent;
 
     private PieChartView chart;
     private PieChartView chartEmpty;
@@ -55,13 +63,23 @@ public class SummaryFragment extends Fragment {
 
         rootview = inflater.inflate(R.layout.fragment_summary,container,false);
 
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+
+        chart = (PieChartView) rootview.findViewById(R.id.pie_chart);
+        chartEmpty = (PieChartView) rootview.findViewById(R.id.pie_chart_empty);
+
         txtCal = (TextView) rootview.findViewById(R.id.txt_sum_cal);
         txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
         txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
         txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
 
-        chart = (PieChartView) rootview.findViewById(R.id.pie_chart);
-        chartEmpty = (PieChartView) rootview.findViewById(R.id.pie_chart_empty);
+        txtCarboRecPersent = (TextView) rootview.findViewById(R.id.txt_carbo_rec);
+        txtProtRecPersent = (TextView) rootview.findViewById(R.id.txt_prot_rec);
+        txtFatRecPersent = (TextView) rootview.findViewById(R.id.txt_fat_rec);
+
+        txtCarboRecPersent.setText(String.valueOf(pref.getInt("carbo_pers", 0)) + "%");
+        txtProtRecPersent.setText(String.valueOf(pref.getInt("prot_pers", 0)) + "%");
+        txtFatRecPersent.setText(String.valueOf(pref.getInt("fat_pers", 0)) + "%");
 
         //Set current date
         today.set(Calendar.HOUR_OF_DAY, 0);
@@ -74,8 +92,7 @@ public class SummaryFragment extends Fragment {
         nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH), 0, 0);
         date = nowto.getTimeInMillis();
-        AppContext.getDbDiary().editDate(date);
-
+        AppContext.getDbDiary().setDate(date);
 
         generateData();
 
@@ -113,7 +130,7 @@ public class SummaryFragment extends Fragment {
             public void onDayClick(Date dateClicked) {
                 nowto.setTime(dateClicked);
                 date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().editDate(date);
+                AppContext.getDbDiary().setDate(date);
 
                 if (today.equals(nowto)) {
                     mainActivity.setSubtitle(getString(R.string.diary_date_today));

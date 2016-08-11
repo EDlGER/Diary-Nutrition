@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
@@ -39,52 +41,61 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Какой ваш образ жизни?"
-            android:textSize="16sp"
+            android:text="@string/intro_purpose"
+            android:textSize="14sp"
             android:paddingBottom="16dp"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rg_activity">
+            android:id="@+id/rg_purpose"
+            android:paddingBottom="16dp">
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_activity1"
-                android:text="Сидячий"
+                android:id="@+id/rb_purpose1"
+                android:text="@string/radio_purpose_lose"
                 android:textSize="16sp"
                 android:checked="true"/>
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_activity2"
-                android:text="Малоактивный"
+                android:id="@+id/rb_purpose2"
+                android:text="@string/radio_purpose_hold"
                 android:textSize="16sp"/>
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_activity3"
-                android:text="Активный"
-                android:textSize="16sp"/>
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rb_activity4"
-                android:text="Очень активный"
+                android:id="@+id/rb_purpose3"
+                android:text="@string/radio_purpose_gain"
                 android:textSize="16sp"/>
 
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:listDivider"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_info"
-            android:layout_marginTop="32dp"
-            android:text="Описание образа жизни" />
+            android:hint="@string/intro_weight"
+            android:paddingTop="16dp">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:maxLength="3"
+                android:text="70"
+                android:inputType="number"
+                android:id="@+id/ed_weight" />
+
+        </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
 

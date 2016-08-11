@@ -9,6 +9,7 @@ import android.support.v4.app.NavUtils;
 import com.github.paolorotolo.appintro.AppIntro;
 
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.fragments.intro.NutritionSlide;
 import ediger.diarynutrition.fragments.intro.PersonSlide;
 import ediger.diarynutrition.fragments.intro.PurposeSlide;
 import ediger.diarynutrition.fragments.intro.ActivitySlide;
@@ -39,6 +40,7 @@ public class IntroActivity extends AppIntro {
         addSlide(new PersonSlide());
         addSlide(new PurposeSlide());
         addSlide(new ActivitySlide());
+        addSlide(new NutritionSlide());
     }
 
     @Override
