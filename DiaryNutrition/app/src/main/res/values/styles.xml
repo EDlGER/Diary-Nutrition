@@ -31,7 +31,7 @@
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 
     <style name="title_text" parent="@android:style/TextAppearance.Medium"/>

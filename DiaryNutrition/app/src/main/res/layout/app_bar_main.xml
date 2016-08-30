@@ -153,7 +153,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccentPressed"
             fab:fab_title="@string/menu_action_weight"
-            fab:fab_icon="@drawable/ic_scale_white"/>
+            fab:fab_icon="@drawable/ic_scale_white" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

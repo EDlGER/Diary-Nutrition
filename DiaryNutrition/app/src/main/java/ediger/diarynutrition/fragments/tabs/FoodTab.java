@@ -13,6 +13,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -155,16 +156,17 @@ public class FoodTab extends Fragment implements
     public Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
         String selections = "usr > 0";
+        String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0){
             return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
-                    null, null, null, null);
+                    null, null, null, orderBy);
         }
         else {
             String value = "%"+constraint.toString()+"%";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "usr > 0 AND food_name like ? ",
-                    new String[]{value},null,null,null);
+                    new String[]{value},null,null,orderBy);
         }
     }
 
@@ -190,6 +192,7 @@ public class FoodTab extends Fragment implements
         getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setIconifiedByDefault(true);

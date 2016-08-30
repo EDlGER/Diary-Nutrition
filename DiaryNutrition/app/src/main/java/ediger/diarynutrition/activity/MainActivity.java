@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity
         title = (TextView) findViewById(R.id.title);
 
         mCompactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        mCompactCalendarView.drawSmallIndicatorForEvents(false);
+        //mCompactCalendarView.drawSmallIndicatorForEvents(false);
 
         // Force English
-        mCompactCalendarView.setLocale(/*Locale.getDefault()*/Locale.ENGLISH);
+        mCompactCalendarView.setLocale(Locale.getDefault());
 
         mCompactCalendarView.setShouldDrawDaysHeader(true);
 
@@ -141,8 +141,6 @@ public class MainActivity extends AppCompatActivity
         setSubtitle(getString(R.string.diary_date_today));
 
         arrow = (ImageView) findViewById(R.id.date_picker_arrow);
-
-        //RelativeLayout datePickerButton = (RelativeLayout) findViewById(R.id.date_picker_button);
 
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override

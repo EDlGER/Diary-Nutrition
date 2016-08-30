@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_diary"
             android:checked="true"
@@ -10,18 +13,23 @@
 
         <item
             android:id="@+id/nav_weight"
-            android:icon="@drawable/ic_scale_grey600"
+            android:icon="@drawable/ic_menu_scale"
             android:title="@string/title_sec3"/>
 
         <item
             android:id="@+id/nav_stat"
-            android:icon="@drawable/ic_pie_chart_black"
+            android:icon="@drawable/ic_menu_chart"
             android:title="@string/title_sec4"/>
 
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_settings"
             android:title="@string/title_sec2" />
 
     </group>

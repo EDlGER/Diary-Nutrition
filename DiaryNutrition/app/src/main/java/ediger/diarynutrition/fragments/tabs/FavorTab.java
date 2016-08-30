@@ -4,6 +4,7 @@ package ediger.diarynutrition.fragments.tabs;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
+import android.text.InputType;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 /**
@@ -37,6 +40,7 @@ import ediger.diarynutrition.objects.AppContext;
  */
 public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final int REQ_CODE_ADD_FOOD = 2;
     private static final int LOADER_ID = -4;
 
     View rootview;
@@ -132,16 +136,17 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     public Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
         String selections = "favor = 1 AND usr > -1";
+        String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0){
             return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
-                    null, null, null, null);
+                    null, null, null, orderBy);
         }
         else {
             String value = "%"+constraint.toString()+"%";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "favor = 1 AND usr > -1 AND food_name like ? ",
-                    new String[]{value},null,null,null);
+                    new String[]{value},null,null,orderBy);
         }
     }
 
@@ -168,6 +173,11 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         switch(item.getItemId()){
             case android.R.id.home:
                 getActivity().onBackPressed();
+            case R.id.action_add:
+                DialogFragment a = new AddFoodDialog();
+                a.setTargetFragment(FavorTab.this, REQ_CODE_ADD_FOOD);
+                a.show(getFragmentManager(), "add_dialog");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -178,9 +188,10 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconifiedByDefault(false);
+        searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
