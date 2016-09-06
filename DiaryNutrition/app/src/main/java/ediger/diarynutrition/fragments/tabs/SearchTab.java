@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -38,13 +39,11 @@ import ediger.diarynutrition.objects.AppContext;
 /**
  * Created by root on 07.02.16.
  */
-public class SearchTab extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>{
+public class SearchTab extends Fragment {
 
     View rootview;
 
     private static final int REQ_CODE_ADD_FOOD = 2;
-    private static final int LOADER_ID = -2;
 
     private int[] to = {
             R.id.txt_f_name,
@@ -53,6 +52,7 @@ public class SearchTab extends Fragment implements
             R.id.txt_f_prot,
             R.id.txt_f_fat
     };
+
     private long addid;
     private String[] from;
     private ListView listFood;
@@ -86,7 +86,7 @@ public class SearchTab extends Fragment implements
             }
         });
         listFood.setTextFilterEnabled(true);
-        listFood.setAdapter(foodAdapter);
+        //listFood.setAdapter(foodAdapter);
         registerForContextMenu(listFood);
         //Поиск
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
@@ -96,76 +96,7 @@ public class SearchTab extends Fragment implements
             }
         });
 
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-
         return rootview;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_CODE_ADD_FOOD){
-            cursor = AppContext.getDbDiary().getAllFood();
-            from = AppContext.getDbDiary().getListFood();
-            foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
-            listFood.setAdapter(foodAdapter);
-            listFood.setTextFilterEnabled(true);
-            foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-                @Override
-                public Cursor runQuery(CharSequence constraint) {
-                    return getFilterList(constraint);
-                }
-            });
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean visible)
-    {
-        super.setUserVisibleHint(visible);
-        if (visible && isResumed())
-        {
-            onResume();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        hideKeyboard();
-
-        cursor = AppContext.getDbDiary().getAllFood();
-        from = AppContext.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
-        listFood.setAdapter(foodAdapter);
-        listFood.setTextFilterEnabled(true);
-        foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return getFilterList(constraint);
-            }
-        });
-        getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        //getLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
-
-    //Поиск по введенным буквам
-    public Cursor getFilterList(CharSequence constraint) {
-        String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
-        String selections = "usr > -1";
-        String orderBy = "food_name asc";
-
-        if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
-                    null, null, orderBy);
-        }
-        else {
-            String value = "%" +constraint.toString() + "%";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name like ? ",
-                    new String[]{value},null,null,orderBy);
-        }
     }
 
     @Override
@@ -179,13 +110,12 @@ public class SearchTab extends Fragment implements
         if (item.getItemId() == 3) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
-
             AppContext.getDbDiary().setFavor(acmi.id, 1);
-            //getLoaderManager().getLoader(LOADER_ID).forceLoad();
-            getLoaderManager().restartLoader(LOADER_ID,null,this);
+            Snackbar snackbar = Snackbar
+                    .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
+            snackbar.show();
+
             return true;
-
-
         }
         return super.onContextItemSelected(item);
     }
@@ -210,10 +140,16 @@ public class SearchTab extends Fragment implements
         getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo (searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconifiedByDefault(true);
+        searchView.setIconifiedByDefault(false);
+
+        searchView.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -222,6 +158,7 @@ public class SearchTab extends Fragment implements
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                listFood.setAdapter(foodAdapter);
                 SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter) listFood.getAdapter();
                 filterAdapter.getFilter().filter(newText.toString());
                 return true;
@@ -229,43 +166,21 @@ public class SearchTab extends Fragment implements
         });
     }
 
-    private void hideKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    //Поиск по введенным буквам
+    private Cursor getFilterList(CharSequence constraint) {
+        String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
+        String selections = "usr = -2";
+        String orderBy = "food_name asc";
+
+        if(constraint == null || constraint.length() == 0) {
+            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
+                    null, null, null);
+        }
+        else {
+            String value = "%" +constraint.toString() + "%";
+            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name like ? ",
+                    new String[]{value},null,null,orderBy);
         }
     }
 
-    //Обновление данных
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new MyCursorLoader(getActivity(),AppContext.getDbDiary());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        foodAdapter.swapCursor(data);
-        listFood.setAdapter(foodAdapter);
-        listFood.setTextFilterEnabled(true);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-
-    }
-
-    private static class MyCursorLoader extends CursorLoader {
-        DbDiary db;
-
-        public MyCursorLoader(Context context, DbDiary db) {
-            super(context);
-            this.db = db;
-        }
-
-        @Override
-        public  Cursor loadInBackground(){
-            return db.getAllFood();
-        }
-    }
 }

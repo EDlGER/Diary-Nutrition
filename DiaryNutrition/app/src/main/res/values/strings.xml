@@ -100,6 +100,11 @@
     <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
     
     <string name="message_serving">Значение порции не введено</string>
+    <string name="message_favorite">Добавлено в избранное</string>
+    
+    <string name="tab_database">База данных</string>
+    <string name="tab_user">Добавленные</string>
+    <string name="tab_favorite">Избранные</string>
 
     <string name="add_rec_gram1">г</string>
     <string name="add_rec_gram100">100г</string>

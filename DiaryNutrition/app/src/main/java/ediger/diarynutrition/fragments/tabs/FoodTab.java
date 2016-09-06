@@ -2,6 +2,7 @@ package ediger.diarynutrition.fragments.tabs;
 
 import android.app.SearchManager;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -245,6 +246,9 @@ public class FoodTab extends Fragment implements
                     .getMenuInfo();
 
             AppContext.getDbDiary().setFavor(acmi.id,1);
+            Snackbar snackbar = Snackbar
+                    .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
+            snackbar.show();
             getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
         }
