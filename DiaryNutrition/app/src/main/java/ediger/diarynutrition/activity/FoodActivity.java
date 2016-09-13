@@ -11,9 +11,6 @@ import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
 
-/**
- * Created by root on 07.02.16.
- */
 public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
     private int Numboftabs = 3;

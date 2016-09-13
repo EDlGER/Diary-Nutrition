@@ -29,9 +29,6 @@ import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.PieChartView;
 
-/**
- * Created by Ediger on 03.05.2015.
- */
 public class SummaryFragment extends Fragment {
     View rootview;
 

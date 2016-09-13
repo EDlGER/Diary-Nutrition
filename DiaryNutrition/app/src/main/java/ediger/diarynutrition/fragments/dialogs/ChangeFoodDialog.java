@@ -13,9 +13,6 @@ import android.widget.Toast;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 06.09.15.
- */
 public class ChangeFoodDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -44,16 +41,28 @@ public class ChangeFoodDialog extends DialogFragment {
         txtProtF.setText(c.getString(3));
         txtFatF.setText(c.getString(4));
 
+        c.close();
+
         builder.setPositiveButton(R.string.context_menu_change,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Toast toast;
+
                         if (txtNameF.getText().toString().matches("") ||
                                 txtCalF.getText().toString().matches("") ||
                                 txtCarboF.getText().toString().matches("") ||
                                 txtProtF.getText().toString().matches("") ||
                                 txtFatF.getText().toString().matches("")) {
-                            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Не все поля заполнены", Toast.LENGTH_SHORT);
+                            toast = Toast.makeText(getActivity().getApplicationContext(),
+                                    getString(R.string.message_dialog_food_empty), Toast.LENGTH_SHORT);
+                            toast.show();
+                        } else if ((txtCalF.getText().toString().compareTo(".") == 0) ||
+                                (txtCarboF.getText().toString().compareTo(".") == 0) ||
+                                (txtProtF.getText().toString().compareTo(".") == 0) ||
+                                (txtFatF.getText().toString().compareTo(".") == 0)) {
+                            toast = Toast.makeText(getActivity().getApplicationContext(),
+                                    getString(R.string.message_dialog_food_point),
+                                    Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             long food_id = getArguments().getLong("id");

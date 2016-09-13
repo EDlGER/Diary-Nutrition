@@ -23,9 +23,6 @@ import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 19.05.15.
- */
 public class RecordAdapter extends SimpleCursorTreeAdapter {
 
     private DiaryFragment mFragment;

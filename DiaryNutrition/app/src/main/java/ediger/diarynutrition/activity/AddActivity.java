@@ -27,14 +27,12 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 11.03.16.
- */
 public class AddActivity extends AppCompatActivity {
 
     private int mealId = 1;
@@ -53,7 +51,7 @@ public class AddActivity extends AppCompatActivity {
     private EditText txtServ;
     private RadioGroup radioMeal;
     private Calendar calendar = Calendar.getInstance();
-    private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm");
+    private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
 
 
     @Override
@@ -170,7 +168,7 @@ public class AddActivity extends AppCompatActivity {
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
                 if (txtServ.getText().toString().matches("")) {
-                    Snackbar.make(v, "Количество порции не введено", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, getString(R.string.message_serving), Snackbar.LENGTH_SHORT).show();
                 } else {
                     AppContext.getDbDiary().addRec(foodId,
                             Integer.parseInt(txtServ.getText().toString()) * gram,
@@ -189,6 +187,7 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         });
+
         txtServ.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -230,10 +229,10 @@ public class AddActivity extends AppCompatActivity {
             float prot = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT)) / 100 * serv * gram;
             float fat = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT)) / 100 * serv * gram;
 
-            this.cal.setText(String.format("%.1f", cal));
-            this.carbo.setText(String.format("%.1f",carbo));
-            this.prot.setText(String.format("%.1f",prot));
-            this.fat.setText(String.format("%.1f",fat));
+            this.cal.setText(String.format(Locale.getDefault(), "%.1f", cal));
+            this.carbo.setText(String.format(Locale.getDefault(), "%.1f",carbo));
+            this.prot.setText(String.format(Locale.getDefault(), "%.1f",prot));
+            this.fat.setText(String.format(Locale.getDefault(), "%.1f",fat));
         } else {
             this.cal.setText("0");
             this.carbo.setText("0");

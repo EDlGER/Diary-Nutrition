@@ -9,10 +9,6 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.Calendar;
 
-
-/**
- * Created by root on 14.05.15.
- */
 public class DbDiary {
 
     public static String ALIAS_ID="_id";

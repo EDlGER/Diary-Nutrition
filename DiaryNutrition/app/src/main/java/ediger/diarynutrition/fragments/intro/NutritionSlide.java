@@ -16,9 +16,6 @@ import java.util.Calendar;
 import ediger.diarynutrition.R;
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
-/**
- * Created by root on 12.05.16.
- */
 public class NutritionSlide extends Fragment implements ISlideSelectionListener {
 
     private int cal;

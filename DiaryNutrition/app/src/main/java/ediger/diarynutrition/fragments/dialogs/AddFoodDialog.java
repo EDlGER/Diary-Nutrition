@@ -13,16 +13,13 @@ import android.widget.Toast;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 14.09.15.
- */
 public class AddFoodDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food,null);
+        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
         builder.setView(relative);
         builder.setTitle(getString(R.string.dialog_tittle_f));
 
@@ -44,14 +41,15 @@ public class AddFoodDialog extends DialogFragment {
                                 txtProtF.getText().toString().matches("") ||
                                 txtFatF.getText().toString().matches("") ) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Не все поля заполнены",Toast.LENGTH_SHORT);
+                                   getString(R.string.message_dialog_food_empty),
+                                    Toast.LENGTH_SHORT);
                             toast.show();
                         } else if ((txtCalF.getText().toString().compareTo(".") == 0) ||
                                 (txtCarboF.getText().toString().compareTo(".") == 0) ||
                                 (txtProtF.getText().toString().compareTo(".") == 0) ||
                                 (txtFatF.getText().toString().compareTo(".") == 0)) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Одно или несколько полей содежат неправильный формат числа",
+                                    getString(R.string.message_dialog_food_point),
                                     Toast.LENGTH_SHORT);
                             toast.show();
                         } else {

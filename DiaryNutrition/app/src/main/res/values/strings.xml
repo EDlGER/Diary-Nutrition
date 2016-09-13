@@ -2,6 +2,12 @@
     <string name="app_name">Diary Nutrition</string>
     <string name="act_food">Продукты</string>
 
+    <string name="action_search">Поиск</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_back">Назад</string>
+
+    <string name="diary_date_today">Сегодня</string>
+
     <string name="menu_action_food">Еда</string>
     <string name="menu_action_weight">Вес</string>
 
@@ -13,10 +19,6 @@
 
     <string name="record_card_info1">Запланировано</string>
     <string name="record_card_info2">Употреблено</string>
-
-    <string name="diary_date_today">Сегодня</string>
-    <string name="diary_date_yesterday">Вчера</string>
-    <string name="diary_date_tomorrow">Завтра</string>
 
     <string name="food_tab1">Добавленные</string>
     <string name="food_tab2">Избранные</string>
@@ -55,6 +57,7 @@
 
     <string name="dialog_tittle_change">Изменение продукта</string>
     <string name="dialog_tittle_f">Добавление своего продукта</string>
+    <string name="dialog_tittle_w">Введите Ваш вес</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
     <string name="dialog_name_f">Название продукта</string>
@@ -62,6 +65,7 @@
     <string name="dialog_carbo_f">Углеводы</string>
     <string name="dialog_prot_f">Белки</string>
     <string name="dialog_fat_f">Жиры</string>
+    <string name="dialog_weight">Вес</string>
 
     <string name="empty_list_weight">Добавьте текущий вес</string>
     <string name="empty_list_food">Нет добавленных продутов</string>
@@ -99,8 +103,11 @@
     <string name="intro_nutrition_consume">Вам необходимо потреблять</string>
     <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
     
-    <string name="message_serving">Значение порции не введено</string>
+    <string name="message_serving">Количество порции не введено</string>
     <string name="message_favorite">Добавлено в избранное</string>
+    <string name="message_dialog_food_empty">Не все поля заполнены</string>
+    <string name="message_dialog_food_point">Одно или несколько полей содежат неправильный формат числа</string>
+    <string name="message_dialog_weight">Вес не введен</string>
     
     <string name="tab_database">База данных</string>
     <string name="tab_user">Добавленные</string>
@@ -115,12 +122,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_search">Поиск</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_back">Назад</string>
-
-    <string name="hello_world">Hello world!</string>
     
     <string-array name="values">
         <item>1</item>

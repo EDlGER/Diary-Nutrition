@@ -15,9 +15,6 @@ import android.widget.TextView;
 import ediger.diarynutrition.R;
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
-/**
- * Created by root on 12.05.16.
- */
 public class ActivitySlide extends Fragment implements ISlideSelectionListener{
 
     private static final String KEY_PREF_ACTIVITY = "activity";

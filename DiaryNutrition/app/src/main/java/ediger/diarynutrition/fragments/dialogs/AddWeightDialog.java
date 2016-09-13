@@ -15,9 +15,6 @@ import android.support.design.widget.TextInputLayout;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 26.02.16.
- */
 public class AddWeightDialog extends DialogFragment {
 
     @NonNull
@@ -27,11 +24,11 @@ public class AddWeightDialog extends DialogFragment {
 
         View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_weight,null);
         builder.setView(relative);
-        builder.setTitle("Введите Ваш вес");
+        builder.setTitle(getString(R.string.dialog_tittle_w));
 
         TextInputLayout til = (TextInputLayout) relative.findViewById(R.id.weightInputLayout);
         final EditText editWeight = (EditText) til.findViewById(R.id.editWeight);
-        til.setHint("Вес");
+        til.setHint(getString(R.string.dialog_weight));
 
         builder.setPositiveButton(R.string.dialog_add,
                 new DialogInterface.OnClickListener() {
@@ -48,7 +45,7 @@ public class AddWeightDialog extends DialogFragment {
 
                         if (editWeight.getText().toString().matches("")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    "Вес не введен", Toast.LENGTH_SHORT);
+                                    getString(R.string.message_dialog_weight), Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             cursor = AppContext.getDbDiary().getWeight(date);

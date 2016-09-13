@@ -8,9 +8,6 @@ import ediger.diarynutrition.fragments.tabs.FavorTab;
 import ediger.diarynutrition.fragments.tabs.FoodTab;
 import ediger.diarynutrition.fragments.tabs.SearchTab;
 
-/**
- * Created by root on 07.02.16.
- */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created

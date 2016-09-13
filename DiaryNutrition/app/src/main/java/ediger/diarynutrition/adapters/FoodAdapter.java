@@ -13,9 +13,6 @@ import android.widget.TextView;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 
-/**
- * Created by root on 30.05.15.
- */
 public class FoodAdapter extends SimpleCursorAdapter {
     private Context context;
     private LayoutInflater layoutInflater;

@@ -36,9 +36,6 @@ import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 05.09.15.
- */
 public class FoodTab extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -150,7 +147,6 @@ public class FoodTab extends Fragment implements
             }
         });
         getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        //getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     //Поиск по введенным буквам
@@ -290,8 +286,7 @@ public class FoodTab extends Fragment implements
 
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getUserFood();
-            return cursor;
+            return db.getUserFood();
         }
     }
 }

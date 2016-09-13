@@ -35,9 +35,6 @@ import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 05.09.15.
- */
 public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int REQ_CODE_ADD_FOOD = 2;
@@ -129,7 +126,6 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             }
         });
         getLoaderManager().getLoader(LOADER_ID).forceLoad();
-        //getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     //Поиск по введенным буквам
@@ -146,7 +142,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             String value = "%"+constraint.toString()+"%";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "favor = 1 AND usr > -1 AND food_name like ? ",
-                    new String[]{value},null,null,orderBy);
+                    new String[]{value}, null, null, orderBy);
         }
     }
 
@@ -161,7 +157,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         if (item.getItemId() == 4) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
-            AppContext.getDbDiary().setFavor(acmi.id,0);
+            AppContext.getDbDiary().setFavor(acmi.id, 0);
             getLoaderManager().getLoader(LOADER_ID).forceLoad();
             return true;
         }
@@ -242,8 +238,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
         @Override
         public  Cursor loadInBackground(){
-            Cursor cursor = db.getFavorFood();
-            return cursor;
+            return db.getFavorFood();
         }
     }
 }

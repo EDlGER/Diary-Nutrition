@@ -9,9 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
@@ -32,13 +29,9 @@ import android.widget.SimpleCursorAdapter;
 import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
-import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by root on 07.02.16.
- */
 public class SearchTab extends Fragment {
 
     View rootview;
@@ -54,9 +47,7 @@ public class SearchTab extends Fragment {
     };
 
     private long addid;
-    private String[] from;
-    private ListView listFood;
-    private Cursor cursor;
+    private ListView listFood;;
     private FoodAdapter foodAdapter;
 
     @Nullable
@@ -67,8 +58,8 @@ public class SearchTab extends Fragment {
         setHasOptionsMenu(true);
 
         //Данные для адаптера
-        cursor = AppContext.getDbDiary().getAllFood();
-        from = AppContext.getDbDiary().getListFood();
+        Cursor cursor = AppContext.getDbDiary().getAllFood();
+        String[] from = AppContext.getDbDiary().getListFood();
 
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
@@ -86,7 +77,6 @@ public class SearchTab extends Fragment {
             }
         });
         listFood.setTextFilterEnabled(true);
-        //listFood.setAdapter(foodAdapter);
         registerForContextMenu(listFood);
         //Поиск
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {

@@ -21,9 +21,6 @@ import ediger.diarynutrition.objects.AppContext;
 import com.github.paolorotolo.appintro.ISlidePolicy;
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
-/**
- * Created by root on 12.05.16.
- */
 public class PurposeSlide extends Fragment implements ISlidePolicy, ISlideSelectionListener {
 
     private static final String KEY_PREF_PURPOSE = "purpose";

@@ -10,14 +10,12 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 
-/**
- * Created by root on 27.02.16.
- */
 public class WeightAdapter extends SimpleCursorAdapter{
     private Context mContext;
     private LayoutInflater layoutInflater;
@@ -43,7 +41,7 @@ public class WeightAdapter extends SimpleCursorAdapter{
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         long date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_DATETIME));
         calendar.setTimeInMillis(date);

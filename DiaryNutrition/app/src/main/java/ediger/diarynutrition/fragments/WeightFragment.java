@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
@@ -36,9 +37,6 @@ import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
-/**
- * Created by root on 27.02.16.
- */
 public class WeightFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final int LOADER_ID = -6;
@@ -193,7 +191,7 @@ public class WeightFragment extends Fragment implements LoaderManager.LoaderCall
         int monthMarker = 7;
         Cursor cursor = null;
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM", Locale.getDefault());
 
 
         if (isWeek) {

@@ -46,10 +46,6 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
 import org.w3c.dom.Text;
 
-/**
- * Created by Ediger on 03.05.2015.
- *
- */
 public class DiaryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -63,7 +59,6 @@ public class DiaryFragment extends Fragment implements
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
-    private CardView dayStat;
     private View footerView;
     private TextView cardCal;
     private TextView cardCarbo;
@@ -249,9 +244,7 @@ public class DiaryFragment extends Fragment implements
             listRecord.expandGroup(i);
             listRecord.collapseGroup(i);
         }
-        //getLoaderManager().restartLoader(-1,null,this);
         setCardData();
-
     }
 
 

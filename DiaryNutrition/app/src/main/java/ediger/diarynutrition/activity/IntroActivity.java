@@ -14,10 +14,6 @@ import ediger.diarynutrition.fragments.intro.PersonSlide;
 import ediger.diarynutrition.fragments.intro.PurposeSlide;
 import ediger.diarynutrition.fragments.intro.ActivitySlide;
 
-
-/**
- * Created by root on 12.05.16.
- */
 public class IntroActivity extends AppIntro {
 
 

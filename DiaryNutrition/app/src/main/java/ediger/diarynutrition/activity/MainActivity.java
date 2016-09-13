@@ -241,8 +241,6 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
 
-        //String title = getString(R.string.app_name);
-
         switch (viewId) {
             case R.id.nav_diary:
                 fragment = new DiaryFragment();
@@ -268,11 +266,6 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.contentMain, fragment);
             ft.commit();
         }
-
-        // set the toolbar title
-        //if (getSupportActionBar() != null) {
-        //    getSupportActionBar().setTitle(title);
-        //}
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

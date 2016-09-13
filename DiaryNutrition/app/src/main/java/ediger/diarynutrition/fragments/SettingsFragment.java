@@ -22,9 +22,6 @@ import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.objects.AppContext;
 
-/**
- * Created by Ediger on 03.05.2015.
- */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.
         OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener{
 
@@ -48,10 +45,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         pref.registerOnSharedPreferenceChangeListener(this);
 
         Preference heightPref = findPreference(KEY_PREF_HEIGHT);
-        heightPref.setSummary(pref.getString(KEY_PREF_HEIGHT,""));
+        heightPref.setSummary(pref.getString(KEY_PREF_HEIGHT, ""));
 
         Preference birthdayPref = findPreference(KEY_PREF_BIRTHDAY);
-        date.setTime(pref.getLong(KEY_PREF_BIRTHDAY,0));
+        date.setTime(pref.getLong(KEY_PREF_BIRTHDAY, 0));
         birthdayPref.setSummary(dateFormat.format(date));
 
         birthdayPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -98,13 +95,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
         if (key.equals(KEY_PREF_BIRTHDAY)) {
             Preference birthdayPref = findPreference(key);
-            date.setTime(pref.getLong(KEY_PREF_BIRTHDAY,0));
+            date.setTime(pref.getLong(KEY_PREF_BIRTHDAY, 0));
 
             birthdayPref.setSummary(dateFormat.format(date));
         }
         if (key.equals(KEY_PREF_HEIGHT)) {
             Preference heightPref = findPreference(key);
-            heightPref.setSummary(sharedPreferences.getString(key,""));
+            heightPref.setSummary(sharedPreferences.getString(key, ""));
         }
 
         calculateProgram();
@@ -150,8 +147,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         double [] activity = {1.2, 1.375, 1.55, 1.725};
         int [] dimension = {-400, 0, 400};
         Calendar birthday = Calendar.getInstance();
-
-        //weight = pref.getFloat("weight", 0);
 
         Cursor cursor = AppContext.getDbDiary().getAllWeight();
         if (cursor.moveToFirst()) {
