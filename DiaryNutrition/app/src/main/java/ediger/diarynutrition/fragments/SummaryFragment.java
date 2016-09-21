@@ -154,10 +154,14 @@ public class SummaryFragment extends Fragment {
         Cursor cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
 
-        txtCal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CAL)));
-        txtCarbo.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
-        txtProt.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
-        txtFat.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+        txtCal.setText(String.format(Locale.getDefault(),"%.1f",
+                cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL))));
+        txtCarbo.setText(String.format(Locale.getDefault(),"%.1f",
+                cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO))));
+        txtProt.setText(String.format(Locale.getDefault(),"%.1f",
+                cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT))));
+        txtFat.setText(String.format(Locale.getDefault(),"%.1f",
+                cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT))));
 
         float cal = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
         float carbo = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)) * 4;
