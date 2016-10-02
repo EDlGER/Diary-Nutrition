@@ -4,6 +4,8 @@
 
     <uses-sdk tools:overrideLibrary="com.github.sundeepk.compactcalendarview"/>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".objects.AppContext"
         android:allowBackup="true"

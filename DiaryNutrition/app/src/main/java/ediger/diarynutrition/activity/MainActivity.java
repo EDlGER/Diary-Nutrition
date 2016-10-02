@@ -29,13 +29,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity
         editor.apply();
 
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-2180848868226246~4003747218");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

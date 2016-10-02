@@ -2,6 +2,7 @@ package ediger.diarynutrition.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,10 @@ import android.support.v7.widget.Toolbar;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
@@ -24,6 +29,11 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_food);
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        mAdView.loadAd(adRequest);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));

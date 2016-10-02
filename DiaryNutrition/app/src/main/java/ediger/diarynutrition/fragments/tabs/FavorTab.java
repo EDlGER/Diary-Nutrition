@@ -102,8 +102,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     public void setUserVisibleHint(boolean visible)
     {
         super.setUserVisibleHint(visible);
-        if (visible && isResumed())
-        {
+        if (visible && isResumed()) {
             onResume();
         }
     }
