@@ -46,8 +46,6 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
-import org.w3c.dom.Text;
-
 public class DiaryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -55,6 +53,7 @@ public class DiaryFragment extends Fragment implements
     private long date;
 
     private SharedPreferences pref;
+    private Intent intent;
 
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
@@ -71,8 +70,6 @@ public class DiaryFragment extends Fragment implements
     private TextView cardFatRec;
     private TextView cardCarboRec;
 
-    //private InterstitialAd mInterstitialAd;
-
 
     @Nullable
     @Override
@@ -83,12 +80,6 @@ public class DiaryFragment extends Fragment implements
         final MainActivity mainActivity = (MainActivity)getActivity();
 
         rootview = inflater.inflate(R.layout.fragment_diary, container, false);
-
-        //AdMob Interstitial Banner
-        /*mInterstitialAd = new InterstitialAd(getActivity());
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-        mInterstitialAd.loadAd(adRequest);
-        mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_id));*/
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
@@ -117,7 +108,7 @@ public class DiaryFragment extends Fragment implements
         nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH), 0, 0);
 
-        Intent intent = getActivity().getIntent();
+        intent = getActivity().getIntent();
         date = intent.getLongExtra("date", nowto.getTimeInMillis());
 
         intent.removeExtra("date");
@@ -181,6 +172,7 @@ public class DiaryFragment extends Fragment implements
     public void setUserVisibleHint(boolean visible)
     {
         super.setUserVisibleHint(visible);
+
         if (visible && isResumed())
         {
             onResume();
@@ -255,11 +247,7 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(i);
         }
         setCardData();
-        //if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-        //mInterstitialAd.show();
-        //}
     }
-
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

@@ -35,6 +35,8 @@ import java.util.Locale;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView arrow;
     private AppBarLayout mAppBarLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-2180848868226246~4003747218");
+        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -180,6 +183,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         displayView(R.id.nav_diary);
+
     }
 
     public void hideKeyboard() {

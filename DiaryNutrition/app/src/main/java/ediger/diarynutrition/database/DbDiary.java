@@ -333,7 +333,7 @@ public class DbDiary {
                 + "where f._id = ? ";
         Cursor usr = db.rawQuery(sql, new String[]{"" + id});
         usr.moveToFirst();
-        if (usr.getInt(0) > 0){
+        if (usr.getInt(0) > 0) {
             cv.put(ALIAS_USR,usr.getInt(0) + 1);
             String where = ALIAS_ID + "=" + id;
             db.update(TABLE_FOOD,cv,where,null);

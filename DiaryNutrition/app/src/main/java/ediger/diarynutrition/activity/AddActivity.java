@@ -25,6 +25,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -53,11 +56,20 @@ public class AddActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
 
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_id));
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("E8B8A18280F8D8867639D5CF594195AD")
+                .build();
+        mInterstitialAd.loadAd(adRequest);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -88,7 +100,7 @@ public class AddActivity extends AppCompatActivity {
         //Title
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.title_text);
         final Intent intent = getIntent();
-        foodId = intent.getLongExtra("FoodId",0);
+        foodId = intent.getLongExtra("FoodId", 0);
         Cursor cursor = AppContext.getDbDiary().getNameFood(foodId);
         cursor.moveToFirst();
         String title = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
@@ -181,7 +193,8 @@ public class AddActivity extends AppCompatActivity {
                     date = calendar.getTimeInMillis();
 
                     Intent intent1 = new Intent(AddActivity.this, MainActivity.class);
-                    intent1.putExtra("date",date);
+                    intent1.putExtra("date", date);
+                    intent1.putExtra("ad", true);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent1);
                 }
@@ -206,6 +219,12 @@ public class AddActivity extends AppCompatActivity {
         });
 
         setInfo();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mInterstitialAd.show();
     }
 
     @Override
