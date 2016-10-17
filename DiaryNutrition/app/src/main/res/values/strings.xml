@@ -34,6 +34,10 @@
 
     <string name="weight_week">Неделя</string>
     <string name="weight_month">Месяц</string>
+    
+    <string name="sum_recommend">Рекомендуется</string>
+    <string name="sum_total">Итого</string>
+    <string name="sum_goal">Цель</string>
 
     <string name="meal1">Завтрак</string>
     <string name="meal2">Второй завтрак</string>

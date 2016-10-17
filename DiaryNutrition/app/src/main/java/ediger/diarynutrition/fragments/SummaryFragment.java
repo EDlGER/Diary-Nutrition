@@ -41,6 +41,11 @@ public class SummaryFragment extends Fragment {
     private TextView txtProt;
     private TextView txtFat;
 
+    private TextView txtCalRec;
+    private TextView txtCarboRec;
+    private TextView txtProtRec;
+    private TextView txtFatRec;
+
     private TextView txtCarboRecPersent;
     private TextView txtProtRecPersent;
     private TextView txtFatRecPersent;
@@ -69,6 +74,11 @@ public class SummaryFragment extends Fragment {
         txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
         txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
         txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
+
+        txtCalRec = (TextView) rootview.findViewById(R.id.txt_pur_cal);
+        txtCarboRec = (TextView) rootview.findViewById(R.id.txt_pur_carbo);
+        txtProtRec = (TextView) rootview.findViewById(R.id.txt_pur_prot);
+        txtFatRec = (TextView) rootview.findViewById(R.id.txt_pur_fat);
 
         txtCarboRecPersent = (TextView) rootview.findViewById(R.id.txt_carbo_rec);
         txtProtRecPersent = (TextView) rootview.findViewById(R.id.txt_prot_rec);
@@ -154,6 +164,11 @@ public class SummaryFragment extends Fragment {
         Cursor cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
 
+        txtCalRec.setText(String.valueOf(pref.getInt("calories", 0)));
+        txtCarboRec.setText(String.valueOf(pref.getInt("carbo", 0)));
+        txtProtRec.setText(String.valueOf(pref.getInt("prot", 0)));
+        txtFatRec.setText(String.valueOf(pref.getInt("fat", 0)));
+
         txtCal.setText(String.format(Locale.getDefault(),"%.1f",
                 cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL))));
         txtCarbo.setText(String.format(Locale.getDefault(),"%.1f",
@@ -170,16 +185,21 @@ public class SummaryFragment extends Fragment {
 
         List<SliceValue> values = new ArrayList<>();
 
-        SliceValue carboSliceValue = new SliceValue(carbo,ChartUtils.COLOR_ORANGE);
-        carboSliceValue.setLabel((int) (carbo / cal * 100) + "%");
-        SliceValue protSliceValue = new SliceValue(prot,ChartUtils.COLOR_GREEN);
-        protSliceValue.setLabel((int) (prot / cal * 100) + "%");
-        SliceValue fatSliceValue = new SliceValue(fat,ChartUtils.COLOR_RED);
-        fatSliceValue.setLabel((int) (fat / cal * 100) + "%");
-
-        values.add(carboSliceValue);
-        values.add(protSliceValue);
-        values.add(fatSliceValue);
+        if (carbo != 0) {
+            SliceValue carboSliceValue = new SliceValue(carbo,ChartUtils.COLOR_ORANGE);
+            carboSliceValue.setLabel((int) (carbo / cal * 100) + "%");
+            values.add(carboSliceValue);
+        }
+        if (prot != 0) {
+            SliceValue protSliceValue = new SliceValue(prot,ChartUtils.COLOR_GREEN);
+            protSliceValue.setLabel((int) (prot / cal * 100) + "%");
+            values.add(protSliceValue);
+        }
+        if (fat != 0) {
+            SliceValue fatSliceValue = new SliceValue(fat,ChartUtils.COLOR_RED);
+            fatSliceValue.setLabel((int) (fat / cal * 100) + "%");
+            values.add(fatSliceValue);
+        }
 
         data = new PieChartData(values);
         data.setHasLabels(true);

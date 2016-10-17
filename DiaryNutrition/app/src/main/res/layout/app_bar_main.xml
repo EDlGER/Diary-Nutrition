@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:expanded="false"
-        app:layout_behavior="ediger.diarynutrition.ScrollingCalendarBehavior">
+        app:layout_behavior="ediger.diarynutrition.ScrollingCalendarBehavior"
+        app:elevation="0dp">
 
 
         <android.support.design.widget.CollapsingToolbarLayout

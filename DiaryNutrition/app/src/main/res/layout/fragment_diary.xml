@@ -1,189 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentFrame">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/cardLayout"
+        android:id="@+id/header_layout"
         android:background="@color/colorPrimary"
         android:elevation="5dp">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:elevation="150dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp">
+            android:id="@+id/consume_layout"
+            android:background="@color/colorPrimary">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:orientation="horizontal"
-                android:layout_marginRight="3dp">
+            <TextView
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/consCal"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_centerHorizontal="true"
+                android:singleLine="true"
+                android:text="9999"
+                android:gravity="center" />
 
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="42dp"
+                android:layout_height="5dp"
+                android:id="@+id/pb_cal"
+                android:progress="50"
+                android:max="100"
+                android:layout_below="@+id/consCal"
+                android:layout_alignRight="@+id/consCal"
+                android:layout_alignEnd="@+id/consCal"
+                android:progressBackgroundTint="#00695c" />
 
-                <TableLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shrinkColumns="*"
-                    android:stretchColumns="*"
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/consFat"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/consCal"
+                android:layout_toStartOf="@+id/consCal"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="10dp"
+                android:text="999"
+                android:gravity="center"
+                android:singleLine="true" />
 
-                    android:background="@color/colorPrimary"
-                    android:layout_margin="1dp"
-                    android:measureWithLargestChild="false">
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="32dp"
+                android:layout_height="5dp"
+                android:id="@+id/pb_fat"
+                android:progress="50"
+                android:max="100"
+                android:layout_below="@+id/consFat"
+                android:layout_alignRight="@+id/consFat"
+                android:layout_alignEnd="@+id/consFat"
+                android:progressBackgroundTint="#00695c" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/consProt"
+                android:text="999"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/consCal"
+                android:layout_toStartOf="@+id/consCal"
+                android:layout_marginRight="72dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:singleLine="true" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/cardInfo1"
-                            android:text="@string/record_card_info1"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_span="8"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:gravity="center_vertical" />
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="32dp"
+                android:layout_height="5dp"
+                android:id="@+id/pb_prot"
+                android:progress="50"
+                android:max="100"
+                android:layout_below="@+id/consProt"
+                android:layout_alignRight="@+id/consProt"
+                android:layout_alignEnd="@+id/consProt"
+                android:progressBackgroundTint="#00695c" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardCarbo1"
-                            android:text="999"
-                            android:textSize="20sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:gravity="center_horizontal"
-                            android:maxLength="3" />
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/consCarbo"
+                android:text="999"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/consCal"
+                android:layout_toStartOf="@+id/consCal"
+                android:layout_marginRight="120dp"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:gravity="center" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardProt1"
-                            android:text="999"
-                            android:textSize="20sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:gravity="center_horizontal"
-                            android:maxLength="3" />
+            <ProgressBar
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="32dp"
+                android:layout_height="5dp"
+                android:id="@+id/pb_carbo"
+                android:progress="50"
+                android:max="100"
+                android:layout_below="@+id/consCarbo"
+                android:layout_alignRight="@+id/consCarbo"
+                android:layout_alignEnd="@+id/consCarbo"
+                android:progressBackgroundTint="#00695c" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardFat1"
-                            android:text="99"
-                            android:textSize="20sp"
-                            android:textColor="@color/colorPrimary"
-                            android:gravity="center_horizontal"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:layout_marginBottom="1dp"
-                            android:maxLength="3" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardCal1"
-                            android:text="2000"
-                            android:textSize="20sp"
-                            android:textColor="@color/colorPrimary"
-                            android:gravity="right"
-                            android:background="#FFFFFF"
-                            android:maxLength="5" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Употреблено"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="16dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold" />
 
-                    </TableRow>
+        </RelativeLayout>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardInfo2"
-                            android:text="@string/record_card_info2"
-                            android:textSize="16sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="0.5dp"
-                            android:layout_span="8" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardCarbo2"
-                            android:text="50"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:maxLength="3"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardProt2"
-                            android:text="30"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:maxLength="3"
-                            android:gravity="center" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardFat2"
-                            android:text="20"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimary"
-                            android:background="#FFFFFF"
-                            android:layout_marginRight="1dp"
-                            android:gravity="center"
-                            android:maxLength="3" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cardCal2"
-                            android:text="2000"
-                            android:textSize="18sp"
-                            android:textColor="@color/colorPrimary"
-                            android:gravity="right"
-                            android:background="#FFFFFF" />
-
-                    </TableRow>
-                </TableLayout>
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
-                    />
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation = "horizontal"
@@ -191,9 +148,7 @@
             android:layout_height="15dp"
             android:background="@color/colorPrimary"
             android:id="@+id/linearLayout"
-            android:gravity="right"
-            android:layout_marginTop="5dp">
-
+            android:gravity="right">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -235,6 +190,10 @@
 
     </LinearLayout>
 
+<!-- #26a69a -->
+
+
+
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -246,6 +205,6 @@
         android:longClickable="true"
         android:divider="@android:color/transparent"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/cardLayout" />
+        android:layout_below="@+id/header_layout" />
 
 </RelativeLayout>

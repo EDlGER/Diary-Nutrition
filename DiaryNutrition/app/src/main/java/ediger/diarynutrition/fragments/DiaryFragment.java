@@ -18,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import java.text.SimpleDateFormat;
@@ -28,7 +27,6 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import ediger.diarynutrition.activity.FoodActivity;
-import ediger.diarynutrition.activity.IntroActivity;
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
@@ -39,12 +37,10 @@ import ediger.diarynutrition.objects.AppContext;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.widget.CardView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 
 public class DiaryFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -61,14 +57,15 @@ public class DiaryFragment extends Fragment implements
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
     private View footerView;
-    private TextView cardCal;
-    private TextView cardCarbo;
-    private TextView cardProt;
-    private TextView cardFat;
-    private TextView cardCalRec;
-    private TextView cardProtRec;
-    private TextView cardFatRec;
-    private TextView cardCarboRec;
+    private TextView consCal;
+    private TextView consCarbo;
+    private TextView consProt;
+    private TextView consFat;
+    private ProgressBar pbCal;
+    private ProgressBar pbCarbo;
+    private ProgressBar pbProt;
+    private ProgressBar pbFat;
+
 
 
     @Nullable
@@ -83,18 +80,17 @@ public class DiaryFragment extends Fragment implements
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
-        cardCal = (TextView) rootview.findViewById(R.id.cardCal2);
-        cardCarbo = (TextView) rootview.findViewById(R.id.cardCarbo2);
-        cardProt = (TextView) rootview.findViewById(R.id.cardProt2);
-        cardFat = (TextView) rootview.findViewById(R.id.cardFat2);
+        consCal = (TextView) rootview.findViewById(R.id.consCal);
+        consCarbo = (TextView) rootview.findViewById(R.id.consCarbo);
+        consProt = (TextView) rootview.findViewById(R.id.consProt);
+        consFat = (TextView) rootview.findViewById(R.id.consFat);
 
-        cardCalRec = (TextView) rootview.findViewById(R.id.cardCal1);
-        cardProtRec = (TextView) rootview.findViewById(R.id.cardProt1);
-        cardFatRec = (TextView) rootview.findViewById(R.id.cardFat1);
-        cardCarboRec = (TextView) rootview.findViewById(R.id.cardCarbo1);
+        pbCal = (ProgressBar) rootview.findViewById(R.id.pb_cal);
+        pbCarbo = (ProgressBar) rootview.findViewById(R.id.pb_carbo);
+        pbProt = (ProgressBar) rootview.findViewById(R.id.pb_prot);
+        pbFat = (ProgressBar) rootview.findViewById(R.id.pb_fat);
 
-
-        setCardData();
+        setHeaderData();
 
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
@@ -229,7 +225,7 @@ public class DiaryFragment extends Fragment implements
                     listRecord.expandGroup(i);
                     listRecord.collapseGroup(i);
                 }
-                setCardData();
+                setHeaderData();
 
                 mainActivity.hideCalendarView();
             }
@@ -246,7 +242,7 @@ public class DiaryFragment extends Fragment implements
             listRecord.expandGroup(i);
             listRecord.collapseGroup(i);
         }
-        setCardData();
+        setHeaderData();
     }
 
     @Override
@@ -277,44 +273,56 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(groupPos);
             listRecord.expandGroup(groupPos);
 
-            setCardData();
+            setHeaderData();
 
             return true;
         }
         return super.onContextItemSelected(item);
     }
 
-    public void setCardData() {
+    //String.valueOf(pref.getInt("calories", 0))     | prot,fat,carbo
+
+    public void setHeaderData() {
         //Число без дробной части
         int res;
-
-        cardCalRec.setText(String.valueOf(pref.getInt("calories", 0)));
-        cardProtRec.setText(String.valueOf(pref.getInt("prot", 0)));
-        cardFatRec.setText(String.valueOf(pref.getInt("fat", 0)));
-        cardCarboRec.setText(String.valueOf(pref.getInt("carbo", 0)));
-
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
         long date = cursor.getLong(0);
         cursor.close();
 
-        cardCal.setText("0");
-        cardCarbo.setText("0");
-        cardProt.setText("0");
-        cardFat.setText("0");
+        consCal.setText("0");
+        consCarbo.setText("0");
+        consProt.setText("0");
+        consFat.setText("0");
+
+        pbCal.setProgress(0);
+        pbCarbo.setProgress(0);
+        pbProt.setProgress(0);
+        pbFat.setProgress(0);
+        pbCal.setMax(pref.getInt("calories", 0));
+        pbCarbo.setMax(pref.getInt("carbo", 0));
+        pbProt.setMax(pref.getInt("prot", 0));
+        pbFat.setMax(pref.getInt("fat", 0));
 
         cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
         if (cursor.moveToFirst()) {
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
-            cardCal.setText(Integer.toString(res));
+            consCal.setText(Integer.toString(res));
+            pbCal.setProgress(res);
+
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO));
-            cardCarbo.setText(Integer.toString(res));
+            consCarbo.setText(Integer.toString(res));
+            pbCarbo.setProgress(res);
+
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT));
-            cardProt.setText(Integer.toString(res));
+            consProt.setText(Integer.toString(res));
+            pbProt.setProgress(res);
+
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT));
-            cardFat.setText(Integer.toString(res));
+            consFat.setText(Integer.toString(res));
+            pbFat.setProgress(res);
 
         }
         cursor.close();

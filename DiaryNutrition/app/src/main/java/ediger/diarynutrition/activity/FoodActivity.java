@@ -22,7 +22,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private SlidingTabLayout tabs;
-    private CharSequence Titles[]= { "База данных","Добавленные", "Избранные" };
+    private CharSequence Titles[]= { "База данных", "Добавленные", "Избранные" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

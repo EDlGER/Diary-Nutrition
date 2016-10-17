@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
     public FloatingActionsMenu menuMultipleActions;
 
+    public Toolbar toolbar;
+
     public Boolean isFirstRun;
 
     public View actionA;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity
 
     public CompactCalendarView mCompactCalendarView;
 
+    public AppBarLayout mAppBarLayout;
+
     public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
     private static String PREF_FIRST_RUN = "first_run";
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity
     private boolean isExpanded = false;
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
-    private AppBarLayout mAppBarLayout;
+
 
 
     @Override
@@ -88,7 +92,8 @@ public class MainActivity extends AppCompatActivity
 
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
@@ -250,18 +255,22 @@ public class MainActivity extends AppCompatActivity
         switch (viewId) {
             case R.id.nav_diary:
                 fragment = new DiaryFragment();
+                mAppBarLayout.setElevation(0);
                 setTitle(getString(R.string.title_sec1));
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
+                mAppBarLayout.setElevation(4);
                 setTitle(getString(R.string.title_sec2));
                 break;
             case R.id.nav_weight:
                 fragment = new WeightFragment();
+                mAppBarLayout.setElevation(4);
                 setTitle(getString(R.string.title_sec3));
                 break;
             case R.id.nav_stat:
                 fragment = new SummaryFragment();
+                mAppBarLayout.setElevation(4);
                 setTitle(getString(R.string.title_sec4));
                 break;
 
