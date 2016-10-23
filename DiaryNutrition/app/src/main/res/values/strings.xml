@@ -11,6 +11,7 @@
     <string name="banner_ad_inter_id">ca-app-pub-2180848868226246/9729746416</string>
 
     <string name="diary_date_today">Сегодня</string>
+    <string name="diary_header_remain">Осталось</string>
 
     <string name="menu_action_food">Еда</string>
     <string name="menu_action_weight">Вес</string>

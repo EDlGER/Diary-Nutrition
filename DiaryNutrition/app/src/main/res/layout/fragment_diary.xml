@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contentFrame">
@@ -17,127 +18,148 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:id="@+id/consume_layout"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/diary_header"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="7dp">
 
-            <TextView
-                android:layout_width="46dp"
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/consCal"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                android:layout_centerHorizontal="true"
-                android:singleLine="true"
-                android:text="9999"
-                android:gravity="center" />
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="4dp"
+                android:layout_alignParentRight="true">
 
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="42dp"
-                android:layout_height="5dp"
-                android:id="@+id/pb_cal"
-                android:progress="50"
-                android:max="100"
-                android:layout_below="@+id/consCal"
-                android:layout_alignRight="@+id/consCal"
-                android:layout_alignEnd="@+id/consCal"
-                android:progressBackgroundTint="#00695c" />
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/consCal"
+                    android:text="9999"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:singleLine="true" />
 
-            <TextView
-                android:layout_width="36dp"
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_cal"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/consFat"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_toLeftOf="@+id/consCal"
-                android:layout_toStartOf="@+id/consCal"
-                android:layout_marginRight="23dp"
-                android:layout_marginTop="10dp"
-                android:text="999"
-                android:gravity="center"
-                android:singleLine="true" />
+                android:layout_marginRight="66dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
 
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="32dp"
-                android:layout_height="5dp"
-                android:id="@+id/pb_fat"
-                android:progress="50"
-                android:max="100"
-                android:layout_below="@+id/consFat"
-                android:layout_alignRight="@+id/consFat"
-                android:layout_alignEnd="@+id/consFat"
-                android:progressBackgroundTint="#00695c" />
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/consFat"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:singleLine="true" />
 
-            <TextView
-                android:layout_width="36dp"
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_fat"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/consProt"
-                android:text="999"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_toLeftOf="@+id/consCal"
-                android:layout_toStartOf="@+id/consCal"
-                android:layout_marginRight="72dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:singleLine="true" />
+                android:layout_marginRight="116dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
 
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="32dp"
-                android:layout_height="5dp"
-                android:id="@+id/pb_prot"
-                android:progress="50"
-                android:max="100"
-                android:layout_below="@+id/consProt"
-                android:layout_alignRight="@+id/consProt"
-                android:layout_alignEnd="@+id/consProt"
-                android:progressBackgroundTint="#00695c" />
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/consProt"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:singleLine="true" />
 
-            <TextView
-                android:layout_width="36dp"
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_prot"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/consCarbo"
-                android:text="999"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_toLeftOf="@+id/consCal"
-                android:layout_toStartOf="@+id/consCal"
-                android:layout_marginRight="120dp"
-                android:layout_marginTop="10dp"
-                android:singleLine="true"
-                android:gravity="center" />
+                android:layout_marginRight="166dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
 
-            <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="32dp"
-                android:layout_height="5dp"
-                android:id="@+id/pb_carbo"
-                android:progress="50"
-                android:max="100"
-                android:layout_below="@+id/consCarbo"
-                android:layout_alignRight="@+id/consCarbo"
-                android:layout_alignEnd="@+id/consCarbo"
-                android:progressBackgroundTint="#00695c" />
+                <TextView
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/consCarbo"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:gravity="center" />
+
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_carbo"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Употреблено"
+                android:text="@string/diary_header_remain"
                 android:textSize="15sp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorPrimary"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="16dp"
-                android:layout_centerVertical="true"
-                android:textStyle="bold" />
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 

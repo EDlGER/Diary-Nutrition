@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.AddWeightDialog;
 import ediger.diarynutrition.objects.AppContext;
+import info.abdolahi.CircularMusicProgressBar;
 
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -61,10 +64,11 @@ public class DiaryFragment extends Fragment implements
     private TextView consCarbo;
     private TextView consProt;
     private TextView consFat;
-    private ProgressBar pbCal;
-    private ProgressBar pbCarbo;
-    private ProgressBar pbProt;
-    private ProgressBar pbFat;
+    private CircularMusicProgressBar pbCal;
+    private CircularMusicProgressBar pbCarbo;
+    private CircularMusicProgressBar pbProt;
+    private CircularMusicProgressBar pbFat;
+
 
 
 
@@ -85,10 +89,10 @@ public class DiaryFragment extends Fragment implements
         consProt = (TextView) rootview.findViewById(R.id.consProt);
         consFat = (TextView) rootview.findViewById(R.id.consFat);
 
-        pbCal = (ProgressBar) rootview.findViewById(R.id.pb_cal);
-        pbCarbo = (ProgressBar) rootview.findViewById(R.id.pb_carbo);
-        pbProt = (ProgressBar) rootview.findViewById(R.id.pb_prot);
-        pbFat = (ProgressBar) rootview.findViewById(R.id.pb_fat);
+        pbCal = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_cal);
+        pbCarbo = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_carbo);
+        pbProt = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_prot);
+        pbFat = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_fat);
 
         setHeaderData();
 
@@ -280,11 +284,15 @@ public class DiaryFragment extends Fragment implements
         return super.onContextItemSelected(item);
     }
 
-    //String.valueOf(pref.getInt("calories", 0))     | prot,fat,carbo
 
     public void setHeaderData() {
         //Число без дробной части
         int res;
+        int rem;
+        int targetCal = pref.getInt("calories", 0);
+        int targetCarbo = pref.getInt("carbo", 0);
+        int targetProt = pref.getInt("prot", 0);
+        int targetFat = pref.getInt("fat", 0);
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
@@ -296,33 +304,56 @@ public class DiaryFragment extends Fragment implements
         consProt.setText("0");
         consFat.setText("0");
 
-        pbCal.setProgress(0);
-        pbCarbo.setProgress(0);
-        pbProt.setProgress(0);
-        pbFat.setProgress(0);
-        pbCal.setMax(pref.getInt("calories", 0));
-        pbCarbo.setMax(pref.getInt("carbo", 0));
-        pbProt.setMax(pref.getInt("prot", 0));
-        pbFat.setMax(pref.getInt("fat", 0));
-
         cursor = AppContext.getDbDiary().getDayData(date);
         cursor.moveToFirst();
         if (cursor.moveToFirst()) {
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
-            consCal.setText(Integer.toString(res));
-            pbCal.setProgress(res);
+            rem = targetCal - res;
+            if (rem < 0) {
+                rem = 0;
+                consCal.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            } else {
+                consCal.setTextColor(Color.parseColor("#000000"));
+                consCal.setAlpha(0.54f);
+            }
+            consCal.setText(Integer.toString(rem));
+            pbCal.setValue(res * 100 / targetCal);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO));
-            consCarbo.setText(Integer.toString(res));
-            pbCarbo.setProgress(res);
+            rem = targetCarbo - res;
+            if (rem < 0) {
+                rem = 0;
+                consCarbo.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            } else {
+                consCarbo.setTextColor(Color.parseColor("#000000"));
+                consCarbo.setAlpha(0.54f);
+            }
+            consCarbo.setText(Integer.toString(rem));
+            pbCarbo.setValue(res * 100 / targetCarbo);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT));
-            consProt.setText(Integer.toString(res));
-            pbProt.setProgress(res);
+            rem = targetProt - res;
+            if (rem < 0) {
+                rem = 0;
+                consProt.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            } else {
+                consProt.setTextColor(Color.parseColor("#000000"));
+                consProt.setAlpha(0.54f);
+            }
+            consProt.setText(Integer.toString(rem));
+            pbProt.setValue(res * 100 / targetProt);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT));
-            consFat.setText(Integer.toString(res));
-            pbFat.setProgress(res);
+            rem = targetFat - res;
+            if (rem < 0) {
+                rem = 0;
+                consFat.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            } else {
+                consFat.setTextColor(Color.parseColor("#000000"));
+                consFat.setAlpha(0.54f);
+            }
+            consFat.setText(Integer.toString(rem));
+            pbFat.setValue(res * 100 / targetFat);
 
         }
         cursor.close();
