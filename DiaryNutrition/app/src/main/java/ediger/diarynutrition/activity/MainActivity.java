@@ -9,6 +9,7 @@ import ediger.diarynutrition.fragments.WeightFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
@@ -255,22 +256,30 @@ public class MainActivity extends AppCompatActivity
         switch (viewId) {
             case R.id.nav_diary:
                 fragment = new DiaryFragment();
-                mAppBarLayout.setElevation(0);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mAppBarLayout.setElevation(0);
+                }
                 setTitle(getString(R.string.title_sec1));
                 break;
             case R.id.nav_settings:
                 fragment = new SettingsFragment();
-                mAppBarLayout.setElevation(4);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mAppBarLayout.setElevation(4);
+                }
                 setTitle(getString(R.string.title_sec2));
                 break;
             case R.id.nav_weight:
                 fragment = new WeightFragment();
-                mAppBarLayout.setElevation(4);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mAppBarLayout.setElevation(4);
+                }
                 setTitle(getString(R.string.title_sec3));
                 break;
             case R.id.nav_stat:
                 fragment = new SummaryFragment();
-                mAppBarLayout.setElevation(4);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mAppBarLayout.setElevation(4);
+                }
                 setTitle(getString(R.string.title_sec4));
                 break;
 

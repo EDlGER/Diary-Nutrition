@@ -94,8 +94,6 @@ public class DiaryFragment extends Fragment implements
         pbProt = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_prot);
         pbFat = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_fat);
 
-        setHeaderData();
-
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND,0);
@@ -164,6 +162,8 @@ public class DiaryFragment extends Fragment implements
         } else {
             getLoaderManager().initLoader(-1, null, this);
         }
+
+        setHeaderData();
 
         return rootview;
     }
@@ -289,10 +289,10 @@ public class DiaryFragment extends Fragment implements
         //Число без дробной части
         int res;
         int rem;
-        int targetCal = pref.getInt("calories", 0);
-        int targetCarbo = pref.getInt("carbo", 0);
-        int targetProt = pref.getInt("prot", 0);
-        int targetFat = pref.getInt("fat", 0);
+        int targetCal = pref.getInt("calories", 1);
+        int targetCarbo = pref.getInt("carbo", 1);
+        int targetProt = pref.getInt("prot", 1);
+        int targetFat = pref.getInt("fat", 1);
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
