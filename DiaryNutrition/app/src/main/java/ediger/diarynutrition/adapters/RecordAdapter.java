@@ -111,7 +111,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         if (c.moveToFirst()) {
             do {
                 mealID = c.getInt(0);
-                if ( mealID == groupPosition+1){
+                if ( mealID == groupPosition + 1){
                     cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
 
                     group_cal.setText(Integer.toString(cal));
@@ -122,7 +122,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
                             c.getColumnIndex(DbDiary.ALIAS_PROT)));
                     String fat = String.format("%.1f", c.getFloat(
                             c.getColumnIndex(DbDiary.ALIAS_FAT)));
-
 
                     group_carbo.setText(carbo);
                     group_prot.setText(prot);

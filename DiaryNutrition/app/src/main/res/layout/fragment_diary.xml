@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contentFrame"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/contentFrame">
-
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/header_layout"
         android:background="@color/colorPrimary"
         android:elevation="5dp">
 
         <RelativeLayout
+            android:id="@+id/consume_layout"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:id="@+id/consume_layout"
-            android:background="@drawable/diary_header"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="2dp"
+            android:background="@drawable/diary_header"
             android:elevation="7dp">
 
             <FrameLayout
@@ -33,12 +32,12 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    android:id="@+id/consCal"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/consCal"
+                    android:layout_gravity="center"
                     android:text="9999"
                     android:textSize="16sp"
-                    android:layout_gravity="center"
                     android:gravity="center"
                     android:singleLine="true" />
 
@@ -65,12 +64,12 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    android:id="@+id/consFat"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/consFat"
+                    android:layout_gravity="center"
                     android:text="999"
                     android:textSize="16sp"
-                    android:layout_gravity="center"
                     android:gravity="center"
                     android:singleLine="true" />
 
@@ -96,12 +95,12 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    android:id="@+id/consProt"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/consProt"
+                    android:layout_gravity="center"
                     android:text="999"
                     android:textSize="16sp"
-                    android:layout_gravity="center"
                     android:gravity="center"
                     android:singleLine="true" />
 
@@ -127,12 +126,12 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    android:id="@+id/consCarbo"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/consCarbo"
+                    android:layout_gravity="center"
                     android:text="999"
                     android:textSize="16sp"
-                    android:layout_gravity="center"
                     android:singleLine="true"
                     android:gravity="center" />
 
@@ -148,85 +147,84 @@
                     app:progress_color="@color/colorAccentPressed"
                     app:progress_startAngle="270" />
 
-
             </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/diary_header_remain"
-                android:textSize="15sp"
-                android:textColor="@color/colorPrimary"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="16dp"
-                android:layout_centerVertical="true" />
+                android:layout_centerVertical="true"
+                android:text="@string/diary_header_remain"
+                android:textSize="15sp"
+                android:textColor="@color/colorPrimary" />
 
         </RelativeLayout>
 
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation = "horizontal"
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="15dp"
+            android:orientation="horizontal"
             android:background="@color/colorPrimary"
-            android:id="@+id/linearLayout"
             android:gravity="right">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
                 android:id="@+id/info_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
                 android:text="@string/record_carbo"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="25dp" />
+                android:gravity="center_horizontal" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
                 android:text="@string/record_prot"
-                android:layout_gravity="right"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="25dp" />
+                android:gravity="center_horizontal"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
                 android:text="@string/record_fat"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="35dp" />
+                android:gravity="center_horizontal"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:text="@string/record_cal"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:gravity="center_horizontal"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-<!-- #26a69a -->
-
-
-
     <ExpandableListView
+        android:id="@+id/listRecords"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:id="@+id/listRecords"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/header_layout"
         android:background="@color/listview_background"
         android:longClickable="true"
-        android:divider="@android:color/transparent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/header_layout" />
+        android:divider="@android:color/transparent" />
 
 </RelativeLayout>

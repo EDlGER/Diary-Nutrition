@@ -22,7 +22,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
     private ViewPager pager;
     private ViewPagerAdapter adapter;
     private SlidingTabLayout tabs;
-    private CharSequence Titles[]= { "База данных", "Добавленные", "Избранные" };
+    private CharSequence Titles[] = new CharSequence[Numboftabs];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,10 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Titles[0] = getString(R.string.tab_database);
+        Titles[1] = getString(R.string.tab_user);
+        Titles[2] = getString(R.string.tab_favorite);
+
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
 
@@ -69,7 +73,6 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
     }
 
     @Override

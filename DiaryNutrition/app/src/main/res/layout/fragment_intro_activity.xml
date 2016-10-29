@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
@@ -11,9 +12,9 @@
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -22,67 +23,67 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@string/intro_title"
             android:textSize="28sp"
-            android:textColor="@android:color/white"
-            android:layout_gravity="center" />
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#F5F5F5"
         android:padding="32dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Какой ваш образ жизни?"
+            android:text="@string/intro_activity"
             android:textSize="16sp"
             android:paddingBottom="16dp"/>
 
         <RadioGroup
+            android:id="@+id/rg_activity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg_activity">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_activity1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_activity1"
-                android:text="Сидячий"
+                android:text="@string/intro_activity_name_1"
                 android:textSize="16sp"
                 android:checked="true"/>
 
             <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/rb_activity2"
-                android:text="Малоактивный"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/intro_activity_name_2"
                 android:textSize="16sp"/>
 
             <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/rb_activity3"
-                android:text="Активный"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/intro_activity_name_3"
                 android:textSize="16sp"/>
 
             <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/rb_activity4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb_activity4"
-                android:text="Очень активный"
+                android:text="@string/intro_activity_name_4"
                 android:textSize="16sp"/>
 
         </RadioGroup>
 
         <TextView
+            android:id="@+id/activity_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_info"
             android:layout_marginTop="32dp"
             android:text="Описание образа жизни" />
 

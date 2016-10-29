@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DbDiary {
 
@@ -38,15 +39,15 @@ public class DbDiary {
     public static String ALIAS_WEIGHT = "weight";
 
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "diary.db";
-    private static final String DB_FOLDER = "/data/data/ediger.diarynutrition/databases/";
-    private static final String DB_PATH = DB_FOLDER + DB_NAME;
+    //private static final String DB_FOLDER = "/data/data/ediger.diarynutrition/databases/";
 
     private static final String TABLE_RECORD = "record";
     private static final String TABLE_FOOD = "food";
     private static final String TABLE_MEAL = "meal";
     private static final String TABLE_DATE = "date";
     private static final String TABLE_WEIGHT = "weight";
+
+    private String dbName;
 
     private DbHelper dbHelper;
     private Context context;
@@ -59,6 +60,13 @@ public class DbDiary {
 
     public DbDiary(Context context) {
         this.context = context;
+
+        if (Locale.getDefault().getLanguage().equals("ru")) {
+            dbName = "diary.db";
+        } else {
+            dbName = "diary_en.db";
+        }
+
         dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
     }
@@ -439,7 +447,7 @@ public class DbDiary {
         private final Context mContext;
 
         public DbHelper(Context context) {
-            super(context, DB_NAME, null, DB_VERSION);
+            super(context, dbName, null, DB_VERSION);
             mContext = context;
             //setForcedUpgrade();
         }

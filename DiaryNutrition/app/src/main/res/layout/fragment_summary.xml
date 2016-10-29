@@ -6,20 +6,20 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:id="@+id/pie_chart_layout">
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart_empty"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:visibility="invisible">
         </lecho.lib.hellocharts.view.PieChartView>
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
-            android:layout_height="200dp" >
+            android:layout_height="150dp" >
         </lecho.lib.hellocharts.view.PieChartView>
 
     </FrameLayout>

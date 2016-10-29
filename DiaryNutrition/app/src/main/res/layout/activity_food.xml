@@ -24,8 +24,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_below="@id/toolbar1" />
+            android:background="@color/colorPrimary" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -33,44 +32,48 @@
             android:layout_height="15dp"
             android:background="@color/colorPrimary"
             android:id="@+id/linearLayout"
-            android:gravity="right"
-            android:layout_below="@+id/tabs">
+            android:gravity="right">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
                 android:id="@+id/info_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
                 android:text="@string/record_carbo"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:gravity="center_horizontal"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
                 android:text="@string/record_prot"
-                android:layout_gravity="right"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:gravity="center_horizontal"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
                 android:text="@string/record_fat"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="30dp" />
+                android:gravity="center_horizontal"
+                 />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/info_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:text="@string/record_cal"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
-                android:layout_marginRight="20dp" />
+                android:gravity="center_horizontal" />
 
         </LinearLayout>
 

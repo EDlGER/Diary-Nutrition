@@ -69,9 +69,6 @@ public class DiaryFragment extends Fragment implements
     private CircularMusicProgressBar pbProt;
     private CircularMusicProgressBar pbFat;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,133 +1,132 @@
 <resources>
     <string name="app_name">Diary Nutrition</string>
-    <string name="act_food">Продукты</string>
+    <string name="app_name_ru"> </string>
+    <string name="act_food">Food</string>
 
-    <string name="action_search">Поиск</string>
+    <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
-    <string name="action_back">Назад</string>
+    <string name="action_back">Back</string>
 
     <string name="ad_app_id">ca-app-pub-2180848868226246~4003747218</string>
     <string name="banner_ad_unit_id">ca-app-pub-2180848868226246/4304798415</string>
     <string name="banner_ad_inter_id">ca-app-pub-2180848868226246/9729746416</string>
 
-    <string name="diary_date_today">Сегодня</string>
-    <string name="diary_header_remain">Осталось</string>
+    <string name="diary_date_today">Today</string>
+    <string name="diary_header_remain">Remaining</string>
 
-    <string name="menu_action_food">Еда</string>
-    <string name="menu_action_weight">Вес</string>
+    <string name="menu_action_food">Food</string>
+    <string name="menu_action_weight">Weight</string>
 
-    <string name="title_sec1">Дневник</string>
-    <string name="title_sec2">Настройки</string>
-    <string name="title_sec3">Котроль веса</string>
-    <string name="title_sec4">Сводка дня</string>
-    <string name="tittle_search">Поиск продукта</string>
+    <string name="title_sec1">Diary</string>
+    <string name="title_sec2">Settings</string>
+    <string name="title_sec3">Weight</string>
+    <string name="title_sec4">Summary</string>
+    <string name="tittle_search">Food search</string>
 
-    <string name="record_card_info1">Запланировано</string>
-    <string name="record_card_info2">Употреблено</string>
+    <string name="food_tab1">Custom</string>
+    <string name="food_tab2">Favorites</string>
 
-    <string name="food_tab1">Добавленные</string>
-    <string name="food_tab2">Избранные</string>
+    <string name="record_carbo">CRB</string>
+    <string name="record_prot">PRT</string>
+    <string name="record_fat">FAT</string>
+    <string name="record_cal">CAL</string>
 
-    <string name="record_carbo">УГЛ</string>
-    <string name="record_prot">БЛК</string>
-    <string name="record_fat">ЖИР</string>
-    <string name="record_cal">ККАЛ</string>
-
-    <string name="weight_week">Неделя</string>
-    <string name="weight_month">Месяц</string>
+    <string name="weight_week">Week</string>
+    <string name="weight_month">Month</string>
     
-    <string name="sum_recommend">Рекомендуется</string>
-    <string name="sum_total">Итого</string>
-    <string name="sum_goal">Цель</string>
+    <string name="sum_recommend">Recommended</string>
+    <string name="sum_total">Total</string>
+    <string name="sum_goal">Goal</string>
 
-    <string name="meal1">Завтрак</string>
-    <string name="meal2">Второй завтрак</string>
-    <string name="meal3">Обед</string>
-    <string name="meal4">Полдник</string>
-    <string name="meal5">Ужин</string>
-    <string name="meal_choose">Выберите прием пищи</string>
+    <string name="meal1">Breakfast</string>
+    <string name="meal2">Lunch</string>
+    <string name="meal3">Dinner</string>
+    <string name="meal4">Afternoon snack</string>
+    <string name="meal5">Supper</string>
+    <string name="meal_choose">Select meal</string>
 
-    <string name="radio_gender_male">Мужской</string>
-    <string name="radio_gender_female">Женский</string>
-    <string name="radio_purpose_lose">Сбросить вес</string>
-    <string name="radio_purpose_hold">Удерживать вес</string>
-    <string name="radio_purpose_gain">Набирать вес</string>
+    <string name="radio_gender_male">Male</string>
+    <string name="radio_gender_female">Female</string>
+    <string name="radio_purpose_lose">Weight loss</string>
+    <string name="radio_purpose_hold">Weight maintenance</string>
+    <string name="radio_purpose_gain">Weight gain</string>
 
-    <string name="dialog_title">Выберите размер порции и время</string>
-    <string name="dialog_cancel">Назад</string>
-    <string name="dialog_add">Добавить</string>
-    <string name="dialog_time">Время</string>
-    <string name="dialog_serv">Порция</string>
-    <string name="dialog_meal">Прием пищи</string>
+    <string name="dialog_cancel">Back</string>
+    <string name="dialog_add">Add</string>
+    <string name="dialog_time">Time</string>
+    <string name="dialog_serv">Serving</string>
+    <string name="dialog_meal">Meal</string>
 
     <string name="dialog_serv_std">100</string>
-    <string name="dialog_change_date">Выбрать</string>
-    <string name="dialog_tittle_date">Выберите дату</string>
+    <string name="dialog_change_date">Select</string>
+    <string name="dialog_tittle_date">Select date</string>
 
-    <string name="dialog_tittle_change">Изменение продукта</string>
-    <string name="dialog_tittle_f">Добавление своего продукта</string>
-    <string name="dialog_tittle_w">Введите Ваш вес</string>
-    <string name="dialog_add_f">Добавить</string>
-    <string name="dialog_cancel_f">Назад</string>
-    <string name="dialog_name_f">Название продукта</string>
-    <string name="dialog_cal_f">Калории</string>
-    <string name="dialog_carbo_f">Углеводы</string>
-    <string name="dialog_prot_f">Белки</string>
-    <string name="dialog_fat_f">Жиры</string>
-    <string name="dialog_weight">Вес</string>
+    <string name="dialog_tittle_change">Food change</string>
+    <string name="dialog_tittle_f">Adding food</string>
+    <string name="dialog_tittle_w">Type your weight, kg</string>
+    <string name="dialog_add_f">Add</string>
+    <string name="dialog_cancel_f">Back</string>
+    <string name="dialog_name_f">Food name</string>
+    <string name="dialog_cal_f">Calories</string>
+    <string name="dialog_carbo_f">Carbohydrates</string>
+    <string name="dialog_prot_f">Proteins</string>
+    <string name="dialog_fat_f">Fats</string>
+    <string name="dialog_weight">Weight</string>
 
-    <string name="empty_list_weight">Добавьте текущий вес</string>
-    <string name="empty_list_food">Нет добавленных продутов</string>
-    <string name="empty_list_favor">Нет избранных продуктов</string>
+    <string name="empty_list_weight">Add current weight</string>
+    <string name="empty_list_food">No food added</string>
+    <string name="empty_list_favor">No favorites food</string>
 
-    <string name="context_menu_del">Удалить</string>
-    <string name="context_menu_change">Изменить</string>
-    <string name="context_menu_favor">В избранное</string>
-    <string name="context_menu_favor_del">Убрать</string>
+    <string name="context_menu_del">Delete</string>
+    <string name="context_menu_change">Change</string>
+    <string name="context_menu_favor">To favorite</string>
+    <string name="context_menu_favor_del">Remove</string>
 
-    <string name="pref_title_user">Личные данные</string>
-    <string name="pref_gender">Пол</string>
-    <string name="pref_birthday">Дата рождения</string>
-    <string name="pref_height">Рост</string>
-    <string name="pref_activity">Активность</string>
-    <string name="pref_purpose">Цель</string>
+    <string name="pref_title_user">Personal data</string>
+    <string name="pref_gender">Gender</string>
+    <string name="pref_birthday">Birthday</string>
+    <string name="pref_height">Height</string>
+    <string name="pref_activity">Activity</string>
+    <string name="pref_purpose">Goal</string>
 
-    <string name="intro_done">Готово</string>
-    <string name="intro_title">Программа питания</string>
-    <string name="intro_gender">Выберите пол</string>
-    <string name="intro_birthday">День рождения</string>
-    <string name="intro_height">Ваш рост (см)</string>
-    <string name="intro_height_error">Введите Ваш рост</string>
-    <string name="intro_weight">Ваш вес (кг)</string>
-    <string name="intro_weight_error">Введите Ваш вес</string>
-    <string name="intro_activity_1">Офисная работа, длительное пребывание в сидячем положении,
-        минимальное количество движения, нет занятий спортом</string>
-    <string name="intro_activity_2">Недолгое пребываение в стоячем положении, недлительная ходьба или
-        легкие занятия спортом 1-2 раза в неделю</string>
-    <string name="intro_activity_3">Длительное пребывание в стоячем положении, небольшая физическая работа или
-        умеренные занятия спортом 2-3 раза в неделю</string>
-    <string name="intro_activity_4">Тяжелая физическая работа или интенсивные занятия спортом более 3 раз в неделю</string>
-    <string name="intro_purpose">Выберите вашу цель</string>
-    <string name="intro_nutrition_cal">ккал</string>
-    <string name="intro_nutrition_consume">Вам необходимо потреблять</string>
-    <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
+    <string name="intro_done">Done</string>
+    <string name="intro_title">Nutrition program</string>
+    <string name="intro_gender">Choose gender</string>
+    <string name="intro_birthday">Birthday</string>
+    <string name="intro_height">Height, cm</string>
+    <string name="intro_height_error">Type your height</string>
+    <string name="intro_weight">Weight, kg</string>
+    <string name="intro_weight_error">Type your weight</string>
+    <string name="intro_activity">What is your activity?</string>
+    <string name="intro_activity_name_1">Sedentary</string>
+    <string name="intro_activity_name_2">Lightly Active</string>
+    <string name="intro_activity_name_3">Moderately Active</string>
+    <string name="intro_activity_name_4">Very Active</string>
+    <string name="intro_activity_1">Little or no exercise</string>
+    <string name="intro_activity_2">Light exercise or sport 1—3 days per week</string>
+    <string name="intro_activity_3">Moderate exercise or sport 3 – 5 days per week</string>
+    <string name="intro_activity_4">Hard exercise or sport 6 – 7 days per week</string>
+    <string name="intro_purpose">Choose your goal</string>
+    <string name="intro_nutrition_cal">kcal</string>
+    <string name="intro_nutrition_consume">You should consume</string>
+    <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
     
-    <string name="message_serving">Количество порции не введено</string>
-    <string name="message_favorite">Добавлено в избранное</string>
-    <string name="message_dialog_food_empty">Не все поля заполнены</string>
-    <string name="message_dialog_food_point">Одно или несколько полей содежат неправильный формат числа</string>
-    <string name="message_dialog_weight">Вес не введен</string>
+    <string name="message_serving">Serving size is not entered</string>
+    <string name="message_favorite">Added to favorite</string>
+    <string name="message_dialog_food_empty">Not all fields are filled</string>
+    <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
+    <string name="message_dialog_weight">Weight is not entered</string>
     
-    <string name="tab_database">База данных</string>
-    <string name="tab_user">Добавленные</string>
-    <string name="tab_favorite">Избранные</string>
+    <string name="tab_database">Database</string>
+    <string name="tab_user">Custom</string>
+    <string name="tab_favorite">Favorites</string>
 
-    <string name="add_rec_gram1">г</string>
-    <string name="add_rec_gram100">100г</string>
+    <string name="add_rec_gram1">g</string>
+    <string name="add_rec_gram100">100g</string>
 
-    <string name="add_food">Добавить продукт</string>
+    <string name="add_food">Add food</string>
 
-    <string name="elv_gram"> г</string>
+    <string name="elv_gram"> g</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -142,8 +141,8 @@
     </string-array>
 
     <string-array name="pref_gender_array">
-        <item>Мужской</item>
-        <item>Женский</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 
     <string-array name="pref_gender_values">
@@ -152,10 +151,10 @@
     </string-array>
 
     <string-array name="pref_activity_array">
-        <item>Сидячий</item>
-        <item>Малоактивный</item>
-        <item>Активный</item>
-        <item>Очень активный</item>
+        <item>Sedentary</item>
+        <item>Lightly Active</item>
+        <item>Moderately Active</item>
+        <item>Very Active</item>
     </string-array>
 
     <string-array name="pref_activity_values">
@@ -166,9 +165,9 @@
     </string-array>
 
     <string-array name="pref_purpose_array">
-        <item>Сбросить вес</item>
-        <item>Поддерживать вес</item>
-        <item>Набрать вес</item>
+        <item>Weight loss</item>
+        <item>Weight maintenance</item>
+        <item>Weight gain</item>
     </string-array>
 
     <string-array name="pref_purpose_values">
