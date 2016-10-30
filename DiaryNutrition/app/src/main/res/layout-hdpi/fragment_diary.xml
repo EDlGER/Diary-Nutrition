@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contentFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:elevation="5dp">
+
+        <RelativeLayout
+            android:id="@+id/consume_layout"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/diary_header"
+            android:elevation="7dp">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="4dp"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/consCal"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="9999"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:singleLine="true" />
+
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_cal"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="66dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/consFat"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:singleLine="true" />
+
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_fat"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="116dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/consProt"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:singleLine="true" />
+
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_prot"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="166dp"
+                android:layout_marginTop="6dp"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/consCarbo"
+                    android:layout_width="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    android:gravity="center" />
+
+                <info.abdolahi.CircularMusicProgressBar
+                    android:id="@+id/pb_carbo"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/background_material_2"
+                    app:border_color="#bdbdbd"
+                    app:border_width="2dp"
+                    app:centercircle_diammterer="0"
+                    app:progress_color="@color/colorAccentPressed"
+                    app:progress_startAngle="270" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="8dp"
+                android:layout_centerVertical="true"
+                android:text="@string/diary_header_remain"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/info_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
+                android:text="@string/record_carbo"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/info_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="18dp"
+                android:text="@string/record_prot"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/info_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:text="@string/record_fat"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/info_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="@string/record_cal"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/listRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/header_layout"
+        android:background="@color/listview_background"
+        android:longClickable="true"
+        android:divider="@android:color/transparent" />
+
+</RelativeLayout>

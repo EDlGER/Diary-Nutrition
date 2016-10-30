@@ -39,10 +39,10 @@
     <string name="sum_goal">Goal</string>
 
     <string name="meal1">Breakfast</string>
-    <string name="meal2">Lunch</string>
-    <string name="meal3">Dinner</string>
-    <string name="meal4">Afternoon snack</string>
-    <string name="meal5">Supper</string>
+    <string name="meal2">Second breakfast</string>
+    <string name="meal3">Lunch</string>
+    <string name="meal4">Dinner</string>
+    <string name="meal5">Snacks</string>
     <string name="meal_choose">Select meal</string>
 
     <string name="radio_gender_male">Male</string>
