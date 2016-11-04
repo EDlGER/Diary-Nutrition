@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/consCal"
-                    android:layout_width="36dp"
+                    android:layout_width="44dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="9999"
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="12dp"
                 android:layout_centerVertical="true"
                 android:text="@string/diary_header_remain"
                 android:textSize="15sp"

@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="125dp"
         android:background="@drawable/background_material_2">
     </LinearLayout>
 
@@ -30,64 +30,73 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F5F5F5"
-        android:padding="32dp">
+        android:background="#F5F5F5">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_activity"
-            android:textSize="16sp"
-            android:paddingBottom="16dp"/>
-
-        <RadioGroup
-            android:id="@+id/rg_activity"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_activity1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/intro_activity_name_1"
-                android:textSize="16sp"
-                android:checked="true"/>
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_activity2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/intro_activity_name_2"
-                android:textSize="16sp"/>
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_activity3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/intro_activity_name_3"
-                android:textSize="16sp"/>
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/rb_activity4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/intro_activity_name_4"
-                android:textSize="16sp"/>
-
-        </RadioGroup>
-
-        <TextView
-            android:id="@+id/activity_info"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Описание образа жизни" />
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/intro_activity"
+                android:textSize="16sp"
+                android:paddingBottom="16dp"/>
+
+            <RadioGroup
+                android:id="@+id/rg_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_activity1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/intro_activity_name_1"
+                    android:textSize="16sp"
+                    android:checked="true"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_activity2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/intro_activity_name_2"
+                    android:textSize="16sp"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_activity3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/intro_activity_name_3"
+                    android:textSize="16sp"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    android:id="@+id/rb_activity4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/intro_activity_name_4"
+                    android:textSize="16sp"/>
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/activity_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Описание образа жизни" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

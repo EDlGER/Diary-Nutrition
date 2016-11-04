@@ -12,14 +12,14 @@
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart_empty"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:visibility="invisible">
         </lecho.lib.hellocharts.view.PieChartView>
 
         <lecho.lib.hellocharts.view.PieChartView
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
-            android:layout_height="150dp" >
+            android:layout_height="wrap_content" >
         </lecho.lib.hellocharts.view.PieChartView>
 
     </FrameLayout>
@@ -144,181 +144,199 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"/>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sum_goal"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="22dp"
-            android:textSize="12sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sum_total"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="118dp"
-            android:textSize="12sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
 
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sum_goal"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="22dp"
+                    android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_cal_f"
-            android:textColor="#ff212121"
-            android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sum_total"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="118dp"
+                    android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sum_cal"
-            android:text="9999.9"
-            android:textSize="16sp"
-            android:textColor="#ff212121"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="85dp"
-            android:gravity="center"/>
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_pur_cal"
-            android:text="9999"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_cal_f"
+                    android:textColor="#ff212121"
+                    android:textSize="16sp"/>
 
+                <TextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_cal"
+                    android:text="9999.9"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_cal"
+                    android:text="9999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_carbo_f"
-            android:textColor="#ff212121"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sum_carbo"
-            android:text="999.9"
-            android:textSize="16sp"
-            android:textColor="#ff212121"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="85dp"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_pur_carbo"
-            android:text="999"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
-
-    </RelativeLayout>
+            </RelativeLayout>
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_prot_f"
-            android:textColor="#ff212121"
-            android:textSize="16sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_carbo_f"
+                    android:textColor="#ff212121"
+                    android:textSize="16sp"/>
 
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sum_prot"
-            android:text="999"
-            android:textSize="16sp"
-            android:textColor="#ff212121"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="85dp"
-            android:gravity="center"/>
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_carbo"
+                    android:text="999.9"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
 
-        <TextView
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_pur_prot"
-            android:text="999"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_carbo"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dialog_fat_f"
-            android:textColor="@android:color/background_dark"
-            android:textSize="16sp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_sum_fat"
-            android:text="999"
-            android:textSize="16sp"
-            android:textColor="#ff212121"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="85dp"
-            android:gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_prot_f"
+                    android:textColor="#ff212121"
+                    android:textSize="16sp"/>
 
-        <TextView
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_pur_fat"
-            android:text="999"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_prot"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_prot"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_fat_f"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_fat"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_fat"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
 
 </LinearLayout>

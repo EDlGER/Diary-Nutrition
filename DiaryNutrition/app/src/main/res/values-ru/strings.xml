@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Diary Nutrition</string>
+    <string name="app_name">DiaryNutrition</string>
     <string name="app_name_ru">Дневник питания</string>
     <string name="act_food">Продукты</string>
 
