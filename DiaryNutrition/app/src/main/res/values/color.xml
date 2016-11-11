@@ -7,7 +7,7 @@
     <color name="colorAccent">#ffa000</color>
     <color name="colorAccentPressed">#ff8f00</color>
     <color name="tabsScrollColor">#004D40</color>
-    <color name="cardview_initial_background">#FFFFFF</color>
+    <color name="layout_standart_background">#FAFAFA</color>
     <color name="listview_background">#EEEEEE</color>
     <color name="listview_second_text">#757575</color>
 

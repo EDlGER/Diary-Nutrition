@@ -110,7 +110,8 @@
     <string name="intro_nutrition_cal">kcal</string>
     <string name="intro_nutrition_consume">You should consume</string>
     <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
-    
+
+    <string name="message_backpress">Press back again to exit</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_favorite">Added to favorite</string>
     <string name="message_dialog_food_empty">Not all fields are filled</string>

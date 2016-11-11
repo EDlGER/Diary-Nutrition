@@ -30,6 +30,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -66,8 +68,10 @@ public class MainActivity extends AppCompatActivity
     private static String PREF_FIRST_RUN = "first_run";
 
     private boolean isExpanded = false;
+    private long lastBackPress;
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
+    private Toast backPressToast;
 
 
 
@@ -241,11 +245,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (currentTime - lastBackPress > 3000) {
+                backPressToast = Toast.makeText(getBaseContext(), R.string.message_backpress,
+                        Toast.LENGTH_LONG);
+                backPressToast.show();
+                lastBackPress = currentTime;
+            } else {
+                if (backPressToast != null) backPressToast.cancel();
+                super.onBackPressed();
+            }
         }
     }
 

@@ -306,49 +306,21 @@ public class DiaryFragment extends Fragment implements
         if (cursor.moveToFirst()) {
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
             rem = targetCal - res;
-            if (rem < 0) {
-                rem = 0;
-                consCal.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-            } else {
-                consCal.setTextColor(Color.parseColor("#000000"));
-                consCal.setAlpha(0.54f);
-            }
             consCal.setText(Integer.toString(rem));
             pbCal.setValue(res * 100 / targetCal);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO));
             rem = targetCarbo - res;
-            if (rem < 0) {
-                rem = 0;
-                consCarbo.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-            } else {
-                consCarbo.setTextColor(Color.parseColor("#000000"));
-                consCarbo.setAlpha(0.54f);
-            }
             consCarbo.setText(Integer.toString(rem));
             pbCarbo.setValue(res * 100 / targetCarbo);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT));
             rem = targetProt - res;
-            if (rem < 0) {
-                rem = 0;
-                consProt.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-            } else {
-                consProt.setTextColor(Color.parseColor("#000000"));
-                consProt.setAlpha(0.54f);
-            }
             consProt.setText(Integer.toString(rem));
             pbProt.setValue(res * 100 / targetProt);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT));
             rem = targetFat - res;
-            if (rem < 0) {
-                rem = 0;
-                consFat.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-            } else {
-                consFat.setTextColor(Color.parseColor("#000000"));
-                consFat.setAlpha(0.54f);
-            }
             consFat.setText(Integer.toString(rem));
             pbFat.setValue(res * 100 / targetFat);
 

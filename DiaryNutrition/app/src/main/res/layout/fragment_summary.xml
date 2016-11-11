@@ -1,184 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:background="@color/listview_background">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/pie_chart_layout">
-
-        <lecho.lib.hellocharts.view.PieChartView
-            android:id="@+id/pie_chart_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible">
-        </lecho.lib.hellocharts.view.PieChartView>
-
-        <lecho.lib.hellocharts.view.PieChartView
-            android:id="@+id/pie_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </lecho.lib.hellocharts.view.PieChartView>
-
-    </FrameLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="32dp"
-            android:paddingBottom="16dp">
+            android:background="@color/layout_standart_background"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:elevation="2dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/pie_chart_layout">
+
+                <lecho.lib.hellocharts.view.PieChartView
+                    android:id="@+id/pie_chart_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible">
+                </lecho.lib.hellocharts.view.PieChartView>
+
+                <lecho.lib.hellocharts.view.PieChartView
+                    android:id="@+id/pie_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </lecho.lib.hellocharts.view.PieChartView>
+
+            </FrameLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/pie_chart_orange"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_carbo_f"
-                    android:layout_marginLeft="32dp"/>
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:paddingBottom="16dp">
 
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@color/pie_chart_orange"/>
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/pie_chart_green"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_carbo_f"
+                            android:layout_marginLeft="32dp"/>
 
-                <TextView
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@color/pie_chart_green"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_prot_f"
+                            android:layout_marginLeft="32dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@color/pie_chart_red"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_fat_f"
+                            android:layout_marginLeft="32dp"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_prot_f"
-                    android:layout_marginLeft="32dp"/>
+                    android:orientation="vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="32dp">
 
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="@string/sum_recommend" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_carbo_rec"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@android:color/background_dark"
+                        android:text="50%"
+                        android:layout_gravity="center_horizontal" />
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/pie_chart_red"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_prot_rec"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@android:color/background_dark"
+                        android:text="25%"
+                        android:layout_gravity="center_horizontal" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dialog_fat_f"
-                    android:layout_marginLeft="32dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_fat_rec"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@android:color/background_dark"
+                        android:text="25%"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="32dp">
+            android:layout_marginTop="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="@string/sum_recommend" />
+                android:text="@string/sum_goal"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="22dp"
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_carbo_rec"
-                android:layout_marginTop="2dp"
-                android:textColor="@android:color/background_dark"
-                android:text="50%"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/sum_total"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="118dp"
+                android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_prot_rec"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/background_dark"
-                android:text="25%"
-                android:layout_gravity="center_horizontal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_fat_rec"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/background_dark"
-                android:text="25%"
-                android:layout_gravity="center_horizontal" />
-
-
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
-    
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sum_goal"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="22dp"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sum_total"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="118dp"
-                    android:textSize="12sp" />
-
-            </RelativeLayout>
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            android:background="@color/layout_standart_background"
+            android:elevation="2dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -333,10 +338,10 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
+    </LinearLayout>
 
-    </ScrollView>
-
-
-
-</LinearLayout>
+</ScrollView>
