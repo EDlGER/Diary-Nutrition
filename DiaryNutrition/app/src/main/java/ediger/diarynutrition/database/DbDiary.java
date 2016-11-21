@@ -2,6 +2,7 @@ package ediger.diarynutrition.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -128,6 +129,18 @@ public class DbDiary {
                 + " (r.[meal_id] = ?) "
                 + " order by r.record_datetime asc";
         return db.rawQuery(sql, new String[]{arg1, arg2, arg3});
+    }
+
+    public Cursor getRecordById(long recordId) {
+        String arg1 = Long.toString(recordId);
+        String sql = "select "
+                + "r.serving as " + ALIAS_SERVING
+                + ",r.record_datetime as " + ALIAS_RECORD_DATETIME
+                + ",r.meal_id as " + ALIAS_MEAL_ID
+                + ",r.food_id as " + ALIAS_FOOD_ID
+                + " from record r "
+                + " where r._id = ?";
+        return db.rawQuery(sql, new String[]{arg1});
     }
 
     public Cursor getAllWeight() {
@@ -264,8 +277,8 @@ public class DbDiary {
     }
 
     public Cursor getFood(long id) {
-        String[] selections = {ALIAS_FOOD_NAME,ALIAS_CAL,ALIAS_CARBO,ALIAS_PROT,ALIAS_FAT};
-        return db.query(TABLE_FOOD,selections,ALIAS_ID + "=" + id,null,null,null,null);
+        String[] selections = {ALIAS_FOOD_NAME, ALIAS_CAL, ALIAS_CARBO, ALIAS_PROT, ALIAS_FAT};
+        return db.query(TABLE_FOOD, selections, ALIAS_ID + "=" + id, null, null, null, null);
     }
 
     public String[] getListFood() {
@@ -374,6 +387,15 @@ public class DbDiary {
         usr.close();
     }
 
+    public void editRec(long recordId, long foodId, int serving,long datetime, int mealId) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_FOOD_ID, foodId);
+        cv.put(ALIAS_SERVING, serving);
+        cv.put(ALIAS_RECORD_DATETIME, datetime);
+        cv.put(ALIAS_MEAL_ID, mealId);
+        String where = ALIAS_ID + "=" + recordId;
+        db.update(TABLE_RECORD, cv, where, null);
+    }
 
     public void addFood(String name, float cal, float carbo,
                         float prot, float fat) {

@@ -148,7 +148,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, 4, 0, R.string.context_menu_del);
+        menu.add(0, 4, 0, R.string.context_menu_favor_del);
     }
 
     @Override

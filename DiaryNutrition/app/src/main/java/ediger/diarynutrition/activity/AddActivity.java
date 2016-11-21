@@ -40,10 +40,17 @@ public class AddActivity extends AppCompatActivity {
 
     private int mealId = 1;
     private int gram = 1;
+    private int serving = 100;
+
+    //Нужны для TimePickerDialog
     private int hour;
     private int min;
+
     private long foodId;
     private long date;
+    private long recordId;
+
+    private Cursor cursor;
 
     private TextView cal;
     private TextView carbo;
@@ -97,43 +104,72 @@ public class AddActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        final Intent intent = getIntent();
+        recordId = intent.getLongExtra("recordId", -1);
+
+        //Если вызов от FoodActivity
+        if (recordId == -1) {
+            foodId = intent.getLongExtra("FoodId", 0);
+
+            cursor = AppContext.getDbDiary().getDate();
+            cursor.moveToFirst();
+            date = cursor.getLong(0);
+            cursor.close();
+
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE);
+
+            if (0 <= hour && hour < 10) radioMeal.check(R.id.rb_meal1);
+            if (9 < hour && hour < 12) radioMeal.check(R.id.rb_meal2);
+            if (11 < hour && hour < 15) radioMeal.check(R.id.rb_meal3);
+            if (14 < hour && hour < 18) radioMeal.check(R.id.rb_meal4);
+            if (17 < hour && hour < 24) radioMeal.check(R.id.rb_meal5);
+
+            calendar.setTimeInMillis(date);
+            calendar.set(calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH),
+                    hour, min);
+            txtTime.setText(timeFormatter.format(calendar.getTime()));
+            date = calendar.getTimeInMillis();
+            //Если вызов от DiaryFragment
+        } else {
+            int[] meal = {
+                    R.id.rb_meal1,
+                    R.id.rb_meal2,
+                    R.id.rb_meal3,
+                    R.id.rb_meal4,
+                    R.id.rb_meal5
+            };
+
+            cursor = AppContext.getDbDiary().getRecordById(recordId);
+            cursor.moveToFirst();
+            foodId = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_ID));
+
+            serving = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SERVING));
+            date = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_RECORD_DATETIME));
+            calendar.setTimeInMillis(date);
+            hour = calendar.get(Calendar.HOUR_OF_DAY);
+            min = calendar.get(Calendar.MINUTE);
+
+            txtTime.setText(timeFormatter.format(calendar.getTime()));
+
+            mealId = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_MEAL_ID));
+            radioMeal.check(meal[mealId - 1]);
+            cursor.close();
+        }
+
         //Title
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.title_text);
-        final Intent intent = getIntent();
-        foodId = intent.getLongExtra("FoodId", 0);
-        Cursor cursor = AppContext.getDbDiary().getNameFood(foodId);
+        cursor = AppContext.getDbDiary().getNameFood(foodId);
         cursor.moveToFirst();
         String title = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
-        getSupportActionBar().setTitle(title);
-
-
-        //Date
-        cursor = AppContext.getDbDiary().getDate();
-        cursor.moveToFirst();
-        date = cursor.getLong(0);
         cursor.close();
-
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        min = calendar.get(Calendar.MINUTE);
-
-        if (0 <= hour && hour < 10) radioMeal.check(R.id.rb_meal1);
-        if (9 < hour && hour < 12) radioMeal.check(R.id.rb_meal2);
-        if (11 < hour && hour < 15) radioMeal.check(R.id.rb_meal3);
-        if (14 < hour && hour < 18) radioMeal.check(R.id.rb_meal4);
-        if (17 < hour && hour < 24) radioMeal.check(R.id.rb_meal5);
+        getSupportActionBar().setTitle(title);
 
         AppCompatRadioButton checkedButton = (AppCompatRadioButton)
                 radioMeal.findViewById(radioMeal.getCheckedRadioButtonId());
         mealId = radioMeal.indexOfChild(checkedButton) + 1;
-
-        calendar.setTimeInMillis(date);
-        calendar.set(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                hour, min);
-        txtTime.setText(timeFormatter.format(calendar.getTime()));
-        date = calendar.getTimeInMillis();
-
 
         txtTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +183,8 @@ public class AddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     gram = 1;
-                    txtServ.setText("100");
+                    //Установить размер порции по умолчанию
+                    txtServ.setText(String.valueOf(serving));
                     txtServ.setFilters(new InputFilter[] {new InputFilter.LengthFilter(3)});
                     setInfo();
                 } else if (position == 1) {
@@ -182,9 +219,16 @@ public class AddActivity extends AppCompatActivity {
                 if (txtServ.getText().toString().matches("")) {
                     Snackbar.make(v, getString(R.string.message_serving), Snackbar.LENGTH_SHORT).show();
                 } else {
-                    AppContext.getDbDiary().addRec(foodId,
-                            Integer.parseInt(txtServ.getText().toString()) * gram,
-                            date, mealId);
+                    if (recordId == -1) {
+                        AppContext.getDbDiary().addRec(foodId,
+                                Integer.parseInt(txtServ.getText().toString()) * gram,
+                                date, mealId);
+                    } else {
+                        AppContext.getDbDiary().editRec(recordId, foodId,
+                                Integer.parseInt(txtServ.getText().toString()) * gram,
+                                date, mealId);
+                    }
+
                     calendar.set(calendar.get(Calendar.YEAR),
                             calendar.get(Calendar.MONTH),
                             calendar.get(Calendar.DAY_OF_MONTH), 0, 0);
@@ -194,7 +238,6 @@ public class AddActivity extends AppCompatActivity {
 
                     Intent intent1 = new Intent(AddActivity.this, MainActivity.class);
                     intent1.putExtra("date", date);
-                    intent1.putExtra("ad", true);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent1);
                 }

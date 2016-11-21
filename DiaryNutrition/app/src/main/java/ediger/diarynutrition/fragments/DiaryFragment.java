@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.activity.FoodActivity;
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
@@ -257,18 +258,20 @@ public class DiaryFragment extends Fragment implements
         // Show context menu for childs
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
             menu.add(0, 3, 0, R.string.context_menu_del);
+            menu.add(0, 4, 0, R.string.context_menu_change);
         }
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
+                ExpandableListContextMenuInfo) item.getMenuInfo();
+        int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+        Cursor child = this.recordAdapter.getChild(groupPos, childPos);
+        long id = child.getLong(0);
+
         if(item.getItemId() == 3) {
-            ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
-                    ExpandableListContextMenuInfo) item.getMenuInfo();
-            int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-            int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
-            Cursor child = this.recordAdapter.getChild(groupPos, childPos);
-            long id = child.getLong(0);
             AppContext.getDbDiary().delRec(id);
 
             listRecord.collapseGroup(groupPos);
@@ -276,6 +279,11 @@ public class DiaryFragment extends Fragment implements
 
             setHeaderData();
 
+            return true;
+        } else if (item.getItemId() == 4) {
+            Intent intent = new Intent(getActivity(), AddActivity.class);
+            intent.putExtra("recordId", id);
+            startActivity(intent);
             return true;
         }
         return super.onContextItemSelected(item);
