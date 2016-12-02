@@ -2,6 +2,7 @@ package ediger.diarynutrition.fragments;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -29,7 +30,7 @@ import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.PieChartView;
 
-public class SummaryFragment extends Fragment {
+public class SummaryDayFragment extends Fragment {
     View rootview;
 
     private long date;
@@ -63,7 +64,7 @@ public class SummaryFragment extends Fragment {
 
         Calendar now = Calendar.getInstance();
 
-        rootview = inflater.inflate(R.layout.fragment_summary,container,false);
+        rootview = inflater.inflate(R.layout.fragment_summary_day,container,false);
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 

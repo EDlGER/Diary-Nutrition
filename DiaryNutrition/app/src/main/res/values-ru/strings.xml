@@ -20,7 +20,7 @@
     <string name="title_sec1">Дневник</string>
     <string name="title_sec2">Настройки</string>
     <string name="title_sec3">Вес</string>
-    <string name="title_sec4">Сводка дня</string>
+    <string name="title_sec4">Сводка</string>
     <string name="tittle_search">Поиск продукта</string>
 
     <string name="food_tab1">Добавленные</string>
@@ -179,5 +179,6 @@
     <string name="intro_activity_name_4">Очень активный</string>
     <string name="intro_activity">Какой Ваш образ жизни?</string>
     <string name="message_backpress">Нажмите еще раз для выхода</string>
+    <string name="macronutrients">Макронутриенты</string>
 
 </resources>

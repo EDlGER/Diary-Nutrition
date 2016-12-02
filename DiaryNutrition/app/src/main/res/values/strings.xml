@@ -111,6 +111,8 @@
     <string name="intro_nutrition_consume">You should consume</string>
     <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
 
+    <string name="macronutrients">Macronutrients</string>
+
     <string name="message_backpress">Press back again to exit</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_favorite">Added to favorite</string>
@@ -121,6 +123,8 @@
     <string name="tab_database">Database</string>
     <string name="tab_user">Custom</string>
     <string name="tab_favorite">Favorites</string>
+    <string name="tab_day">День</string>
+    <string name="tab_week">Неделя</string>
 
     <string name="add_rec_gram1">g</string>
     <string name="add_rec_gram100">100g</string>

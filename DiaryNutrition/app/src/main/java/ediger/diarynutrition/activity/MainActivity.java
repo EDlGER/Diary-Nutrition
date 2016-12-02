@@ -3,7 +3,7 @@ package ediger.diarynutrition.activity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
-import ediger.diarynutrition.fragments.SummaryFragment;
+import ediger.diarynutrition.fragments.SummaryMainFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
@@ -38,8 +38,6 @@ import java.util.Locale;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity
@@ -290,9 +288,10 @@ public class MainActivity extends AppCompatActivity
                 setTitle(getString(R.string.title_sec3));
                 break;
             case R.id.nav_stat:
-                fragment = new SummaryFragment();
+                //fragment = new SummaryDayFragment();
+                fragment = new SummaryMainFragment();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    mAppBarLayout.setElevation(4);
+                    mAppBarLayout.setElevation(0);
                 }
                 setTitle(getString(R.string.title_sec4));
                 break;
