@@ -99,6 +99,7 @@ public class DbDiary {
                 + ",sum(f.[carbo]/100*r.[serving]) as " +ALIAS_CARBO
                 + ",sum(f.[prot]/100*r.[serving]) as " +ALIAS_PROT
                 + ",sum(f.[fat]/100*r.[serving]) as " +ALIAS_FAT
+                + ",sum(r.serving) as " + ALIAS_SERVING
                 + " FROM record r"
                 + " inner join food f on r.food_id=f._id"
                 + " where r.record_datetime between ? and ?"

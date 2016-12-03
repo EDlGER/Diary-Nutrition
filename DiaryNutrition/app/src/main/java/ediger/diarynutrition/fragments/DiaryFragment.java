@@ -123,7 +123,8 @@ public class DiaryFragment extends Fragment implements
                 R.id.txtGroupCal,
                 R.id.txtGroupCarbo,
                 R.id.txtGroupProt,
-                R.id.txtGroupFat
+                R.id.txtGroupFat,
+                R.id.txtGroupServ
         };
         String[] groupFrom = AppContext.getDbDiary().getListMeal();
         int[] childTo = {

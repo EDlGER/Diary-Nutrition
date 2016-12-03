@@ -35,16 +35,6 @@
             android:gravity="right">
 
             <TextView
-                android:id="@+id/info_carbo"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:text="@string/record_carbo"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
-
-            <TextView
                 android:id="@+id/info_prot"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
@@ -58,8 +48,18 @@
                 android:id="@+id/info_fat"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="15dp"
                 android:text="@string/record_fat"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/info_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="@string/record_carbo"
                 android:textSize="12sp"
                 android:textColor="#FFFFFF"
                 android:gravity="center_horizontal"

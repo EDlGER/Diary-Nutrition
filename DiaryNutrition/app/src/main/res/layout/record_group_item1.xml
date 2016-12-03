@@ -39,6 +39,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txtGroupProt"
+            android:layout_alignLeft="@+id/txt_meal"
+            android:layout_alignStart="@+id/txt_meal"
+            android:text="200 g"
+            android:textSize="12sp"
+            android:id="@+id/txtGroupServ" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="350"
             android:id="@+id/txtGroupCal"
             android:textColor="@color/colorPrimary"
@@ -52,12 +62,12 @@
             android:layout_height="wrap_content"
             android:text="4"
             android:textColor="@color/listview_second_text"
-            android:id="@+id/txtGroupFat"
+            android:id="@+id/txtGroupCarbo"
             android:textSize="16sp"
             android:maxLength="5"
             android:layout_alignLeft="@+id/view"
             android:layout_alignStart="@+id/view"
-            android:layout_alignTop="@+id/txtGroupProt"
+            android:layout_alignTop="@+id/txtGroupFat"
             android:layout_marginLeft="5dp"
              />
 
@@ -76,15 +86,15 @@
             android:layout_height="wrap_content"
             android:text="99999"
             android:textColor="@color/listview_second_text"
-            android:id="@+id/txtGroupProt"
+            android:id="@+id/txtGroupFat"
             android:textSize="16sp"
             android:maxLength="5"
-            android:layout_alignTop="@+id/txtGroupCarbo"
+            android:layout_alignTop="@+id/txtGroupProt"
             android:layout_alignLeft="@+id/view2"
             android:layout_alignStart="@+id/view2"
             android:layout_marginLeft="5dp"
-            android:layout_toLeftOf="@+id/txtGroupFat"
-            android:layout_toStartOf="@+id/txtGroupFat"
+            android:layout_toLeftOf="@+id/txtGroupCarbo"
+            android:layout_toStartOf="@+id/txtGroupCarbo"
             android:gravity="center_horizontal" />
 
         <View
@@ -102,7 +112,7 @@
             android:layout_height="wrap_content"
             android:text="99999"
             android:textColor="@color/listview_second_text"
-            android:id="@+id/txtGroupCarbo"
+            android:id="@+id/txtGroupProt"
             android:textSize="16sp"
             android:layout_alignParentRight="false"
             android:layout_alignParentEnd="false"
@@ -117,6 +127,8 @@
             android:id="@+id/child_divider"
             android:background="?android:attr/listDivider"
             android:layout_marginTop="46dp" />
+
+
 
     </RelativeLayout>
 

@@ -56,24 +56,6 @@
                         <View
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:background="@color/chart_orange"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/dialog_carbo_f"
-                            android:layout_marginLeft="32dp"/>
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp">
-
-                        <View
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
                             android:background="@color/chart_green"/>
 
                         <TextView
@@ -102,6 +84,24 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <View
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:background="@color/chart_orange"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_carbo_f"
+                            android:layout_marginLeft="32dp"/>
+
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -120,17 +120,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txt_carbo_rec"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@android:color/background_dark"
-                        android:text="50%"
-                        android:layout_gravity="center_horizontal" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:id="@+id/txt_prot_rec"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:textColor="@android:color/background_dark"
                         android:text="25%"
                         android:layout_gravity="center_horizontal" />
@@ -142,6 +133,15 @@
                         android:layout_marginTop="4dp"
                         android:textColor="@android:color/background_dark"
                         android:text="25%"
+                        android:layout_gravity="center_horizontal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_carbo_rec"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@android:color/background_dark"
+                        android:text="50%"
                         android:layout_gravity="center_horizontal" />
 
                 </LinearLayout>
@@ -234,44 +234,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_carbo_f"
-                    android:textColor="#ff212121"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_sum_carbo"
-                    android:text="999.9"
-                    android:textSize="16sp"
-                    android:textColor="#ff212121"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="85dp"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_pur_carbo"
-                    android:text="999"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center"/>
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/dialog_prot_f"
                     android:textColor="#ff212121"
                     android:textSize="16sp"/>
@@ -280,7 +242,7 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_sum_prot"
-                    android:text="999"
+                    android:text="999.9"
                     android:textSize="16sp"
                     android:textColor="#ff212121"
                     android:layout_alignParentRight="true"
@@ -299,6 +261,7 @@
 
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -310,7 +273,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_fat_f"
-                    android:textColor="@android:color/background_dark"
+                    android:textColor="#ff212121"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -328,6 +291,43 @@
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_pur_fat"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_carbo_f"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_carbo"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_carbo"
                     android:text="999"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"

@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,8 +44,10 @@ public class SummaryWeekFragment extends Fragment {
 
     /** Параметры графика */
     private int numberOfColumns = 7;
+    private boolean hasLabels = false;
 
     private Calendar calendar = Calendar.getInstance();
+    private AppCompatSpinner weekChange;
 
     private ColumnChartView chartCal;
     private ColumnChartView chartMacro;
@@ -56,6 +61,7 @@ public class SummaryWeekFragment extends Fragment {
 
         chartCal = (ColumnChartView) rootview.findViewById(R.id.week_chart_cal);
         chartMacro = (ColumnChartView) rootview.findViewById(R.id.week_chart_macro);
+        weekChange = (AppCompatSpinner) rootview.findViewById(R.id.sp_week_change);
 
         //Получение первого дня текущей недели
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -65,9 +71,50 @@ public class SummaryWeekFragment extends Fragment {
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
 
         firstWeekDay = calendar.getTimeInMillis();
+        final Calendar firstDayOfWeek = (Calendar) calendar.clone();
+        Calendar lastDayOfWeek = (Calendar) calendar.clone();
+        lastDayOfWeek.add(Calendar.DATE, 6);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMM", Locale.getDefault());
+        String[] values = new String[4];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = dateFormat.format(firstDayOfWeek.getTime()) + " - " + dateFormat.format(lastDayOfWeek.getTime());
+            firstDayOfWeek.add(Calendar.DATE, -7);
+            lastDayOfWeek.add(Calendar.DATE, -7);
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item, values);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weekChange.setAdapter(adapter);
+
+        weekChange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Calendar c = (Calendar) calendar.clone();
+                c.add(Calendar.WEEK_OF_YEAR, position * -1);
+                firstWeekDay = c.getTimeInMillis();
+                generateCalData();
+                generateMacroData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         generateCalData();
         generateMacroData();
+
+        chartCal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasLabels = !hasLabels;
+                generateCalData();
+                generateMacroData();
+            }
+        });
 
         return rootview;
     }
@@ -122,11 +169,16 @@ public class SummaryWeekFragment extends Fragment {
                         ContextCompat.getColor(getActivity(), R.color.colorAccent)));
                 axisValues.add(new AxisValue(i).setLabel(dateFormatter.format(currentWeek.getTime())));
                 Column column = new Column(valuesCal);
-                if (amount == 0) {
-                    column.setHasLabels(false);
+                if (hasLabels) {
+                    if (amount == 0) {
+                        column.setHasLabels(false);
+                    } else {
+                        column.setHasLabels(true);
+                    }
                 } else {
-                    column.setHasLabels(true);
+                    column.setHasLabels(false);
                 }
+
                 columnsCal.add(column);
             }
             currentWeek.add(Calendar.DAY_OF_WEEK, 1);
@@ -139,10 +191,10 @@ public class SummaryWeekFragment extends Fragment {
         dataCal = new ColumnChartData(columnsCal);
         dataCal.setAxisXBottom(axisX);
         dataCal.setAxisYLeft(axisY);
-        dataCal.setValueLabelBackgroundAuto(false);
+        /*dataCal.setValueLabelBackgroundAuto(false);
         dataCal.setValueLabelBackgroundColor(ContextCompat.getColor(getActivity(),
                 R.color.grey_transpanent));
-        dataCal.setValueLabelsTextColor(ContextCompat.getColor(getActivity(), R.color.black_semi_transparent));
+        dataCal.setValueLabelsTextColor(ContextCompat.getColor(getActivity(), R.color.black_semi_transparent));*/
 
         chartCal.setColumnChartData(dataCal);
         chartCal.setZoomEnabled(false);

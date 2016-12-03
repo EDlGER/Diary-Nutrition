@@ -34,15 +34,6 @@
                 <TextView
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/record_carbo"
-                    android:textSize="14sp"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_width="38dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
                     android:text="@string/record_prot"
                     android:textSize="14sp"
                     android:textColor="#FFFFFF"
@@ -51,8 +42,17 @@
                 <TextView
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/record_fat"
+                    android:textSize="14sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:layout_width="38dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/record_carbo"
                     android:textSize="14sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>
@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/info_carbo1"
+                    android:id="@+id/info_prot1"
                     android:text="999.9"
                     android:textSize="14sp"
                     android:maxWidth="55dp"
@@ -90,7 +90,7 @@
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:maxWidth="55dp"
-                    android:id="@+id/info_prot1"
+                    android:id="@+id/info_fat1"
                     android:text="999.9"
                     android:textSize="14sp"
                     android:gravity="center_horizontal"
@@ -99,7 +99,7 @@
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:maxWidth="55dp"
-                    android:id="@+id/info_fat1"
+                    android:id="@+id/info_carbo1"
                     android:text="999.9"
                     android:textSize="14sp"
                     android:gravity="center_horizontal"

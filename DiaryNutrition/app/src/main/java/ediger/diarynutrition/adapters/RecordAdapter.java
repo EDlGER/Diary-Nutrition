@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import ediger.diarynutrition.activity.MainActivity;
@@ -94,6 +95,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         TextView group_carbo = (TextView) view.findViewById(R.id.txtGroupCarbo);
         TextView group_prot = (TextView) view.findViewById(R.id.txtGroupProt);
         TextView group_fat = (TextView) view.findViewById(R.id.txtGroupFat);
+        TextView group_serv = (TextView) view.findViewById(R.id.txtGroupServ);
 
         Cursor c = AppContext.getDbDiary().getMealData();
         c.moveToPosition(groupPosition);
@@ -107,6 +109,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         group_carbo.setText("");
         group_prot.setText("");
         group_fat.setText("");
+        group_serv.setText("");
 
         if (c.moveToFirst()) {
             do {
@@ -116,16 +119,18 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
                     group_cal.setText(Integer.toString(cal));
 
-                    String carbo = String.format("%.1f",c.getFloat(
+                    String carbo = String.format(Locale.getDefault(), "%.1f",c.getFloat(
                             c.getColumnIndex(DbDiary.ALIAS_CARBO)));
-                    String prot = String.format("%.1f", c.getFloat(
+                    String prot = String.format(Locale.getDefault(), "%.1f", c.getFloat(
                             c.getColumnIndex(DbDiary.ALIAS_PROT)));
-                    String fat = String.format("%.1f", c.getFloat(
+                    String fat = String.format(Locale.getDefault(), "%.1f", c.getFloat(
                             c.getColumnIndex(DbDiary.ALIAS_FAT)));
+                    String serv = c.getString(c.getColumnIndex(DbDiary.ALIAS_SERVING)) + mContext.getString(R.string.elv_gram);
 
                     group_carbo.setText(carbo);
                     group_prot.setText(prot);
                     group_fat.setText(fat);
+                    group_serv.setText(serv);
                 }
             } while (c.moveToNext());
         }
@@ -209,7 +214,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         holder.fat.setText(fat);
 
         holder.serving.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
-                + " г");
+                + mContext.getString(R.string.elv_gram));
 
         long dateTime = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_RECORD_DATETIME));
         calendar.setTimeInMillis(dateTime);

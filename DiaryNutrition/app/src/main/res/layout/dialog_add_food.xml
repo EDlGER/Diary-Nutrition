@@ -50,25 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/carboInputLayout"
-        android:hint="@string/dialog_carbo_f"
-        android:layout_gravity="center_horizontal">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="12"
-            android:id="@+id/txtCarboF"
-            android:textSize="16sp"
-            android:maxLength="4" />
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/protInputLayout"
         android:hint="@string/dialog_prot_f"
         android:layout_gravity="center_horizontal">
 
@@ -87,7 +68,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/fatInputLayout"
+        android:id="@+id/protInputLayout"
         android:hint="@string/dialog_fat_f"
         android:layout_gravity="center_horizontal">
 
@@ -97,6 +78,25 @@
             android:inputType="numberDecimal"
             android:ems="12"
             android:id="@+id/txtFatF"
+            android:textSize="16sp"
+            android:maxLength="4" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fatInputLayout"
+        android:hint="@string/dialog_carbo_f"
+        android:layout_gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="12"
+            android:id="@+id/txtCarboF"
             android:textSize="16sp"
             android:maxLength="4" />
 
