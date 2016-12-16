@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calInputLayout"
-        android:hint="@string/dialog_cal_f"
+        android:hint="@string/macro_cal"
         android:layout_gravity="center_horizontal">
 
         <EditText
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/carboInputLayout"
-        android:hint="@string/dialog_prot_f"
+        android:hint="@string/macro_prot"
         android:layout_gravity="center_horizontal">
 
         <EditText
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/protInputLayout"
-        android:hint="@string/dialog_fat_f"
+        android:hint="@string/macro_fat"
         android:layout_gravity="center_horizontal">
 
         <EditText
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fatInputLayout"
-        android:hint="@string/dialog_carbo_f"
+        android:hint="@string/macro_carbo"
         android:layout_gravity="center_horizontal">
 
         <EditText
@@ -101,4 +101,5 @@
             android:maxLength="4" />
 
     </android.support.design.widget.TextInputLayout>
+
 </LinearLayout>

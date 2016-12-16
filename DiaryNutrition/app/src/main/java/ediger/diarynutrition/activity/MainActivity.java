@@ -7,8 +7,10 @@ import ediger.diarynutrition.fragments.SummaryMainFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -294,6 +296,21 @@ public class MainActivity extends AppCompatActivity
                     mAppBarLayout.setElevation(0);
                 }
                 setTitle(getString(R.string.title_sec4));
+                break;
+            case R.id.nav_rate:
+                Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" +
+                                    this.getPackageName())));
+                }
                 break;
 
         }

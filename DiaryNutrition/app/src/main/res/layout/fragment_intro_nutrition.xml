@@ -185,6 +185,12 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/intro_nutrition_info"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>

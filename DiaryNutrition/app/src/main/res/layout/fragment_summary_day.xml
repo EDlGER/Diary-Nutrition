@@ -61,7 +61,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dialog_prot_f"
+                            android:text="@string/macro_prot"
                             android:layout_marginLeft="32dp"/>
 
                     </RelativeLayout>
@@ -79,7 +79,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dialog_fat_f"
+                            android:text="@string/macro_fat"
                             android:layout_marginLeft="32dp"/>
 
                     </RelativeLayout>
@@ -97,7 +97,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/dialog_carbo_f"
+                            android:text="@string/macro_carbo"
                             android:layout_marginLeft="32dp"/>
 
                     </RelativeLayout>
@@ -196,7 +196,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_cal_f"
+                    android:text="@string/macro_cal"
                     android:textColor="#ff212121"
                     android:textSize="16sp"/>
 
@@ -234,7 +234,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_prot_f"
+                    android:text="@string/macro_prot"
                     android:textColor="#ff212121"
                     android:textSize="16sp"/>
 
@@ -272,7 +272,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_fat_f"
+                    android:text="@string/macro_fat"
                     android:textColor="#ff212121"
                     android:textSize="16sp"/>
 
@@ -309,7 +309,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_carbo_f"
+                    android:text="@string/macro_carbo"
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp"/>
 

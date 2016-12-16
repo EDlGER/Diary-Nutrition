@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/dialog_cal_f"
+                android:text="@string/macro_cal"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:textSize="16sp" />
@@ -84,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_carbo_f"
+                    android:text="@string/macro_carbo"
                     android:layout_marginLeft="8dp"/>
 
                 <View
@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_prot_f"
+                    android:text="@string/macro_prot"
                     android:layout_marginLeft="8dp"/>
 
                 <View
@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_fat_f"
+                    android:text="@string/macro_fat"
                     android:layout_marginLeft="8dp"/>
 
 

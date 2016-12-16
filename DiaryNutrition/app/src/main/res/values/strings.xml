@@ -21,7 +21,9 @@
     <string name="title_sec2">Settings</string>
     <string name="title_sec3">Weight</string>
     <string name="title_sec4">Summary</string>
+    <string name="title_sec5">Rate app</string>
     <string name="tittle_search">Food search</string>
+    <string name="title_activity_program">Nutrition program</string>
 
     <string name="food_tab1">Custom</string>
     <string name="food_tab2">Favorites</string>
@@ -33,7 +35,7 @@
 
     <string name="weight_week">Week</string>
     <string name="weight_month">Month</string>
-    
+
     <string name="sum_recommend">Recommended</string>
     <string name="sum_total">Total</string>
     <string name="sum_goal">Goal</string>
@@ -64,14 +66,12 @@
     <string name="dialog_tittle_change">Food change</string>
     <string name="dialog_tittle_f">Adding food</string>
     <string name="dialog_tittle_w">Type your weight, kg</string>
+    <string name="dialog_title_c">Enter the goal calories</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_name_f">Food name</string>
-    <string name="dialog_cal_f">Calories</string>
-    <string name="dialog_carbo_f">Carbohydrates</string>
-    <string name="dialog_prot_f">Proteins</string>
-    <string name="dialog_fat_f">Fats</string>
     <string name="dialog_weight">Weight</string>
+    <string name="dialog_change">Change</string>
 
     <string name="empty_list_weight">Add current weight</string>
     <string name="empty_list_food">No food added</string>
@@ -83,11 +83,14 @@
     <string name="context_menu_favor_del">Remove</string>
 
     <string name="pref_title_user">Personal data</string>
+    <string name="pref_title_program">Nutrition program</string>
     <string name="pref_gender">Gender</string>
     <string name="pref_birthday">Birthday</string>
     <string name="pref_height">Height</string>
     <string name="pref_activity">Activity</string>
     <string name="pref_purpose">Goal</string>
+    <string name="pref_program_edit">Customize PFC</string>
+    <string name="pref_program_reset">Reset program</string>
 
     <string name="intro_done">Done</string>
     <string name="intro_title">Nutrition program</string>
@@ -110,21 +113,25 @@
     <string name="intro_nutrition_cal">kcal</string>
     <string name="intro_nutrition_consume">You should consume</string>
     <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
+    <string name="intro_nutrition_info">You can change this values in settings</string>
 
     <string name="macronutrients">Macronutrients</string>
 
     <string name="message_backpress">Press back again to exit</string>
     <string name="message_serving">Serving size is not entered</string>
+    <string name="message_program_perc">Amount of percent must be equal 100</string>
+    <string name="message_program_gram">Amount of calories and ratio of PFC will change while editing of macronutrients</string>
     <string name="message_favorite">Added to favorite</string>
     <string name="message_dialog_food_empty">Not all fields are filled</string>
     <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
     <string name="message_dialog_weight">Weight is not entered</string>
-    
+    <string name="message_dialog_cal">Calories is not entered</string>
+
     <string name="tab_database">Database</string>
     <string name="tab_user">Custom</string>
     <string name="tab_favorite">Favorites</string>
-    <string name="tab_day">День</string>
-    <string name="tab_week">Неделя</string>
+    <string name="tab_day">Day</string>
+    <string name="tab_week">Week</string>
 
     <string name="add_rec_gram1">g</string>
     <string name="add_rec_gram100">100g</string>
@@ -132,10 +139,19 @@
     <string name="add_food">Add food</string>
 
     <string name="elv_gram"> g</string>
+    <string name="percent">%</string>
+
+    <string name="macro_cal">Calories</string>
+    <string name="macro_carbo">Carbohydrates</string>
+    <string name="macro_prot">Proteins</string>
+    <string name="macro_fat">Fats</string>
+    <string name="macro_carbo_short">C</string>
+    <string name="macro_prot_short">P</string>
+    <string name="macro_fat_short">F</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    
+
     <string-array name="values">
         <item>1</item>
         <item>2</item>
@@ -179,6 +195,11 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+    </string-array>
+
+    <string-array name="program_macro_array">
+        <item>Percent</item>
+        <item>Gram</item>
     </string-array>
 
 </resources>

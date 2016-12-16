@@ -1,11 +1,14 @@
 package ediger.diarynutrition.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
 
@@ -19,7 +22,9 @@ import java.util.Locale;
 
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.activity.ProgramActivity;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.dialogs.ChangeCaloriesDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.
@@ -30,6 +35,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_HEIGHT = "height";
     public static final String KEY_PREF_ACTIVITY = "activity";
     public static final String KEY_PREF_PURPOSE = "purpose";
+    public static final String KEY_PREF_CALORIES = "calories";
+    public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
+    public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
 
     private SharedPreferences pref;
     Date date = new Date();
@@ -41,7 +49,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
         pref.registerOnSharedPreferenceChangeListener(this);
 
         Preference heightPref = findPreference(KEY_PREF_HEIGHT);
@@ -50,7 +58,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Preference birthdayPref = findPreference(KEY_PREF_BIRTHDAY);
         date.setTime(pref.getLong(KEY_PREF_BIRTHDAY, 0));
         birthdayPref.setSummary(dateFormat.format(date));
-
         birthdayPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -58,6 +65,37 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 return false;
             }
         });
+
+        Preference caloriesPref = findPreference(KEY_PREF_CALORIES);
+        caloriesPref.setSummary(String.valueOf(pref.getInt(KEY_PREF_CALORIES, 0)));
+        caloriesPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                DialogFragment dialog = new ChangeCaloriesDialog();
+                dialog.show(getFragmentManager(), "change_calories_dialog");
+                return false;
+            }
+        });
+
+        Preference editProgram = findPreference(KEY_PREF_PROGRAM_EDIT);
+        editProgram.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity(), ProgramActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        Preference resetProgram = findPreference(KEY_PREF_PROGRAM_RESET);
+        resetProgram.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                calculateDefaultProgram();
+                return false;
+            }
+        });
+
     }
 
     @Override
@@ -92,20 +130,28 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 key.equals(KEY_PREF_ACTIVITY) || key.equals(KEY_PREF_PURPOSE)) {
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
+            calculateDefaultProgram();
         }
         if (key.equals(KEY_PREF_BIRTHDAY)) {
             Preference birthdayPref = findPreference(key);
             date.setTime(pref.getLong(KEY_PREF_BIRTHDAY, 0));
 
             birthdayPref.setSummary(dateFormat.format(date));
+            calculateDefaultProgram();
         }
         if (key.equals(KEY_PREF_HEIGHT)) {
             Preference heightPref = findPreference(key);
             heightPref.setSummary(sharedPreferences.getString(key, ""));
+            calculateDefaultProgram();
         }
 
-        calculateProgram();
+        if (key.equals(KEY_PREF_CALORIES)) {
+            Preference caloriesPref = findPreference(key);
+            caloriesPref.setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
+            calculateUserProgram();
+        }
     }
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -128,7 +174,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     }
 
-    private void calculateProgram() {
+    private void calculateDefaultProgram() {
         int cal;
         int prot;
         int fat;
@@ -175,6 +221,23 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         editor.putInt("prot_pers", purpose[Integer.parseInt(pref.getString("purpose", "0")) - 1][0]);
         editor.putInt("fat_pers", purpose[Integer.parseInt(pref.getString("purpose", "0")) - 1][1]);
         editor.putInt("carbo_pers", purpose[Integer.parseInt(pref.getString("purpose", "0")) - 1][2]);
+        editor.apply();
+    }
+
+    private void calculateUserProgram() {
+        int cal = pref.getInt(KEY_PREF_CALORIES, 0);
+        float prot;
+        float fat;
+        float carbo;
+
+        prot = (float) pref.getInt("prot_pers", 1) / 100 * (float) cal / 4;
+        fat = (float) pref.getInt("fat_pers", 1) / 100 * (float) cal / 9;
+        carbo = (float) pref.getInt("carbo_pers", 1) / 100 * (float) cal /4;
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("prot", (int) prot);
+        editor.putInt("fat", (int) fat);
+        editor.putInt("carbo", (int) carbo);
         editor.apply();
     }
 }

@@ -1,62 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/grey100">
 
     <LinearLayout
+        android:id="@+id/chart_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/radio_layout"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
+        android:orientation="vertical"
+        android:background="@color/layout_standart_background"
+        android:elevation="2dp">
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/rb_week"
-            android:text="@string/weight_week"/>
+            android:orientation="horizontal"
+            android:id="@+id/radio_layout"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp">
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"/>
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rb_week"
+                android:text="@string/weight_week"/>
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/rb_month"
-            android:text="@string/weight_month"/>
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rb_month"
+                android:text="@string/weight_month"/>
+
+        </LinearLayout>
+
+        <lecho.lib.hellocharts.view.LineChartView
+            android:id="@+id/weight_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/radio_layout"
+            android:padding="16dp"/>
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/chart_divider"
-        android:background="?android:attr/listDivider"
-        android:layout_below="@+id/radio_layout"/>
-
-    <lecho.lib.hellocharts.view.LineChartView
-        android:id="@+id/weight_chart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/chart_divider"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:id="@+id/list_divider"
-        android:layout_below="@+id/weight_chart"
-        android:background="?android:attr/listDivider"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/list_divider">
+        android:layout_below="@+id/chart_layout">
 
         <ListView
             android:id="@+id/listWeight"

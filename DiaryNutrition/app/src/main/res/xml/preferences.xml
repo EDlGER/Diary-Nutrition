@@ -37,4 +37,21 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/pref_title_program">
+
+        <Preference
+            android:key="calories"
+            android:title="@string/macro_cal" />
+
+        <Preference
+            android:key="program_edit"
+            android:title="@string/pref_program_edit"/>
+
+        <Preference
+            android:key="program_reset"
+            android:title="@string/pref_program_reset"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

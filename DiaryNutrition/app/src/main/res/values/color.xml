@@ -12,6 +12,8 @@
     <color name="listview_background">#EEEEEE</color>
     <color name="listview_second_text">#757575</color>
 
+    <color name="grey100">#F5F5F5</color>
+    <color name="grey200">#EEEEEE</color>
     <color name="background_dark">#E0E0E0</color>
     <color name="white">#FFFFFF</color>
 
