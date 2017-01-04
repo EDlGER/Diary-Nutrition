@@ -203,5 +203,6 @@
     <string name="macro_prot_short">Б</string>
     <string name="intro_nutrition_info">Вы можете изменить эти значения в настройках</string>
     <string name="title_sec5">Оценить приложение</string>
+    <string name="message_program_null">Количество макронутриентов должно быть больше нуля</string>
 
 </resources>

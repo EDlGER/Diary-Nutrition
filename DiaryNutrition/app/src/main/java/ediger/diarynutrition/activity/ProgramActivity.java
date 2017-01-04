@@ -29,6 +29,7 @@ import ediger.diarynutrition.R;
 public class ProgramActivity extends AppCompatActivity implements
         AppCompatSeekBar.OnSeekBarChangeListener {
     private boolean isMacroPerc = true;
+    private boolean isNullValue = false;
 
     private SharedPreferences pref;
 
@@ -174,10 +175,14 @@ public class ProgramActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkNullValue();
+
                 if (cal.getText().toString().equals("") || cal.getText().toString().equals("0")) {
                     Snackbar.make(v, R.string.message_dialog_cal, Snackbar.LENGTH_SHORT).show();
-                } else if (Integer.parseInt(calSum.getText().toString()) != 100) {
+                } else if (Integer.parseInt(calSum.getText().toString()) != 100 && isMacroPerc) {
                     Snackbar.make(v, R.string.message_program_perc, Snackbar.LENGTH_SHORT).show();
+                } else if (isNullValue) {
+                    Snackbar.make(v, R.string.message_program_null, Snackbar.LENGTH_SHORT).show();
                 } else {
                     if (isMacroPerc) {
                         SharedPreferences.Editor editor = pref.edit();
@@ -338,6 +343,19 @@ public class ProgramActivity extends AppCompatActivity implements
                 + Integer.parseInt(fatPerc.getText().toString())
                 + Integer.parseInt(carboPerc.getText().toString());
         calSum.setText(String.valueOf(sum));
+    }
+
+    private void checkNullValue() {
+        if (sbProtGram.getProgress() *
+                sbFatGram.getProgress() *
+                sbCarboGram.getProgress() *
+                sbProtPerc.getProgress() *
+                sbFatPerc.getProgress() *
+                sbCarboPerc.getProgress() == 0) {
+            isNullValue = true;
+        } else {
+            isNullValue = false;
+        }
     }
 
     @Override
