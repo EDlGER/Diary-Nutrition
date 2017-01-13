@@ -85,7 +85,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="5"
-                    android:text="01.01.1990"
                     android:editable="false"
                     android:id="@+id/ed_birthday" />
             </android.support.design.widget.TextInputLayout>
@@ -103,7 +102,6 @@
                     android:layout_height="wrap_content"
                     android:ems="5"
                     android:maxLength="3"
-                    android:text="170"
                     android:inputType="number"
                     android:id="@+id/ed_height" />
             </android.support.design.widget.TextInputLayout>

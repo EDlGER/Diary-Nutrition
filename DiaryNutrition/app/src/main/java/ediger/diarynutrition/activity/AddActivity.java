@@ -91,7 +91,10 @@ public class AddActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spServ);
         txtTime = (EditText) findViewById(R.id.txtTime);
+
         txtServ = (EditText) findViewById(R.id.txtServ);
+        txtServ.setText(getString(R.string.dialog_serv_std));
+
         radioMeal = (RadioGroup) findViewById(R.id.rgMeal);
 
         //Spinner

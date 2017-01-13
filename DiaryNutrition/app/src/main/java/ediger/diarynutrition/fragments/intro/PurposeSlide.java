@@ -39,6 +39,7 @@ public class PurposeSlide extends Fragment implements ISlidePolicy, ISlideSelect
         View view = inflater.inflate(R.layout.fragment_intro_purpose, container, false);
 
         txtWeight = (EditText) view.findViewById(R.id.ed_weight);
+        txtWeight.setText("70");
 
         radioPurpose = (RadioGroup) view.findViewById(R.id.rg_purpose);
         radioPurpose.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

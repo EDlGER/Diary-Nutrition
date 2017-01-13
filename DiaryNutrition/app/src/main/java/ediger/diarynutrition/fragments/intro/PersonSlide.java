@@ -59,7 +59,10 @@ public class PersonSlide extends Fragment implements ISlidePolicy,ISlideSelectio
             }
         });
 
+        calendar.set(year,month,day);
+
         txtBirthday = (EditText) view.findViewById(R.id.ed_birthday);
+        txtBirthday.setText(dateFormatter.format(calendar.getTime()));
         txtBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +71,7 @@ public class PersonSlide extends Fragment implements ISlidePolicy,ISlideSelectio
         });
 
         txtHeight = (EditText) view.findViewById(R.id.ed_height);
+        txtHeight.setText("170");
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 

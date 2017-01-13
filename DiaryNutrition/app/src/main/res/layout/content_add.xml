@@ -29,8 +29,7 @@
                 android:id="@+id/txtServ"
                 android:textSize="25sp"
                 android:maxLength="3"
-                android:gravity="center_horizontal"
-                android:text="@string/dialog_serv_std" />
+                android:gravity="center_horizontal" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +60,6 @@
                 android:maxLength="5"
                 android:textSize="25sp"
                 android:singleLine="true"
-                android:text="00:00"
                 android:editable="false"/>
 
         </android.support.design.widget.TextInputLayout>

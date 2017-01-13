@@ -91,7 +91,6 @@
                     android:layout_height="wrap_content"
                     android:ems="5"
                     android:maxLength="5"
-                    android:text="70"
                     android:id="@+id/ed_weight"
                     android:inputType="numberDecimal" />
             </android.support.design.widget.TextInputLayout>
