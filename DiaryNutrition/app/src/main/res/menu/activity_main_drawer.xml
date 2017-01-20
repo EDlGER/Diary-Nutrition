@@ -36,6 +36,11 @@
             android:icon="@drawable/ic_menu_rate"
             android:title="@string/title_sec5"/>
 
+        <item
+            android:id="@+id/nav_donate"
+            android:icon="@drawable/ic_menu_donate"
+            android:title="@string/title_sec6"/>
+
     </group>
 
 </menu>

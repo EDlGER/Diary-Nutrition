@@ -3,6 +3,7 @@ package ediger.diarynutrition.activity;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -38,6 +39,11 @@ import ediger.diarynutrition.objects.AppContext;
 
 public class AddActivity extends AppCompatActivity {
 
+    private static String PREF_ADS_REMOVED = "ads_removed";
+    private static final String PREF_FILE_PREMIUM = "premium_data";
+
+    private boolean isAdsRemoved;
+
     private int mealId = 1;
     private int gram = 1;
     private int serving = 100;
@@ -70,13 +76,19 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        SharedPreferences pref = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE);
+        isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
+
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_id));
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("E8B8A18280F8D8867639D5CF594195AD")
                 .build();
-        mInterstitialAd.loadAd(adRequest);
+
+        if (!isAdsRemoved) {
+            mInterstitialAd.loadAd(adRequest);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -270,7 +282,8 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mInterstitialAd.show();
+        if (!isAdsRemoved) mInterstitialAd.show();
+
     }
 
     @Override

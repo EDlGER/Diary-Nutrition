@@ -1,13 +1,19 @@
 package ediger.diarynutrition.activity;
 
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.fragments.BillingFragment;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
 import ediger.diarynutrition.fragments.SummaryMainFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
+import ediger.diarynutrition.util.IabHelper;
+import ediger.diarynutrition.util.IabResult;
+import ediger.diarynutrition.util.Inventory;
+import ediger.diarynutrition.util.Purchase;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -23,6 +29,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -65,8 +72,16 @@ public class MainActivity extends AppCompatActivity
 
     public SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
-    private static String PREF_FIRST_RUN = "first_run";
+    IabHelper mHelper;
 
+    private static final String TAG = "DiaryNutrition";
+    private static final String SKU_REMOVE_ADS = "com.ediger.removeads";
+    private static final String PREF_FILE_PREMIUM = "premium_data";
+    private static final String PREF_ADS_REMOVED = "ads_removed";
+
+    private static final String PREF_FIRST_RUN = "first_run";
+
+    private boolean isAdsRemoved;
     private boolean isExpanded = false;
     private long lastBackPress;
     private float mCurrentRotation = 360.0f;
@@ -89,6 +104,38 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        //Check ads
+        isAdsRemoved = getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
+                .getBoolean(PREF_ADS_REMOVED, false);
+
+        String base64EncodedPublicKey =
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhuPm/qMEeS+CaCZfsFnMc8J5b6fkSlFihv" +
+                        "ZwE7HlAC/hOHUinZLX3aG3m5sU3zMMTEVoCgR50/wgJt6BMFXri5V3+z+xgK4hkSHaX+L4" +
+                        "djcoHgECyLjb73WwR1YbEOksQNaVM/MLIfBhtWfJuVaMwe0teAVRzGpxAPmTMB2jNYTxxt" +
+                        "R9SMUwWt3VoU9lU1BJH8zd8TtPfqtSxTJbeNxe2i9/l2Ew4P2/J/BdeK1ZNnjeBM2Kz+S8" +
+                        "5TuIuKhYle7x8DRf2CogSiIgZXf2Jnl+kU+vwr+Qw0QOYPwdLcakErx0ienUga3qmFTsCT" +
+                        "sTS88zAFRXdFYDPip+CBrkpzbPhwIDAQAB";
+
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) {
+                    Log.d(TAG, "In-app Billing setup failed: " + result);
+                    return;
+                }
+
+                if(mHelper == null) {
+                    return;
+                }
+
+                Log.d(TAG, "In-app Billing setup is OK");
+                mHelper.queryInventoryAsync(mReceivedInventoryListener);
+            }
+        });
+
+
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(PREF_FIRST_RUN, false);
         editor.apply();
@@ -96,7 +143,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -132,7 +178,6 @@ public class MainActivity extends AppCompatActivity
         title = (TextView) findViewById(R.id.title);
 
         mCompactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
-        //mCompactCalendarView.drawSmallIndicatorForEvents(false);
 
         // Force English
         mCompactCalendarView.setLocale(Locale.getDefault());
@@ -195,6 +240,27 @@ public class MainActivity extends AppCompatActivity
         displayView(R.id.nav_diary);
 
     }
+
+    IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        @Override
+        public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+            Log.d(TAG, "Query inventory finished");
+
+            if (mHelper == null)
+                return;
+
+            if (result.isFailure()) {
+                return;
+            }
+            Log.d(TAG, "Query inventory was successful");
+
+            isAdsRemoved = inv.hasPurchase(SKU_REMOVE_ADS);
+            SharedPreferences.Editor spe = getSharedPreferences(PREF_FILE_PREMIUM,
+                    Context.MODE_PRIVATE).edit();
+            spe.putBoolean(PREF_ADS_REMOVED, isAdsRemoved);
+            spe.apply();
+        }
+    };
 
     public void hideKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -290,7 +356,6 @@ public class MainActivity extends AppCompatActivity
                 setTitle(getString(R.string.title_sec3));
                 break;
             case R.id.nav_stat:
-                //fragment = new SummaryDayFragment();
                 fragment = new SummaryMainFragment();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     mAppBarLayout.setElevation(0);
@@ -312,7 +377,13 @@ public class MainActivity extends AppCompatActivity
                                     this.getPackageName())));
                 }
                 break;
-
+            case R.id.nav_donate:
+                fragment = new BillingFragment();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    mAppBarLayout.setElevation(0);
+                }
+                setTitle(getString(R.string.title_sec6));
+                break;
         }
 
         if (fragment != null) {
@@ -335,6 +406,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mHelper != null) {
+            mHelper.dispose();
+            mHelper = null;
+        }
+    }
 }
 
 

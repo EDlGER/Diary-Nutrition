@@ -1,5 +1,6 @@
 package ediger.diarynutrition.activity;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
@@ -15,9 +17,12 @@ import ediger.diarynutrition.adapters.ViewPagerAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-
 public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
+    private static String PREF_ADS_REMOVED = "ads_removed";
+    private static final String PREF_FILE_PREMIUM = "premium_data";
+
+    private boolean isAdsRemoved;
     private int Numboftabs = 3;
     private ViewPager pager;
     private ViewPagerAdapter adapter;
@@ -36,7 +41,18 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("E8B8A18280F8D8867639D5CF594195AD")
                 .build();
-        mAdView.loadAd(adRequest);
+
+        SharedPreferences pref = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE);
+        isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
+
+        if (isAdsRemoved) {
+            mAdView.setEnabled(false);
+            mAdView.setVisibility(View.GONE);
+        } else {
+            mAdView.setEnabled(true);
+            mAdView.setVisibility(View.VISIBLE);
+            mAdView.loadAd(adRequest);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));

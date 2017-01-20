@@ -8,8 +8,8 @@ android {
         applicationId "ediger.diarynutrition"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 12
-        versionName "1.2.0"
+        versionCode 13
+        versionName "1.1.2"
     }
     buildTypes {
         release {
