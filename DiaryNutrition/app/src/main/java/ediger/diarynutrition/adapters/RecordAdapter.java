@@ -84,7 +84,8 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
             params.setMargins(pxSide,0,pxSide,pxBottomCol);
             relative.setLayoutParams(params);
             divider.setVisibility(View.INVISIBLE);
-        } else if ((isExpanded) && (getChildrenCount(groupPosition) != 0)) {
+        }
+        if ((isExpanded) && (getChildrenCount(groupPosition) != 0)) {
             params.setMargins(pxSide,0,pxSide,pxBottomExp);
             relative.setLayoutParams(params);
             divider.setVisibility(View.VISIBLE);
@@ -183,11 +184,11 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         //Калории без дробной части
         int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
 
-        String carbo = String.format("%.1f",cursor.getFloat(
+        String carbo = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
-        String prot = String.format("%.1f", cursor.getFloat(
+        String prot = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
-        String fat = String.format("%.1f", cursor.getFloat(
+        String fat = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
 
         String name = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
@@ -221,7 +222,6 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
 
         holder.time.setText(timeFormatter.format(calendar.getTime()));
     }
-
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {

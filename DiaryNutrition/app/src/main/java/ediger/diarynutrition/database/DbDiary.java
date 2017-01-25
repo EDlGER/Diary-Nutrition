@@ -116,6 +116,7 @@ public class DbDiary {
                 + ",r.[serving] as "+ALIAS_SERVING
                 + ",r.[record_datetime] as "+ALIAS_RECORD_DATETIME
                 + ",r.[meal_id] as " +ALIAS_MEAL_ID
+                + ",r.[food_id] as " + ALIAS_FOOD_ID
                 + ",f.[food_name] as "+ALIAS_FOOD_NAME
                 + ",(f.[cal]/100*r.[serving]) as "+ALIAS_CAL
                 + ",(f.[carbo]/100*r.[serving]) as "+ALIAS_CARBO
@@ -338,11 +339,12 @@ public class DbDiary {
      * f.usr = 0 - стандартный продукт
      * f.usr > 0 - пользовательский
      * f.usr = -1  - скрытый пользовательский
+     * f.usr = -2 - скрытый стандартный
      * Нужно для определения использования пользовательского продукта записью
      */
-    public void addRec(long id, int serv, long datetime, int meal) {
+    public void addRec(long foodId, int serv, long datetime, int meal) {
         ContentValues cv = new ContentValues();
-        cv.put(ALIAS_FOOD_ID, id);
+        cv.put(ALIAS_FOOD_ID, foodId);
         cv.put(ALIAS_SERVING, serv);
         cv.put(ALIAS_RECORD_DATETIME, datetime);
         cv.put(ALIAS_MEAL_ID, meal);
@@ -353,11 +355,11 @@ public class DbDiary {
                 + "f.[usr] "
                 + "from food f "
                 + "where f._id = ? ";
-        Cursor usr = db.rawQuery(sql, new String[]{"" + id});
+        Cursor usr = db.rawQuery(sql, new String[]{"" + foodId});
         usr.moveToFirst();
         if (usr.getInt(0) > 0) {
             cv.put(ALIAS_USR,usr.getInt(0) + 1);
-            String where = ALIAS_ID + "=" + id;
+            String where = ALIAS_ID + "=" + foodId;
             db.update(TABLE_FOOD,cv,where,null);
         }
         usr.close();
@@ -418,13 +420,17 @@ public class DbDiary {
                 + "where f._id = ? ";
         Cursor usr = db.rawQuery(sql,new String[] {"" + id});
         usr.moveToFirst();
-        if (usr.getInt(0) > 1){
+        if (usr.getInt(0) > 1) {
             ContentValues cv = new ContentValues();
             cv.put(ALIAS_USR, -1);
             String where = ALIAS_ID + "=" + id;
             db.update(TABLE_FOOD, cv, where, null);
-        }
-        else {
+        } else if (usr.getInt(0) == 0) {
+            ContentValues cv = new ContentValues();
+            cv.put(ALIAS_USR, -2);
+            String where = ALIAS_ID + "=" + id;
+            db.update(TABLE_FOOD, cv, where, null);
+        } else {
             db.delete(TABLE_FOOD, ALIAS_ID + " = " + id,null);
         }
         usr.close();

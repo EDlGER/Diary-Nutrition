@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,7 @@ public class AddActivity extends AppCompatActivity {
 
     private EditText txtTime;
     private EditText txtServ;
+    private AppCompatCheckBox cbAddMoreFood;
     private RadioGroup radioMeal;
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
@@ -98,6 +100,7 @@ public class AddActivity extends AppCompatActivity {
         carbo = (TextView) findViewById(R.id.info_carbo1);
         prot = (TextView) findViewById(R.id.info_prot1);
         fat = (TextView) findViewById(R.id.info_fat1);
+        cbAddMoreFood = (AppCompatCheckBox) findViewById(R.id.cb_add_food);
 
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -251,10 +254,14 @@ public class AddActivity extends AppCompatActivity {
                     calendar.clear(Calendar.MILLISECOND);
                     date = calendar.getTimeInMillis();
 
-                    Intent intent1 = new Intent(AddActivity.this, MainActivity.class);
-                    intent1.putExtra("date", date);
-                    intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent1);
+                    if (cbAddMoreFood.isChecked()) {
+                        onBackPressed();
+                    } else {
+                        Intent intent1 = new Intent(AddActivity.this, MainActivity.class);
+                        intent1.putExtra("date", date);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent1);
+                    }
                 }
             }
         });

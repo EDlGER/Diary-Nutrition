@@ -139,9 +139,11 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         }
         else {
             String value = "%"+constraint.toString()+"%";
+            String orderBySearch = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
+                    constraint.toString() + "%\" desc";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "favor = 1 AND usr > -1 AND food_name like ? ",
-                    new String[]{value}, null, null, orderBy);
+                    new String[]{value}, null, null, orderBySearch);
         }
     }
 

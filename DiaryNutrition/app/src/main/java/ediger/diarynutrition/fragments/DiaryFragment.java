@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,9 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import ediger.diarynutrition.activity.AddActivity;
@@ -48,6 +51,8 @@ public class DiaryFragment extends Fragment implements
 
     View rootview;
     private long date;
+
+    private List<List<Long>> buffer = new ArrayList<>();
 
     private SharedPreferences pref;
     private Intent intent;
@@ -252,6 +257,17 @@ public class DiaryFragment extends Fragment implements
                 ExpandableListContextMenuInfo) menuInfo;
 
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+        int childCount = recordAdapter.getChildrenCount(groupPos);
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP &&
+                listRecord.isGroupExpanded(groupPos) && childCount != 0) {
+            menu.add(0, 1, 0, R.string.context_menu_copy);
+        }
+
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+            menu.add(0, 2, 0, R.string.context_menu_paste);
+        }
 
         // Show context menu for childs
         if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
@@ -266,10 +282,68 @@ public class DiaryFragment extends Fragment implements
                 ExpandableListContextMenuInfo) item.getMenuInfo();
         int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
         int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        if (!listRecord.isGroupExpanded(groupPos)) {
+            listRecord.expandGroup(groupPos);
+        }
         Cursor child = this.recordAdapter.getChild(groupPos, childPos);
-        long id = child.getLong(0);
+        long id;
+
+        List<Long> childBuf;
+
+        if (item.getItemId() == 1) {
+
+            for (int i = 0; i < recordAdapter.getChildrenCount(groupPos); i++) {
+                childBuf = new ArrayList<>();
+
+                child = this.recordAdapter.getChild(groupPos, i);
+
+                //food_id
+                childBuf.add(child.getLong(4));
+                //serving
+                childBuf.add(child.getLong(1));
+                //record_datetime
+                childBuf.add(child.getLong(2));
+
+                buffer.add(childBuf);
+            }
+
+
+            Snackbar.make(rootview, getString(R.string.message_record_meal_copy),
+                    Snackbar.LENGTH_SHORT).show();
+
+            return true;
+        }
+
+        if (item.getItemId() == 2) {
+
+            for (int i = 0; i < buffer.size(); i++) {
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(buffer.get(i).get(2));
+                calendar.clear(Calendar.MILLISECOND);
+                calendar.clear(Calendar.SECOND);
+                calendar.clear(Calendar.MINUTE);
+                calendar.clear(Calendar.HOUR);
+                calendar.clear(Calendar.HOUR_OF_DAY);
+
+                AppContext.getDbDiary().addRec(
+                        buffer.get(i).get(0),
+                        (int) (long) buffer.get(i).get(1),
+                        buffer.get(i).get(2) + (nowto.getTimeInMillis() - calendar.getTimeInMillis()),
+                        groupPos + 1);
+
+            }
+            buffer.clear();
+
+            listRecord.collapseGroup(groupPos);
+            listRecord.expandGroup(groupPos);
+
+            return true;
+        }
 
         if(item.getItemId() == 3) {
+            id = child.getLong(0);
             AppContext.getDbDiary().delRec(id);
 
             listRecord.collapseGroup(groupPos);
@@ -279,6 +353,7 @@ public class DiaryFragment extends Fragment implements
 
             return true;
         } else if (item.getItemId() == 4) {
+            id = child.getLong(0);
             Intent intent = new Intent(getActivity(), AddActivity.class);
             intent.putExtra("recordId", id);
             startActivity(intent);

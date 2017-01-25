@@ -161,9 +161,11 @@ public class FoodTab extends Fragment implements
         }
         else {
             String value = "%"+constraint.toString()+"%";
+            String orderBySearch = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
+                    constraint.toString() + "%\" desc";
             return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
-                    "usr > 0 AND food_name like ? ",
-                    new String[]{value},null,null,orderBy);
+                    "usr > 0 AND food_name like ?",
+                    new String[]{value},null,null,orderBySearch);
         }
     }
 

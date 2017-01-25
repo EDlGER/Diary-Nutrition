@@ -9,7 +9,6 @@ import ediger.diarynutrition.fragments.WeightFragment;
 import ediger.diarynutrition.util.IabHelper;
 import ediger.diarynutrition.util.IabResult;
 import ediger.diarynutrition.util.Inventory;
-import ediger.diarynutrition.util.Purchase;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;

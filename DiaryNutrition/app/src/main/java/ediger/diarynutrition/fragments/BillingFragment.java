@@ -191,8 +191,8 @@ public class BillingFragment extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
 
         mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
-
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
-        mainActivity.title.setPadding(0, 30, 0, 0);
+
+        mainActivity.title.setPadding(0, 25, 0, 0);
     }
 }

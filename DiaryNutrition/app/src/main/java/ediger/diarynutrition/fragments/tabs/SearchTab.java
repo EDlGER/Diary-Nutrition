@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.text.InputType;
@@ -29,6 +33,7 @@ import android.widget.SimpleCursorAdapter;
 import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
+import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.objects.AppContext;
 
@@ -49,6 +54,8 @@ public class SearchTab extends Fragment {
     private long addid;
     private ListView listFood;;
     private FoodAdapter foodAdapter;
+    private Cursor cursor;
+    private String[] from;
 
     @Nullable
     @Override
@@ -58,8 +65,8 @@ public class SearchTab extends Fragment {
         setHasOptionsMenu(true);
 
         //Данные для адаптера
-        Cursor cursor = AppContext.getDbDiary().getAllFood();
-        String[] from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.getDbDiary().getAllFood();
+        from = AppContext.getDbDiary().getListFood();
 
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
@@ -92,17 +99,29 @@ public class SearchTab extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0,3,0,R.string.context_menu_favor);
+        menu.add(0, 3, 0, R.string.context_menu_favor);
+        menu.add(0, 4 ,0 , R.string.context_menu_del);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+
         if (item.getItemId() == 3) {
-            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
-                    .getMenuInfo();
             AppContext.getDbDiary().setFavor(acmi.id, 1);
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
+            snackbar.show();
+
+            return true;
+        }
+
+        if (item.getItemId() == 4) {
+            AppContext.getDbDiary().delFood(acmi.id);
+            Snackbar snackbar = Snackbar
+                    .make(rootview, getString(R.string.message_food_del),
+                            BaseTransientBottomBar.LENGTH_LONG);
             snackbar.show();
 
             return true;
@@ -159,8 +178,8 @@ public class SearchTab extends Fragment {
     //Поиск по введенным буквам
     private Cursor getFilterList(CharSequence constraint) {
         String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
-        String selections = "usr = -2";
-        String orderBy = "food_name asc";
+        String selections = "usr = -3";
+        //String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0) {
             return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
@@ -168,9 +187,10 @@ public class SearchTab extends Fragment {
         }
         else {
             String value = "%" +constraint.toString() + "%";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name like ? ",
-                    new String[]{value},null,null,orderBy);
+            String orderBy = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
+                    constraint.toString() + "%\" desc";
+            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name LIKE ? ",
+                    new String[]{value}, null, null, orderBy);
         }
     }
-
 }

@@ -137,7 +137,16 @@
             android:background="?android:attr/listDivider"
             android:layout_below="@+id/rbLayout"/>
         
-        
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_add_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/radio_divider"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/add_food_more" />
+
     </RelativeLayout>
 
 

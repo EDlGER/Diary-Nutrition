@@ -16,7 +16,7 @@
 
     <!-- Fullscreen application theme. -->
     <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
     </style>
 
     <style name="ToolbarTextColor" parent="AppTheme">
