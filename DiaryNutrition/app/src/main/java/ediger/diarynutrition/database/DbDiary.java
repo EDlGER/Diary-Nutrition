@@ -5,11 +5,19 @@ import android.content.Context;
 import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.widget.Toast;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.Calendar;
 import java.util.Locale;
+
+import ediger.diarynutrition.R;
 
 public class DbDiary {
 
@@ -62,7 +70,8 @@ public class DbDiary {
     public DbDiary(Context context) {
         this.context = context;
 
-        if (Locale.getDefault().getLanguage().equals("ru")) {
+        if (Locale.getDefault().getLanguage().equals("ru")
+                || Locale.getDefault().getLanguage().equals("uk")) {
             dbName = "diary.db";
         } else {
             dbName = "diary_en.db";
@@ -72,6 +81,68 @@ public class DbDiary {
         db = dbHelper.getWritableDatabase();
     }
 
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void backupDb() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String folderPath = "/DiaryNutrition/";
+                String currentDbPath = "//data/ediger.diarynutrition/databases/" + dbName;
+                String backupDbPath = dbName;
+
+                File folder = new File(sd, folderPath);
+                folder.mkdirs();
+
+                File currentDb = new File(data, currentDbPath);
+                File backupDb = new File(folder, backupDbPath);
+
+                FileChannel src = new FileInputStream(currentDb).getChannel();
+                FileChannel dst = new FileOutputStream(backupDb).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+
+                Toast.makeText(context, R.string.message_data_backup, Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void restoreDb() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String folderPath = "/DiaryNutrition/";
+                String currentDbPath = "//data/ediger.diarynutrition/databases/" + dbName;
+                String backupDbPath = dbName;
+
+                File folder = new File(sd, folderPath);
+                folder.mkdirs();
+
+                File currentDb = new File(data, currentDbPath);
+                File backupDb = new File(folder, backupDbPath);
+                FileChannel src = new FileInputStream(backupDb).getChannel();
+                FileChannel dst = new FileOutputStream(currentDb).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+
+                Toast.makeText(context, R.string.message_data_restore, Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     public Cursor getMealData(){
         return db.query(TABLE_MEAL, null, null, null, null, null, null);

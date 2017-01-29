@@ -141,7 +141,12 @@ public class SummaryWeekFragment extends Fragment {
         mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
 
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
-        mainActivity.title.setPadding(0, 25, 0, 0);
+
+        if (getResources().getDisplayMetrics().density > 2.0) {
+            mainActivity.title.setPadding(0, 40, 0, 0);
+        } else {
+            mainActivity.title.setPadding(0, 25, 0, 0);
+        }
     }
 
     private void generateCalData() {

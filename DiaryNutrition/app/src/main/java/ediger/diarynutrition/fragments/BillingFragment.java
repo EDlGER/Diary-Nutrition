@@ -3,9 +3,11 @@ package ediger.diarynutrition.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ public class BillingFragment extends Fragment {
     String payload = "123";
 
     private boolean isAdsRemoved;
+    private TextView adsStatus;
     private Button buyButton;
 
     @Nullable
@@ -47,9 +50,23 @@ public class BillingFragment extends Fragment {
         final MainActivity mainActivity = (MainActivity) getActivity();
 
         buyButton = (Button) rootview.findViewById(R.id.btn_buy);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            buyButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+        } else {
+            buyButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.black_semi_transparent));
+        }
 
         isAdsRemoved = getActivity().getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
                 .getBoolean(PREF_ADS_REMOVED, false);
+
+        adsStatus = (TextView) rootview.findViewById(R.id.txt_ads_status);
+        if (isAdsRemoved) {
+            adsStatus.setText(getString(R.string.billing_ads_disable));
+            buyButton.setEnabled(false);
+        } else {
+            adsStatus.setText(getString(R.string.billing_ads_enable));
+            buyButton.setEnabled(true);
+        }
 
         String base64EncodedPublicKey =
                 "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhuPm/qMEeS+CaCZfsFnMc8J5b6fkSlFihv" +
@@ -193,6 +210,21 @@ public class BillingFragment extends Fragment {
         mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
 
-        mainActivity.title.setPadding(0, 25, 0, 0);
+        if (getResources().getDisplayMetrics().density > 2.0) {
+            mainActivity.title.setPadding(0, 40, 0, 0);
+        } else {
+            mainActivity.title.setPadding(0, 25, 0, 0);
+        }
+
+        isAdsRemoved = getActivity().getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
+                .getBoolean(PREF_ADS_REMOVED, false);
+
+        if (isAdsRemoved) {
+            adsStatus.setText(getString(R.string.billing_ads_disable));
+            buyButton.setEnabled(false);
+        } else {
+            adsStatus.setText(getString(R.string.billing_ads_enable));
+            buyButton.setEnabled(true);
+        }
     }
 }

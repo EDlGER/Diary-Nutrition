@@ -54,4 +54,21 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/pref_title_data">
+
+        <Preference
+            android:key="data_path"
+            android:title="@string/pref_data_path" />
+
+        <Preference
+            android:key="data_backup"
+            android:title="@string/pref_data_backup" />
+
+        <Preference
+            android:key="data_restore"
+            android:title="@string/pref_data_restore"/>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

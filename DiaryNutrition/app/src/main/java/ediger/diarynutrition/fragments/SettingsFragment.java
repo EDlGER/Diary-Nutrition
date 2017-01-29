@@ -1,16 +1,23 @@
 package ediger.diarynutrition.fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
@@ -38,6 +45,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_CALORIES = "calories";
     public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
     public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
+    public static final String KEY_PREF_DATA_PATH = "data_path";
+    public static final String KEY_PREF_DATA_BACKUP = "data_backup";
+    public static final String KEY_PREF_DATA_RESTORE = "data_restore";
+
+    private static final int REQ_WRITE_STORAGE = 112;
+
 
     private SharedPreferences pref;
     Date date = new Date();
@@ -96,6 +109,67 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
+
+        Preference pathData = findPreference(KEY_PREF_DATA_PATH);
+        String path = Environment.getExternalStorageDirectory().getPath()
+                + "/DiaryNutrition/" + AppContext.getDbDiary().getDbName();
+        pathData.setSummary(path);
+
+
+        Preference backupData = findPreference(KEY_PREF_DATA_BACKUP);
+        backupData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                boolean hasPermission = (ContextCompat.checkSelfPermission(getActivity(),
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+
+                if (!hasPermission) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQ_WRITE_STORAGE);
+                }
+                AppContext.getDbDiary().backupDb();
+                return false;
+            }
+        });
+
+        Preference restoreData = findPreference(KEY_PREF_DATA_RESTORE);
+        restoreData.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+
+                boolean hasPermission = (ContextCompat.checkSelfPermission(getActivity(),
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+
+                if (!hasPermission) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQ_WRITE_STORAGE);
+                }
+                AppContext.getDbDiary().restoreDb();
+                return false;
+            }
+        });
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQ_WRITE_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getActivity().finish();
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    Toast.makeText(getActivity(), "Now app can write", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "The app not allowed to write to your storage",
+                            Toast.LENGTH_SHORT).show();
+                }
+        }
     }
 
     @Override
@@ -121,7 +195,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         mainActivity.menuMultipleActions.setVisibility(View.INVISIBLE);
 
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
-        mainActivity.title.setPadding(0, 25, 0, 0);
+
+        if (getResources().getDisplayMetrics().density > 2.0) {
+            mainActivity.title.setPadding(0, 40, 0, 0);
+        } else {
+            mainActivity.title.setPadding(0, 25, 0, 0);
+        }
     }
 
     @Override

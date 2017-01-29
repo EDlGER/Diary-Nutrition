@@ -11,6 +11,10 @@
     <string name="banner_ad_unit_id">ca-app-pub-2180848868226246/4304798415</string>
     <string name="banner_ad_inter_id">ca-app-pub-2180848868226246/9729746416</string>
 
+    <string name="billing_button_buy">Disable</string>
+    <string name="billing_ads_disable">Ads is disabled</string>
+    <string name="billing_ads_enable">Ads is enabled</string>
+
     <string name="diary_date_today">Today</string>
     <string name="diary_header_remain">Remaining</string>
 
@@ -87,6 +91,7 @@
 
     <string name="pref_title_user">Personal data</string>
     <string name="pref_title_program">Nutrition program</string>
+    <string name="pref_title_data">Data</string>
     <string name="pref_gender">Gender</string>
     <string name="pref_birthday">Birthday</string>
     <string name="pref_height">Height</string>
@@ -94,6 +99,9 @@
     <string name="pref_purpose">Goal</string>
     <string name="pref_program_edit">Customize PFC</string>
     <string name="pref_program_reset">Reset program</string>
+    <string name="pref_data_backup">Backup</string>
+    <string name="pref_data_restore">Restore</string>
+    <string name="pref_data_path">Path</string>
 
     <string name="intro_done">Done</string>
     <string name="intro_title">Nutrition program</string>
@@ -132,6 +140,8 @@
     <string name="message_dialog_weight">Weight is not entered</string>
     <string name="message_dialog_cal">Calories is not entered</string>
     <string name="message_record_meal_copy">Meal copied</string>
+    <string name="message_data_restore">Restore database is successful!</string>
+    <string name="message_data_backup">Backup database is successful!</string>
 
     <string name="tab_database">Database</string>
     <string name="tab_user">Custom</string>

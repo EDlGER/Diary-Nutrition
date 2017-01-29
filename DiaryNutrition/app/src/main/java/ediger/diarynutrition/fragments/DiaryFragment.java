@@ -339,6 +339,8 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(groupPos);
             listRecord.expandGroup(groupPos);
 
+            setHeaderData();
+
             return true;
         }
 
