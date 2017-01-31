@@ -47,8 +47,6 @@ public class BillingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_billing, container, false);
 
-        final MainActivity mainActivity = (MainActivity) getActivity();
-
         buyButton = (Button) rootview.findViewById(R.id.btn_buy);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             buyButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
@@ -62,10 +60,10 @@ public class BillingFragment extends Fragment {
         adsStatus = (TextView) rootview.findViewById(R.id.txt_ads_status);
         if (isAdsRemoved) {
             adsStatus.setText(getString(R.string.billing_ads_disable));
-            buyButton.setEnabled(false);
+            buyButton.setVisibility(View.GONE);
         } else {
             adsStatus.setText(getString(R.string.billing_ads_enable));
-            buyButton.setEnabled(true);
+            buyButton.setVisibility(View.VISIBLE);
         }
 
         String base64EncodedPublicKey =
@@ -99,15 +97,8 @@ public class BillingFragment extends Fragment {
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mainActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        mHelper.launchPurchaseFlow(getActivity(), SKU_REMOVE_ADS, 10001,
-                                mPurchaseFinishedListener, payload);
-                    }
-                });
+                mHelper.launchPurchaseFlow(getActivity(), SKU_REMOVE_ADS, 10001,
+                        mPurchaseFinishedListener, payload);
             }
         });
 
@@ -129,7 +120,8 @@ public class BillingFragment extends Fragment {
             Log.d(TAG, "Query inventory was successful");
 
             Purchase removeAdsPurchase = inv.getPurchase(SKU_REMOVE_ADS);
-            isAdsRemoved = (removeAdsPurchase != null && verifyDeveloperPayload(removeAdsPurchase));
+            isAdsRemoved = (removeAdsPurchase != null);
+            //isAdsRemoved = (removeAdsPurchase != null && verifyDeveloperPayload(removeAdsPurchase));
             //inv.hasPurchase(SKU_REMOVE_ADS);
 
             SharedPreferences.Editor spe = getActivity().getSharedPreferences(PREF_FILE_PREMIUM,
@@ -157,13 +149,13 @@ public class BillingFragment extends Fragment {
 
             if (result.isFailure()) return;
 
-            if (!verifyDeveloperPayload(info)) return;
+            //if (!verifyDeveloperPayload(info)) return;
 
             if (info.getSku().equals(SKU_REMOVE_ADS)) {
-                Toast.makeText(getActivity(), "Purchase for disabling ads done",
+                Toast.makeText(getActivity(), getString(R.string.message_billing_success),
                         Toast.LENGTH_SHORT).show();
                 isAdsRemoved = true;
-                buyButton.setEnabled(false);
+                buyButton.setVisibility(View.GONE);
             }
         }
     };
@@ -221,10 +213,10 @@ public class BillingFragment extends Fragment {
 
         if (isAdsRemoved) {
             adsStatus.setText(getString(R.string.billing_ads_disable));
-            buyButton.setEnabled(false);
+            buyButton.setVisibility(View.GONE);
         } else {
             adsStatus.setText(getString(R.string.billing_ads_enable));
-            buyButton.setEnabled(true);
+            buyButton.setVisibility(View.VISIBLE);
         }
     }
 }

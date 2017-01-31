@@ -219,5 +219,6 @@
     <string name="billing_ads_disable">Реклама отключена</string>
     <string name="billing_ads_enable">Реклама включена</string>
     <string name="billing_button_buy">Отключить</string>
+    <string name="message_billing_success">Покупка успешно завершена!</string>
 
 </resources>

@@ -14,12 +14,13 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/servInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/servInputLayout"
-            android:hint="@string/dialog_serv"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="16dp">
+            android:layout_marginLeft="16dp"
+            android:hint="@string/dialog_serv"
+            app:hintAnimationEnabled="false">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -44,13 +45,14 @@
         </android.support.v7.widget.AppCompatSpinner>
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/timeInputLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/timeInputLayout"
-            android:hint="@string/dialog_time"
             android:layout_toRightOf="@+id/spServ"
             android:layout_marginLeft="16dp"
-            android:layout_alignBottom="@+id/servInputLayout">
+            android:layout_alignBottom="@+id/servInputLayout"
+            android:hint="@string/dialog_time"
+            app:hintAnimationEnabled="false">
 
             <EditText
                 android:layout_width="wrap_content"

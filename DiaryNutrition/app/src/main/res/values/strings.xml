@@ -142,6 +142,7 @@
     <string name="message_record_meal_copy">Meal copied</string>
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
+    <string name="message_billing_success">Purchase for disabling ads done</string>
 
     <string name="tab_database">Database</string>
     <string name="tab_user">Custom</string>
