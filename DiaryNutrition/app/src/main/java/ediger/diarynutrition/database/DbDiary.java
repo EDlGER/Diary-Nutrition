@@ -2,10 +2,12 @@ package ediger.diarynutrition.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -18,25 +20,26 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.fragments.SettingsFragment;
 
 public class DbDiary {
 
-    public static String ALIAS_ID="_id";
+    public static String ALIAS_ID = "_id";
 
     /** Поля таблицы Record */
-    public static String ALIAS_FOOD_ID="food_id";
-    public static String ALIAS_MEAL_ID="meal_id";
-    public static String ALIAS_SERVING="serving";
-    public static String ALIAS_RECORD_DATETIME="record_datetime";
+    public static String ALIAS_FOOD_ID = "food_id";
+    public static String ALIAS_MEAL_ID = "meal_id";
+    public static String ALIAS_SERVING = "serving";
+    public static String ALIAS_RECORD_DATETIME = "record_datetime";
 
     /** Поля таблицы Food */
-    public static String ALIAS_FOOD_NAME ="food_name";
-    public static String ALIAS_CAL ="cal";
-    public static String ALIAS_CARBO ="carbo";
-    public static String ALIAS_PROT ="prot";
-    public static String ALIAS_FAT ="fat";
-    public static String ALIAS_FAV ="favor";
-    public static String ALIAS_USR ="usr";
+    public static String ALIAS_FOOD_NAME = "food_name";
+    public static String ALIAS_CAL = "cal";
+    public static String ALIAS_CARBO = "carbo";
+    public static String ALIAS_PROT = "prot";
+    public static String ALIAS_FAT = "fat";
+    public static String ALIAS_FAV = "favor";
+    public static String ALIAS_USR = "usr";
 
     /** Поля таблицы Meal */
     public static String ALIAS_M_NAME = "name";
@@ -69,9 +72,23 @@ public class DbDiary {
 
     public DbDiary(Context context) {
         this.context = context;
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        String dbLanguage = pref.getString(SettingsFragment.KEY_PREF_DATA_LANGUAGE, "");
 
-        if (Locale.getDefault().getLanguage().equals("ru")
-                || Locale.getDefault().getLanguage().equals("uk")) {
+        if (dbLanguage.isEmpty()) {
+            SharedPreferences.Editor editor = pref.edit();
+            if (Locale.getDefault().getLanguage().equals("ru")
+                    || Locale.getDefault().getLanguage().equals("uk")) {
+                dbLanguage = "ru";
+                editor.putString(SettingsFragment.KEY_PREF_DATA_LANGUAGE, "ru");
+            } else {
+                dbLanguage = "en";
+                editor.putString(SettingsFragment.KEY_PREF_DATA_LANGUAGE, "en");
+            }
+            editor.apply();
+        }
+
+        if (dbLanguage.equals("ru") || dbLanguage.equals("uk")) {
             dbName = "diary.db";
         } else {
             dbName = "diary_en.db";

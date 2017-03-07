@@ -102,6 +102,7 @@
     <string name="pref_data_backup">Backup</string>
     <string name="pref_data_restore">Restore</string>
     <string name="pref_data_path">Path</string>
+    <string name="pref_data_language">Database language</string>
 
     <string name="intro_done">Done</string>
     <string name="intro_title">Nutrition program</string>
@@ -177,6 +178,16 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+    </string-array>
+
+    <string-array name="pref_language_array">
+        <item>English</item>
+        <item>Russian</item>
+    </string-array>
+
+    <string-array name="pref_language_values">
+        <item>en</item>
+        <item>ru</item>
     </string-array>
 
     <string-array name="pref_gender_array">

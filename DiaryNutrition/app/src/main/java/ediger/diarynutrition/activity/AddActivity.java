@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -41,7 +42,7 @@ import ediger.diarynutrition.objects.AppContext;
 
 public class AddActivity extends AppCompatActivity {
 
-    private static String PREF_ADS_REMOVED = "ads_removed";
+    private static final String PREF_ADS_REMOVED = "ads_removed";
     private static final String PREF_FILE_PREMIUM = "premium_data";
 
     private boolean isAdsRemoved;

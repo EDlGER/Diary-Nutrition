@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <PreferenceCategory
             android:title="@string/pref_title_user">
 
@@ -56,6 +57,13 @@
 
     <PreferenceCategory
         android:title="@string/pref_title_data">
+
+        <ListPreference
+            android:key="data_language"
+            android:title="@string/pref_data_language"
+            android:entries="@array/pref_language_array"
+            android:entryValues="@array/pref_language_values"
+            android:summary="%s"/>
 
         <Preference
             android:key="data_path"

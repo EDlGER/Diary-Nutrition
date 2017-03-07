@@ -93,15 +93,19 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //First app start
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        //First app start
         isFirstRun = pref.getBoolean(PREF_FIRST_RUN, true);
 
-        //startActivity
+        //startIntroActivity
         if (isFirstRun) {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(PREF_FIRST_RUN, false);
+        editor.apply();
 
         //Check ads
         isAdsRemoved = getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
@@ -133,11 +137,6 @@ public class MainActivity extends AppCompatActivity
                 mHelper.queryInventoryAsync(mReceivedInventoryListener);
             }
         });
-
-
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(PREF_FIRST_RUN, false);
-        editor.apply();
 
         setContentView(R.layout.activity_main);
 

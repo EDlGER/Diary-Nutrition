@@ -4,9 +4,7 @@
     android:layout_height="62dp"
     android:weightSum="1"
     android:background="@color/listview_background"
-    android:id="@+id/Relative"
->
-
+    android:id="@+id/Relative">
 
     <RelativeLayout
         android:layout_width="match_parent"

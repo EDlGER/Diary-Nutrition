@@ -12,6 +12,11 @@ import ediger.diarynutrition.database.DbDiary;
  */
 public class AppContext extends Application{
 
+    private static DbDiary dbDiary;
+    private static AppContext instance;
+
+    public AppContext() {instance = this;}
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -19,12 +24,6 @@ public class AppContext extends Application{
         dbDiary = new DbDiary(this);
 
     }
-
-
-    private static DbDiary dbDiary;
-    private static AppContext instance;
-
-    public AppContext() {instance = this;}
 
     public static AppContext getInstance(){return instance;}
 

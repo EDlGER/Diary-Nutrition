@@ -1,7 +1,10 @@
 package ediger.diarynutrition.fragments;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -45,17 +48,18 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_CALORIES = "calories";
     public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
     public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
+    public static final String KEY_PREF_DATA_LANGUAGE= "data_language";
     public static final String KEY_PREF_DATA_PATH = "data_path";
     public static final String KEY_PREF_DATA_BACKUP = "data_backup";
     public static final String KEY_PREF_DATA_RESTORE = "data_restore";
 
     private static final int REQ_WRITE_STORAGE = 112;
 
-
     private SharedPreferences pref;
-    Date date = new Date();
     private Calendar birthday = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
+
+    Date date = new Date();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +112,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 return false;
             }
         });
-
 
         Preference pathData = findPreference(KEY_PREF_DATA_PATH);
         String path = Environment.getExternalStorageDirectory().getPath()
@@ -210,6 +213,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
             calculateDefaultProgram();
+        }
+        if (key.equals(KEY_PREF_DATA_LANGUAGE)) {
+            Intent restartIntent = getActivity().getPackageManager()
+                    .getLaunchIntentForPackage(getActivity().getPackageName() );
+            PendingIntent intent = PendingIntent.getActivity(
+                    getActivity(), 0,
+                    restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+            manager.set(AlarmManager.RTC, System.currentTimeMillis() + 10, intent);
+            System.exit(2);
         }
         if (key.equals(KEY_PREF_BIRTHDAY)) {
             Preference birthdayPref = findPreference(key);

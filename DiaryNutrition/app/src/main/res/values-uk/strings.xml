@@ -138,6 +138,16 @@
         <item>6</item>
     </string-array>
 
+    <string-array name="pref_language_array">
+        <item>Английский</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string-array name="pref_language_values">
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+
     <string-array name="pref_gender_array">
         <item>Мужской</item>
         <item>Женский</item>
@@ -220,5 +230,6 @@
     <string name="billing_ads_enable">Реклама включена</string>
     <string name="billing_button_buy">Отключить</string>
     <string name="message_billing_success">Покупка успешно завершена!</string>
+    <string name="pref_data_language">Язык базы данных</string>
 
 </resources>
