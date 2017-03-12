@@ -231,5 +231,7 @@
     <string name="billing_button_buy">Отключить</string>
     <string name="message_billing_success">Покупка успешно завершена!</string>
     <string name="pref_data_language">Язык базы данных</string>
+    <string name="pref_policy">Политика конфиденциальности</string>
+    <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 
 </resources>

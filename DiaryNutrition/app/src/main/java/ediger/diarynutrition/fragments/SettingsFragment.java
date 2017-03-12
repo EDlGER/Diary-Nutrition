@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -32,6 +33,7 @@ import java.util.Locale;
 
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.activity.PolicyActivity;
 import ediger.diarynutrition.activity.ProgramActivity;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.ChangeCaloriesDialog;
@@ -52,6 +54,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_DATA_PATH = "data_path";
     public static final String KEY_PREF_DATA_BACKUP = "data_backup";
     public static final String KEY_PREF_DATA_RESTORE = "data_restore";
+    public static final String KEY_PREF_POLICY = "policy";
 
     private static final int REQ_WRITE_STORAGE = 112;
 
@@ -151,6 +154,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                             REQ_WRITE_STORAGE);
                 }
                 AppContext.getDbDiary().restoreDb();
+                return false;
+            }
+        });
+
+        Preference privacyPolicy = findPreference(KEY_PREF_POLICY);
+        privacyPolicy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent intent = new Intent(getActivity(), PolicyActivity.class);
+                startActivity(intent);
                 return false;
             }
         });

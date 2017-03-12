@@ -170,6 +170,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         switch(item.getItemId()){
             case android.R.id.home:
                 getActivity().onBackPressed();
+                break;
             case R.id.action_add:
                 DialogFragment a = new AddFoodDialog();
                 a.setTargetFragment(FavorTab.this, REQ_CODE_ADD_FOOD);

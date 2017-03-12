@@ -103,6 +103,7 @@
     <string name="pref_data_restore">Restore</string>
     <string name="pref_data_path">Path</string>
     <string name="pref_data_language">Database language</string>
+    <string name="pref_policy">Privacy Policy</string>
 
     <string name="intro_done">Done</string>
     <string name="intro_title">Nutrition program</string>
@@ -144,6 +145,8 @@
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
+
+    <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 
     <string name="tab_database">Database</string>
     <string name="tab_user">Custom</string>

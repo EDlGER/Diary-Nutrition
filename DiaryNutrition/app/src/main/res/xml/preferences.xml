@@ -79,4 +79,8 @@
 
     </PreferenceCategory>
 
+    <Preference
+        android:key="policy"
+        android:title="@string/pref_policy"/>
+
 </PreferenceScreen>
