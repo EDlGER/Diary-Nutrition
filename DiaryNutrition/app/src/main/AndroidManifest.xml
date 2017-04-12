@@ -32,7 +32,7 @@
             android:name=".activity.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activity.FoodActivity"
             android:label="@string/act_food"

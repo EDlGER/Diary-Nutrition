@@ -2,9 +2,6 @@ package ediger.diarynutrition.objects;
 
 import android.app.Application;
 
-import java.util.Calendar;
-import java.util.Locale;
-
 import ediger.diarynutrition.database.DbDiary;
 
 /**
