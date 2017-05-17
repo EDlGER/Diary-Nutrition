@@ -1,7 +1,10 @@
 package ediger.diarynutrition.database;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
 import android.database.Cursor;
@@ -21,6 +24,7 @@ import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.objects.AppContext;
 
 public class DbDiary {
 
@@ -50,7 +54,12 @@ public class DbDiary {
     /** Поля таблицы Weight */
     public static String ALIAS_WEIGHT = "weight";
 
-    private static final int DB_VERSION = 1;
+    /**Поля таблицы Water */
+    //ALIAS_DATETIME = "datetime"
+    public static String ALIAS_AMOUNT = "amount";
+
+    private static final int DB_VERSION = 2;
+
     //private static final String DB_FOLDER = "/data/data/ediger.diarynutrition/databases/";
 
     private static final String TABLE_RECORD = "record";
@@ -58,6 +67,7 @@ public class DbDiary {
     private static final String TABLE_MEAL = "meal";
     private static final String TABLE_DATE = "date";
     private static final String TABLE_WEIGHT = "weight";
+    private static final String TABLE_WATER = "water";
 
     private String dbName;
 
@@ -154,6 +164,17 @@ public class DbDiary {
                 dst.close();
 
                 Toast.makeText(context, R.string.message_data_restore, Toast.LENGTH_SHORT).show();
+
+                //Перезагрузка приложения для того, чтобы сработало автоматическое обновление БД
+                Intent restartIntent = context.getPackageManager()
+                        .getLaunchIntentForPackage(context.getPackageName() );
+                PendingIntent intent = PendingIntent.getActivity(
+                        context, 0,
+                        restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                manager.set(AlarmManager.RTC, System.currentTimeMillis() + 10, intent);
+                System.exit(2);
+
             }
 
         } catch (Exception e) {
@@ -557,6 +578,24 @@ public class DbDiary {
         cv.put(ALIAS_FAV,state);
         String where = ALIAS_ID + " = " + id;
         db.update(TABLE_FOOD,cv,where,null);
+    }
+
+    public void addWater(long date, int amount) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_DATETIME, date);
+        cv.put(ALIAS_AMOUNT, amount);
+        db.insert(TABLE_WATER, null, cv);
+    }
+
+    public void delWater(long id) {
+        db.delete(TABLE_WATER, ALIAS_ID + " = " + id, null);
+    }
+
+    public void editWater(long id, long datetime, int amount) {
+        ContentValues cv = new ContentValues();
+        cv.put(ALIAS_DATETIME, datetime);
+        cv.put(ALIAS_AMOUNT, amount);
+        db.update(TABLE_WATER, cv, ALIAS_ID + " = " + id, null);
     }
 
     private class DbHelper extends SQLiteAssetHelper {

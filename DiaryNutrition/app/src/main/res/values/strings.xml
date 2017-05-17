@@ -20,6 +20,7 @@
 
     <string name="menu_action_food">Food</string>
     <string name="menu_action_weight">Weight</string>
+    <string name="menu_action_water">Water</string>
 
     <string name="title_sec1">Diary</string>
     <string name="title_sec2">Settings</string>
@@ -64,19 +65,26 @@
     <string name="dialog_serv">Serving</string>
     <string name="dialog_meal">Meal</string>
 
-    <string name="dialog_serv_std">100</string>
+    <string name="dialog_serv_std" translatable="false">100</string>
     <string name="dialog_change_date">Select</string>
     <string name="dialog_tittle_date">Select date</string>
-
     <string name="dialog_tittle_change">Food change</string>
     <string name="dialog_tittle_f">Adding food</string>
     <string name="dialog_tittle_w">Type your weight, kg</string>
     <string name="dialog_title_c">Enter the goal calories</string>
+    <string name="dialog_title_water_serving">Enter amount of water</string>
+    <string name="dialog_title_water">Adding water</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_name_f">Food name</string>
     <string name="dialog_weight">Weight</string>
     <string name="dialog_change">Change</string>
+    <string name="dialog_amount_water">Amount, ml</string>
+    <string name="dialog_ml">ml</string>
+    <string name="dialog_water_value1" translatable="false">250</string>
+    <string name="dialog_water_value2" translatable="false">500</string>
+    <string name="dialog_water_value3" translatable="false">750</string>
+    <string name="dialog_water_value4" translatable="false">1000</string>
 
     <string name="empty_list_weight">Add current weight</string>
     <string name="empty_list_food">No food added</string>
@@ -141,6 +149,7 @@
     <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
     <string name="message_dialog_weight">Weight is not entered</string>
     <string name="message_dialog_cal">Calories is not entered</string>
+    <string name="message_dialog_water">Water is not entered</string>
     <string name="message_record_meal_copy">Meal copied</string>
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
@@ -161,7 +170,7 @@
     <string name="add_food_more">Add more food</string>
 
     <string name="elv_gram"> g</string>
-    <string name="percent">%</string>
+    <string name="percent" translatable="false">%</string>
 
     <string name="macro_cal">Calories</string>
     <string name="macro_carbo">Carbohydrates</string>

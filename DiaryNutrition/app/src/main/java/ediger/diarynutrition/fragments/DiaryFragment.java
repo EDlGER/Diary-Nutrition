@@ -12,6 +12,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.fragments.dialogs.AddWaterDialog;
 import ediger.diarynutrition.fragments.dialogs.AddWeightDialog;
 import ediger.diarynutrition.objects.AppContext;
 import info.abdolahi.CircularMusicProgressBar;
@@ -192,7 +195,7 @@ public class DiaryFragment extends Fragment implements
 
         mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
         mainActivity.menuMultipleActions.collapseImmediately();
-        mainActivity.actionA.setOnClickListener(new View.OnClickListener() {
+        mainActivity.actionFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), FoodActivity.class);
@@ -200,11 +203,18 @@ public class DiaryFragment extends Fragment implements
                 startActivity(addIntent);
             }
         });
-        mainActivity.actionB.setOnClickListener(new View.OnClickListener() {
+        mainActivity.actionWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment a = new AddWeightDialog();
                 a.show(getFragmentManager(), "add_weight_dialog");
+                mainActivity.menuMultipleActions.collapse();
+            }
+        });
+        mainActivity.actionWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWaterDialog();
                 mainActivity.menuMultipleActions.collapse();
             }
         });
@@ -410,6 +420,21 @@ public class DiaryFragment extends Fragment implements
         }
         cursor.close();
     }
+
+    private void showWaterDialog() {
+        boolean isLargeLayout = getResources().getBoolean(R.bool.layout_large);
+        FragmentManager fragmentManager = getFragmentManager();
+        AddWaterDialog dialog = new AddWaterDialog();
+
+        if (isLargeLayout) {
+            dialog.show(fragmentManager, "dialog");
+        } else {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
+        }
+    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

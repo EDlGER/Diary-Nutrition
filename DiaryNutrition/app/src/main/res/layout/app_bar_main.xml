@@ -139,22 +139,31 @@
         android:layout_marginEnd="16dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_title="@string/menu_action_food"
-            fab:fab_icon="@drawable/ic_food_menu_white"/>
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_b"
+            android:id="@+id/action_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccentPressed"
             fab:fab_title="@string/menu_action_weight"
             fab:fab_icon="@drawable/ic_scale_white" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_water"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccentPressed"
+            fab:fab_title="@string/menu_action_water"
+            fab:fab_icon="@drawable/ic_water_white" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/action_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorAccent"
+            fab:fab_colorPressed="@color/colorAccentPressed"
+            fab:fab_title="@string/menu_action_food"
+            fab:fab_icon="@drawable/ic_food_menu_white"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

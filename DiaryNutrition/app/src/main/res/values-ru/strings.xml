@@ -57,7 +57,6 @@
     <string name="dialog_serv">Порция</string>
     <string name="dialog_meal">Прием пищи</string>
 
-    <string name="dialog_serv_std">100</string>
     <string name="dialog_change_date">Выбрать</string>
     <string name="dialog_tittle_date">Выберите дату</string>
 
@@ -207,7 +206,6 @@
     <string name="title_activity_program">Программа питания</string>
     <string name="message_program_perc">Сумма процентов должна быть 100</string>
     <string name="message_program_gram">При изменении макронутриентов изменится количество калорий и соотношение БЖУ</string>
-    <string name="percent">%</string>
     <string name="macro_carbo_short">У</string>
     <string name="macro_fat_short">Ж</string>
     <string name="macro_prot_short">Б</string>
@@ -233,6 +231,12 @@
     <string name="pref_data_language">Язык базы данных</string>
     <string name="pref_policy">Политика конфиденциальности</string>
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
+    <string name="menu_action_water">Вода</string>
+    <string name="dialog_amount_water">Количество, мл</string>
+    <string name="dialog_title_water">Добавление воды</string>
+    <string name="message_dialog_water">Количество воды не введено</string>
+    <string name="dialog_ml">мл</string>
+    <string name="dialog_title_water_serving">Введите количество воды</string>
 
 
 </resources>

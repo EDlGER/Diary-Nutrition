@@ -18,7 +18,8 @@
 
         <EditTextPreference
             android:key="height"
-            android:title="@string/pref_height" />
+            android:title="@string/pref_height"
+            android:inputType="number"/>
 
         <ListPreference
             android:key="activity"

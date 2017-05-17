@@ -45,14 +45,13 @@ public class ChangeCaloriesDialog extends DialogFragment {
                         Toast toast;
 
                         if (changeCal.getText().toString().equals("") ||
-                                changeCal.getText().toString().equals("0")) {
+                                changeCal.getText().toString().startsWith("0")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
                                     getString(R.string.message_dialog_cal),
                                     Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
                             int cal = Integer.parseInt(changeCal.getText().toString());
-                            if (cal == 0) {cal = 1;}
 
                             SharedPreferences.Editor editor = pref.edit();
                             editor.putInt(SettingsFragment.KEY_PREF_CALORIES, cal);

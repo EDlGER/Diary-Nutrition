@@ -57,9 +57,11 @@ public class MainActivity extends AppCompatActivity
 
     public Boolean isFirstRun;
 
-    public View actionA;
+    public View actionFood;
 
-    public View actionB;
+    public View actionWeight;
+
+    public View actionWater;
 
     public RelativeLayout datePicker;
 
@@ -146,8 +148,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
-        actionA = findViewById(R.id.action_a);
-        actionB = findViewById(R.id.action_b);
+        actionFood = findViewById(R.id.action_food);
+        actionWeight = findViewById(R.id.action_weight);
+        actionWater = findViewById(R.id.action_water);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
