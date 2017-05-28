@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -35,6 +36,7 @@ import java.util.Locale;
 
 import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.objects.AppContext;
 
 /**
@@ -49,6 +51,8 @@ public class AddWaterDialog extends DialogFragment {
     private static final String PREF_WATER_SERVING_4 = "water_serving_4";
 
     private long time;
+    private int hour;
+    private int minute;
     private int cardId;
 
     private SharedPreferences pref;
@@ -74,10 +78,14 @@ public class AddWaterDialog extends DialogFragment {
         }
     };
 
+    private DiaryFragment diaryFragment;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.dialog_add_water, container, false);
+
+        diaryFragment = (DiaryFragment) getTargetFragment();
 
         txtWater1 = (TextView) root.findViewById(R.id.txt_water_1);
         txtWater2 = (TextView) root.findViewById(R.id.txt_water_2);
@@ -126,7 +134,20 @@ public class AddWaterDialog extends DialogFragment {
         }
         setHasOptionsMenu(true);
 
+        Cursor cursor = AppContext.getDbDiary().getDate();
+        cursor.moveToFirst();
+        time = cursor.getLong(0);
+        cursor.close();
+
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        calendar.setTimeInMillis(time);
+        calendar.set(calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH),
+                hour, minute);
         time = calendar.getTimeInMillis();
+
 
         InputMethodManager im = (InputMethodManager) getActivity()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -142,21 +163,25 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_1:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater1.getText().toString()));
                     hideKeyboard();
+                    diaryFragment.updateWaterUI();
                     dismiss();
                     break;
                 case R.id.card_water_2:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater2.getText().toString()));
                     hideKeyboard();
+                    diaryFragment.updateWaterUI();
                     dismiss();
                     break;
                 case R.id.card_water_3:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater3.getText().toString()));
                     hideKeyboard();
+                    diaryFragment.updateWaterUI();
                     dismiss();
                     break;
                 case R.id.card_water_4:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater4.getText().toString()));
                     hideKeyboard();
+                    diaryFragment.updateWaterUI();
                     dismiss();
                     break;
             }
@@ -229,6 +254,7 @@ public class AddWaterDialog extends DialogFragment {
         } else {
             AppContext.getDbDiary().addWater(time, Integer.parseInt(edWater.getText().toString()));
             hideKeyboard();
+            diaryFragment.updateWaterUI();
             dismiss();
         }
     }

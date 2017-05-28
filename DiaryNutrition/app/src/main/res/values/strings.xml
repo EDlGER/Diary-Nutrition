@@ -31,6 +31,8 @@
     <string name="tittle_search">Food search</string>
     <string name="title_activity_program">Nutrition program</string>
 
+    <string name="card_button_more">View more</string>
+
     <string name="food_tab1">Custom</string>
     <string name="food_tab2">Favorites</string>
 
@@ -72,6 +74,7 @@
     <string name="dialog_tittle_f">Adding food</string>
     <string name="dialog_tittle_w">Type your weight, kg</string>
     <string name="dialog_title_c">Enter the goal calories</string>
+    <string name="dialog_title_water_edit">Enter the goal amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
     <string name="dialog_title_water">Adding water</string>
     <string name="dialog_add_f">Add</string>
@@ -85,6 +88,7 @@
     <string name="dialog_water_value2" translatable="false">500</string>
     <string name="dialog_water_value3" translatable="false">750</string>
     <string name="dialog_water_value4" translatable="false">1000</string>
+    <string name="dialog_water_help">Hold to change values</string>
 
     <string name="empty_list_weight">Add current weight</string>
     <string name="empty_list_food">No food added</string>
@@ -137,6 +141,7 @@
     <string name="intro_nutrition_info">You can change this values in settings</string>
 
     <string name="macronutrients">Macronutrients</string>
+    <string name="water">Water</string>
 
     <string name="message_backpress">Press back again to exit</string>
     <string name="message_serving">Serving size is not entered</string>

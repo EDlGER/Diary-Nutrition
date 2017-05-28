@@ -17,9 +17,10 @@ import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.SettingsFragment;
 
 /**
- * Created by root on 06.12.16.
+ * Created by ediger on 27.05.17.
  */
-public class ChangeCaloriesDialog extends DialogFragment {
+
+public class ChangeWaterDialog extends DialogFragment {
 
     private SharedPreferences pref;
 
@@ -32,11 +33,11 @@ public class ChangeCaloriesDialog extends DialogFragment {
 
         View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit, null);
         builder.setView(relative);
-        builder.setTitle(getString(R.string.dialog_title_c));
+        builder.setTitle(getString(R.string.dialog_title_water_edit));
 
         TextInputLayout til = (TextInputLayout) relative.findViewById(R.id.inputLayout);
-        final EditText changeCal = (EditText) til.findViewById(R.id.edit);
-        til.setHint(getString(R.string.macro_cal));
+        final EditText changeWater = (EditText) til.findViewById(R.id.edit);
+        til.setHint(getString(R.string.dialog_amount_water));
 
         builder.setPositiveButton(R.string.dialog_change,
                 new DialogInterface.OnClickListener() {
@@ -44,17 +45,17 @@ public class ChangeCaloriesDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast toast;
 
-                        if (changeCal.getText().toString().equals("") ||
-                                changeCal.getText().toString().startsWith("0")) {
+                        if (changeWater.getText().toString().equals("") ||
+                                changeWater.getText().toString().startsWith("0")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
-                                    getString(R.string.message_dialog_cal),
+                                    getString(R.string.message_dialog_water),
                                     Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
-                            int cal = Integer.parseInt(changeCal.getText().toString());
+                            int water = Integer.parseInt(changeWater.getText().toString());
 
                             SharedPreferences.Editor editor = pref.edit();
-                            editor.putInt(SettingsFragment.KEY_PREF_CALORIES, cal);
+                            editor.putInt(SettingsFragment.KEY_PREF_WATER, water);
                             editor.apply();
                         }
                     }
@@ -71,4 +72,5 @@ public class ChangeCaloriesDialog extends DialogFragment {
         builder.setCancelable(true);
         return builder.create();
     }
+
 }

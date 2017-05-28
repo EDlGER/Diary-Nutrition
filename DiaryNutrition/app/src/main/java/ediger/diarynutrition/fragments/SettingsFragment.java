@@ -37,6 +37,7 @@ import ediger.diarynutrition.activity.PolicyActivity;
 import ediger.diarynutrition.activity.ProgramActivity;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.ChangeCaloriesDialog;
+import ediger.diarynutrition.fragments.dialogs.ChangeWaterDialog;
 import ediger.diarynutrition.objects.AppContext;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.
@@ -48,6 +49,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_ACTIVITY = "activity";
     public static final String KEY_PREF_PURPOSE = "purpose";
     public static final String KEY_PREF_CALORIES = "calories";
+    public static final String KEY_PREF_WATER = "water";
     public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
     public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
     public static final String KEY_PREF_DATA_LANGUAGE= "data_language";
@@ -93,6 +95,18 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             public boolean onPreferenceClick(Preference preference) {
                 DialogFragment dialog = new ChangeCaloriesDialog();
                 dialog.show(getFragmentManager(), "change_calories_dialog");
+                return false;
+            }
+        });
+
+        Preference waterPref = findPreference(KEY_PREF_WATER);
+        //Вместо 2000 вставить подсчитанное значение
+        waterPref.setSummary(String.valueOf(pref.getInt(KEY_PREF_WATER, 2000)));
+        waterPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                DialogFragment dialog = new ChangeWaterDialog();
+                dialog.show(getFragmentManager(), "change_water_dialog");
                 return false;
             }
         });
@@ -254,6 +268,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Preference caloriesPref = findPreference(key);
             caloriesPref.setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
             calculateUserProgram();
+        }
+
+        if (key.equals(KEY_PREF_WATER)) {
+            Preference waterPref = findPreference(key);
+            waterPref.setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
         }
     }
 

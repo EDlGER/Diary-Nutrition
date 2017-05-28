@@ -237,6 +237,10 @@
     <string name="message_dialog_water">Количество воды не введено</string>
     <string name="dialog_ml">мл</string>
     <string name="dialog_title_water_serving">Введите количество воды</string>
+    <string name="dialog_water_help">Удерживайте для изменения значений</string>
+    <string name="card_button_more">Подробнее</string>
+    <string name="water">Вода</string>
+    <string name="dialog_title_water_edit">Введите целевое количество воды, мл</string>
 
 
 </resources>

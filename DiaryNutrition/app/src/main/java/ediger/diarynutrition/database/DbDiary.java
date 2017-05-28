@@ -58,6 +58,8 @@ public class DbDiary {
     //ALIAS_DATETIME = "datetime"
     public static String ALIAS_AMOUNT = "amount";
 
+    public static String ALIAS_SUM_AMOUNT = "sum_amount";
+
     private static final int DB_VERSION = 2;
 
     //private static final String DB_FOLDER = "/data/data/ediger.diarynutrition/databases/";
@@ -186,9 +188,31 @@ public class DbDiary {
         return db.query(TABLE_MEAL, null, null, null, null, null, null);
     }
 
+    public Cursor getWaterData(long date) {
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date + 86356262);
+        String sql = "select "
+                + "w.amount as " + ALIAS_AMOUNT
+                + ", w.datetime as " + ALIAS_DATETIME
+                + " from water w"
+                + " where w.datetime between ? and ?"
+                + " order by w.datetime asc";
+        return db.rawQuery(sql, new String[] {arg1, arg2});
+    }
+
+    public Cursor getDayWaterData(long date) {
+        String arg1 = Long.toString(date);
+        String arg2 = Long.toString(date + 86356262);
+        String sql = "select "
+                + "sum(w.amount) as " + ALIAS_SUM_AMOUNT
+                + " from water w"
+                + " where w.datetime between ? and ?";
+        return db.rawQuery(sql, new String[] {arg1, arg2});
+    }
+
     public Cursor getDayData(long date) {
         String arg1 = Long.toString(date);
-        String arg2 = Long.toString(date+86356262);  // 86356262 = 24 часа
+        String arg2 = Long.toString(date + 86356262);  // 86356262 = 24 часа
         String sql = "select "
                 + "sum(f.cal/100*r.serving) as " +ALIAS_CAL
                 + ",sum(f.[carbo]/100*r.[serving]) as " +ALIAS_CARBO
@@ -212,7 +236,7 @@ public class DbDiary {
                 + " FROM record r"
                 + " inner join food f on r.food_id=f._id"
                 + " where r.record_datetime between ? and ?"
-                + "group by r.meal_id";
+                + " group by r.meal_id";
         return db.rawQuery(sql, new String[]{arg1, arg2});
     }
 

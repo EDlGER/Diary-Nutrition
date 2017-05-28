@@ -47,6 +47,10 @@
             android:title="@string/macro_cal" />
 
         <Preference
+            android:key="water"
+            android:title="@string/water" />
+
+        <Preference
             android:key="program_edit"
             android:title="@string/pref_program_edit"/>
 

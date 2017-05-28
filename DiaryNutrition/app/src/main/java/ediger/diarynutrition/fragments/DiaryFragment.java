@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -31,10 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.activity.FoodActivity;
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.activity.WaterActivity;
 import ediger.diarynutrition.adapters.RecordAdapter;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.dialogs.AddWaterDialog;
@@ -70,10 +73,14 @@ public class DiaryFragment extends Fragment implements
     private TextView consCarbo;
     private TextView consProt;
     private TextView consFat;
+    private TextView water;
+    private TextView waterTotal;
+    private TextView waterRemain;
     private CircularMusicProgressBar pbCal;
     private CircularMusicProgressBar pbCarbo;
     private CircularMusicProgressBar pbProt;
     private CircularMusicProgressBar pbFat;
+    private CircularMusicProgressBar pbWater;
 
     @Nullable
     @Override
@@ -150,8 +157,34 @@ public class DiaryFragment extends Fragment implements
                 android.R.layout.simple_list_item_1,
                 childFrom, childTo);
 
+        //R.layout.footer============================
+        footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
+
+        CardView cardWater = (CardView) footerView.findViewById(R.id.card_water);
+        cardWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View expansionView = rootview.findViewById(R.id.expansion_view);
+                int location[] = new int[2];
+                expansionView.getLocationInWindow(location);
+
+                Intent intent = new Intent(getActivity(), WaterActivity.class);
+                intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
+                intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
+                intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
+                intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
+                intent.putExtra("date", date);
+
+                startActivity(intent);
+            }
+        });
+
+        water = (TextView) footerView.findViewById(R.id.txt_water);
+        waterTotal = (TextView) footerView.findViewById(R.id.txt_water_total);
+        waterRemain = (TextView) footerView.findViewById(R.id.txt_water_remain);
+        pbWater = (CircularMusicProgressBar) footerView.findViewById(R.id.pb_water);
+
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
-        footerView = inflater.inflate(R.layout.footer,listRecord, false);
         listRecord.addFooterView(footerView, null, false);
         listRecord.setAdapter(recordAdapter);
         registerForContextMenu(listRecord);
@@ -168,6 +201,7 @@ public class DiaryFragment extends Fragment implements
         }
 
         setHeaderData();
+        updateWaterUI();
 
         return rootview;
     }
@@ -241,6 +275,7 @@ public class DiaryFragment extends Fragment implements
                     listRecord.collapseGroup(i);
                 }
                 setHeaderData();
+                updateWaterUI();
 
                 mainActivity.hideCalendarView();
             }
@@ -258,6 +293,7 @@ public class DiaryFragment extends Fragment implements
             listRecord.collapseGroup(i);
         }
         setHeaderData();
+        updateWaterUI();
     }
 
     @Override
@@ -421,18 +457,31 @@ public class DiaryFragment extends Fragment implements
         cursor.close();
     }
 
+    public void updateWaterUI() {
+        int value = 0;
+        //2000 заменить
+        int target = pref.getInt(SettingsFragment.KEY_PREF_WATER, 2000);
+        waterTotal.setText(String.valueOf(target));
+
+        Cursor cursor = AppContext.getDbDiary().getDayWaterData(date);
+        if (cursor.moveToFirst()) {
+            value = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT));
+            water.setText(String.valueOf(value));
+        }
+        cursor.close();
+
+        waterRemain.setText(String.valueOf(target - value));
+        pbWater.setValue(value * 100 / target);
+    }
+
     private void showWaterDialog() {
-        boolean isLargeLayout = getResources().getBoolean(R.bool.layout_large);
         FragmentManager fragmentManager = getFragmentManager();
         AddWaterDialog dialog = new AddWaterDialog();
+        dialog.setTargetFragment(this, 0);
 
-        if (isLargeLayout) {
-            dialog.show(fragmentManager, "dialog");
-        } else {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
-        }
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
     }
 
 

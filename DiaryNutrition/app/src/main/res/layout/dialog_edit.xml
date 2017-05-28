@@ -6,7 +6,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/caloriesInputLayout"
+        android:id="@+id/inputLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp">
 
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:ems="8"
             android:textSize="22sp"
-            android:id="@+id/calories_change"
+            android:id="@+id/edit"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="41dp"

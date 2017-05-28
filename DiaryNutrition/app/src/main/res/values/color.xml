@@ -17,6 +17,9 @@
     <color name="background_dark">#E0E0E0</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="black_opacity_87">#DE000000</color>
+    <color name="black_opacity_12">#1F000000</color>
+
     <color name="chart_red">#FF4444</color>
     <color name="chart_green">#99CC00</color>
     <color name="chart_orange">#FFBB33</color>

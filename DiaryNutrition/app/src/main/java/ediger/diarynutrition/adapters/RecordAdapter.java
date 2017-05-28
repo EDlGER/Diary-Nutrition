@@ -63,7 +63,7 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         cursor.close();
 
         if (view == null ) {
-                view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
+            view = layoutInflater.inflate(R.layout.record_group_item1,parent,false);
         }
 
         RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.group_layout);

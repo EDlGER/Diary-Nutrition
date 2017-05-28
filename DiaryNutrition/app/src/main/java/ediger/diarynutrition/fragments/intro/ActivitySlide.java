@@ -30,7 +30,8 @@ public class ActivitySlide extends Fragment implements ISlideSelectionListener{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_intro_activity, container, false);
 
-        final String [] info = {getString(R.string.intro_activity_1),
+        final String [] info = {
+                getString(R.string.intro_activity_1),
                 getString(R.string.intro_activity_2),
                 getString(R.string.intro_activity_3),
                 getString(R.string.intro_activity_4)};
