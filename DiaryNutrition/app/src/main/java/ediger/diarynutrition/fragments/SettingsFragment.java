@@ -99,9 +99,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             }
         });
 
+
+
         Preference waterPref = findPreference(KEY_PREF_WATER);
-        //Вместо 2000 вставить подсчитанное значение
-        waterPref.setSummary(String.valueOf(pref.getInt(KEY_PREF_WATER, 2000)));
+        waterPref.setSummary(String.valueOf(pref.getInt(KEY_PREF_WATER, getDefaultWater())));
         waterPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -272,7 +273,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         if (key.equals(KEY_PREF_WATER)) {
             Preference waterPref = findPreference(key);
-            waterPref.setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
+            waterPref.setSummary(String.valueOf(sharedPreferences.getInt(key, getDefaultWater())));
         }
     }
 
@@ -363,5 +364,23 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         editor.putInt("fat", (int) fat);
         editor.putInt("carbo", (int) carbo);
         editor.apply();
+    }
+
+    private int getDefaultWater() {
+        int gender = Integer.parseInt(pref.getString(KEY_PREF_GENDER, "1"));
+        float weight = 70;
+        int water;
+
+        Cursor cursor = AppContext.getDbDiary().getAllWeight();
+        if (cursor.moveToFirst()) {
+            weight = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_WEIGHT));
+        }
+        if (gender == 1) {
+            water = (int) (weight * 35);
+        } else {
+            water = (int) (weight * 31);
+        }
+
+        return water;
     }
 }

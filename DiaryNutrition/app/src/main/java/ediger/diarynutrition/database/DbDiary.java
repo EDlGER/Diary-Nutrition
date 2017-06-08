@@ -192,7 +192,8 @@ public class DbDiary {
         String arg1 = Long.toString(date);
         String arg2 = Long.toString(date + 86356262);
         String sql = "select "
-                + "w.amount as " + ALIAS_AMOUNT
+                + "w._id as " + ALIAS_ID
+                + ", w.amount as " + ALIAS_AMOUNT
                 + ", w.datetime as " + ALIAS_DATETIME
                 + " from water w"
                 + " where w.datetime between ? and ?"

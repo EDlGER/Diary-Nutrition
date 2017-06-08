@@ -336,11 +336,48 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/water"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_sum_water"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="#ff212121"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="85dp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_pur_water"
+                    android:text="999"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="50dp"/>
 
     </LinearLayout>
 

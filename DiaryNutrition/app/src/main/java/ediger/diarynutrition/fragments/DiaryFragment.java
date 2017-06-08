@@ -1,6 +1,7 @@
 package ediger.diarynutrition.fragments;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.Intent;
@@ -49,6 +50,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
@@ -81,6 +83,9 @@ public class DiaryFragment extends Fragment implements
     private CircularMusicProgressBar pbProt;
     private CircularMusicProgressBar pbFat;
     private CircularMusicProgressBar pbWater;
+
+    private AddWaterDialog dialog;
+    FragmentTransaction transaction;
 
     @Nullable
     @Override
@@ -157,25 +162,32 @@ public class DiaryFragment extends Fragment implements
                 android.R.layout.simple_list_item_1,
                 childFrom, childTo);
 
-        //R.layout.footer============================
+        //footer
         footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
 
         CardView cardWater = (CardView) footerView.findViewById(R.id.card_water);
         cardWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View expansionView = rootview.findViewById(R.id.expansion_view);
-                int location[] = new int[2];
-                expansionView.getLocationInWindow(location);
+                Cursor cursor = AppContext.getDbDiary().getWaterData(date);
+                if (cursor.moveToFirst()) {
+                    View expansionView = rootview.findViewById(R.id.expansion_view);
+                    int location[] = new int[2];
+                    expansionView.getLocationInWindow(location);
 
-                Intent intent = new Intent(getActivity(), WaterActivity.class);
-                intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
-                intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
-                intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
-                intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
-                intent.putExtra("date", date);
+                    Intent intent = new Intent(getActivity(), WaterActivity.class);
+                    intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
+                    intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
+                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
+                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
+                    intent.putExtra("date", date);
 
-                startActivity(intent);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.message_card_water),
+                            Toast.LENGTH_SHORT).show();
+                }
+                cursor.close();
             }
         });
 
@@ -204,6 +216,15 @@ public class DiaryFragment extends Fragment implements
         updateWaterUI();
 
         return rootview;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == AddWaterDialog.REQ_WATER) {
+            updateWaterUI();
+            dialog.setTargetFragment(null, 0);
+        }
     }
 
     @Override
@@ -476,10 +497,10 @@ public class DiaryFragment extends Fragment implements
 
     private void showWaterDialog() {
         FragmentManager fragmentManager = getFragmentManager();
-        AddWaterDialog dialog = new AddWaterDialog();
+        dialog = new AddWaterDialog();
         dialog.setTargetFragment(this, 0);
 
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
     }

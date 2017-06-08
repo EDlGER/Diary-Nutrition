@@ -51,8 +51,10 @@ public class SummaryWeekFragment extends Fragment {
 
     private ColumnChartView chartCal;
     private ColumnChartView chartMacro;
+    private ColumnChartView chartWater;
     private ColumnChartData dataCal;
     private ColumnChartData dataMacro;
+    private ColumnChartData dataWater;
 
     @Nullable
     @Override
@@ -61,6 +63,7 @@ public class SummaryWeekFragment extends Fragment {
 
         chartCal = (ColumnChartView) rootview.findViewById(R.id.week_chart_cal);
         chartMacro = (ColumnChartView) rootview.findViewById(R.id.week_chart_macro);
+        chartWater = (ColumnChartView) rootview.findViewById(R.id.week_chart_water);
         weekChange = (AppCompatSpinner) rootview.findViewById(R.id.sp_week_change);
 
         //Получение первого дня текущей недели
@@ -96,6 +99,7 @@ public class SummaryWeekFragment extends Fragment {
                 firstWeekDay = c.getTimeInMillis();
                 generateCalData();
                 generateMacroData();
+                generateWaterData();
             }
 
             @Override
@@ -104,17 +108,29 @@ public class SummaryWeekFragment extends Fragment {
             }
         });
 
-        generateCalData();
-        generateMacroData();
-
         chartCal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hasLabels = !hasLabels;
                 generateCalData();
                 generateMacroData();
+                generateWaterData();
             }
         });
+
+        chartWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasLabels = !hasLabels;
+                generateCalData();
+                generateMacroData();
+                generateWaterData();
+            }
+        });
+
+        generateCalData();
+        generateMacroData();
+        generateWaterData();
 
         return rootview;
     }
@@ -163,7 +179,7 @@ public class SummaryWeekFragment extends Fragment {
 
         List<SubcolumnValue> valuesCal;
 
-        Cursor cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());;
+        Cursor cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());
 
         for (int i = 0; i < numberOfColumns; i++) {
             cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());
@@ -219,7 +235,7 @@ public class SummaryWeekFragment extends Fragment {
 
         List<SubcolumnValue> values;
 
-        Cursor cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());;
+        Cursor cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());
 
         for (int i = 0; i < numberOfColumns; i++) {
             cursor = AppContext.getDbDiary().getDayData(currentWeek.getTimeInMillis());
@@ -264,6 +280,58 @@ public class SummaryWeekFragment extends Fragment {
         chartMacro.setColumnChartData(dataMacro);
         chartMacro.setZoomEnabled(false);
         chartMacro.setValueSelectionEnabled(true);
+    }
+
+    private void generateWaterData() {
+        int amount;
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("EE d", Locale.getDefault());
+        Calendar currentWeek = Calendar.getInstance();
+        currentWeek.setTimeInMillis(firstWeekDay);
+
+        Axis axisX = new Axis();
+        Axis axisY = new Axis().setHasLines(true);
+        List<AxisValue> axisValues = new ArrayList<>();
+
+        List<Column> columnsWater = new ArrayList<>();
+
+        List<SubcolumnValue> valuesWater;
+
+        Cursor cursor = AppContext.getDbDiary().getDayWaterData(currentWeek.getTimeInMillis());
+
+        for (int i = 0; i < numberOfColumns; i++) {
+            cursor = AppContext.getDbDiary().getDayWaterData(currentWeek.getTimeInMillis());
+            if (cursor.moveToFirst()) {
+                amount = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT));
+                valuesWater = new ArrayList<>();
+                valuesWater.add(new SubcolumnValue(amount,
+                        ContextCompat.getColor(getActivity(), R.color.colorAccent)));
+                axisValues.add(new AxisValue(i).setLabel(dateFormatter.format(currentWeek.getTime())));
+                Column column = new Column(valuesWater);
+                if (hasLabels) {
+                    if (amount == 0) {
+                        column.setHasLabels(false);
+                    } else {
+                        column.setHasLabels(true);
+                    }
+                } else {
+                    column.setHasLabels(false);
+                }
+
+                columnsWater.add(column);
+            }
+            currentWeek.add(Calendar.DAY_OF_WEEK, 1);
+        }
+        cursor.close();
+
+        axisX.setValues(axisValues);
+        axisY.setMaxLabelChars(4);
+
+        dataWater = new ColumnChartData(columnsWater);
+        dataWater.setAxisXBottom(axisX);
+        dataWater.setAxisYLeft(axisY);
+
+        chartWater.setColumnChartData(dataWater);
+        chartWater.setZoomEnabled(false);
     }
 
 }

@@ -41,11 +41,13 @@ public class SummaryDayFragment extends Fragment {
     private TextView txtCarbo;
     private TextView txtProt;
     private TextView txtFat;
+    private TextView txtWater;
 
     private TextView txtCalRec;
     private TextView txtCarboRec;
     private TextView txtProtRec;
     private TextView txtFatRec;
+    private TextView txtWaterRec;
 
     private TextView txtCarboRecPersent;
     private TextView txtProtRecPersent;
@@ -75,11 +77,13 @@ public class SummaryDayFragment extends Fragment {
         txtCarbo = (TextView) rootview.findViewById(R.id.txt_sum_carbo);
         txtProt = (TextView) rootview.findViewById(R.id.txt_sum_prot);
         txtFat = (TextView) rootview.findViewById(R.id.txt_sum_fat);
+        txtWater = (TextView) rootview.findViewById(R.id.txt_sum_water);
 
         txtCalRec = (TextView) rootview.findViewById(R.id.txt_pur_cal);
         txtCarboRec = (TextView) rootview.findViewById(R.id.txt_pur_carbo);
         txtProtRec = (TextView) rootview.findViewById(R.id.txt_pur_prot);
         txtFatRec = (TextView) rootview.findViewById(R.id.txt_pur_fat);
+        txtWaterRec = (TextView) rootview.findViewById(R.id.txt_pur_water);
 
         txtCarboRecPersent = (TextView) rootview.findViewById(R.id.txt_carbo_rec);
         txtProtRecPersent = (TextView) rootview.findViewById(R.id.txt_prot_rec);
@@ -110,6 +114,7 @@ public class SummaryDayFragment extends Fragment {
         }
 
         generateData();
+        getWaterData();
 
         return rootview;
     }
@@ -154,6 +159,7 @@ public class SummaryDayFragment extends Fragment {
                 }
 
                 generateData();
+                getWaterData();
 
                 mainActivity.hideCalendarView();
             }
@@ -227,5 +233,18 @@ public class SummaryDayFragment extends Fragment {
             txtFat.setText("0");
         }
         cursor.close();
+    }
+
+    private void getWaterData() {
+        Cursor cursor = AppContext.getDbDiary().getDayWaterData(date);
+        cursor.moveToFirst();
+        txtWater.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT)));
+        cursor.close();
+
+        if (txtWater.getText().toString().matches("")) {
+            txtWater.setText("0");
+        }
+
+        txtWaterRec.setText(String.valueOf(pref.getInt(SettingsFragment.KEY_PREF_WATER, 0)));
     }
 }

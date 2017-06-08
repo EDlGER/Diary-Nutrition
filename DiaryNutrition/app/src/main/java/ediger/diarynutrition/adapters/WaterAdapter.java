@@ -1,10 +1,12 @@
 package ediger.diarynutrition.adapters;
 
 import android.database.Cursor;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
+import ediger.diarynutrition.objects.AppContext;
 
 /**
  * Created by ediger on 18.05.17.
@@ -23,6 +26,7 @@ import ediger.diarynutrition.database.DbDiary;
 
 public class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.ViewHolder> {
 
+    private long date;
     private Cursor data;
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
 
@@ -35,8 +39,9 @@ public class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.ViewHolder> 
         }
     }
 
-    public WaterAdapter(Cursor data) {
+    public WaterAdapter(Cursor data, long date) {
         this.data = data;
+        this.date = date;
     }
 
     @Override
@@ -47,10 +52,23 @@ public class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         RelativeLayout relative = holder.relative;
         TextView txtTime = (TextView) relative.findViewById(R.id.txt_time);
         TextView txtAmount = (TextView) relative.findViewById(R.id.txt_amount);
+
+        FrameLayout frameRemove = (FrameLayout) relative.findViewById(R.id.frame_delete);
+        frameRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.moveToPosition(position)) {
+                    AppContext.getDbDiary().delWater(data.getLong(data.getColumnIndex(DbDiary.ALIAS_ID)));
+                    data = AppContext.getDbDiary().getWaterData(date);
+                    notifyItemRemoved(position);
+                    notifyItemRangeRemoved(position, getItemCount());
+                }
+            }
+        });
 
         if (data.moveToPosition(position)) {
             Calendar calendar = Calendar.getInstance();
@@ -63,11 +81,12 @@ public class WaterAdapter extends RecyclerView.Adapter<WaterAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        if (data.moveToFirst()) {
+        return data.getCount();
+        /*if (data.moveToFirst()) {
             return data.getCount();
         } else {
             return 0;
-        }
+        }*/
     }
 
 }

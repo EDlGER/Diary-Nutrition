@@ -241,5 +241,6 @@
     <string name="card_button_more">Подробнее</string>
     <string name="water">Вода</string>
     <string name="dialog_title_water_edit">Введите целевое количество воды, мл</string>
+    <string name="message_card_water">Вы не добавляли воду в этот день</string>
 
 </resources>

@@ -66,7 +66,7 @@ public class AddActivity extends AppCompatActivity {
     private TextView prot;
     private TextView fat;
 
-    private EditText txtTime;
+    private TextView txtTime;
     private EditText txtServ;
     private AppCompatCheckBox cbAddMoreFood;
     private RadioGroup radioMeal;
@@ -107,7 +107,7 @@ public class AddActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spServ);
-        txtTime = (EditText) findViewById(R.id.txtTime);
+        txtTime = (TextView) findViewById(R.id.txt_time);
 
         txtServ = (EditText) findViewById(R.id.txtServ);
         txtServ.setText(getString(R.string.dialog_serv_std));

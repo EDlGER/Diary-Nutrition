@@ -44,7 +44,7 @@ public class WaterActivity extends SlidingActivity {
 
         date = intent.getLongExtra("date", 0);
 
-        WaterAdapter adapter = new WaterAdapter(AppContext.getDbDiary().getWaterData(date));
+        WaterAdapter adapter = new WaterAdapter(AppContext.getDbDiary().getWaterData(date), date);
 
         listWater = (RecyclerView) findViewById(R.id.list_water);
         listWater.setLayoutManager(new LinearLayoutManager(this));

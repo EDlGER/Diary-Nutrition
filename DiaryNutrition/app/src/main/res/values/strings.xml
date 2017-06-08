@@ -159,6 +159,7 @@
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
+    <string name="message_card_water">You didn\'t add water this day</string>
 
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 

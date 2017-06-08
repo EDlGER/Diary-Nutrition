@@ -14,6 +14,8 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.fragments.SettingsFragment;
+
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
 public class NutritionSlide extends Fragment implements ISlideSelectionListener {
@@ -22,6 +24,8 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     private int prot;
     private int fat;
     private int carbo;
+
+    private float weight;
 
     private int [] loss = {30, 30, 40};
     private int [] deduction = {20, 30, 50};
@@ -79,7 +83,7 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     }
 
     private void calculateCal() {
-        float weight;
+
         float height;
         float age;
         float [] gender = {5,-161};
@@ -101,7 +105,6 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     }
 
     private void calculatePfc() {
-
         int purposeId = Integer.parseInt(pref.getString("purpose", "1")) - 1;
 
         prot = (int) ((double) purpose[purposeId][0] / 100 * (double) cal / 4);
@@ -110,10 +113,26 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
 
     }
 
+    private void calculateWater() {
+        int gender = Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_GENDER, "1"));
+        int water;
+
+        if (gender == 1) {
+            water = (int) (weight * 35);
+        } else {
+            water = (int) (weight * 31);
+        }
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(SettingsFragment.KEY_PREF_WATER, water);
+        editor.apply();
+    }
+
+
     @Override
     public void onSlideSelected() {
         calculateCal();
         calculatePfc();
+        calculateWater();
         txtCal.setText(String.valueOf(cal));
 
         txtProtPers.setText(purpose[Integer.parseInt(pref.getString("purpose", "0")) - 1][0] + "%");

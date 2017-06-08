@@ -1,11 +1,13 @@
 package ediger.diarynutrition.activity;
 
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.BillingFragment;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
 import ediger.diarynutrition.fragments.SummaryMainFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
+import ediger.diarynutrition.objects.AppContext;
 import ediger.diarynutrition.util.IabHelper;
 import ediger.diarynutrition.util.IabResult;
 import ediger.diarynutrition.util.Inventory;
@@ -15,6 +17,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,13 +92,15 @@ public class MainActivity extends AppCompatActivity
     private ImageView arrow;
     private Toast backPressToast;
 
+    private SharedPreferences pref;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         //First app start
         isFirstRun = pref.getBoolean(PREF_FIRST_RUN, true);
 
@@ -108,6 +113,12 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean(PREF_FIRST_RUN, false);
         editor.apply();
+
+        //Check water
+        int checkWaterPref = pref.getInt(SettingsFragment.KEY_PREF_WATER, 0);
+        if (checkWaterPref == 0) {
+            editor.putInt(SettingsFragment.KEY_PREF_WATER, getDefaultWater());
+        }
 
         //Check ads
         isAdsRemoved = getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
@@ -414,6 +425,24 @@ public class MainActivity extends AppCompatActivity
             mHelper.dispose();
             mHelper = null;
         }
+    }
+
+    private int getDefaultWater() {
+        int gender = Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_GENDER, "1"));
+        float weight = 70;
+        int water;
+
+        Cursor cursor = AppContext.getDbDiary().getAllWeight();
+        if (cursor.moveToFirst()) {
+            weight = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_WEIGHT));
+        }
+        if (gender == 1) {
+            water = (int) (weight * 35);
+        } else {
+            water = (int) (weight * 31);
+        }
+
+        return water;
     }
 }
 

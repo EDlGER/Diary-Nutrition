@@ -1,9 +1,11 @@
 package ediger.diarynutrition.fragments.dialogs;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +47,8 @@ import ediger.diarynutrition.objects.AppContext;
  */
 
 public class AddWaterDialog extends DialogFragment {
+
+    public static final int REQ_WATER = 1;
 
     private static final String PREF_WATER_SERVING_1 = "water_serving_1";
     private static final String PREF_WATER_SERVING_2 = "water_serving_2";
@@ -78,14 +83,11 @@ public class AddWaterDialog extends DialogFragment {
         }
     };
 
-    private DiaryFragment diaryFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.dialog_add_water, container, false);
-
-        diaryFragment = (DiaryFragment) getTargetFragment();
 
         txtWater1 = (TextView) root.findViewById(R.id.txt_water_1);
         txtWater2 = (TextView) root.findViewById(R.id.txt_water_2);
@@ -163,25 +165,25 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_1:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater1.getText().toString()));
                     hideKeyboard();
-                    diaryFragment.updateWaterUI();
+                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
                     dismiss();
                     break;
                 case R.id.card_water_2:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater2.getText().toString()));
                     hideKeyboard();
-                    diaryFragment.updateWaterUI();
+                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
                     dismiss();
                     break;
                 case R.id.card_water_3:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater3.getText().toString()));
                     hideKeyboard();
-                    diaryFragment.updateWaterUI();
+                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
                     dismiss();
                     break;
                 case R.id.card_water_4:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater4.getText().toString()));
                     hideKeyboard();
-                    diaryFragment.updateWaterUI();
+                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
                     dismiss();
                     break;
             }
@@ -254,7 +256,7 @@ public class AddWaterDialog extends DialogFragment {
         } else {
             AppContext.getDbDiary().addWater(time, Integer.parseInt(edWater.getText().toString()));
             hideKeyboard();
-            diaryFragment.updateWaterUI();
+            getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
             dismiss();
         }
     }
@@ -346,6 +348,7 @@ public class AddWaterDialog extends DialogFragment {
         builder.create();
         builder.show();
     }
+
 }
 
 
