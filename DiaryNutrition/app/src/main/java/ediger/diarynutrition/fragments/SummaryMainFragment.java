@@ -20,7 +20,7 @@ import ediger.diarynutrition.adapters.ViewPagerAdapter;
 public class SummaryMainFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private View rootview;
 
-    private int Numboftabs = 2;
+    private int Numboftabs = 3;
     private ViewPager pager;
     private SummaryPagerAdapter adapter;
     private SlidingTabLayout tabs;
@@ -33,6 +33,7 @@ public class SummaryMainFragment extends Fragment implements ViewPager.OnPageCha
 
         Titles[0] = getString(R.string.tab_day);
         Titles[1] = getString(R.string.tab_week);
+        Titles[2] = getString(R.string.tab_month);
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new SummaryPagerAdapter(getActivity().getSupportFragmentManager(), Titles, Numboftabs);

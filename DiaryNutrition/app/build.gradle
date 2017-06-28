@@ -41,6 +41,7 @@ dependencies {
     compile 'com.klinkerapps:sliding-activity:1.4.4'
     compile 'com.android.support:animated-vector-drawable:25.3.1'
     compile 'com.android.support:palette-v7:25.3.1'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }
 
 

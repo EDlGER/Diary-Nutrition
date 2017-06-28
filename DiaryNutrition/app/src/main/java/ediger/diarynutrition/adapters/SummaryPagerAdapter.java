@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import ediger.diarynutrition.fragments.SummaryDayFragment;
+import ediger.diarynutrition.fragments.SummaryMonthFragment;
 import ediger.diarynutrition.fragments.SummaryWeekFragment;
 
 /**
@@ -27,14 +28,14 @@ public class SummaryPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        if(position == 0) // if the position is 0 we are returning the First tab
-        {
-            SummaryDayFragment tab1 = new SummaryDayFragment();
-            return tab1;
-        } else {
-            SummaryWeekFragment tab2 = new SummaryWeekFragment();
-            return tab2;
-        }
+        // if the position is 0 we are returning the First tab
+        if(position == 0)
+            return new SummaryDayFragment();
+        else if (position == 1)
+            return new SummaryWeekFragment();
+        else
+            return new SummaryMonthFragment();
+
     }
 
     // This method return the titles for the Tabs in the Tab Strip

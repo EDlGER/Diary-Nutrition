@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:background="@drawable/chart_marker_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tab_day"
+            android:textSize="12sp"
+            android:textAllCaps="true"/>
+
+        <TextView
+            android:id="@+id/marker_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="10"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="85dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"/>
+
+    <LinearLayout
+        android:id="@+id/prot_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_prot"
+            android:textSize="12sp"
+            android:textColor="@color/chart_green"/>
+
+        <TextView
+            android:id="@+id/marker_prot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="240"
+            android:textStyle="bold"
+            android:textColor="@color/chart_green"
+            android:maxLength="3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fat_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_fat"
+            android:textSize="12sp"
+            android:textColor="@color/chart_red" />
+
+        <TextView
+            android:id="@+id/marker_fat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="240"
+            android:textStyle="bold"
+            android:textColor="@color/chart_red"
+            android:maxLength="3"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/carbo_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/record_carbo"
+            android:textSize="12sp"
+            android:textColor="@color/chart_orange" />
+
+        <TextView
+            android:id="@+id/marker_carbo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="240"
+            android:textStyle="bold"
+            android:textColor="@color/chart_orange"
+            android:maxLength="3"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

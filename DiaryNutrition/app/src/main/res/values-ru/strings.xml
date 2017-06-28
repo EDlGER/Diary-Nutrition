@@ -188,6 +188,21 @@
         <item>По граммам</item>
     </string-array>
 
+    <string-array name="months">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+
     <string name="intro_activity_name_1">Сидячий</string>
     <string name="intro_activity_name_2">Малоактивный</string>
     <string name="intro_activity_name_3">Активный</string>
@@ -242,6 +257,7 @@
     <string name="water">Вода</string>
     <string name="dialog_title_water_edit">Введите целевое количество воды, мл</string>
     <string name="message_card_water">Вы не добавляли воду в этот день</string>
+    <string name="tab_month">Месяц</string>
 
 
 </resources>

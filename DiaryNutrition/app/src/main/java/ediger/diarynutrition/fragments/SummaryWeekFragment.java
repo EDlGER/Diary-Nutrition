@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +26,8 @@ import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
-import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.SubcolumnValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.ColumnChartView;
-import lecho.lib.hellocharts.view.LineChartView;
 
 /**
  * Created by root on 23.11.16.
@@ -212,10 +207,6 @@ public class SummaryWeekFragment extends Fragment {
         dataCal = new ColumnChartData(columnsCal);
         dataCal.setAxisXBottom(axisX);
         dataCal.setAxisYLeft(axisY);
-        /*dataCal.setValueLabelBackgroundAuto(false);
-        dataCal.setValueLabelBackgroundColor(ContextCompat.getColor(getActivity(),
-                R.color.grey_transpanent));
-        dataCal.setValueLabelsTextColor(ContextCompat.getColor(getActivity(), R.color.black_semi_transparent));*/
 
         chartCal.setColumnChartData(dataCal);
         chartCal.setZoomEnabled(false);

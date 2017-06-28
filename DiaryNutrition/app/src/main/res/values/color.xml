@@ -11,6 +11,7 @@
     <color name="layout_standart_background">#FAFAFA</color>
     <color name="listview_background">#EEEEEE</color>
     <color name="listview_second_text">#757575</color>
+    <color name="chart_label_color">#BDBDBD</color>
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>
@@ -18,6 +19,8 @@
     <color name="white">#FFFFFF</color>
 
     <color name="black_opacity_87">#DE000000</color>
+    <color name="black_opacity_54">#8A000000</color>
+    <color name="black_opacity_38">#61000000</color>
     <color name="black_opacity_12">#1F000000</color>
 
     <color name="chart_red">#FF4444</color>
@@ -29,5 +32,3 @@
     <color name="intro_light">#9E9E9E</color>
 
 </resources>
-
-<!-- #ffb300 -->

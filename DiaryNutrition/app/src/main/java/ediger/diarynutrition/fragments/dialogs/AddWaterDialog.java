@@ -243,6 +243,7 @@ public class AddWaterDialog extends DialogFragment {
                 break;
             case android.R.id.home:
                 hideKeyboard();
+                getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_CANCELED, null);
                 dismiss();
                 break;
         }

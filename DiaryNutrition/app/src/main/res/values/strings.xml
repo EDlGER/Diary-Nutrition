@@ -168,6 +168,7 @@
     <string name="tab_favorite">Favorites</string>
     <string name="tab_day">Day</string>
     <string name="tab_week">Week</string>
+    <string name="tab_month">Month</string>
 
     <string name="add_rec_gram1">g</string>
     <string name="add_rec_gram100">100g</string>
@@ -247,6 +248,21 @@
     <string-array name="program_macro_array">
         <item>Percent</item>
         <item>Gram</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
 
 </resources>

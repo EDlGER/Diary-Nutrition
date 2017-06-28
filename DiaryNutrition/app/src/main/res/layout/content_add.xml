@@ -40,46 +40,22 @@
             android:id="@+id/spServ"
             android:layout_alignBottom="@+id/servInputLayout"
             android:layout_toRightOf="@+id/servInputLayout"
-            android:layout_marginLeft="8dp"
+
             android:layout_marginBottom="12dp">
         </android.support.v7.widget.AppCompatSpinner>
-
-        <!--<android.support.design.widget.TextInputLayout
-            android:id="@+id/timeInputLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/spServ"
-            android:layout_marginLeft="16dp"
-            android:layout_alignBottom="@+id/servInputLayout"
-            android:hint="@string/dialog_time"
-            app:hintAnimationEnabled="false"> -->
 
             <TextView
                 android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/spServ"
-                android:layout_marginLeft="8dp"
+
                 android:layout_alignBottom="@+id/servInputLayout"
                 android:text="16:30"
                 android:textSize="25sp"
                 android:focusable="false"
                 android:drawableRight="@drawable/ic_menu_down_grey600_24dp"
                 style="@android:style/Widget.EditText"/>
-
-
-            <!--<EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="3"
-                android:id="@+id/txtTime"
-                android:maxLength="5"
-                android:textSize="25sp"
-                android:singleLine="true"
-                android:editable="false"/> -->
-
-        <!--</android.support.design.widget.TextInputLayout>-->
-
 
         <View
             android:layout_width="match_parent"

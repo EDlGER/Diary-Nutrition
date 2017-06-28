@@ -221,8 +221,8 @@ public class DiaryFragment extends Fragment implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == AddWaterDialog.REQ_WATER) {
-            updateWaterUI();
+        if (requestCode == AddWaterDialog.REQ_WATER) {
+            if (resultCode == Activity.RESULT_OK)  updateWaterUI();
             dialog.setTargetFragment(null, 0);
         }
     }
