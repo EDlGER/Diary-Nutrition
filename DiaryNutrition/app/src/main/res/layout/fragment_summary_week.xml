@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark">
@@ -59,14 +60,14 @@
                 android:layout_marginTop="16dp"
                 android:textSize="16sp" />
 
-            <lecho.lib.hellocharts.view.ColumnChartView
+            <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/week_chart_macro"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,40 +77,43 @@
                 android:paddingRight="16dp"
                 android:paddingBottom="16dp">
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/chart_orange"/>
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/ch_prot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    app:buttonTint="@color/chart_green"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/macro_carbo"
-                    android:layout_marginLeft="8dp"/>
+                    android:text="@string/macro_prot" />
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/chart_green"
-                    android:layout_marginLeft="18dp"/>
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/ch_fat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:layout_marginLeft="8dp"
+                    app:buttonTint="@color/chart_red"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/macro_prot"
-                    android:layout_marginLeft="8dp"/>
+                    android:text="@string/macro_fat" />
 
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:background="@color/chart_red"
-                    android:layout_marginLeft="18dp"/>
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/ch_carbo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:layout_marginLeft="8dp"
+                    app:buttonTint="@color/chart_orange"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/macro_fat"
-                    android:layout_marginLeft="8dp"/>
+                    android:text="@string/macro_carbo" />
 
 
             </LinearLayout>

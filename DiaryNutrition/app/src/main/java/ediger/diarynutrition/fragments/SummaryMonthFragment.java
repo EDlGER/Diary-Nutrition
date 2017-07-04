@@ -46,12 +46,10 @@ import lecho.lib.hellocharts.view.ColumnChartView;
 /**
  * Created by root on 23.11.16.
  */
-public class SummaryMonthFragment extends Fragment implements CompoundButton.OnCheckedChangeListener{
+public class SummaryMonthFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     private View rootview;
 
     private long firstMonthDay;
-
-    private boolean hasLabels = false;
 
     /** Параметры графика */
     private int numberOfColumns = 31;
@@ -127,23 +125,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
             }
         });
 
-        chartCal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hasLabels = !hasLabels;
-                generateCalData();
-                generateWaterData();
-            }
-        });
-
-        chartWater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hasLabels = !hasLabels;
-                generateCalData();
-                generateWaterData();
-            }
-        });
+        chartInit();
 
         return rootview;
     }
@@ -161,7 +143,26 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
     public void onResume() {
         super.onResume();
 
-        chartInit();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                generateCalData();
+            }
+        });
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                generateMacroData();
+            }
+        });
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                generateWaterData();
+            }
+        });
 
         if (!getUserVisibleHint()) {
             return;
@@ -178,10 +179,6 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
         } else {
             mainActivity.title.setPadding(0, 25, 0, 0);
         }
-
-        generateCalData();
-        generateMacroData();
-        generateWaterData();
     }
 
     private void chartInit() {
@@ -264,18 +261,12 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
                             .setAppendedText(s.toCharArray()));
                 }
 
-                if (hasLabels) {
-                    if (amount == 0) {
-                        column.setHasLabels(false);
-                    } else {
-                        column.setHasLabels(true);
-                    }
-                } else {
-                    column.setHasLabels(false);
-                }
+                column.setHasLabelsOnlyForSelected(true);
+
                 columnsCal.add(column);
             }
             currentMonth.add(Calendar.DAY_OF_WEEK, 1);
+            cursor.close();
         }
         cursor.close();
 
@@ -287,6 +278,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
         dataCal.setAxisXBottom(axisX);
         dataCal.setAxisYLeft(axisY);
 
+        chartCal.setValueSelectionEnabled(true);
         chartCal.setColumnChartData(dataCal);
         chartCal.setZoomEnabled(false);
     }
@@ -310,6 +302,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
                 valuesProt.add(new Entry(i, amount));
             }
             currentMonth.add(Calendar.DAY_OF_MONTH, 1);
+            cursor.close();
         }
 
         // Fat values
@@ -321,6 +314,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
                 valuesFat.add(new Entry(i, amount));
             }
             currentMonth.add(Calendar.DAY_OF_MONTH, 1);
+            cursor.close();
         }
 
         // Carbo values
@@ -332,6 +326,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
                 valuesCarbo.add(new Entry(i, amount));
             }
             currentMonth.add(Calendar.DAY_OF_MONTH, 1);
+            cursor.close();
         }
 
         cursor.close();
@@ -427,19 +422,12 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
                             .setAppendedText(s.toCharArray()));
                 }
 
-                if (hasLabels) {
-                    if (amount == 0) {
-                        column.setHasLabels(false);
-                    } else {
-                        column.setHasLabels(true);
-                    }
-                } else {
-                    column.setHasLabels(false);
-                }
+                column.setHasLabelsOnlyForSelected(true);
 
                 columnsWater.add(column);
             }
             currentMonth.add(Calendar.DAY_OF_WEEK, 1);
+            cursor.close();
         }
         cursor.close();
 
@@ -451,6 +439,7 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
         dataWater.setAxisXBottom(axisX);
         dataWater.setAxisYLeft(axisY);
 
+        chartWater.setValueSelectionEnabled(true);
         chartWater.setColumnChartData(dataWater);
         chartWater.setZoomEnabled(false);
     }
