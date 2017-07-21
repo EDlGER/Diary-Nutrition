@@ -30,10 +30,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             SearchTab tab1 = new SearchTab();
             return tab1;
         } else if(position == 1) {
-            FoodTab tab2 = new FoodTab();
+            FavorTab tab2 = new FavorTab();
             return tab2;
         } else {
-            FavorTab tab3 = new FavorTab();
+            FoodTab tab3 = new FoodTab();
             return tab3;
         }
 

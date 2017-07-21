@@ -1,54 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/grey100">
 
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/sp_interval"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:entries="@array/weight_interval"/>
+
     <LinearLayout
-        android:id="@+id/chart_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/layout_standart_background"
         android:elevation="2dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/radio_layout"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp">
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/rb_week"
-                android:text="@string/weight_week"/>
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/rb_month"
-                android:text="@string/weight_month"/>
-
-        </LinearLayout>
-
         <lecho.lib.hellocharts.view.LineChartView
             android:id="@+id/weight_chart"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/radio_layout"
+            android:layout_height="220dp"
             android:padding="16dp"/>
 
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/chart_layout">
+        android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/listWeight"
@@ -61,10 +40,9 @@
             android:id="@+id/empty_list_weight"
             android:layout_gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/empty_list_weight"
-            />
+            android:text="@string/empty_list_weight" />
 
     </FrameLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -52,6 +52,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public static final String KEY_PREF_WATER = "water";
     public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
     public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
+    public static final String KEY_PREF_UI_WATER_CARD = "water_card";
+    public static final String KEY_PREF_UI_DEFAULT_TAB = "default_tab";
     public static final String KEY_PREF_DATA_LANGUAGE= "data_language";
     public static final String KEY_PREF_DATA_PATH = "data_path";
     public static final String KEY_PREF_DATA_BACKUP = "data_backup";
@@ -241,6 +243,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
             calculateDefaultProgram();
+        }
+        if (key.equals(KEY_PREF_UI_DEFAULT_TAB)) {
+            Preference listPref = findPreference(key);
+            listPref.setSummary("%s");
         }
         if (key.equals(KEY_PREF_DATA_LANGUAGE)) {
             Intent restartIntent = getActivity().getPackageManager()

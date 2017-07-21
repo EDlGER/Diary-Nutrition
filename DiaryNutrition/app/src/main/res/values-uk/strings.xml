@@ -203,6 +203,18 @@
         <item>Декабрь</item>
     </string-array>
 
+    <string-array name="weight_interval">
+        <item>Неделя</item>
+        <item>Месяц</item>
+        <item>Два месяца</item>
+    </string-array>
+
+    <string-array name="pref_water_card_array">
+        <item>База данных</item>
+        <item>Избранные</item>
+        <item>Добавленные</item>
+    </string-array>
+
     <string name="intro_activity_name_1">Сидячий</string>
     <string name="intro_activity_name_2">Малоактивный</string>
     <string name="intro_activity_name_3">Активный</string>
@@ -258,5 +270,10 @@
     <string name="dialog_title_water_edit">Введите целевое количество воды, мл</string>
     <string name="message_card_water">Вы не добавляли воду в этот день</string>
     <string name="tab_month">Месяц</string>
+    <string name="pref_title_ui">Интерфейс</string>
+    <string name="pref_ui_water_card">Счетчик воды</string>
+    <string name="pref_ui_tab_default">Вкладка по умолчанию</string>
+    <string name="switch_off">Отключен</string>
+    <string name="switch_on">Включен</string>
 
 </resources>

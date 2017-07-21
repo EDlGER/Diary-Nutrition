@@ -2,12 +2,17 @@ package ediger.diarynutrition.fragments.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.support.design.widget.TextInputLayout;
@@ -42,7 +47,6 @@ public class AddWeightDialog extends DialogFragment {
                         cursor.moveToFirst();
                         date = cursor.getLong(0);
 
-
                         if (editWeight.getText().toString().matches("")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
                                     getString(R.string.message_dialog_weight), Toast.LENGTH_SHORT);
@@ -71,5 +75,4 @@ public class AddWeightDialog extends DialogFragment {
         builder.setCancelable(true);
         return builder.create();
     }
-
 }

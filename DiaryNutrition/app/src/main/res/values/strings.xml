@@ -103,6 +103,7 @@
 
     <string name="pref_title_user">Personal data</string>
     <string name="pref_title_program">Nutrition program</string>
+    <string name="pref_title_ui">Interface</string>
     <string name="pref_title_data">Data</string>
     <string name="pref_gender">Gender</string>
     <string name="pref_birthday">Birthday</string>
@@ -111,6 +112,8 @@
     <string name="pref_purpose">Goal</string>
     <string name="pref_program_edit">Customize PFC</string>
     <string name="pref_program_reset">Reset program</string>
+    <string name="pref_ui_tab_default">Default tab</string>
+    <string name="pref_ui_water_card">Water counter</string>
     <string name="pref_data_backup">Backup</string>
     <string name="pref_data_restore">Restore</string>
     <string name="pref_data_path">Path</string>
@@ -163,9 +166,24 @@
 
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 
+    <string name="switch_on">Switched on</string>
+    <string name="switch_off">Switched off</string>
+
+    <string-array name="pref_water_card_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_water_card_array">
+        <item>Database</item>
+        <item>Favorites</item>
+        <item>Custom</item>
+    </string-array>
+
     <string name="tab_database">Database</string>
-    <string name="tab_user">Custom</string>
     <string name="tab_favorite">Favorites</string>
+    <string name="tab_user">Custom</string>
     <string name="tab_day">Day</string>
     <string name="tab_week">Week</string>
     <string name="tab_month">Month</string>
@@ -263,6 +281,12 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
+    </string-array>
+
+    <string-array name="weight_interval">
+        <item>Week</item>
+        <item>Month</item>
+        <item>Two months</item>
     </string-array>
 
 </resources>

@@ -289,25 +289,10 @@ public class DbDiary {
         return db.rawQuery(sql,null);
     }
 
-    public Cursor getWeekWeight() {
+    public Cursor getWeightFrom(long from) {
         Calendar calendar = Calendar.getInstance();
         long date = calendar.getTimeInMillis();
-        String arg1 = Long.toString(date - 604800017);
-        String arg2 = Long.toString(date);
-        String sql = "select "
-                + "w._id as " + ALIAS_ID
-                + ",w.weight as " + ALIAS_WEIGHT
-                + ",w.datetime as " + ALIAS_DATETIME
-                + " from weight w"
-                + " where w.datetime between ? and ?"
-                + " order by w.datetime asc";
-        return db.rawQuery(sql, new String[]{arg1, arg2});
-    }
-
-    public Cursor getMonthWeight() {
-        Calendar calendar = Calendar.getInstance();
-        long date = calendar.getTimeInMillis();
-        String arg1 = Long.toString(date - 2629800000L);
+        String arg1 = Long.toString(date - from);
         String arg2 = Long.toString(date);
         String sql = "select "
                 + "w._id as " + ALIAS_ID

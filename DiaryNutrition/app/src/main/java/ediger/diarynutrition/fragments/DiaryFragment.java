@@ -212,6 +212,12 @@ public class DiaryFragment extends Fragment implements
             getLoaderManager().initLoader(-1, null, this);
         }
 
+        if (pref.getBoolean(SettingsFragment.KEY_PREF_UI_WATER_CARD, true)) {
+            cardWater.setVisibility(View.VISIBLE);
+        } else {
+            cardWater.setVisibility(View.GONE);
+        }
+
         setHeaderData();
         updateWaterUI();
 

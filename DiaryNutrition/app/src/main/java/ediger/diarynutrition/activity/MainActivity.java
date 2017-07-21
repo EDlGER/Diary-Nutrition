@@ -7,6 +7,7 @@ import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.fragments.SettingsFragment;
 import ediger.diarynutrition.fragments.SummaryMainFragment;
 import ediger.diarynutrition.fragments.WeightFragment;
+import ediger.diarynutrition.fragments.dialogs.AddWaterDialog;
 import ediger.diarynutrition.objects.AppContext;
 import ediger.diarynutrition.util.IabHelper;
 import ediger.diarynutrition.util.IabResult;
@@ -91,6 +92,9 @@ public class MainActivity extends AppCompatActivity
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
     private Toast backPressToast;
+
+    private Fragment fragment = null;
+    private NavigationView navigationView;
 
     private SharedPreferences pref;
 
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
@@ -328,8 +332,17 @@ public class MainActivity extends AppCompatActivity
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (getSupportFragmentManager()
+                .findFragmentById(android.R.id.content) instanceof AddWaterDialog) {
+            super.onBackPressed();
+        } else if (fragment instanceof DiaryFragment) {
             if (currentTime - lastBackPress > 3000) {
+
+                if (getSupportFragmentManager()
+                        .findFragmentById(android.R.id.content) instanceof AddWaterDialog) {
+                    super.onBackPressed();
+                }
+
                 backPressToast = Toast.makeText(getBaseContext(), R.string.message_backpress,
                         Toast.LENGTH_LONG);
                 backPressToast.show();
@@ -338,12 +351,13 @@ public class MainActivity extends AppCompatActivity
                 if (backPressToast != null) backPressToast.cancel();
                 super.onBackPressed();
             }
+        } else {
+            displayView(R.id.nav_diary);
+            navigationView.setCheckedItem(R.id.nav_diary);
         }
     }
 
     public void displayView(int viewId) {
-
-        Fragment fragment = null;
 
         switch (viewId) {
             case R.id.nav_diary:

@@ -2,6 +2,8 @@ package ediger.diarynutrition.fragments.tabs;
 
 import android.app.SearchManager;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
@@ -29,6 +31,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import ediger.diarynutrition.activity.AddActivity;
+import ediger.diarynutrition.fragments.SettingsFragment;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
@@ -57,11 +60,15 @@ public class FoodTab extends Fragment implements
     private Cursor cursor;
     private FoodAdapter foodAdapter;
 
+    private SharedPreferences pref;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootview = inflater.inflate(R.layout.fragment_tab_food, container, false);
 
         setHasOptionsMenu(true);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
         //Данные для адаптера
         cursor = AppContext.getDbDiary().getUserFood();
@@ -194,7 +201,16 @@ public class FoodTab extends Fragment implements
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconifiedByDefault(true);
+
+        if (Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_UI_DEFAULT_TAB, "0")) == 2) {
+            searchView.setIconified(false);
+        } else {
+            searchView.setIconifiedByDefault(true);
+        }
+        searchView.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchView, InputMethodManager.SHOW_IMPLICIT);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
