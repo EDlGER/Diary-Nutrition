@@ -15,14 +15,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 
 import java.text.SimpleDateFormat;
@@ -49,8 +55,10 @@ import info.abdolahi.CircularMusicProgressBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 
@@ -59,6 +67,7 @@ public class DiaryFragment extends Fragment implements
 
     View rootview;
     private long date;
+    private boolean isRemaining = true;
 
     private List<List<Long>> buffer = new ArrayList<>();
 
@@ -70,11 +79,13 @@ public class DiaryFragment extends Fragment implements
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
-    private View footerView;
+
+    //Values in CircularProgress
     private TextView consCal;
     private TextView consCarbo;
     private TextView consProt;
     private TextView consFat;
+
     private TextView water;
     private TextView waterTotal;
     private TextView waterRemain;
@@ -83,6 +94,7 @@ public class DiaryFragment extends Fragment implements
     private CircularMusicProgressBar pbProt;
     private CircularMusicProgressBar pbFat;
     private CircularMusicProgressBar pbWater;
+    private TextSwitcher headerSwitcher;
 
     private AddWaterDialog dialog;
     FragmentTransaction transaction;
@@ -97,6 +109,8 @@ public class DiaryFragment extends Fragment implements
 
         rootview = inflater.inflate(R.layout.fragment_diary, container, false);
 
+        setHasOptionsMenu(true);
+
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
         consCal = (TextView) rootview.findViewById(R.id.consCal);
@@ -108,6 +122,29 @@ public class DiaryFragment extends Fragment implements
         pbCarbo = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_carbo);
         pbProt = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_prot);
         pbFat = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_fat);
+
+        //Header switcher
+        headerSwitcher = (TextSwitcher) rootview.findViewById(R.id.headerSwitcher);
+        headerSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                TextView textView = new TextView(getActivity());
+                textView.setGravity(Gravity.CENTER_VERTICAL);
+                textView.setTextSize(15);
+                textView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                return textView;
+            }
+        });
+        Animation inAnimation = AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.fade_in);
+        Animation outAnimation = AnimationUtils.loadAnimation(getActivity(),
+                android.R.anim.fade_out);
+        headerSwitcher.setInAnimation(inAnimation);
+        headerSwitcher.setOutAnimation(outAnimation);
+        headerSwitcher.setText(isRemaining ?
+                getResources().getString(R.string.diary_header_remain) :
+                getResources().getString(R.string.diary_header_total));
+
 
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
@@ -163,7 +200,7 @@ public class DiaryFragment extends Fragment implements
                 childFrom, childTo);
 
         //footer
-        footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
+        View footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
 
         CardView cardWater = (CardView) footerView.findViewById(R.id.card_water);
         cardWater.setOnClickListener(new View.OnClickListener() {
@@ -437,6 +474,25 @@ public class DiaryFragment extends Fragment implements
         return super.onContextItemSelected(item);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.fragment_diary, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_switch:
+                isRemaining = !isRemaining;
+                headerSwitcher.setText(isRemaining ?
+                        getResources().getString(R.string.diary_header_remain) :
+                        getResources().getString(R.string.diary_header_total));
+                setHeaderData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void setHeaderData() {
         //Число без дробной части
@@ -446,6 +502,11 @@ public class DiaryFragment extends Fragment implements
         int targetCarbo = pref.getInt("carbo", 1);
         int targetProt = pref.getInt("prot", 1);
         int targetFat = pref.getInt("fat", 1);
+
+        if (targetCal == 0) targetCal++;
+        if (targetCarbo == 0) targetCarbo++;
+        if (targetProt == 0) targetProt++;
+        if (targetFat == 0) targetFat++;
 
         Cursor cursor = AppContext.getDbDiary().getDate();
         cursor.moveToFirst();
@@ -458,28 +519,26 @@ public class DiaryFragment extends Fragment implements
         consFat.setText("0");
 
         cursor = AppContext.getDbDiary().getDayData(date);
-        cursor.moveToFirst();
         if (cursor.moveToFirst()) {
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
             rem = targetCal - res;
-            consCal.setText(Integer.toString(rem));
+            consCal.setText(isRemaining ? String.valueOf(rem) : String.valueOf(res));
             pbCal.setValue(res * 100 / targetCal);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO));
             rem = targetCarbo - res;
-            consCarbo.setText(Integer.toString(rem));
+            consCarbo.setText(isRemaining ? String.valueOf(rem) : String.valueOf(res));
             pbCarbo.setValue(res * 100 / targetCarbo);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT));
             rem = targetProt - res;
-            consProt.setText(Integer.toString(rem));
+            consProt.setText(isRemaining ? String.valueOf(rem) : String.valueOf(res));
             pbProt.setValue(res * 100 / targetProt);
 
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT));
             rem = targetFat - res;
-            consFat.setText(Integer.toString(rem));
+            consFat.setText(isRemaining ? String.valueOf(rem) : String.valueOf(res));
             pbFat.setValue(res * 100 / targetFat);
-
         }
         cursor.close();
     }

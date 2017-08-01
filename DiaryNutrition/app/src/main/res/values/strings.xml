@@ -17,10 +17,12 @@
 
     <string name="diary_date_today">Today</string>
     <string name="diary_header_remain">Remaining</string>
+    <string name="diary_header_total">Total</string>
 
     <string name="menu_action_food">Food</string>
     <string name="menu_action_weight">Weight</string>
     <string name="menu_action_water">Water</string>
+    <string name="menu_action_switch">Remaining/Total</string>
 
     <string name="title_sec1">Diary</string>
     <string name="title_sec2">Settings</string>
@@ -67,6 +69,7 @@
     <string name="dialog_serv">Serving</string>
     <string name="dialog_meal">Meal</string>
 
+    <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>
     <string name="dialog_change_date">Select</string>
     <string name="dialog_tittle_date">Select date</string>

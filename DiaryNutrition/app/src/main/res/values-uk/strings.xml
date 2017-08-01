@@ -275,5 +275,7 @@
     <string name="pref_ui_tab_default">Вкладка по умолчанию</string>
     <string name="switch_off">Отключен</string>
     <string name="switch_on">Включен</string>
+    <string name="diary_header_total">Всего</string>
+    <string name="menu_action_switch">Осталось/Всего</string>
 
 </resources>

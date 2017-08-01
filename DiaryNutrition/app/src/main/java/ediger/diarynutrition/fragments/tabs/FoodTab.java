@@ -201,7 +201,6 @@ public class FoodTab extends Fragment implements
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
         if (Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_UI_DEFAULT_TAB, "0")) == 2) {
             searchView.setIconified(false);
         } else {

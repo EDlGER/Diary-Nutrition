@@ -108,10 +108,7 @@ public class AddActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         AppCompatSpinner spinner = (AppCompatSpinner) findViewById(R.id.spServ);
         txtTime = (TextView) findViewById(R.id.txt_time);
-
         txtServ = (EditText) findViewById(R.id.txtServ);
-        txtServ.setText(getString(R.string.dialog_serv_std));
-
         radioMeal = (RadioGroup) findViewById(R.id.rgMeal);
 
         //Spinner
@@ -204,12 +201,15 @@ public class AddActivity extends AppCompatActivity {
                 if (position == 0) {
                     gram = 1;
                     //Установить размер порции по умолчанию
-                    txtServ.setText(String.valueOf(serving));
+                    //txtServ.setText(String.valueOf(serving));
+                    txtServ.setText("");
+                    txtServ.setHint(R.string.dialog_serv_std);
                     txtServ.setFilters(new InputFilter[] {new InputFilter.LengthFilter(3)});
                     setInfo();
                 } else if (position == 1) {
                     gram = 100;
-                    txtServ.setText("1");
+                    txtServ.setText("");
+                    txtServ.setHint(R.string.serv_nstd);
                     txtServ.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
                     setInfo();
                 }
@@ -236,16 +236,25 @@ public class AddActivity extends AppCompatActivity {
                         getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
-                if (txtServ.getText().toString().matches("")) {
+                int serving;
+
+                if (txtServ.getText().toString().startsWith("0")) {
                     Snackbar.make(v, getString(R.string.message_serving), Snackbar.LENGTH_SHORT).show();
                 } else {
+
+                    if (txtServ.getText().toString().matches("")) {
+                        serving = gram == 1 ? 100 : 1;
+                    } else {
+                        serving = Integer.parseInt(txtServ.getText().toString());
+                    }
+
                     if (recordId == -1) {
                         AppContext.getDbDiary().addRec(foodId,
-                                Integer.parseInt(txtServ.getText().toString()) * gram,
+                                serving * gram,
                                 date, mealId);
                     } else {
                         AppContext.getDbDiary().editRec(recordId, foodId,
-                                Integer.parseInt(txtServ.getText().toString()) * gram,
+                                serving * gram,
                                 date, mealId);
                     }
 
@@ -308,24 +317,28 @@ public class AddActivity extends AppCompatActivity {
     private void setInfo() {
         Cursor cursor = AppContext.getDbDiary().getFood(foodId);
         cursor.moveToFirst();
+        float serv;
 
-        if (!this.txtServ.getText().toString().matches("")) {
-            float serv = Float.parseFloat(this.txtServ.getText().toString());
-            float cal = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL)) / 100 * serv * gram;
-            float carbo = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)) / 100 * serv * gram;
-            float prot = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT)) / 100 * serv * gram;
-            float fat = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT)) / 100 * serv * gram;
-
-            this.cal.setText(String.format(Locale.getDefault(), "%.1f", cal));
-            this.carbo.setText(String.format(Locale.getDefault(), "%.1f",carbo));
-            this.prot.setText(String.format(Locale.getDefault(), "%.1f",prot));
-            this.fat.setText(String.format(Locale.getDefault(), "%.1f",fat));
+        if (txtServ.getText().toString().matches("")) {
+            if (gram == 1) {
+                serv = 100;
+            } else {
+                serv = 1;
+            }
         } else {
-            this.cal.setText("0");
-            this.carbo.setText("0");
-            this.prot.setText("0");
-            this.fat.setText("0");
+            serv = Float.parseFloat(txtServ.getText().toString());
         }
+
+        float cal = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL)) / 100 * serv * gram;
+        float carbo = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CARBO)) / 100 * serv * gram;
+        float prot = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_PROT)) / 100 * serv * gram;
+        float fat = cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_FAT)) / 100 * serv * gram;
+
+        this.cal.setText(String.format(Locale.getDefault(), "%.1f", cal));
+        this.carbo.setText(String.format(Locale.getDefault(), "%.1f",carbo));
+        this.prot.setText(String.format(Locale.getDefault(), "%.1f",prot));
+        this.fat.setText(String.format(Locale.getDefault(), "%.1f",fat));
+
         cursor.close();
     }
 
