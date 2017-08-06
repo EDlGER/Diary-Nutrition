@@ -200,8 +200,6 @@ public class AddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     gram = 1;
-                    //Установить размер порции по умолчанию
-                    //txtServ.setText(String.valueOf(serving));
                     txtServ.setText("");
                     txtServ.setHint(R.string.dialog_serv_std);
                     txtServ.setFilters(new InputFilter[] {new InputFilter.LengthFilter(3)});

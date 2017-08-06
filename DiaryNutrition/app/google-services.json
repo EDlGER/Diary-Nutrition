@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "87070234554-8c7qr7vl0vvah3vciesftarjrnujjo03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ediger.diarynutrition",
+            "certificate_hash": "c2124d2654f25e8c8997f54fc2a63b4f2a0d6ca6"
+          }
+        },
+        {
           "client_id": "87070234554-ff58q4gl8hv47eqn71j2p2rfmltv6geb.apps.googleusercontent.com",
           "client_type": 3
         }

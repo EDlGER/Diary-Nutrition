@@ -33,6 +33,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -41,6 +44,8 @@ import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.objects.AppContext;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ediger on 11.05.17.
@@ -55,10 +60,15 @@ public class AddWaterDialog extends DialogFragment {
     private static final String PREF_WATER_SERVING_3 = "water_serving_3";
     private static final String PREF_WATER_SERVING_4 = "water_serving_4";
 
+    private static final String PREF_ADS_REMOVED = "ads_removed";
+    private static final String PREF_FILE_PREMIUM = "premium_data";
+
     private long time;
     private int hour;
     private int minute;
     private int cardId;
+
+    private boolean isAdsRemoved;
 
     private SharedPreferences pref;
 
@@ -71,6 +81,8 @@ public class AddWaterDialog extends DialogFragment {
     private TextView txtTime;
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm", Locale.getDefault());
+
+    private InterstitialAd mInterstitialAd;
 
     private TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -88,6 +100,16 @@ public class AddWaterDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.dialog_add_water, container, false);
+
+        SharedPreferences pref = getActivity().getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE);
+        isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_water_id));
+
+        if (!isAdsRemoved) {
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        }
 
         txtWater1 = (TextView) root.findViewById(R.id.txt_water_1);
         txtWater2 = (TextView) root.findViewById(R.id.txt_water_2);
@@ -166,24 +188,36 @@ public class AddWaterDialog extends DialogFragment {
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater1.getText().toString()));
                     hideKeyboard();
                     getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+
+                    if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
+
                     dismiss();
                     break;
                 case R.id.card_water_2:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater2.getText().toString()));
                     hideKeyboard();
                     getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+
+                    if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
+
                     dismiss();
                     break;
                 case R.id.card_water_3:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater3.getText().toString()));
                     hideKeyboard();
                     getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+
+                    if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
+
                     dismiss();
                     break;
                 case R.id.card_water_4:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater4.getText().toString()));
                     hideKeyboard();
                     getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+
+                    if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
+
                     dismiss();
                     break;
             }
@@ -258,6 +292,9 @@ public class AddWaterDialog extends DialogFragment {
             AppContext.getDbDiary().addWater(time, Integer.parseInt(edWater.getText().toString()));
             hideKeyboard();
             getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+
+            if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
+
             dismiss();
         }
     }
