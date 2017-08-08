@@ -73,8 +73,8 @@
         <ListPreference
             android:key="default_tab"
             android:title="@string/pref_ui_tab_default"
-            android:entries="@array/pref_water_card_array"
-            android:entryValues="@array/pref_water_card_values"
+            android:entries="@array/pref_tab_array"
+            android:entryValues="@array/pref_tab_values"
             android:summary="%s"
             android:defaultValue="0"/>
 

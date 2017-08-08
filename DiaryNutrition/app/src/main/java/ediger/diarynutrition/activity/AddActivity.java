@@ -169,6 +169,7 @@ public class AddActivity extends AppCompatActivity {
             hour = calendar.get(Calendar.HOUR_OF_DAY);
             min = calendar.get(Calendar.MINUTE);
 
+            txtServ.setText(String.valueOf(serving));
             txtTime.setText(timeFormatter.format(calendar.getTime()));
 
             mealId = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_MEAL_ID));
@@ -200,7 +201,12 @@ public class AddActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     gram = 1;
-                    txtServ.setText("");
+
+                    if (recordId == -1)
+                        txtServ.setText("");
+                    else
+                        txtServ.setText(String.valueOf(serving));
+
                     txtServ.setHint(R.string.dialog_serv_std);
                     txtServ.setFilters(new InputFilter[] {new InputFilter.LengthFilter(3)});
                     setInfo();

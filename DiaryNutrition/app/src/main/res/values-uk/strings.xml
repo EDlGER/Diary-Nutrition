@@ -204,7 +204,13 @@
         <item>Два месяца</item>
     </string-array>
 
-    <string-array name="pref_water_card_array">
+    <string-array name="pref_tab_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_tab_array">
         <item>База данных</item>
         <item>Избранные</item>
         <item>Добавленные</item>
