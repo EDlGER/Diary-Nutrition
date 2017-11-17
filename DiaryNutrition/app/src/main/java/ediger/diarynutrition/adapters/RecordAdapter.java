@@ -1,21 +1,34 @@
 package ediger.diarynutrition.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.support.annotation.IntRange;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v7.widget.RecyclerView;
+import android.util.SparseIntArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorTreeAdapter;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import ediger.diarynutrition.activity.MainActivity;
@@ -23,15 +36,134 @@ import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.DiaryFragment;
 import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.widget.ExpandableItemIndicator;
 
-public class RecordAdapter extends SimpleCursorTreeAdapter {
+public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGroupViewHolder, RecordAdapter.MyChildViewHolder> {
 
     private DiaryFragment mFragment;
-    private MainActivity mActivity;
-    private Context mContext;
 
     protected final HashMap<Integer, Integer> mGroupMap;
 
+    private interface Expandable extends ExpandableItemConstants {
+    }
+
+    public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
+        public FrameLayout mContainer;
+        public TextView mTextView;
+
+        public MyBaseViewHolder(View v) {
+            super(v);
+            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mTextView = (TextView) v.findViewById(android.R.id.text1);
+        }
+    }
+
+    public static class MyGroupViewHolder extends MyBaseViewHolder {
+        public ExpandableItemIndicator mIndicator;
+
+        public MyGroupViewHolder(View v) {
+            super(v);
+            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+        }
+    }
+
+    public static class MyChildViewHolder extends MyBaseViewHolder {
+        public MyChildViewHolder(View v) {
+            super(v);
+        }
+    }
+
+    public RecordAdapter( Context context, DiaryFragment fragment, Cursor cursor) {
+        super(context, cursor);
+        mFragment = fragment;
+        mGroupMap = new HashMap<>();
+    }
+
+    @Override
+    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View v = inflater.inflate(R.layout.list_group_item, parent, false);
+        return new MyGroupViewHolder(v);
+    }
+
+    @Override
+    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        return new MyChildViewHolder(v);
+    }
+
+    @Override
+    public void onBindGroupViewHolder(MyGroupViewHolder holder, Cursor cursor) {
+        // set text
+        holder.mTextView.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_M_NAME)));
+
+        // mark as clickable
+        holder.itemView.setClickable(true);
+
+        // set background resource (target view ID: container)
+        final int expandState = holder.getExpandStateFlags();
+
+        if ((expandState & ExpandableItemConstants.STATE_FLAG_IS_UPDATED) != 0) {
+            int bgResId;
+            boolean isExpanded;
+            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+
+            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+                bgResId = R.drawable.bg_group_item_expanded_state;
+                isExpanded = true;
+            } else {
+                bgResId = R.drawable.bg_group_item_normal_state;
+                isExpanded = false;
+            }
+
+            holder.mContainer.setBackgroundResource(bgResId);
+            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
+        }
+    }
+
+    @Override
+    public void onBindChildViewHolder(MyChildViewHolder holder, Cursor cursor) {
+        // set text
+        holder.mTextView.setText("*");
+
+        // set background resource (target view ID: container)
+        int bgResId;
+        bgResId = R.drawable.bg_item_normal_state;
+        holder.mContainer.setBackgroundResource(bgResId);
+    }
+
+    @Override
+    protected Cursor getChildrenCursor(Cursor groupCursor) {
+        Loader loader = null;
+        int groupPos = groupCursor.getPosition();
+        int groupId = groupCursor.getInt(groupCursor
+                .getColumnIndex(DbDiary.ALIAS_ID));
+
+        mGroupMap.put(groupId, groupPos);
+
+        if (mFragment != null && mFragment.isAdded()) {
+            loader = mFragment.getLoaderManager().getLoader(groupId);
+            if (loader != null && !loader.isReset()){
+                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
+            }
+            else {
+                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+            }
+        }
+        return null;
+    }
+
+    public HashMap<Integer, Integer> getGroupMap () {
+        return mGroupMap;
+    }
+
+    @Override
+    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+        return false;
+    }
+
+/*
     public RecordAdapter(Context context,DiaryFragment df, Cursor cursor, int groupLayout,
                          String[] groupFrom, int[] groupTo, int childLayout,
                          String[] childFrom, int[] childTo) {
@@ -261,5 +393,5 @@ public class RecordAdapter extends SimpleCursorTreeAdapter {
         public TextView fat;
         public TextView time;
         public TextView serving;
-    }
+    }*/
 }

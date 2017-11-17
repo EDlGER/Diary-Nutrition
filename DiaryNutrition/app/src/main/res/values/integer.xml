@@ -2,5 +2,6 @@
 <resources>
 
     <integer name="numSideItems">1</integer>
+    <integer name="expandable_item_indicator_anim_duration">200</integer>
 
 </resources>

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -121,7 +120,7 @@ public class SearchTab extends Fragment {
             AppContext.getDbDiary().delFood(acmi.id);
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_food_del),
-                            BaseTransientBottomBar.LENGTH_LONG);
+                            Snackbar.LENGTH_LONG);
             snackbar.show();
 
             return true;

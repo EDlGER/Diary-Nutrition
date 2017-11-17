@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.NinePatchDrawable;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -17,7 +19,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -61,24 +66,34 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 
 public class DiaryFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+        RecyclerViewExpandableItemManager.OnGroupExpandListener {
 
     View rootview;
-    private long date;
+    private long mDate;
     private boolean isRemaining = true;
 
     private List<List<Long>> buffer = new ArrayList<>();
 
     private SharedPreferences pref;
-    private Intent intent;
 
     private Calendar nowto;
     private Calendar today = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private RecordAdapter recordAdapter;
     private ExpandableListView listRecord;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mWrappedAdapter;
+    private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
     //Values in CircularProgress
     private TextView consCal;
@@ -102,6 +117,8 @@ public class DiaryFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        Log.v("DiaryFragment", "onCreateViewIn");
 
         Cursor cursor;
         Calendar now = Calendar.getInstance();
@@ -158,21 +175,21 @@ public class DiaryFragment extends Fragment implements
         nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH), 0, 0);
 
-        intent = getActivity().getIntent();
-        date = intent.getLongExtra("date", nowto.getTimeInMillis());
+        Intent intent = getActivity().getIntent();
+        mDate = intent.getLongExtra("date", nowto.getTimeInMillis());
 
         intent.removeExtra("date");
-        now.setTimeInMillis(date);
+        now.setTimeInMillis(mDate);
 
         mainActivity.setCurrentDate(now.getTime());
         if (today.equals(now)) {
             mainActivity.setSubtitle(getString(R.string.diary_date_today));
         }
 
-        AppContext.getDbDiary().setDate(date);
+        AppContext.getDbDiary().setDate(mDate);
 
         cursor = AppContext.getDbDiary().getMealData();
-        int[] groupTo = {
+   /*     int[] groupTo = {
                 R.id.txt_meal,
                 R.id.txtGroupCal,
                 R.id.txtGroupCarbo,
@@ -197,8 +214,45 @@ public class DiaryFragment extends Fragment implements
                 android.R.layout.simple_expandable_list_item_1,
                 groupFrom, groupTo,
                 android.R.layout.simple_list_item_1,
-                childFrom, childTo);
+                childFrom, childTo);*/
+//=================================================================================================================================
 
+
+        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.list_records);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(savedInstanceState);
+        mRecyclerViewExpandableItemManager.setOnGroupExpandListener(this);
+        mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
+
+        //final RecordAdapter recordAdapter = new RecordAdapter(getActivity(), this, cursor);
+        recordAdapter = new RecordAdapter(getActivity(), this, cursor);
+
+        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(recordAdapter);
+        final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
+
+        // Change animations are enabled by default since support-v7-recyclerview v22.
+        // Need to disable them when using animation indicator.
+        animator.setSupportsChangeAnimations(false);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
+        mRecyclerView.setItemAnimator(animator);
+        mRecyclerView.setHasFixedSize(false);
+        // additional decorations
+        //noinspection StatementWithEmptyBody
+        if (supportsViewElevation()) {
+            // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
+        } else {
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(),
+                    R.drawable.material_shadow_z1)));
+        }
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(),
+                R.drawable.list_divider_h), true));
+
+        mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
+
+
+        //=============================================================================================================================
         //footer
         View footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
 
@@ -206,7 +260,7 @@ public class DiaryFragment extends Fragment implements
         cardWater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor cursor = AppContext.getDbDiary().getWaterData(date);
+                Cursor cursor = AppContext.getDbDiary().getWaterData(mDate);
                 if (cursor.moveToFirst()) {
                     View expansionView = rootview.findViewById(R.id.expansion_view);
                     int location[] = new int[2];
@@ -217,7 +271,7 @@ public class DiaryFragment extends Fragment implements
                     intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
                     intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
                     intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
-                    intent.putExtra("date", date);
+                    intent.putExtra("date", mDate);
 
                     startActivity(intent);
                 } else {
@@ -233,6 +287,7 @@ public class DiaryFragment extends Fragment implements
         waterRemain = (TextView) footerView.findViewById(R.id.txt_water_remain);
         pbWater = (CircularMusicProgressBar) footerView.findViewById(R.id.pb_water);
 
+        /*
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
         listRecord.addFooterView(footerView, null, false);
         listRecord.setAdapter(recordAdapter);
@@ -240,7 +295,7 @@ public class DiaryFragment extends Fragment implements
 
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.collapseGroup(i);
-        }
+        }*/
 
         Loader loader = getLoaderManager().initLoader(-1, null, this);
         if (loader != null && !loader.isReset()){
@@ -297,7 +352,7 @@ public class DiaryFragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), FoodActivity.class);
-                addIntent.putExtra("CurrentCal", date);
+                addIntent.putExtra("CurrentCal", mDate);
                 startActivity(addIntent);
             }
         });
@@ -325,8 +380,8 @@ public class DiaryFragment extends Fragment implements
             public void onDayClick(Date dateClicked) {
 
                 nowto.setTime(dateClicked);
-                date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().setDate(date);
+                mDate = nowto.getTimeInMillis();
+                AppContext.getDbDiary().setDate(mDate);
 
                 if (today.equals(nowto)) {
                     mainActivity.setSubtitle(getString(R.string.diary_date_today));
@@ -351,11 +406,11 @@ public class DiaryFragment extends Fragment implements
         });
 
         mainActivity.title.setPadding(0, 0, 0, 0);
-
+/*
         for(int i=0; i < recordAdapter.getGroupCount(); i++) {
             listRecord.expandGroup(i);
             listRecord.collapseGroup(i);
-        }
+        }*/
         setHeaderData();
         updateWaterUI();
     }
@@ -549,7 +604,7 @@ public class DiaryFragment extends Fragment implements
         int target = pref.getInt(SettingsFragment.KEY_PREF_WATER, 2000);
         waterTotal.setText(String.valueOf(target));
 
-        Cursor cursor = AppContext.getDbDiary().getDayWaterData(date);
+        Cursor cursor = AppContext.getDbDiary().getDayWaterData(mDate);
         if (cursor.moveToFirst()) {
             value = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT));
             water.setText(String.valueOf(value));
@@ -570,13 +625,36 @@ public class DiaryFragment extends Fragment implements
         transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
     }
 
+    @Override
+    public void onGroupCollapse(int groupPosition, boolean fromUser, Object payload) {
+
+    }
+
+    @Override
+    public void onGroupExpand(int groupPosition, boolean fromUser, Object payload) {
+        if (fromUser) {
+            adjustScrollPositionOnGroupExpanded(groupPosition);
+        }
+    }
+
+    private void adjustScrollPositionOnGroupExpanded(int groupPosition) {
+        int childItemHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.list_item_height);
+        int topMargin = (int) (getActivity().getResources().getDisplayMetrics().density * 16); // top-spacing: 16dp
+        int bottomMargin = topMargin; // bottom-spacing: 16dp
+
+        mRecyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin);
+    }
+
+    private boolean supportsViewElevation() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cl;
 
         if (id > -1){
-            cl = new ChildCursorLoader(getActivity(),AppContext.getDbDiary(), date,id);
+            cl = new ChildCursorLoader(getActivity(),AppContext.getDbDiary(), mDate, id);
         }
         else {
             cl = new GroupCursorLoader(getActivity(),AppContext.getDbDiary());
@@ -590,10 +668,10 @@ public class DiaryFragment extends Fragment implements
 
         if (id > -1){
             if (!data.isClosed()) {
-                HashMap<Integer,Integer> groupMap = recordAdapter.getGroupMap();
                 try {
+                    HashMap<Integer,Integer> groupMap = recordAdapter.getGroupMap();
                     int groupPos = groupMap.get(id);
-                    recordAdapter.setChildrenCursor(groupPos,data);
+                    recordAdapter.setChildrenCursor(groupPos, data);
                 } catch (NullPointerException e) {
                     Log.w("DEBUG",e.getMessage());
                 }
@@ -618,6 +696,7 @@ public class DiaryFragment extends Fragment implements
             recordAdapter.setGroupCursor(null);
         }*/
     }
+
 
     private static class ChildCursorLoader extends CursorLoader {
         DbDiary db;

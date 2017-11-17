@@ -8,4 +8,9 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="commonListItemStyle">
+        <item name="android:elevation">@dimen/list_item_elevation</item>
+        <item name="android:outlineProvider">bounds</item>
+    </style>
+
 </resources>
