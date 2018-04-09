@@ -23,7 +23,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +41,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,6 +50,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
@@ -196,7 +200,7 @@ public class MainActivity extends AppCompatActivity
         mCompactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
         // Force English
-        mCompactCalendarView.setLocale(Locale.getDefault());
+        mCompactCalendarView.setLocale(TimeZone.getDefault(), Locale.getDefault());
 
         mCompactCalendarView.setShouldDrawDaysHeader(true);
 
@@ -221,34 +225,36 @@ public class MainActivity extends AppCompatActivity
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isExpanded) {
-                    RotateAnimation anim = new RotateAnimation(mCurrentRotation,
-                            mCurrentRotation + 180.0f,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f);
+                if (!mCompactCalendarView.isAnimating()) {
+                    if (isExpanded) {
+                        RotateAnimation anim = new RotateAnimation(mCurrentRotation,
+                                mCurrentRotation + 180.0f,
+                                Animation.RELATIVE_TO_SELF, 0.5f,
+                                Animation.RELATIVE_TO_SELF, 0.5f);
 
-                    mCurrentRotation = (mCurrentRotation + 180.0f) % 360.0f;
-                    anim.setInterpolator(new LinearInterpolator());
-                    anim.setFillAfter(true);
-                    anim.setFillEnabled(true);
-                    anim.setDuration(300);
-                    arrow.startAnimation(anim);
-                    mAppBarLayout.setExpanded(false, true);
-                    isExpanded = false;
-                } else {
-                    RotateAnimation anim = new RotateAnimation(mCurrentRotation,
-                            mCurrentRotation - 180.0f,
-                            Animation.RELATIVE_TO_SELF, 0.5f,
-                            Animation.RELATIVE_TO_SELF, 0.5f);
+                        mCurrentRotation = (mCurrentRotation + 180.0f) % 360.0f;
+                        anim.setInterpolator(new LinearInterpolator());
+                        anim.setFillAfter(true);
+                        anim.setFillEnabled(true);
+                        anim.setDuration(300);
+                        arrow.startAnimation(anim);
+                        mCompactCalendarView.hideCalendar();
+                        isExpanded = false;
+                    } else {
+                        RotateAnimation anim = new RotateAnimation(mCurrentRotation,
+                                mCurrentRotation - 180.0f,
+                                Animation.RELATIVE_TO_SELF, 0.5f,
+                                Animation.RELATIVE_TO_SELF, 0.5f);
 
-                    mCurrentRotation = (mCurrentRotation - 180.0f) % 360.0f;
-                    anim.setInterpolator(new LinearInterpolator());
-                    anim.setFillAfter(true);
-                    anim.setFillEnabled(true);
-                    anim.setDuration(300);
-                    arrow.startAnimation(anim);
-                    mAppBarLayout.setExpanded(true, true);
-                    isExpanded = true;
+                        mCurrentRotation = (mCurrentRotation - 180.0f) % 360.0f;
+                        anim.setInterpolator(new LinearInterpolator());
+                        anim.setFillAfter(true);
+                        anim.setFillEnabled(true);
+                        anim.setDuration(300);
+                        arrow.startAnimation(anim);
+                        mCompactCalendarView.showCalendar();
+                        isExpanded = true;
+                    }
                 }
             }
         });
@@ -296,7 +302,7 @@ public class MainActivity extends AppCompatActivity
         anim.setFillEnabled(true);
         anim.setDuration(150);
         arrow.startAnimation(anim);
-        mAppBarLayout.setExpanded(false, true);
+        mCompactCalendarView.hideCalendar();
         isExpanded = false;
     }
 

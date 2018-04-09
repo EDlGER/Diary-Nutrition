@@ -142,15 +142,15 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
 
         mGroupMap.put(groupId, groupPos);
 
-        if (mFragment != null && mFragment.isAdded()) {
-            loader = mFragment.getLoaderManager().getLoader(groupId);
-            if (loader != null && !loader.isReset()){
-                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
-            }
-            else {
-                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
-            }
-        }
+//        if (mFragment != null && mFragment.isAdded()) {
+//            loader = mFragment.getLoaderManager().getLoader(groupId);
+//            if (loader != null && !loader.isReset()){
+//                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
+//            }
+//            else {
+//                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+//            }
+//        }
         return null;
     }
 
