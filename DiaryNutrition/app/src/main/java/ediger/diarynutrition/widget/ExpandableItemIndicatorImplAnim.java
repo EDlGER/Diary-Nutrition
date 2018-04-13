@@ -29,7 +29,8 @@ import android.view.View;
 import ediger.diarynutrition.R;
 
 // NOTE: AnimatedVectorDrawableCompat works on API level 11+, using 15
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+//@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
     private AppCompatImageView mImageView;
 

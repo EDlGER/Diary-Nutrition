@@ -1,41 +1,27 @@
 package ediger.diarynutrition.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.support.annotation.IntRange;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v7.widget.RecyclerView;
-import android.util.SparseIntArray;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorTreeAdapter;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
-import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.DiaryFragment;
-import ediger.diarynutrition.objects.AppContext;
 import ediger.diarynutrition.widget.ExpandableItemIndicator;
 
 public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGroupViewHolder, RecordAdapter.MyChildViewHolder> {
@@ -47,34 +33,45 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
     private interface Expandable extends ExpandableItemConstants {
     }
 
-    public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
+    public static class MyGroupViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
         public TextView mTextView;
-
-        public MyBaseViewHolder(View v) {
-            super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
-        }
-    }
-
-    public static class MyGroupViewHolder extends MyBaseViewHolder {
         public ExpandableItemIndicator mIndicator;
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
-    public static class MyChildViewHolder extends MyBaseViewHolder {
+    public static class MyChildViewHolder extends AbstractExpandableItemViewHolder {
+        RelativeLayout mContainer;
+
+        TextView mFoodName;
+        TextView mCal;
+        TextView mProt;
+        TextView mFat;
+        TextView mCarbo;
+        TextView mTime;
+        TextView mServing;
+
         public MyChildViewHolder(View v) {
             super(v);
+            mContainer = v.findViewById(R.id.container);
+            mFoodName = v.findViewById(R.id.txt_food_name);
+            mCal = v.findViewById(R.id.txt_cal);
+            mProt = v.findViewById(R.id.txt_prot);
+            mFat = v.findViewById(R.id.txt_fat);
+            mCarbo = v.findViewById(R.id.txt_carbo);
+            mTime = v.findViewById(R.id.txt_time);
+            mServing = v.findViewById(R.id.txt_serving);
         }
     }
 
-    public RecordAdapter( Context context, DiaryFragment fragment, Cursor cursor) {
-        super(context, cursor);
+    public RecordAdapter(Context context, DiaryFragment fragment, Cursor cursor) {
+        super(context, cursor, false);
         mFragment = fragment;
         mGroupMap = new HashMap<>();
     }
@@ -89,7 +86,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
     @Override
     public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.record_item1, parent, false);
         return new MyChildViewHolder(v);
     }
 
@@ -124,10 +121,38 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
 
     @Override
     public void onBindChildViewHolder(MyChildViewHolder holder, Cursor cursor) {
-        // set text
-        holder.mTextView.setText("*");
+        int cal = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
+        String carbo = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_CARBO)));
+        String prot = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_PROT)));
+        String fat = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
+                cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
+        String name = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
+        if (name.length() > 25) {
+            holder.mFoodName.setTextSize(12);
+        } else {
+            holder.mFoodName.setTextSize(16);
+        }
 
-        // set background resource (target view ID: container)
+        holder.mFoodName.setText(name);
+        holder.mCal.setText(String.valueOf(cal));
+        holder.mCarbo.setText(carbo);
+        holder.mProt.setText(prot);
+        holder.mFat.setText(fat);
+
+        //TODO String with placeholders
+        holder.mServing.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
+                + mContext.getString(R.string.elv_gram));
+
+        long dateTime = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_RECORD_DATETIME));
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.setTimeInMillis(dateTime);
+
+        holder.mTime.setText(new SimpleDateFormat("kk:mm", Locale.getDefault())
+                .format(calendar.getTime()));
+
+        //set background resource (target view ID: container)
         int bgResId;
         bgResId = R.drawable.bg_item_normal_state;
         holder.mContainer.setBackgroundResource(bgResId);
@@ -135,24 +160,25 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
 
     @Override
     protected Cursor getChildrenCursor(Cursor groupCursor) {
-        Loader loader = null;
+        Loader loader;
         int groupPos = groupCursor.getPosition();
         int groupId = groupCursor.getInt(groupCursor
                 .getColumnIndex(DbDiary.ALIAS_ID));
 
         mGroupMap.put(groupId, groupPos);
 
-//        if (mFragment != null && mFragment.isAdded()) {
-//            loader = mFragment.getLoaderManager().getLoader(groupId);
-//            if (loader != null && !loader.isReset()){
-//                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
-//            }
-//            else {
-//                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
-//            }
-//        }
+        if (mFragment != null && mFragment.isAdded()) {
+            loader = mFragment.getLoaderManager().getLoader(groupId);
+            if (loader != null && !loader.isReset()){
+                mFragment.getLoaderManager().restartLoader(groupId,null,mFragment);
+            }
+            else {
+                mFragment.getLoaderManager().initLoader(groupId,null,mFragment);
+            }
+        }
         return null;
     }
+
 
     public HashMap<Integer, Integer> getGroupMap () {
         return mGroupMap;
@@ -160,7 +186,11 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
 
     @Override
     public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
-        return false;
+        // check is enabled
+        if (!(holder.itemView.isEnabled() && holder.itemView.isClickable())) {
+            return false;
+        }
+        return true;
     }
 
 /*

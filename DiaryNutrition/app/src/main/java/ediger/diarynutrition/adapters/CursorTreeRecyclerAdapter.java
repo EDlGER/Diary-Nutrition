@@ -10,9 +10,6 @@ import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
-import android.widget.CursorAdapter;
-import android.widget.CursorTreeAdapter;
-import android.widget.SimpleCursorTreeAdapter;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 
@@ -23,7 +20,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAda
 abstract class CursorTreeRecyclerAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
         extends AbstractExpandableItemAdapter<GVH, CVH> {
 
-    private Context mContext;
+    protected Context mContext;
     private Handler mHandler;
     private boolean mAutoRequery;
 
@@ -184,8 +181,6 @@ abstract class CursorTreeRecyclerAdapter<GVH extends RecyclerView.ViewHolder, CV
             throw new IllegalStateException("this should only be called when the cursor is valid");
         }
 
-        //throw new IllegalStateException("couldn't move cursor to position " + groupPosition);
-
         onBindGroupViewHolder(holder, cursor);
     }
 
@@ -196,13 +191,10 @@ abstract class CursorTreeRecyclerAdapter<GVH extends RecyclerView.ViewHolder, CV
                                       int groupPosition,
                                       int childPosition,
                                       @IntRange(from = -8388608L, to = 8388607L) int viewType) {
-
         Cursor cursor = getChildrenCursorHelper(groupPosition, true).moveTo(childPosition);
         if (cursor == null) {
             throw new IllegalStateException("this should only be called when the cursor is valid");
         }
-
-        //throw new IllegalStateException("couldn't move cursor to position " + groupPosition);
 
         onBindChildViewHolder(holder, cursor);
     }
@@ -241,7 +233,7 @@ abstract class CursorTreeRecyclerAdapter<GVH extends RecyclerView.ViewHolder, CV
 
     @Override
     public boolean onHookGroupCollapse(int groupPosition, boolean fromUser) {
-        deactivateChildrenCursorHelper(groupPosition);
+        //deactivateChildrenCursorHelper(groupPosition);
         return super.onHookGroupCollapse(groupPosition, fromUser);
     }
 
@@ -257,16 +249,10 @@ abstract class CursorTreeRecyclerAdapter<GVH extends RecyclerView.ViewHolder, CV
         cursorHelper.deactivate();
     }
 
-    /**
-     * @see CursorAdapter#changeCursor(Cursor)
-     */
     public void changeCursor(Cursor cursor) {
         mGroupCursorHelper.changeCursor(cursor, true);
     }
 
-    /**
-     * @see CursorAdapter#getCursor()
-     */
     public Cursor getCursor() {
         return mGroupCursorHelper.getCursor();
     }

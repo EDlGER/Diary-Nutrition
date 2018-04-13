@@ -51,7 +51,7 @@ public class ExpandableItemIndicator extends FrameLayout {
         // NOTE: AnimatedVectorDrawableCompat works on API level 11+,
         // but I prefer to use it on API level 16+ only due to performance reason of
         // both hardware and Android platform.
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     protected void onInit(Context context, AttributeSet attrs, int defStyleAttr) {

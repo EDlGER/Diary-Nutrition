@@ -18,11 +18,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -73,7 +71,8 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 
-public class DiaryFragment extends Fragment implements RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+        RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener {
 
     View rootview;
@@ -88,16 +87,13 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
     private Calendar today = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
 
-    private RecyclerView.Adapter recordAdapterr;
-
-    //TODO удалить (mock)
+    private RecyclerView.Adapter wrappedAdapter;
     private RecordAdapter recordAdapter;
 
     private ExpandableListView listRecord;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
     //Values in CircularProgress
@@ -106,14 +102,10 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
     private TextView consProt;
     private TextView consFat;
 
-    private TextView water;
-    private TextView waterTotal;
-    private TextView waterRemain;
     private CircularMusicProgressBar pbCal;
     private CircularMusicProgressBar pbCarbo;
     private CircularMusicProgressBar pbProt;
     private CircularMusicProgressBar pbFat;
-    private CircularMusicProgressBar pbWater;
     private TextSwitcher headerSwitcher;
 
     private AddWaterDialog dialog;
@@ -135,18 +127,18 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
-        consCal = (TextView) rootview.findViewById(R.id.consCal);
-        consCarbo = (TextView) rootview.findViewById(R.id.consCarbo);
-        consProt = (TextView) rootview.findViewById(R.id.consProt);
-        consFat = (TextView) rootview.findViewById(R.id.consFat);
+        consCal = rootview.findViewById(R.id.consCal);
+        consCarbo = rootview.findViewById(R.id.consCarbo);
+        consProt = rootview.findViewById(R.id.consProt);
+        consFat = rootview.findViewById(R.id.consFat);
 
-        pbCal = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_cal);
-        pbCarbo = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_carbo);
-        pbProt = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_prot);
-        pbFat = (CircularMusicProgressBar) rootview.findViewById(R.id.pb_fat);
+        pbCal = rootview.findViewById(R.id.pb_cal);
+        pbCarbo = rootview.findViewById(R.id.pb_carbo);
+        pbProt = rootview.findViewById(R.id.pb_prot);
+        pbFat =  rootview.findViewById(R.id.pb_fat);
 
         //Header switcher
-        headerSwitcher = (TextSwitcher) rootview.findViewById(R.id.headerSwitcher);
+        headerSwitcher = rootview.findViewById(R.id.headerSwitcher);
         headerSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
@@ -166,7 +158,6 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
         headerSwitcher.setText(isRemaining ?
                 getResources().getString(R.string.diary_header_remain) :
                 getResources().getString(R.string.diary_header_total));
-
 
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
@@ -201,38 +192,42 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
         mRecyclerViewExpandableItemManager.setOnGroupExpandListener(this);
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
-        View.OnClickListener onWaterClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Cursor cursor = AppContext.getDbDiary().getWaterData(mDate);
-                if (cursor.moveToFirst()) {
-                    View expansionView = rootview.findViewById(R.id.expansion_view);
-                    int location[] = new int[2];
-                    expansionView.getLocationInWindow(location);
-
-                    Intent intent = new Intent(getActivity(), WaterActivity.class);
-                    intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
-                    intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
-                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
-                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
-                    intent.putExtra("date", mDate);
-
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.message_card_water),
-                            Toast.LENGTH_SHORT).show();
-                }
-                cursor.close();
-            }
-        };
-        //TODO Mocking
         recordAdapter = new RecordAdapter(getActivity(), this, cursor);
 
-        recordAdapterr = new RecordAdapter(getActivity(), this, cursor);
-        recordAdapterr = mRecyclerViewExpandableItemManager.createWrappedAdapter(recordAdapterr);
-        recordAdapterr = new WaterFooterAdapter(getActivity().getBaseContext(),
-                recordAdapterr, mDate, onWaterClickListener);
-        mRecyclerView.setAdapter(recordAdapterr);  // requires *wrapped* adapter
+        wrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(recordAdapter);
+
+        if (pref.getBoolean(SettingsFragment.KEY_PREF_UI_WATER_CARD, true)) {
+
+            View.OnClickListener onWaterClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Cursor cursor = AppContext.getDbDiary().getWaterData(mDate);
+                    if (cursor.moveToFirst()) {
+                        View expansionView = rootview.findViewById(R.id.expansion_view);
+                        int location[] = new int[2];
+                        expansionView.getLocationInWindow(location);
+
+                        Intent intent = new Intent(getActivity(), WaterActivity.class);
+                        intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
+                        intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
+                        intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
+                        intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
+                        intent.putExtra("date", mDate);
+
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.message_card_water),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    cursor.close();
+                }
+            };
+
+            wrappedAdapter = new WaterFooterAdapter(getActivity().getBaseContext(),
+                    wrappedAdapter, onWaterClickListener);
+        }
+
+        mRecyclerView.setAdapter(wrappedAdapter);  // requires *wrapped* adapter
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(false);
@@ -258,42 +253,6 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
 
-
-        //=============================================================================================================================
-        //footer
-        /*View footerView = inflater.inflate(R.layout.record_footer, listRecord, false);
-
-        CardView cardWater = (CardView) footerView.findViewById(R.id.card_water);
-        cardWater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor cursor = AppContext.getDbDiary().getWaterData(mDate);
-                if (cursor.moveToFirst()) {
-                    View expansionView = rootview.findViewById(R.id.expansion_view);
-                    int location[] = new int[2];
-                    expansionView.getLocationInWindow(location);
-
-                    Intent intent = new Intent(getActivity(), WaterActivity.class);
-                    intent.putExtra(Consts.ARG_EXPANSION_LEFT_OFFSET, location[0]);
-                    intent.putExtra(Consts.ARG_EXPANSION_TOP_OFFSET, location[1]);
-                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_WIDTH, expansionView.getWidth());
-                    intent.putExtra(Consts.ARG_EXPANSION_VIEW_HEIGHT, expansionView.getHeight());
-                    intent.putExtra("date", mDate);
-
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.message_card_water),
-                            Toast.LENGTH_SHORT).show();
-                }
-                cursor.close();
-            }
-        });
-
-        water = (TextView) footerView.findViewById(R.id.txt_water);
-        waterTotal = (TextView) footerView.findViewById(R.id.txt_water_total);
-        waterRemain = (TextView) footerView.findViewById(R.id.txt_water_remain);
-        pbWater = (CircularMusicProgressBar) footerView.findViewById(R.id.pb_water);*/
-        //=================================== footer end ==========================================
         /*
         listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
         listRecord.addFooterView(footerView, null, false);
@@ -304,22 +263,14 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
             listRecord.collapseGroup(i);
         }*/
 
-//        Loader loader = getLoaderManager().initLoader(-1, null, this);
-//        if (loader != null && !loader.isReset()){
-//            getLoaderManager().restartLoader(-1,null,this);
-//        } else {
-//            getLoaderManager().initLoader(-1, null, this);
-//        }
-
-        //footer update
-        /*if (pref.getBoolean(SettingsFragment.KEY_PREF_UI_WATER_CARD, true)) {
-            cardWater.setVisibility(View.VISIBLE);
+        Loader loader = getLoaderManager().initLoader(-1, null, this);
+        if (loader != null && !loader.isReset()){
+            getLoaderManager().restartLoader(-1,null,this);
         } else {
-            cardWater.setVisibility(View.GONE);
-        }*/
+            getLoaderManager().initLoader(-1, null, this);
+        }
 
         setHeaderData();
-        //updateWaterUI();
 
         return rootview;
     }
@@ -328,7 +279,7 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AddWaterDialog.REQ_WATER) {
-            if (resultCode == Activity.RESULT_OK)  recordAdapterr.notifyDataSetChanged();
+            if (resultCode == Activity.RESULT_OK)  wrappedAdapter.notifyDataSetChanged();
             dialog.setTargetFragment(null, 0);
         }
     }
@@ -396,13 +347,9 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
                 } else {
                     mainActivity.setSubtitle(dateFormat.format(dateClicked));
                 }
-
-//                for (int i = 0; i < recordAdapter.getGroupCount(); i++) {
-//                    listRecord.expandGroup(i);
-//                    listRecord.collapseGroup(i);
-//                }
                 setHeaderData();
-                recordAdapterr.notifyDataSetChanged();
+                wrappedAdapter.notifyDataSetChanged();
+                restartChildrenLoaders();
 
                 mainActivity.hideCalendarView();
             }
@@ -414,13 +361,15 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
         });
 
         mainActivity.title.setPadding(0, 0, 0, 0);
-/*
-        for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            listRecord.expandGroup(i);
-            listRecord.collapseGroup(i);
-        }*/
+
         setHeaderData();
-        recordAdapterr.notifyDataSetChanged();
+        wrappedAdapter.notifyDataSetChanged();
+    }
+
+    private void restartChildrenLoaders() {
+        for (int i = 0; i < recordAdapter.getGroupMap().size(); i++) {
+            getLoaderManager().restartLoader(i, null, this);
+        }
     }
 
     @Override
@@ -640,7 +589,7 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
-    /*@Override
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         CursorLoader cl;
 
@@ -671,39 +620,38 @@ public class DiaryFragment extends Fragment implements RecyclerViewExpandableIte
             recordAdapter.setGroupCursor(data);
         }
     }
-*/
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//
-//        /*int id = loader.getId();
-//
-//        if (id != -1){
-//            try {
-//                recordAdapter.setChildrenCursor(id,null);
-//            } catch (NullPointerException e) {
-//                Log.w("TAG",e.getMessage());
-//            }
-//        } else {
-//            recordAdapter.setGroupCursor(null);
-//        }*/
-//    }
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        int id = loader.getId();
+
+        if (id != -1){
+            try {
+                recordAdapter.setChildrenCursor(id,null);
+            } catch (NullPointerException e) {
+                Log.w("TAG",e.getMessage());
+            }
+        } else {
+            recordAdapter.setGroupCursor(null);
+        }
+    }
 
 
     private static class ChildCursorLoader extends CursorLoader {
         DbDiary db;
-        long cal;
+        long date;
         int groupId;
 
-        public ChildCursorLoader(Context context,DbDiary db,long cal,int groupId) {
+        public ChildCursorLoader(Context context,DbDiary db,long date,int groupId) {
             super(context);
             this.db = db;
-            this.cal = cal;
+            this.date = date;
             this.groupId = groupId;
         }
 
         @Override
         public  Cursor loadInBackground(){
-            return db.getRecordData(cal, groupId);
+            return db.getRecordData(date, groupId);
         }
     }
 

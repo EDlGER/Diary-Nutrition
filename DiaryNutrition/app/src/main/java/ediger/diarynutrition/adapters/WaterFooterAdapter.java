@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,10 @@ import ediger.diarynutrition.objects.AppContext;
 import info.abdolahi.CircularMusicProgressBar;
 
 public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<WaterFooterAdapter.HeaderViewHolder,
-        WaterFooterAdapter.FooterViewHolder>
-        implements View.OnClickListener {
+        WaterFooterAdapter.FooterViewHolder> {
 
-    Context mContext;
-    View.OnClickListener mOnClickListener;
-    long mDate;
+    private Context mContext;
+    private View.OnClickListener mOnClickListener;
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         public HeaderViewHolder(View itemView) {
@@ -37,6 +36,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
         TextView waterTotal;
         TextView waterRemain;
         CircularMusicProgressBar pbWater;
+        CardView cardView;
 
         public FooterViewHolder(View itemView) {
             super(itemView);
@@ -44,18 +44,14 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
             waterTotal = itemView.findViewById(R.id.txt_water_total);
             waterRemain = itemView.findViewById(R.id.txt_water_remain);
             pbWater = itemView.findViewById(R.id.pb_water);
+            cardView = itemView.findViewById(R.id.card_water);
         }
     }
 
-    public WaterFooterAdapter(Context context, RecyclerView.Adapter adapter, long date) {
-        this(context, adapter, date, null);
-    }
-
     public WaterFooterAdapter(Context context, RecyclerView.Adapter adapter,
-                              long date, View.OnClickListener onClickListener) {
+                              View.OnClickListener onClickListener) {
         setAdapter(adapter);
         mContext = context;
-        mDate = date;
         mOnClickListener = onClickListener;
     }
 
@@ -69,9 +65,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
         View v = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.record_footer, parent, false);
-        FooterViewHolder vh = new FooterViewHolder(v);
-        vh.itemView.setOnClickListener(this);
-        return vh;
+        return new FooterViewHolder(v);
     }
 
     @Override
@@ -83,42 +77,27 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
     public void onBindFooterItemViewHolder(FooterViewHolder holder, int localPosition) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-        if (pref.getBoolean(SettingsFragment.KEY_PREF_UI_WATER_CARD, true)) {
-            holder.itemView.setVisibility(View.VISIBLE);
+        int value = 0;
+        //TODO change 2000
+        int target = pref.getInt(SettingsFragment.KEY_PREF_WATER, 2000);
+        holder.waterTotal.setText(String.valueOf(target));
 
-            int value = 0;
-            //2000 заменить
-            int target = pref.getInt(SettingsFragment.KEY_PREF_WATER, 2000);
-            holder.waterTotal.setText(String.valueOf(target));
-
-            Cursor cursor = AppContext.getDbDiary().getDayWaterData(mDate);
-            if (cursor.moveToFirst()) {
-                value = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT));
-                holder.water.setText(String.valueOf(value));
-            }
-            cursor.close();
-
-            holder.waterRemain.setText(String.valueOf(target - value));
-            holder.pbWater.setValue(value * 100 / target);
-        } else {
-            holder.itemView.setVisibility(View.GONE);
+        Cursor dateCursor = AppContext.getDbDiary().getDate();
+        long date = 0;
+        if (dateCursor.moveToFirst()) {
+            date = dateCursor.getLong(dateCursor.getColumnIndex(DbDiary.ALIAS_DATETIME));
         }
-    }
 
-    public void updateFooter() {
-        getFooterAdapter().notifyDataSetChanged();
-    }
-
-    public void updateFooter(long date) {
-        mDate = date;
-        getFooterAdapter().notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View view) {
-        if (mOnClickListener != null) {
-            mOnClickListener.onClick(view);
+        Cursor cursor = AppContext.getDbDiary().getDayWaterData(date);
+        if (cursor.moveToFirst()) {
+            value = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_SUM_AMOUNT));
+            holder.water.setText(String.valueOf(value));
         }
+        cursor.close();
+        holder.waterRemain.setText(String.valueOf(target - value));
+        holder.pbWater.setValue(value * 100 / target);
+
+        holder.cardView.setOnClickListener(mOnClickListener);
     }
 
     @Override
