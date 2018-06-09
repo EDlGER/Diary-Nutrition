@@ -278,6 +278,8 @@
     <string name="switch_on">Включен</string>
     <string name="diary_header_total">Всего</string>
     <string name="menu_action_switch">Осталось/Всего</string>
+    <string name="message_record_meal_insert_fail">Прием пищи не скопирован</string>
+    <string name="message_record_meal_insert">"Вставка успешна "</string>
 
 
 </resources>

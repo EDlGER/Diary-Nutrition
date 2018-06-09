@@ -162,7 +162,9 @@
     <string name="message_dialog_weight">Weight is not entered</string>
     <string name="message_dialog_cal">Calories is not entered</string>
     <string name="message_dialog_water">Water is not entered</string>
-    <string name="message_record_meal_copy">Meal copied</string>
+    <string name="message_record_meal_copy">Meal is copied</string>
+    <string name="message_record_meal_insert">Inserting is successful</string>
+    <string name="message_record_meal_insert_fail">Meal is not copied</string>
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>

@@ -69,7 +69,11 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
+import com.h6ah4i.android.widget.advrecyclerview.event.RecyclerViewRecyclerEventDistributor;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
+import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
+import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         RecyclerViewExpandableItemManager.OnGroupCollapseListener,
@@ -89,8 +93,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
 
     private RecyclerView.Adapter wrappedAdapter;
     private RecordAdapter recordAdapter;
-
-    private ExpandableListView listRecord;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -192,7 +194,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
         mRecyclerViewExpandableItemManager.setOnGroupExpandListener(this);
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
-        recordAdapter = new RecordAdapter(getActivity(), this, cursor);
+        recordAdapter = new RecordAdapter(getActivity(), this, cursor, this);
 
         wrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(recordAdapter);
 
@@ -252,25 +254,10 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                 R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
-
-        /*
-        listRecord = (ExpandableListView) rootview.findViewById(R.id.listRecords);
-        listRecord.addFooterView(footerView, null, false);
-        listRecord.setAdapter(recordAdapter);
-        registerForContextMenu(listRecord);
-
-        for(int i=0; i < recordAdapter.getGroupCount(); i++) {
-            listRecord.collapseGroup(i);
-        }*/
-
-        Loader loader = getLoaderManager().initLoader(-1, null, this);
-        if (loader != null && !loader.isReset()){
-            getLoaderManager().restartLoader(-1,null,this);
-        } else {
-            getLoaderManager().initLoader(-1, null, this);
-        }
+        registerForContextMenu(mRecyclerView);
 
         setHeaderData();
+        getLoaderManager().initLoader(-1, null, this);
 
         return rootview;
     }
@@ -348,7 +335,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                     mainActivity.setSubtitle(dateFormat.format(dateClicked));
                 }
                 setHeaderData();
-                wrappedAdapter.notifyDataSetChanged();
                 restartChildrenLoaders();
 
                 mainActivity.hideCalendarView();
@@ -367,122 +353,149 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     private void restartChildrenLoaders() {
-        for (int i = 0; i < recordAdapter.getGroupMap().size(); i++) {
+        for (int i = 0; i < recordAdapter.getGroupMap().size() + 1; i++) {
             getLoaderManager().restartLoader(i, null, this);
         }
+        mRecyclerViewExpandableItemManager.collapseAll();
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
-                ExpandableListContextMenuInfo) menuInfo;
 
-        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int childCount = recordAdapter.getChildrenCount(groupPos);
+        RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
+        if (rv == null) {
+            return;
+        }
+        RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 
-        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP &&
-                listRecord.isGroupExpanded(groupPos) && childCount != 0) {
-            menu.add(0, 1, 0, R.string.context_menu_copy);
+        int rootPosition = vh.getAdapterPosition();
+        if (rootPosition == RecyclerView.NO_POSITION) {
+            return;
+        }
+        RecyclerView.Adapter rootAdapter = rv.getAdapter();
+        int localFlatPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter, recordAdapter, rootPosition);
+
+        long expandablePosition = mRecyclerViewExpandableItemManager.getExpandablePosition(localFlatPosition);
+        int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
+        int childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition);
+        int childCount = recordAdapter.getChildrenCount(groupPosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            //group
+            if (mRecyclerViewExpandableItemManager.isGroupExpanded(groupPosition) && childCount != 0) {
+                menu.add(0, 1, 0, R.string.context_menu_copy).setActionView(v);
+            }
+            menu.add(0, 2, 0, R.string.context_menu_paste).setActionView(v);
+        } else {
+            //child
+            menu.add(0, 3, 0, R.string.context_menu_del).setActionView(v);
+            menu.add(0, 4, 0, R.string.context_menu_change).setActionView(v);
         }
 
-        if (type == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-            menu.add(0, 2, 0, R.string.context_menu_paste);
-        }
+        recordAdapter.setContextMenuState(true);
+    }
 
-        // Show context menu for childs
-        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-            menu.add(0, 3, 0, R.string.context_menu_del);
-            menu.add(0, 4, 0, R.string.context_menu_change);
-        }
+    public void onContextMenuClosed() {
+        recordAdapter.setContextMenuState(false);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.
-                ExpandableListContextMenuInfo) item.getMenuInfo();
-        int groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
-        int childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
-        if (!listRecord.isGroupExpanded(groupPos)) {
-            listRecord.expandGroup(groupPos);
+        RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(item.getActionView());
+        if (rv == null) {
+            return super.onContextItemSelected(item);
         }
-        Cursor child = this.recordAdapter.getChild(groupPos, childPos);
-        long id;
+        RecyclerView.ViewHolder vh = rv.findContainingViewHolder(item.getActionView());
 
+        int rootPosition = vh.getAdapterPosition();
+        if (rootPosition == RecyclerView.NO_POSITION) {
+            return false;
+        }
+        RecyclerView.Adapter rootAdapter = rv.getAdapter();
+        int localFlatPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter, recordAdapter, rootPosition);
+
+        long expandablePosition = mRecyclerViewExpandableItemManager.getExpandablePosition(localFlatPosition);
+        int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
+        int childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition);
+        int childCount = recordAdapter.getChildrenCount(groupPosition);
+
+        Cursor child = recordAdapter.getChild(groupPosition, childPosition);
+        long id;
         List<Long> childBuf;
 
-        if (item.getItemId() == 1) {
+        switch (item.getItemId()) {
+            //Meal copy
+            case 1:
+                for (int i = 0; i < childCount; i++) {
+                    childBuf = new ArrayList<>();
 
-            for (int i = 0; i < recordAdapter.getChildrenCount(groupPos); i++) {
-                childBuf = new ArrayList<>();
+                    child = this.recordAdapter.getChild(groupPosition, i);
 
-                child = this.recordAdapter.getChild(groupPos, i);
+                    //food_id
+                    childBuf.add(child.getLong(4));
+                    //serving
+                    childBuf.add(child.getLong(1));
+                    //record_datetime
+                    childBuf.add(child.getLong(2));
 
-                //food_id
-                childBuf.add(child.getLong(4));
-                //serving
-                childBuf.add(child.getLong(1));
-                //record_datetime
-                childBuf.add(child.getLong(2));
-
-                buffer.add(childBuf);
-            }
-
-
-            Snackbar.make(rootview, getString(R.string.message_record_meal_copy),
+                    buffer.add(childBuf);
+                }
+                Snackbar.make(rootview, getString(R.string.message_record_meal_copy),
                     Snackbar.LENGTH_SHORT).show();
+                break;
+            //Meal insert
+            case 2:
+                if (buffer.size() == 0) {
+                    Snackbar.make(rootview, getString(R.string.message_record_meal_insert_fail),
+                            Snackbar.LENGTH_SHORT).show();
+                    break;
+                }
+                for (int i = 0; i < buffer.size(); i++) {
 
-            return true;
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(buffer.get(i).get(2));
+                    calendar.clear(Calendar.MILLISECOND);
+                    calendar.clear(Calendar.SECOND);
+                    calendar.clear(Calendar.MINUTE);
+                    calendar.clear(Calendar.HOUR);
+                    calendar.clear(Calendar.HOUR_OF_DAY);
+
+                    AppContext.getDbDiary().addRec(
+                            buffer.get(i).get(0),
+                            buffer.get(i).get(1).intValue(),
+                            buffer.get(i).get(2) + (nowto.getTimeInMillis() - calendar.getTimeInMillis()),
+                            groupPosition + 1);
+
+                }
+                restartChildrenLoaders();
+                mRecyclerViewExpandableItemManager.notifyChildrenOfGroupItemChanged(groupPosition);
+                buffer.clear();
+                setHeaderData();
+
+                Snackbar.make(rootview, getString(R.string.message_record_meal_insert),
+                        Snackbar.LENGTH_SHORT).show();
+
+                break;
+
+            //Record delete
+            case 3:
+                id = child.getLong(0);
+                AppContext.getDbDiary().delRec(id);
+                mRecyclerViewExpandableItemManager.notifyChildItemRemoved(groupPosition, childPosition);
+                setHeaderData();
+                break;
+
+            //Record changing
+            case 4:
+                id = child.getLong(0);
+                Intent intent = new Intent(getActivity(), AddActivity.class);
+                intent.putExtra("recordId", id);
+                startActivity(intent);
+                break;
         }
 
-        if (item.getItemId() == 2) {
-
-            for (int i = 0; i < buffer.size(); i++) {
-
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(buffer.get(i).get(2));
-                calendar.clear(Calendar.MILLISECOND);
-                calendar.clear(Calendar.SECOND);
-                calendar.clear(Calendar.MINUTE);
-                calendar.clear(Calendar.HOUR);
-                calendar.clear(Calendar.HOUR_OF_DAY);
-
-                AppContext.getDbDiary().addRec(
-                        buffer.get(i).get(0),
-                        (int) (long) buffer.get(i).get(1),
-                        buffer.get(i).get(2) + (nowto.getTimeInMillis() - calendar.getTimeInMillis()),
-                        groupPos + 1);
-
-            }
-            buffer.clear();
-
-            listRecord.collapseGroup(groupPos);
-            listRecord.expandGroup(groupPos);
-
-            setHeaderData();
-
-            return true;
-        }
-
-        if(item.getItemId() == 3) {
-            id = child.getLong(0);
-            AppContext.getDbDiary().delRec(id);
-
-            listRecord.collapseGroup(groupPos);
-            listRecord.expandGroup(groupPos);
-
-            setHeaderData();
-
-            return true;
-        } else if (item.getItemId() == 4) {
-            id = child.getLong(0);
-            Intent intent = new Intent(getActivity(), AddActivity.class);
-            intent.putExtra("recordId", id);
-            startActivity(intent);
-            return true;
-        }
         return super.onContextItemSelected(item);
     }
 
@@ -613,7 +626,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                     int groupPos = groupMap.get(id);
                     recordAdapter.setChildrenCursor(groupPos, data);
                 } catch (NullPointerException e) {
-                    Log.w("DEBUG",e.getMessage());
+                    //Log.w("DEBUG", e.getMessage());
                 }
             }
         } else {
@@ -629,13 +642,12 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
             try {
                 recordAdapter.setChildrenCursor(id,null);
             } catch (NullPointerException e) {
-                Log.w("TAG",e.getMessage());
+                //Log.w("TAG",e.getMessage());
             }
         } else {
             recordAdapter.setGroupCursor(null);
         }
     }
-
 
     private static class ChildCursorLoader extends CursorLoader {
         DbDiary db;
