@@ -104,7 +104,7 @@ public class SummaryDayFragment extends Fragment {
         nowto.set(now.get(Calendar.YEAR), now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH), 0, 0);
         date = nowto.getTimeInMillis();
-        AppContext.getDbDiary().setDate(date);
+        AppContext.setDate(date);
 
         //Текущий день календаря
         final MainActivity mainActivity = (MainActivity)getActivity();
@@ -150,7 +150,7 @@ public class SummaryDayFragment extends Fragment {
             public void onDayClick(Date dateClicked) {
                 nowto.setTime(dateClicked);
                 date = nowto.getTimeInMillis();
-                AppContext.getDbDiary().setDate(date);
+                AppContext.setDate(date);
 
                 if (today.equals(nowto)) {
                     mainActivity.setSubtitle(getString(R.string.diary_date_today));

@@ -128,10 +128,7 @@ public class AddActivity extends AppCompatActivity {
         if (recordId == -1) {
             foodId = intent.getLongExtra("FoodId", 0);
 
-            cursor = AppContext.getDbDiary().getDate();
-            cursor.moveToFirst();
-            date = cursor.getLong(0);
-            cursor.close();
+            date = AppContext.getDate();
 
             hour = calendar.get(Calendar.HOUR_OF_DAY);
             min = calendar.get(Calendar.MINUTE);

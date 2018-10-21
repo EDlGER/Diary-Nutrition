@@ -185,7 +185,8 @@ public class DbDiary {
     }
 
     public Cursor getMealData(){
-        return db.query(TABLE_MEAL, null, null, null, null, null, null);
+        return db.query(TABLE_MEAL, null, null,
+                null, null, null, null);
     }
 
     public Cursor getWaterData(long date) {
@@ -214,7 +215,7 @@ public class DbDiary {
     public Cursor getDayData(long date) {
         String arg1 = Long.toString(date);
         String arg2 = Long.toString(date + 86356262);  // 86356262 = 24 часа
-        String sql = "select "
+        String sql = "SELECT "
                 + "sum(f.cal/100*r.serving) as " +ALIAS_CAL
                 + ",sum(f.[carbo]/100*r.[serving]) as " +ALIAS_CARBO
                 + ",sum(f.[prot]/100*r.[serving]) as " +ALIAS_PROT
@@ -224,9 +225,10 @@ public class DbDiary {
                 + " where r.record_datetime between ? and ?";
         return db.rawQuery(sql, new String[]{arg1, arg2});
     }
-    public Cursor getGroupData(long date) {
+    public Cursor getGroupData(long date, int mealId) {
         String arg1 = Long.toString(date);
         String arg2 = Long.toString(date+86356262);
+        String arg3 = String.valueOf(mealId);
         String sql = "SELECT "
                 + "r.meal_id as " + ALIAS_ID
                 + ",sum(f.cal/100*r.serving) as " +ALIAS_CAL
@@ -236,16 +238,15 @@ public class DbDiary {
                 + ",sum(r.serving) as " + ALIAS_SERVING
                 + " FROM record r"
                 + " inner join food f on r.food_id=f._id"
-                + " where r.record_datetime between ? and ?"
-                + " group by r.meal_id";
-        return db.rawQuery(sql, new String[]{arg1, arg2});
+                + " where (r.record_datetime between ? and ?) and (r.meal_id = ?)";
+        return db.rawQuery(sql, new String[]{arg1, arg2, arg3});
     }
 
     public Cursor getRecordData(long date, long mealID) {
         String arg1 = Long.toString(date);
         String arg2 = Long.toString(date+86356262);
         String arg3 = Long.toString(mealID);
-        String sql = "select "
+        String sql = "SELECT "
                 + "r._id as "+ALIAS_ID
                 + ",r.[serving] as "+ALIAS_SERVING
                 + ",r.[record_datetime] as "+ALIAS_RECORD_DATETIME

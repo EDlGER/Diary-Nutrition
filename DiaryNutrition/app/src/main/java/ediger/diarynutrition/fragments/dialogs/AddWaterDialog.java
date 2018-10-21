@@ -158,10 +158,7 @@ public class AddWaterDialog extends DialogFragment {
         }
         setHasOptionsMenu(true);
 
-        Cursor cursor = AppContext.getDbDiary().getDate();
-        cursor.moveToFirst();
-        time = cursor.getLong(0);
-        cursor.close();
+        time = AppContext.getDate();
 
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);

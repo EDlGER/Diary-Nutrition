@@ -22,9 +22,10 @@ import java.util.TimeZone;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
 import ediger.diarynutrition.fragments.DiaryFragment;
+import ediger.diarynutrition.objects.AppContext;
 import ediger.diarynutrition.widget.ExpandableItemIndicator;
 
-public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGroupViewHolder, RecordAdapter.MyChildViewHolder> {
+public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGroupViewHolder, RecordAdapter.MyChildViewHolder> {
 
     private DiaryFragment mFragment;
     private View.OnCreateContextMenuListener mOnCreateContextMenuListener;
@@ -36,21 +37,33 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
     }
 
     public static class MyGroupViewHolder extends AbstractExpandableItemViewHolder {
-        public FrameLayout mContainer;
-        public TextView mTextView;
+        public FrameLayout mBackground;
+        public RelativeLayout mContainer;
+        public TextView mMeal;
+        public TextView mServing;
+        public TextView mCal;
+        public TextView mProt;
+        public TextView mFat;
+        public TextView mCarbo;
         public ExpandableItemIndicator mIndicator;
 
         public MyGroupViewHolder(View v) {
             super(v);
+            mBackground = v.findViewById(R.id.background);
             mContainer = v.findViewById(R.id.container);
-            mTextView = v.findViewById(android.R.id.text1);
+            mMeal = v.findViewById(R.id.txt_meal);
+            mServing = v.findViewById(R.id.txt_group_serv);
+            mCal = v.findViewById(R.id.txt_group_cal);
+            mProt = v.findViewById(R.id.txt_group_prot);
+            mFat = v.findViewById(R.id.txt_group_fat);
+            mCarbo = v.findViewById(R.id.txt_group_carbo);
             mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
     public static class MyChildViewHolder extends AbstractExpandableItemViewHolder {
+        FrameLayout mBackground;
         RelativeLayout mContainer;
-
         TextView mFoodName;
         TextView mCal;
         TextView mProt;
@@ -61,6 +74,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
 
         public MyChildViewHolder(View v) {
             super(v);
+            mBackground = v.findViewById(R.id.background);
             mContainer = v.findViewById(R.id.container);
             mFoodName = v.findViewById(R.id.txt_food_name);
             mCal = v.findViewById(R.id.txt_cal);
@@ -93,22 +107,56 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
     @Override
     public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_group_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_record_group_item, parent, false);
         return new MyGroupViewHolder(v);
     }
 
     @Override
     public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.record_item1, parent, false);
+        final View v = inflater.inflate(R.layout.list_record_child_item, parent, false);
         return new MyChildViewHolder(v);
     }
 
     @Override
     public void onBindGroupViewHolder(MyGroupViewHolder holder, Cursor cursor) {
-        // set text
-        holder.mTextView.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_M_NAME)));
+
         holder.mContainer.setOnCreateContextMenuListener(mOnCreateContextMenuListener);
+
+        int groupId = cursor.getInt(cursor.getColumnIndex(DbDiary.ALIAS_ID));
+        int groupPos = cursor.getPosition();
+
+        if (getChildrenCount(groupPos) != 0) {
+            Cursor c = AppContext.getDbDiary().getGroupData(AppContext.getDate(), groupId);
+
+            c.moveToFirst();
+
+            //TODO Change receiving values in different formats
+            String serv = c.getString(c.getColumnIndex(DbDiary.ALIAS_SERVING))
+                    + mContext.getString(R.string.elv_gram);
+            int cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
+            String prot = String.format(Locale.getDefault(), "%.1f",
+                    c.getFloat(c.getColumnIndex(DbDiary.ALIAS_PROT)));
+            String fat = String.format(Locale.getDefault(), "%.1f",
+                    c.getFloat(c.getColumnIndex(DbDiary.ALIAS_FAT)));
+            String carbo = String.format(Locale.getDefault(), "%.1f",
+                    c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CARBO)));
+            holder.mServing.setText(serv);
+            holder.mCal.setText(String.valueOf(cal));
+            holder.mProt.setText(prot);
+            holder.mFat.setText(fat);
+            holder.mCarbo.setText(carbo);
+
+            c.close();
+        } else {
+            holder.mServing.setText("");
+            holder.mCal.setText("");
+            holder.mProt.setText("");
+            holder.mFat.setText("");
+            holder.mCarbo.setText("");
+        }
+
+        holder.mMeal.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_M_NAME)));
 
         // mark as clickable
         holder.itemView.setClickable(true);
@@ -121,14 +169,24 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
             boolean isExpanded;
             boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
+            FrameLayout.LayoutParams params;
+            float factor = mFragment.getResources().getDisplayMetrics().density;
+
             if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                bgResId = R.drawable.bg_group_item_expanded_state;
+                bgResId = R.drawable.bg_list_group_item_expanded_state;
                 isExpanded = true;
+                params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        (int ) (80 * factor));
+
             } else {
-                bgResId = R.drawable.bg_group_item_normal_state;
+                bgResId = R.drawable.bg_list_group_item_normal_state;
                 isExpanded = false;
+                params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                        (int ) (90 * factor));
             }
 
+
+            holder.mBackground.setLayoutParams(params);
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         }
@@ -170,9 +228,21 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
         holder.mTime.setText(new SimpleDateFormat("kk:mm", Locale.getDefault())
                 .format(calendar.getTime()));
 
-        //set background resource (target view ID: container)
         int bgResId;
-        bgResId = R.drawable.bg_item_normal_state;
+        float factor = mFragment.getResources().getDisplayMetrics().density;
+        FrameLayout.LayoutParams params;
+
+        if (cursor.getPosition() == cursor.getCount() - 1) {
+            bgResId = R.drawable.bg_child_item_last;
+            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    (int) (70 *factor));
+        } else {
+            bgResId = R.drawable.bg_child_item_normal;
+            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    (int) (64 *factor));
+        }
+
+        holder.mBackground.setLayoutParams(params);
         holder.mContainer.setBackgroundResource(bgResId);
     }
 
@@ -208,7 +278,9 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter<RecordAdapter.MyGro
     @Override
     public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check is enabled
-        if (!(holder.itemView.isEnabled() && holder.itemView.isClickable()) || isContextMenuOpen) {
+        if (!(holder.itemView.isEnabled() && holder.itemView.isClickable())
+                || getChildCount(groupPosition) == 0
+                || isContextMenuOpen) {
             return false;
         } else {
             return true;

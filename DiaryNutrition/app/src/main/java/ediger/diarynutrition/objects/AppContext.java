@@ -9,23 +9,36 @@ import ediger.diarynutrition.database.DbDiary;
  */
 public class AppContext extends Application{
 
-    private static DbDiary dbDiary;
-    private static AppContext instance;
+    /* Date of chosen day (begin of the day - 00:00) in milliseconds */
+    private static long sDate;
 
-    public AppContext() {instance = this;}
+    private static DbDiary sDbDiary;
+    private static AppContext sInstance;
+
+    public AppContext() {sInstance = this;}
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        dbDiary = new DbDiary(this);
+        sDbDiary = new DbDiary(this);
 
     }
 
-    public static AppContext getInstance(){return instance;}
+    public static AppContext getInstance() {
+        return sInstance;
+    }
 
-    public static DbDiary getDbDiary(){
-            return dbDiary;
-        }
+    public static DbDiary getDbDiary() {
+            return sDbDiary;
+    }
+
+    public static long getDate() {
+        return sDate;
+    }
+
+    public static void setDate(long date) {
+        sDate = date;
+    }
 
 }

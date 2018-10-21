@@ -40,19 +40,14 @@ public class AddWeightDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast toast;
-                        long date;
-
-                        Cursor cursor = AppContext.getDbDiary().getDate();
-
-                        cursor.moveToFirst();
-                        date = cursor.getLong(0);
+                        long date = AppContext.getDate();
 
                         if (editWeight.getText().toString().matches("")) {
                             toast = Toast.makeText(getActivity().getApplicationContext(),
                                     getString(R.string.message_dialog_weight), Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
-                            cursor = AppContext.getDbDiary().getWeight(date);
+                            Cursor cursor = AppContext.getDbDiary().getWeight(date);
                             if (cursor.moveToFirst()) {
                                 AppContext.getDbDiary().setWeight(date,
                                         Float.parseFloat(editWeight.getText().toString()));
@@ -60,8 +55,9 @@ public class AddWeightDialog extends DialogFragment {
                                 AppContext.getDbDiary().addWeight(date,
                                         Float.parseFloat(editWeight.getText().toString()));
                             }
+                            cursor.close();
                         }
-                        cursor.close();
+
                     }
                 });
 

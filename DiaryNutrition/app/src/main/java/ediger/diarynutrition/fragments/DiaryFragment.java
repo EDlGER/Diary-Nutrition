@@ -184,7 +184,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
             mainActivity.setSubtitle(getString(R.string.diary_date_today));
         }
 
-        AppContext.getDbDiary().setDate(mDate);
+        AppContext.setDate(mDate);
 
         cursor = AppContext.getDbDiary().getMealData();
 
@@ -250,8 +250,8 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                     new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(),
                     R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(),
-                R.drawable.list_divider_h), true));
+//        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(),
+//                R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
         registerForContextMenu(mRecyclerView);
@@ -298,7 +298,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), FoodActivity.class);
-                addIntent.putExtra("CurrentCal", mDate);
+                //addIntent.putExtra("CurrentCal", mDate);
                 startActivity(addIntent);
             }
         });
@@ -306,7 +306,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
             @Override
             public void onClick(View v) {
                 DialogFragment a = new AddWeightDialog();
-                a.show(getFragmentManager(), "add_weight_dialog");
+                a.show(getFragmentManager(), "addWeightDialog");
                 mainActivity.menuMultipleActions.collapse();
             }
         });
@@ -327,7 +327,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
 
                 nowto.setTime(dateClicked);
                 mDate = nowto.getTimeInMillis();
-                AppContext.getDbDiary().setDate(mDate);
+                AppContext.setDate(mDate);
 
                 if (today.equals(nowto)) {
                     mainActivity.setSubtitle(getString(R.string.diary_date_today));
@@ -533,17 +533,14 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
         if (targetProt == 0) targetProt++;
         if (targetFat == 0) targetFat++;
 
-        Cursor cursor = AppContext.getDbDiary().getDate();
-        cursor.moveToFirst();
-        long date = cursor.getLong(0);
-        cursor.close();
+        long date = AppContext.getDate();
 
         consCal.setText("0");
         consCarbo.setText("0");
         consProt.setText("0");
         consFat.setText("0");
 
-        cursor = AppContext.getDbDiary().getDayData(date);
+        Cursor cursor = AppContext.getDbDiary().getDayData(date);
         if (cursor.moveToFirst()) {
             res = (int) cursor.getFloat(cursor.getColumnIndex(DbDiary.ALIAS_CAL));
             rem = targetCal - res;

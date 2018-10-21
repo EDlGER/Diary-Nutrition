@@ -2,6 +2,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?android:attr/colorControlHighlight">
 
-    <item android:drawable="@drawable/record_item_normal"/>
+    <item android:drawable="@drawable/bg_item_last"/>
 
 </ripple>

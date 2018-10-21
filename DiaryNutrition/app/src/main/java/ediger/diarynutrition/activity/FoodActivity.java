@@ -4,12 +4,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import ediger.diarynutrition.R;
@@ -22,15 +20,12 @@ import com.google.android.gms.ads.AdView;
 
 public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
-    private static String PREF_ADS_REMOVED = "ads_removed";
+    private static final String PREF_ADS_REMOVED = "ads_removed";
     private static final String PREF_FILE_PREMIUM = "premium_data";
 
-    private boolean isAdsRemoved;
-    private int Numboftabs = 3;
-    private ViewPager pager;
+    private int tabsNum = 3;
     private ViewPagerAdapter adapter;
-    private SlidingTabLayout tabs;
-    private CharSequence Titles[] = new CharSequence[Numboftabs];
+    private CharSequence Titles[] = new CharSequence[tabsNum];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +33,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         setContentView(R.layout.activity_food);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.adView);
         //AdRequest adRequest = new AdRequest.Builder().build();
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -46,7 +41,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
                 .build();
 
         SharedPreferences pref = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE);
-        isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
+        boolean isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
 
         if (isAdsRemoved) {
             mAdView.setEnabled(false);
@@ -71,10 +66,10 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         Titles[2] = getString(R.string.tab_user);
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(), Titles, tabsNum);
 
         // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
+        ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(adapter);
         invalidateFragmentMenus(pager.getCurrentItem());
 
@@ -83,7 +78,7 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         pager.setCurrentItem(Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_UI_DEFAULT_TAB, "0")));
 
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        SlidingTabLayout tabs = findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View

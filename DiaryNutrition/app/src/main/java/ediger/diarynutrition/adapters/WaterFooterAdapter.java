@@ -64,7 +64,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
     public FooterViewHolder onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.record_footer, parent, false);
+                .inflate(R.layout.list_record_footer, parent, false);
         return new FooterViewHolder(v);
     }
 
@@ -82,11 +82,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
         int target = pref.getInt(SettingsFragment.KEY_PREF_WATER, 2000);
         holder.waterTotal.setText(String.valueOf(target));
 
-        Cursor dateCursor = AppContext.getDbDiary().getDate();
-        long date = 0;
-        if (dateCursor.moveToFirst()) {
-            date = dateCursor.getLong(dateCursor.getColumnIndex(DbDiary.ALIAS_DATETIME));
-        }
+        long date = AppContext.getDate();
 
         Cursor cursor = AppContext.getDbDiary().getDayWaterData(date);
         if (cursor.moveToFirst()) {

@@ -10,15 +10,11 @@
     <color name="tabsScrollColor">#004D40</color>
     <color name="layout_standart_background">#FAFAFA</color>
     <color name="listview_background">#EEEEEE</color>
-    <color name="listview_second_text">#757575</color>
+    <color name="listview_primary_text">#DE000000</color>
+    <color name="listview_second_text">#99000000</color>
     <color name="chart_label_color">#BDBDBD</color>
 
-    <color name="bg_item_normal_state">#fff0f0f0</color>
-    <color name="bg_swipe_item_neutral">@android:color/transparent</color>
-    <color name="bg_group_item_normal_state">#ffddffdd</color>
-    <color name="bg_group_item_normal_pressed_state">#ff99cc99</color>
-    <color name="bg_group_item_expanded_state">#ff88dd88</color>
-    <color name="bg_group_item_expanded_pressed_state">#ff99cc99</color>
+    <color name="bg_record_list_item">#FAFAFA</color>
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>
