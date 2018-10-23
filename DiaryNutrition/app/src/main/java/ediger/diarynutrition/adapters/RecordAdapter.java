@@ -37,15 +37,17 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
     }
 
     public static class MyGroupViewHolder extends AbstractExpandableItemViewHolder {
-        public FrameLayout mBackground;
-        public RelativeLayout mContainer;
-        public TextView mMeal;
-        public TextView mServing;
-        public TextView mCal;
-        public TextView mProt;
-        public TextView mFat;
-        public TextView mCarbo;
-        public ExpandableItemIndicator mIndicator;
+        FrameLayout mBackground;
+        RelativeLayout mContainer;
+        TextView mMeal;
+        TextView mServing;
+        TextView mCal;
+        TextView mProt;
+        TextView mFat;
+        TextView mCarbo;
+        ExpandableItemIndicator mIndicator;
+        View mDivider;
+
 
         public MyGroupViewHolder(View v) {
             super(v);
@@ -58,6 +60,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
             mFat = v.findViewById(R.id.txt_group_fat);
             mCarbo = v.findViewById(R.id.txt_group_carbo);
             mIndicator = v.findViewById(R.id.indicator);
+            mDivider = v.findViewById(R.id.divider);
         }
     }
 
@@ -71,6 +74,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
         TextView mCarbo;
         TextView mTime;
         TextView mServing;
+        View mDivider;
 
         public MyChildViewHolder(View v) {
             super(v);
@@ -83,6 +87,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
             mCarbo = v.findViewById(R.id.txt_carbo);
             mTime = v.findViewById(R.id.txt_time);
             mServing = v.findViewById(R.id.txt_serving);
+            mDivider = v.findViewById(R.id.divider);
         }
 
     }
@@ -177,12 +182,14 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
                 isExpanded = true;
                 params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                         (int ) (80 * factor));
+                holder.mDivider.setVisibility(View.VISIBLE);
 
             } else {
                 bgResId = R.drawable.bg_list_group_item_normal_state;
                 isExpanded = false;
                 params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                         (int ) (90 * factor));
+                holder.mDivider.setVisibility(View.GONE);
             }
 
 
@@ -236,10 +243,12 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
             bgResId = R.drawable.bg_child_item_last;
             params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     (int) (70 *factor));
+            holder.mDivider.setVisibility(View.GONE);
         } else {
             bgResId = R.drawable.bg_child_item_normal;
             params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     (int) (64 *factor));
+            holder.mDivider.setVisibility(View.VISIBLE);
         }
 
         holder.mBackground.setLayoutParams(params);

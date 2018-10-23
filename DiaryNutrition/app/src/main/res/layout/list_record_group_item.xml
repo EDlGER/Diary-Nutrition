@@ -120,6 +120,13 @@
             android:textColor="@color/listview_second_text"
             android:textSize="14sp" />
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="?android:listDivider"/>
+
     </RelativeLayout>
 
 </FrameLayout>

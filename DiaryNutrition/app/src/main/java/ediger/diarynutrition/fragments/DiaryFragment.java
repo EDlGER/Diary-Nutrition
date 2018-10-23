@@ -250,8 +250,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                     new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(),
                     R.drawable.material_shadow_z1)));
         }
-//        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(),
-//                R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
         registerForContextMenu(mRecyclerView);
@@ -484,6 +482,12 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                 id = child.getLong(0);
                 AppContext.getDbDiary().delRec(id);
                 mRecyclerViewExpandableItemManager.notifyChildItemRemoved(groupPosition, childPosition);
+                for (int i = 0; i < recordAdapter.getGroupMap().size() + 1; i++) {
+                    getLoaderManager().restartLoader(i, null, this);
+                }
+                if (childPosition == 0) {
+                    mRecyclerViewExpandableItemManager.collapseGroup(groupPosition);
+                }
                 setHeaderData();
                 break;
 
