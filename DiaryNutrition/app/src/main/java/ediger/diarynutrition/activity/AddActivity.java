@@ -84,6 +84,8 @@ public class AddActivity extends AppCompatActivity {
         isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false);
 
         mInterstitialAd = new InterstitialAd(this);
+
+        //mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
         mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_id));
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
