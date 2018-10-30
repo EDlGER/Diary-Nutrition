@@ -136,7 +136,6 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
 
             c.moveToFirst();
 
-            //TODO Change receiving values in different formats
             String serv = c.getString(c.getColumnIndex(DbDiary.ALIAS_SERVING))
                     + mContext.getString(R.string.elv_gram);
             int cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
@@ -212,7 +211,7 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
         String fat = String.format(Locale.getDefault(), "%.1f", cursor.getFloat(
                 cursor.getColumnIndex(DbDiary.ALIAS_FAT)));
         String name = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
-        if (name.length() > 25) {
+        if (name.length() > 18) {
             holder.mFoodName.setTextSize(12);
         } else {
             holder.mFoodName.setTextSize(16);
@@ -224,7 +223,6 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
         holder.mProt.setText(prot);
         holder.mFat.setText(fat);
 
-        //TODO String with placeholders
         holder.mServing.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
                 + mContext.getString(R.string.elv_gram));
 

@@ -93,7 +93,7 @@
         app:compactCalendarTargetHeight="250dp"
         app:compactCalendarBackgroundColor="?attr/colorPrimary"
         app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="#00796b"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
         app:compactCalendarTextColor="#fff"
         app:compactCalendarTextSize="12sp" />
 

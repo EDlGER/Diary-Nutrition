@@ -22,7 +22,7 @@ public class ScrollingCalendarBehavior extends AppBarLayout.Behavior {
 
     @Override
     public boolean onInterceptTouchEvent(CoordinatorLayout parent, AppBarLayout child, MotionEvent ev) {
-        return false;/*super.onInterceptTouchEvent(parent, child, ev);*/
+        return false;
     }
 
 

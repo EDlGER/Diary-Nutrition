@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -32,7 +31,6 @@ import android.view.ViewGroup;
 
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ExpandableListView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,10 +65,6 @@ import android.widget.ViewSwitcher;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
-import com.h6ah4i.android.widget.advrecyclerview.event.RecyclerViewRecyclerEventDistributor;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
@@ -241,16 +235,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
         animator.setSupportsChangeAnimations(false);
         mRecyclerView.setItemAnimator(animator);
 
-        // additional decorations
-        //noinspection StatementWithEmptyBody
-
-        // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
-        if (!supportsViewElevation()) {
-            mRecyclerView.addItemDecoration(
-                    new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(),
-                    R.drawable.material_shadow_z1)));
-        }
-
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
         registerForContextMenu(mRecyclerView);
 
@@ -296,7 +280,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
             @Override
             public void onClick(View v) {
                 Intent addIntent = new Intent(getActivity(), FoodActivity.class);
-                //addIntent.putExtra("CurrentCal", mDate);
                 startActivity(addIntent);
             }
         });
@@ -485,7 +468,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
                 for (int i = 0; i < recordAdapter.getGroupMap().size() + 1; i++) {
                     getLoaderManager().restartLoader(i, null, this);
                 }
-                if (childPosition == 0) {
+                if (childPosition == 0 && recordAdapter.getChildrenCount(groupPosition) == 1) {
                     mRecyclerViewExpandableItemManager.collapseGroup(groupPosition);
                 }
                 setHeaderData();
@@ -597,10 +580,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
         int bottomMargin = topMargin; // bottom-spacing: 16dp
 
         mRecyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin);
-    }
-
-    private boolean supportsViewElevation() {
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
     @Override
