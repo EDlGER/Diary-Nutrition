@@ -199,6 +199,10 @@ public class SummaryWeekFragment extends Fragment implements CompoundButton.OnCh
 
         mainActivity.datePicker.setVisibility(View.INVISIBLE);
 
+        if (mainActivity.isCalendarExpanded) {
+            mainActivity.hideCalendarView();
+        }
+
         if (getResources().getDisplayMetrics().density > 2.0) {
             mainActivity.title.setPadding(0, 40, 0, 0);
         } else {

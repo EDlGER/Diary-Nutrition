@@ -212,13 +212,15 @@
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/txt_pur_cal"
                     android:layout_width="45dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txt_pur_cal"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="9999"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
+                    android:maxLength="4"
                     android:gravity="center"/>
 
             </RelativeLayout>
@@ -250,13 +252,15 @@
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/txt_pur_prot"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txt_pur_prot"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="999"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
+                    android:maxLength="3"
                     android:gravity="center"/>
 
             </RelativeLayout>
@@ -288,13 +292,15 @@
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/txt_pur_fat"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txt_pur_fat"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="999"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
+                    android:maxLength="3"
                     android:gravity="center"/>
 
             </RelativeLayout>
@@ -325,13 +331,15 @@
                     android:gravity="center"/>
 
                 <TextView
+                    android:id="@+id/txt_pur_carbo"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txt_pur_carbo"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="999"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
+                    android:maxLength="3"
                     android:gravity="center"/>
 
             </RelativeLayout>

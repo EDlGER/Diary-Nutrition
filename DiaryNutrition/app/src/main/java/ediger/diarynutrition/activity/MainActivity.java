@@ -23,9 +23,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -42,7 +40,6 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +56,8 @@ import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public boolean isCalendarExpanded = false;
 
     public FloatingActionsMenu menuMultipleActions;
 
@@ -92,7 +91,6 @@ public class MainActivity extends AppCompatActivity
     private static final String PREF_FIRST_RUN = "first_run";
 
     private boolean isAdsRemoved;
-    private boolean isExpanded = false;
     private long lastBackPress;
     private float mCurrentRotation = 360.0f;
     private ImageView arrow;
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if (isExpanded) {
+                if (isCalendarExpanded) {
                     hideCalendarView();
                 }
             }
@@ -227,7 +225,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (!mCompactCalendarView.isAnimating()) {
-                    if (isExpanded) {
+                    if (isCalendarExpanded) {
                         RotateAnimation anim = new RotateAnimation(mCurrentRotation,
                                 mCurrentRotation + 180.0f,
                                 Animation.RELATIVE_TO_SELF, 0.5f,
@@ -240,7 +238,7 @@ public class MainActivity extends AppCompatActivity
                         anim.setDuration(300);
                         arrow.startAnimation(anim);
                         mCompactCalendarView.hideCalendar();
-                        isExpanded = false;
+                        isCalendarExpanded = false;
                     } else {
                         RotateAnimation anim = new RotateAnimation(mCurrentRotation,
                                 mCurrentRotation - 180.0f,
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity
                         anim.setDuration(300);
                         arrow.startAnimation(anim);
                         mCompactCalendarView.showCalendar();
-                        isExpanded = true;
+                        isCalendarExpanded = true;
                     }
                 }
             }
@@ -304,7 +302,7 @@ public class MainActivity extends AppCompatActivity
         anim.setDuration(150);
         arrow.startAnimation(anim);
         mCompactCalendarView.hideCalendar();
-        isExpanded = false;
+        isCalendarExpanded = false;
     }
 
     public void setCurrentDate(Date date) {
