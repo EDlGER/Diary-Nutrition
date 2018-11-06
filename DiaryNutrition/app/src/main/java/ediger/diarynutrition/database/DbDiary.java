@@ -6,14 +6,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
-import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +21,6 @@ import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.SettingsFragment;
-import ediger.diarynutrition.objects.AppContext;
 
 public class DbDiary {
 
