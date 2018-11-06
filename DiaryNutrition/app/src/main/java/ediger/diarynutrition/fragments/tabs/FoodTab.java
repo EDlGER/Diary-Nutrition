@@ -123,7 +123,7 @@ public class FoodTab extends Fragment implements
                     return getFilterList(constraint);
                 }
             });
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
@@ -153,7 +153,7 @@ public class FoodTab extends Fragment implements
                 return getFilterList(constraint);
             }
         });
-        getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     //Поиск по введенным буквам
@@ -244,14 +244,14 @@ public class FoodTab extends Fragment implements
             c.setArguments(args);
             c.setTargetFragment(FoodTab.this,REQ_CODE_CHANGE);
             c.show(getFragmentManager(),"change_dialog");
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
         if(item.getItemId() == 2) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().delFood(acmi.id);
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
         if (item.getItemId() == 3) {
@@ -262,7 +262,7 @@ public class FoodTab extends Fragment implements
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
             snackbar.show();
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
         return super.onContextItemSelected(item);
@@ -290,7 +290,7 @@ public class FoodTab extends Fragment implements
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        foodAdapter.swapCursor(null);
     }
 
     private static class MyCursorLoader extends CursorLoader {

@@ -345,15 +345,15 @@ public class DbDiary {
     public Cursor getAllFood() {
         String sql = "select "
                 + "f._id as "+ ALIAS_ID
-                + ",f.[food_name] as "+ ALIAS_FOOD_NAME
-                + ",f.[cal] as "+ ALIAS_CAL
-                + ",f.[carbo] as "+ ALIAS_CARBO
-                + ",f.[prot] as "+ ALIAS_PROT
-                + ",f.[fat] as "+ ALIAS_FAT
-                + ",f.[favor] as "+ ALIAS_FAV
-                + ",f.[usr] as "+ ALIAS_USR
+                + ",f.food_name as "+ ALIAS_FOOD_NAME
+                + ",f.cal as "+ ALIAS_CAL
+                + ",f.carbo as "+ ALIAS_CARBO
+                + ",f.prot as "+ ALIAS_PROT
+                + ",f.fat as "+ ALIAS_FAT
+                + ",f.favor as "+ ALIAS_FAV
+                + ",f.usr as "+ ALIAS_USR
                 + " from food f "
-                + "where f.[usr] > -1"
+                + "where f.usr > -1"
                 + " order by f.food_name asc";
         return  db.rawQuery(sql, null);
     }
@@ -361,15 +361,15 @@ public class DbDiary {
     public Cursor getUserFood() {
         String sql = "select "
                 + "f._id as "+ ALIAS_ID
-                + ",f.[food_name] as "+ ALIAS_FOOD_NAME
-                + ",f.[cal] as "+ ALIAS_CAL
-                + ",f.[carbo] as "+ ALIAS_CARBO
-                + ",f.[prot] as "+ ALIAS_PROT
-                + ",f.[fat] as "+ ALIAS_FAT
-                + ",f.[favor] as "+ ALIAS_FAV
-                + ",f.[usr] as "+ ALIAS_USR
+                + ",f.food_name as "+ ALIAS_FOOD_NAME
+                + ",f.cal as "+ ALIAS_CAL
+                + ",f.carbo as "+ ALIAS_CARBO
+                + ",f.prot as "+ ALIAS_PROT
+                + ",f.fat as "+ ALIAS_FAT
+                + ",f.favor as "+ ALIAS_FAV
+                + ",f.usr as "+ ALIAS_USR
                 + " from food f "
-                + " where f.[usr] > 0"
+                + " where f.usr > 0"
                 + " order by f.food_name asc";
         return  db.rawQuery(sql,null);
     }
@@ -377,15 +377,15 @@ public class DbDiary {
     public Cursor getFavorFood() {
         String sql = "select "
                 + "f._id as "+ ALIAS_ID
-                + ",f.[food_name] as "+ ALIAS_FOOD_NAME
-                + ",f.[cal] as "+ ALIAS_CAL
-                + ",f.[carbo] as "+ ALIAS_CARBO
-                + ",f.[prot] as "+ ALIAS_PROT
-                + ",f.[fat] as "+ ALIAS_FAT
-                + ",f.[favor] as "+ ALIAS_FAV
-                + ",f.[usr] as "+ ALIAS_USR
+                + ",f.food_name as "+ ALIAS_FOOD_NAME
+                + ",f.cal as "+ ALIAS_CAL
+                + ",f.carbo as "+ ALIAS_CARBO
+                + ",f.prot as "+ ALIAS_PROT
+                + ",f.fat as "+ ALIAS_FAT
+                + ",f.favor as "+ ALIAS_FAV
+                + ",f.usr as "+ ALIAS_USR
                 + " from food f "
-                + " where f.[favor] = 1 AND f.[usr] > -1"
+                + " where f.favor = 1 AND f.usr > -1"
                 + " order by f.food_name asc";
         return  db.rawQuery(sql,null);
     }

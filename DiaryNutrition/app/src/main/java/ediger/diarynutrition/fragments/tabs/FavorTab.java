@@ -131,7 +131,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
                 return getFilterList(constraint);
             }
         });
-        getLoaderManager().getLoader(LOADER_ID).forceLoad();
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
     //Поиск по введенным буквам
@@ -166,7 +166,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
             AppContext.getDbDiary().setFavor(acmi.id, 0);
-            getLoaderManager().getLoader(LOADER_ID).forceLoad();
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
         return super.onContextItemSelected(item);
@@ -243,7 +243,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        foodAdapter.swapCursor(null);
     }
 
     private static class MyCursorLoader extends CursorLoader {
