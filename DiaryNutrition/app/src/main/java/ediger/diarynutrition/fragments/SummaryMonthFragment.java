@@ -129,6 +129,9 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
         });
 
         chartInit();
+        generateCalData();
+        generateMacroData();
+        generateWaterData();
 
         return rootview;
     }
@@ -145,27 +148,6 @@ public class SummaryMonthFragment extends Fragment implements CompoundButton.OnC
     @Override
     public void onResume() {
         super.onResume();
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                generateCalData();
-            }
-        });
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                generateMacroData();
-            }
-        });
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                generateWaterData();
-            }
-        });
 
         if (!getUserVisibleHint()) {
             return;
