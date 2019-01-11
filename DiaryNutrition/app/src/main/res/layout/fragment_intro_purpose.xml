@@ -54,20 +54,20 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rg_purpose"
                 android:paddingBottom="8dp">
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rb_purpose1"
                     android:text="@string/radio_purpose_lose"
                     android:textSize="16sp"
                     android:checked="true"/>
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rb_purpose2"
                     android:text="@string/radio_purpose_hold"
                     android:textSize="16sp"/>
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/rb_purpose3"
@@ -80,7 +80,7 @@
                 android:layout_height="1dp"
                 android:background="?android:listDivider"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/intro_weight"
@@ -93,7 +93,7 @@
                     android:maxLength="5"
                     android:id="@+id/ed_weight"
                     android:inputType="numberDecimal" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

@@ -11,7 +11,7 @@
         android:background="#FAFAFA"
         android:elevation="5dp">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,13 +79,13 @@
 
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_below="@+id/header">
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

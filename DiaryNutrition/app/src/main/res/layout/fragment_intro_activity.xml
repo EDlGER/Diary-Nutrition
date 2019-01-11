@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rb_activity1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,21 +64,21 @@
                     android:textSize="16sp"
                     android:checked="true"/>
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rb_activity2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/intro_activity_name_2"
                     android:textSize="16sp"/>
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rb_activity3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/intro_activity_name_3"
                     android:textSize="16sp"/>
 
-                <android.support.v7.widget.AppCompatRadioButton
+                <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/rb_activity4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

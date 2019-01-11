@@ -2,16 +2,15 @@ package ediger.diarynutrition.fragments.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.design.widget.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.objects.AppContext;

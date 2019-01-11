@@ -2,7 +2,7 @@ package ediger.diarynutrition.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.content.Loader;
+import androidx.loader.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
