@@ -57,6 +57,10 @@ public class AddWaterDialog extends DialogFragment {
     private static final String PREF_ADS_REMOVED = "ads_removed";
     private static final String PREF_FILE_PREMIUM = "premium_data";
 
+    public interface OnWaterUpdateListener {
+        void onUpdate();
+    }
+
     private long time;
     private int hour;
     private int minute;
@@ -89,6 +93,7 @@ public class AddWaterDialog extends DialogFragment {
         }
     };
 
+    private OnWaterUpdateListener onWaterUpdateListener;
 
     @Nullable
     @Override
@@ -105,31 +110,31 @@ public class AddWaterDialog extends DialogFragment {
             mInterstitialAd.loadAd(new AdRequest.Builder().build());
         }
 
-        txtWater1 = (TextView) root.findViewById(R.id.txt_water_1);
-        txtWater2 = (TextView) root.findViewById(R.id.txt_water_2);
-        txtWater3 = (TextView) root.findViewById(R.id.txt_water_3);
-        txtWater4 = (TextView) root.findViewById(R.id.txt_water_4);
+        txtWater1 = root.findViewById(R.id.txt_water_1);
+        txtWater2 = root.findViewById(R.id.txt_water_2);
+        txtWater3 = root.findViewById(R.id.txt_water_3);
+        txtWater4 = root.findViewById(R.id.txt_water_4);
 
-        edWater = (TextInputEditText) root.findViewById(R.id.ed_water);
+        edWater = root.findViewById(R.id.ed_water);
         edWater.requestFocus();
 
-        CardView cardWater1 = (CardView) root.findViewById(R.id.card_water_1);
+        CardView cardWater1 = root.findViewById(R.id.card_water_1);
         cardWater1.setOnClickListener(onClick);
         cardWater1.setOnLongClickListener(onLongClick);
 
-        CardView cardWater2 = (CardView) root.findViewById(R.id.card_water_2);
+        CardView cardWater2 = root.findViewById(R.id.card_water_2);
         cardWater2.setOnClickListener(onClick);
         cardWater2.setOnLongClickListener(onLongClick);
 
-        CardView cardWater3 = (CardView) root.findViewById(R.id.card_water_3);
+        CardView cardWater3 = root.findViewById(R.id.card_water_3);
         cardWater3.setOnClickListener(onClick);
         cardWater3.setOnLongClickListener(onLongClick);
 
-        CardView cardWater4 = (CardView) root.findViewById(R.id.card_water_4);
+        CardView cardWater4 = root.findViewById(R.id.card_water_4);
         cardWater4.setOnClickListener(onClick);
         cardWater4.setOnLongClickListener(onLongClick);
 
-        txtTime = (TextView) root.findViewById(R.id.ed_time_water);
+        txtTime = root.findViewById(R.id.ed_time_water);
         txtTime.setText(timeFormatter.format(calendar.getTime()));
         txtTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +144,7 @@ public class AddWaterDialog extends DialogFragment {
             }
         });
 
-        Toolbar toolbar = (Toolbar) root.findViewById(R.id.toolbar_dialog);
+        Toolbar toolbar = root.findViewById(R.id.toolbar_dialog);
         toolbar.setTitle(getResources().getString(R.string.dialog_title_water));
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -178,7 +183,7 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_1:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater1.getText().toString()));
                     hideKeyboard();
-                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+                    onWaterUpdateListener.onUpdate();
 
                     if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
 
@@ -187,7 +192,7 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_2:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater2.getText().toString()));
                     hideKeyboard();
-                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+                    onWaterUpdateListener.onUpdate();
 
                     if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
 
@@ -196,7 +201,7 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_3:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater3.getText().toString()));
                     hideKeyboard();
-                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+                    onWaterUpdateListener.onUpdate();
 
                     if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
 
@@ -205,7 +210,7 @@ public class AddWaterDialog extends DialogFragment {
                 case R.id.card_water_4:
                     AppContext.getDbDiary().addWater(time, Integer.parseInt(txtWater4.getText().toString()));
                     hideKeyboard();
-                    getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+                    onWaterUpdateListener.onUpdate();
 
                     if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
 
@@ -268,11 +273,15 @@ public class AddWaterDialog extends DialogFragment {
                 break;
             case android.R.id.home:
                 hideKeyboard();
-                getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_CANCELED, null);
+                onWaterUpdateListener.onUpdate();
                 dismiss();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setOnWaterUpdateListener(OnWaterUpdateListener listener) {
+        onWaterUpdateListener = listener;
     }
 
     private void addWater() {
@@ -282,7 +291,7 @@ public class AddWaterDialog extends DialogFragment {
         } else {
             AppContext.getDbDiary().addWater(time, Integer.parseInt(edWater.getText().toString()));
             hideKeyboard();
-            getTargetFragment().onActivityResult(REQ_WATER, Activity.RESULT_OK, null);
+            onWaterUpdateListener.onUpdate();
 
             if (!isAdsRemoved && mInterstitialAd.isLoaded()) mInterstitialAd.show();
 
@@ -327,7 +336,7 @@ public class AddWaterDialog extends DialogFragment {
         builder.setView(root);
         builder.setTitle(getString(R.string.dialog_title_water_serving));
 
-        final TextInputEditText edWater = (TextInputEditText) root.findViewById(R.id.ed_water_serving);
+        final TextInputEditText edWater = root.findViewById(R.id.ed_water_serving);
 
         builder.setPositiveButton(R.string.dialog_change, new DialogInterface.OnClickListener() {
             @Override

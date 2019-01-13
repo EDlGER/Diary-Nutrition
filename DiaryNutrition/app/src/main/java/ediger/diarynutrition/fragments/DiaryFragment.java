@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.fragment.app.DialogFragment;
@@ -103,8 +104,7 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
     private CircularMusicProgressBar pbFat;
     private TextSwitcher headerSwitcher;
 
-    private AddWaterDialog dialog;
-    FragmentTransaction transaction;
+    AddWaterDialog dialog;
 
     @Nullable
     @Override
@@ -241,15 +241,6 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().initLoader(-1, null, this);
 
         return rootview;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AddWaterDialog.REQ_WATER) {
-            if (resultCode == Activity.RESULT_OK)  wrappedAdapter.notifyDataSetChanged();
-            dialog.setTargetFragment(null, 0);
-        }
     }
 
     @Override
@@ -552,13 +543,19 @@ public class DiaryFragment extends Fragment implements LoaderManager.LoaderCallb
     }
 
     private void showWaterDialog() {
-        FragmentManager fragmentManager = getFragmentManager();
         dialog = new AddWaterDialog();
-        dialog.setTargetFragment(this, 0);
-
-        transaction = fragmentManager.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();
+        dialog.setOnWaterUpdateListener(new AddWaterDialog.OnWaterUpdateListener() {
+            @Override
+            public void onUpdate() {
+                wrappedAdapter.notifyDataSetChanged();
+            }
+        });
+            getFragmentManager()
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .add(android.R.id.content, dialog)
+                    .addToBackStack(null)
+                    .commit();
     }
 
     @Override
