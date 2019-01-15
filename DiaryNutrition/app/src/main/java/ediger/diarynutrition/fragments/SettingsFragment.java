@@ -10,25 +10,25 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Environment;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
+
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
-
-import com.github.machinarius.preferencefragment.PreferenceFragment;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import ediger.diarynutrition.activity.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.activity.PolicyActivity;
@@ -38,8 +38,8 @@ import ediger.diarynutrition.fragments.dialogs.ChangeCaloriesDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeWaterDialog;
 import ediger.diarynutrition.objects.AppContext;
 
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.
-        OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener{
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
+        OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener {
 
     public static final String KEY_PREF_GENDER = "gender";
     public static final String KEY_PREF_BIRTHDAY = "birthday";
@@ -63,13 +63,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private SharedPreferences pref;
     private Calendar birthday = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
-
-    Date date = new Date();
+    private Date date = new Date();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+        setPreferencesFromResource(R.xml.preferences, rootKey);
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
         pref.registerOnSharedPreferenceChangeListener(this);
@@ -182,7 +181,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 return false;
             }
         });
-
     }
 
     @Override

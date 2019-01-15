@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
+<androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
@@ -63,7 +63,7 @@
     <PreferenceCategory
         android:title="@string/pref_title_ui">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="water_card"
             android:title="@string/pref_ui_water_card"
             android:summaryOn="@string/switch_on"
@@ -108,4 +108,4 @@
         android:key="policy"
         android:title="@string/pref_policy"/>
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>
