@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="272dp"
     android:gravity="center_horizontal"
     android:background="@color/listview_background">
 
@@ -141,11 +141,5 @@
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/listview_background"/>
 
 </LinearLayout>

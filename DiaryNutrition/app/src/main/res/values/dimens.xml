@@ -14,6 +14,8 @@
     <dimen name="list_group_item_height">72dp</dimen>
     <dimen name="list_item_height">64dp</dimen>
 
+    <dimen name="bottom_offset_dp">78dp</dimen>
+    
     <dimen name="page_margin">@dimen/margin_small</dimen>
     <dimen name="text_margin">16dp</dimen>
 </resources>

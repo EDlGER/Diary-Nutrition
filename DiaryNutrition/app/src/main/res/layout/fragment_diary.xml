@@ -230,6 +230,8 @@
         android:layout_alignParentRight="false"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/header_layout"
-        android:background="@color/listview_background" />
+        android:background="@color/listview_background"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/bottom_offset_dp"/>
 
 </RelativeLayout>
