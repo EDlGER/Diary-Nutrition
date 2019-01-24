@@ -145,11 +145,16 @@ public class RecordAdapter extends CursorTreeRecyclerAdapter <RecordAdapter.MyGr
                     c.getFloat(c.getColumnIndex(DbDiary.ALIAS_FAT)));
             String carbo = String.format(Locale.getDefault(), "%.1f",
                     c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CARBO)));
-            holder.mServing.setText(serv);
             holder.mCal.setText(String.valueOf(cal));
             holder.mProt.setText(prot);
             holder.mFat.setText(fat);
             holder.mCarbo.setText(carbo);
+
+            if (serv.contains("null")) {
+                holder.mServing.setText("");
+            } else {
+                holder.mServing.setText(serv);
+            }
 
             c.close();
         } else {

@@ -1,16 +1,15 @@
-<resources>>
+<resources>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
+    <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
 
     <style name="commonListItemStyle">
         <item name="android:elevation">@dimen/list_item_elevation</item>
     </style>
-    <!-- <item name="android:outlineProvider">bounds</item>-->
 
 </resources>

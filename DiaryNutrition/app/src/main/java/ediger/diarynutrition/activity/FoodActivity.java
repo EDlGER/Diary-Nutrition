@@ -1,6 +1,7 @@
 package ediger.diarynutrition.activity;
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,6 +33,8 @@ public class FoodActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_food);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         AdView mAdView = findViewById(R.id.adView);
         //AdRequest adRequest = new AdRequest.Builder().build();
