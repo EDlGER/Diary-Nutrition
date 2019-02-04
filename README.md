@@ -1,9 +1,3 @@
 # Diary-Nutrition
 
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljcENjLWpETy1waEk" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljUkdkbG9mQkNHTVk" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljUERqeEt3RXJkWWM" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljNWNQQWJRcTVZWXc" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljeW4yM3BmMFZibjQ" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljT3l0bDBCZHdxVHc" width="180" height="320">
-<img src="https://drive.google.com/uc?export=download&confirm=no_antivirus&id=0B-yZIceoibljSnI4SkpuTFJCVVk" width="180" height="320">
+<a href='https://play.google.com/store/apps/details?id=ediger.diarynutrition&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
