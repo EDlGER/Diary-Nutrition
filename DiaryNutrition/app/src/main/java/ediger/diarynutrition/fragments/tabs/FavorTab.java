@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.widget.SearchView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,6 +59,8 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
     private Cursor cursor;
     private FoodAdapter foodAdapter;
 
+    private SearchView searchView;
+
     private SharedPreferences pref;
 
     @Override
@@ -84,6 +87,8 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 addIntent.putExtra("FoodId", addid);
+                searchView.setQuery("", false);
+                getLoaderManager().restartLoader(LOADER_ID, null, FavorTab.this);
                 startActivity(addIntent);
             }
         });
@@ -192,7 +197,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
         getActivity().getMenuInflater().inflate(R.menu.activity_add, menu);
         // Retrieve the SearchView and plug it into SearchManager
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
@@ -215,7 +220,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
             @Override
             public boolean onQueryTextChange(String newText) {
                 SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter)listFood.getAdapter();
-                filterAdapter.getFilter().filter(newText.toString());
+                filterAdapter.getFilter().filter(newText);
                 return true;
             }
         });
@@ -236,9 +241,9 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        foodAdapter.swapCursor(data);
-        listFood.setAdapter(foodAdapter);
-        listFood.setTextFilterEnabled(true);
+        if (data.getCount() > -1 && !data.isClosed()) {
+            foodAdapter.swapCursor(data);
+        }
     }
 
     @Override

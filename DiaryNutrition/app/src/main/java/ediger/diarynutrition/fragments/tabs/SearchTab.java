@@ -52,6 +52,8 @@ public class SearchTab extends Fragment {
     private Cursor cursor;
     private String[] from;
 
+    private SearchView searchView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class SearchTab extends Fragment {
 
                 Intent addIntent = new Intent(getActivity(), AddActivity.class);
                 addIntent.putExtra("FoodId", addid);
+                searchView.setQuery("", true);
                 startActivity(addIntent);
             }
         });
@@ -143,7 +146,7 @@ public class SearchTab extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         getActivity().getMenuInflater().inflate(R.menu.fragment_search, menu);
         // Retrieve the SearchView and plug it into SearchManager
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
 
         searchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
@@ -164,7 +167,7 @@ public class SearchTab extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 listFood.setAdapter(foodAdapter);
                 SimpleCursorAdapter filterAdapter = (SimpleCursorAdapter) listFood.getAdapter();
-                filterAdapter.getFilter().filter(newText.toString());
+                filterAdapter.getFilter().filter(newText);
                 return true;
             }
         });

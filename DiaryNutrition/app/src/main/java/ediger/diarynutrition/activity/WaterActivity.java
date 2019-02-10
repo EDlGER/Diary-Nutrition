@@ -6,17 +6,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.klinker.android.sliding.MultiShrinkScroller;
-import com.klinker.android.sliding.SlidingActivity;
 
 import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.R;
+import ediger.diarynutrition.SlidingActivity;
 import ediger.diarynutrition.adapters.WaterAdapter;
 import ediger.diarynutrition.objects.AppContext;
-
-/**
- * Created by ediger on 20.05.17.
- */
 
 public class WaterActivity extends SlidingActivity {
 
