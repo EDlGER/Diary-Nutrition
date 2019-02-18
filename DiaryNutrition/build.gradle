@@ -21,3 +21,19 @@ allprojects {
         }
     }
 }
+
+ext {
+    // Sdk and tools
+    // Support library and architecture components support minSdk 14 and above.
+    minSdkVersion = 15
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+
+    // App dependencies
+
+
+    // Architecture Components dependencies
+    roomVersion = '1.1.1'
+    archLifecycleVersion = '1.1.1'
+}
