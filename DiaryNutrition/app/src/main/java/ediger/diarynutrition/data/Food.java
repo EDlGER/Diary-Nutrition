@@ -38,6 +38,10 @@ public class Food {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFoodName() {
         return foodName;
     }
