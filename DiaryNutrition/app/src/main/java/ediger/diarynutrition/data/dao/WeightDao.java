@@ -17,9 +17,9 @@ public interface WeightDao {
     LiveData<List<Weight>> loadWeight();
 
     /**
-     * @param from in milliseconds
-     * @param to in milliseconds
-     * @return Find all weights for specific interval
+     * Get all records of weight for specific interval
+     * @param from beginning of the period in milliseconds
+     * @param to end of the period in milliseconds
      */
     @Query("SELECT * FROM weight WHERE datetime BETWEEN :from AND :to ORDER BY datetime ASC")
     LiveData<List<Weight>> getWeight(long from, long to);

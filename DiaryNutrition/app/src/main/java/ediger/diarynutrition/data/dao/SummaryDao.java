@@ -9,10 +9,9 @@ import ediger.diarynutrition.data.Summary;
 public interface SummaryDao {
 
     /**
-     * It is intended to use in summary
-     * 86356262 = 24 hours
-     * @param date beginning of the day in milliseconds
-     * @return Summary of the day
+     * Summary of macronutrients for specific period
+     * @param from beginning of the period in milliseconds
+     * @param to end of the period in milliseconds
      */
     @Query("SELECT " +
             "sum(food.cal / 100 * record.serving) as cal, " +
@@ -21,14 +20,14 @@ public interface SummaryDao {
             "sum(food.carbo / 100 * record.serving) as carbo " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food._id " +
-            "WHERE record_datetime BETWEEN :date AND (:date + 86356262)")
-    LiveData<Summary> getDayData(long date);
+            "WHERE record_datetime BETWEEN :from AND :to")
+    LiveData<Summary> getDaySummary(long from, long to);
 
     /**
-     *
-     * @param date beginning of the day in milliseconds
-     * @param mealId
-     * @return Summary of records depending on mealId
+     * Summary of macronutrients for specific period and group
+     * @param mealId id of the meal
+     * @param from beginning of the period in milliseconds
+     * @param to end of the period in milliseconds
      */
     @Query("SELECT " +
             "sum(food.cal / 100 * record.serving) as cal, " +
@@ -38,7 +37,18 @@ public interface SummaryDao {
             "sum(record.serving) as serving " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food._id " +
-            "WHERE (record_datetime BETWEEN :date AND (:date + 86356262)) AND meal_id = :mealId")
-    LiveData<Summary> getGroupData(long date, int mealId);
+            "WHERE (record_datetime BETWEEN :from AND :to) AND meal_id = :mealId")
+    LiveData<Summary> getGroupSummary(int mealId, long from, long to);
+
+
+    /**
+     * Summary of total water amount for specific period
+     * @param from beginning of the period in milliseconds
+     * @param to end of the period in milliseconds
+     */
+    @Query("SELECT sum(amount) FROM water " +
+            "WHERE datetime BETWEEN :from AND :to")
+    LiveData<Summary> getWaterSummary(long from, long to);
+
 
 }

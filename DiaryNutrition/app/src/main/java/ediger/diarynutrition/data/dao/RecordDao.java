@@ -15,9 +15,10 @@ import ediger.diarynutrition.data.RecordWithFoodAndMeal;
 public interface RecordDao {
 
     /**
-     * 86356262 = 24 hours
-     * @param date beginning of the day in milliseconds
-     * @param mealId
+     * Get children for specific meal group and period
+     * @param mealId id of the meal
+     * @param from beginning of the period in milliseconds
+     * @param to end of the period in milliseconds
      * @return Children for specific meal group
      */
     @Query("SELECT " +
@@ -35,9 +36,9 @@ public interface RecordDao {
             "FROM record " +
             "INNER JOIN food ON record.food_id = food._id " +
             "INNER JOIN meal ON record.meal_id = meal._id " +
-            "WHERE (record_datetime BETWEEN :date AND (:date + 86356262)) AND meal._id = :mealId " +
+            "WHERE (record_datetime BETWEEN :from AND :to) AND meal._id = :mealId " +
             "ORDER BY record_datetime ASC")
-    LiveData<List<RecordWithFoodAndMeal>> loadRecords(long date, int mealId);
+    LiveData<List<RecordWithFoodAndMeal>> loadRecords(int mealId, long from, long to);
 
     @Query("SELECT * FROM record WHERE _id = :id")
     Record getRecord(int id);

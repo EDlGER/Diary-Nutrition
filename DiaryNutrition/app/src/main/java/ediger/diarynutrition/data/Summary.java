@@ -7,7 +7,9 @@ public class Summary {
     private int fat;
     private int carbo;
 
-    int serving;
+    private int serving;
+
+    private int waterAmount;
 
     public Summary(int cal, int prot, int fat, int carbo) {
         this.cal = cal;
@@ -22,6 +24,10 @@ public class Summary {
         this.fat = fat;
         this.carbo = carbo;
         this.serving = serving;
+    }
+
+    public Summary(int waterAmount) {
+        this.waterAmount = waterAmount;
     }
 
     public int getCal() {
