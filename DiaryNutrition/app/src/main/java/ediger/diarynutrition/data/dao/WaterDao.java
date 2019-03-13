@@ -21,7 +21,7 @@ public interface WaterDao {
     LiveData<List<Water>> loadWater(long from, long to);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertWater(int amount, long datetime);
+    void insertWater(Water water);
 
     @Query("DELETE FROM water WHERE _id = :id")
     int deleteWaterById(int id);

@@ -2,11 +2,9 @@ package ediger.diarynutrition.objects;
 
 import android.app.Application;
 
+import ediger.diarynutrition.data.DatabaseCopier;
 import ediger.diarynutrition.database.DbDiary;
 
-/**
- * Created by root on 17.05.15.
- */
 public class AppContext extends Application{
 
     /* Date of chosen day (begin of the day - 00:00) in milliseconds */
@@ -22,6 +20,8 @@ public class AppContext extends Application{
         super.onCreate();
 
         sDbDiary = new DbDiary(this);
+
+        //DatabaseCopier.getInstance(this).execute();
 
     }
 

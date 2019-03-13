@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "weight")
 public class Weight {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     private int id;
 
@@ -19,6 +19,14 @@ public class Weight {
     public Weight(float amount, long datetime) {
         this.amount = amount;
         this.datetime = datetime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public float getAmount() {

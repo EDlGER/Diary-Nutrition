@@ -3,9 +3,11 @@ package ediger.diarynutrition.data;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "record",
+        indices = {@Index("meal_id"), @Index("food_id")},
         foreignKeys = {
                 @ForeignKey(entity = Food.class,
                     parentColumns = "_id",
@@ -39,6 +41,14 @@ public class Record {
         this.foodId = foodId;
         this.serving = serving;
         this.datetime = datetime;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getMealId() {

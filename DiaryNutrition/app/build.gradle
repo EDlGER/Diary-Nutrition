@@ -10,6 +10,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 29
         versionName "1.2.7"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -29,7 +31,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha03'
+    implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0-alpha01'
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
@@ -53,6 +55,11 @@ dependencies {
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+
+    // Android Testing Support Library's
+    androidTestImplementation "androidx.test:runner:$rootProject.atsl"
+    androidTestImplementation "androidx.test:rules:$rootProject.atsl"
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.archCore"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.google.gms:google-services:4.2.0'
     }
 }
@@ -36,4 +36,8 @@ ext {
     // Architecture Components dependencies
     roomVersion = '1.1.1'
     archLifecycleVersion = '1.1.1'
+
+    //Testing
+    atsl = '1.1.0-alpha4'
+    archCore = "2.0.0"
 }

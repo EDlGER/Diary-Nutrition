@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "water")
 public class Water {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     private int id;
 
@@ -22,6 +22,10 @@ public class Water {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getAmount() {
