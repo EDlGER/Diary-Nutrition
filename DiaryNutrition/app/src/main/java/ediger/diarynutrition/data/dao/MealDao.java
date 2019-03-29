@@ -2,8 +2,10 @@ package ediger.diarynutrition.data.dao;
 
 import java.util.List;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -23,5 +25,8 @@ public interface MealDao {
 
     @Query("DELETE FROM meal WHERE _id = :id")
     int deleteMealById(int id);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insertMeal(Meal meal);
 
 }

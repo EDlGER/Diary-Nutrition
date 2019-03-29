@@ -13,8 +13,7 @@ public class Meal {
 
     private String name;
 
-    public Meal(int id, String name) {
-        this.id = id;
+    public Meal(String name) {
         this.name = name;
     }
 

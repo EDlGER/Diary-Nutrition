@@ -27,7 +27,7 @@ public interface WeightDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertWeight(Weight weight);
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateWeight(Weight weight);
 
     @Query("DELETE FROM weight WHERE _id = :id")

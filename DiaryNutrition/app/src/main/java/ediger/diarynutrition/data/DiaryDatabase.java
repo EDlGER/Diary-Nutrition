@@ -11,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import ediger.diarynutrition.data.dao.FoodDao;
 import ediger.diarynutrition.data.dao.MealDao;
 import ediger.diarynutrition.data.dao.RecordDao;
+import ediger.diarynutrition.data.dao.SummaryDao;
 import ediger.diarynutrition.data.dao.WaterDao;
 import ediger.diarynutrition.data.dao.WeightDao;
 
@@ -25,6 +26,7 @@ public abstract class DiaryDatabase extends RoomDatabase {
     public abstract RecordDao recordDao();
     public abstract WaterDao waterDao();
     public abstract WeightDao weightDao();
+    public abstract SummaryDao summaryDao();
 
     public static DiaryDatabase getInstance(Context context) {
         if (sInstance == null) {
@@ -39,7 +41,9 @@ public abstract class DiaryDatabase extends RoomDatabase {
     }
 
     private static DiaryDatabase buildDatabase(final Context appContext) {
+
         DatabaseCopier.getInstance(appContext).execute();
+
         return Room.databaseBuilder(appContext, DiaryDatabase.class,
                     DatabaseCopier.getInstance(appContext).getDatabaseName())
                 .addMigrations(MIGRATION_1_2)

@@ -34,8 +34,20 @@ public interface FoodDao {
     @Query("DELETE FROM food WHERE _id = :id")
     int deleteFoodById(int id);
 
+    @Query("SELECT * FROM food " +
+            "WHERE food_name LIKE :text " +
+            "ORDER BY food_name = :text DESC, food_name LIKE :text DESC ")
+    LiveData<List<Food>> searchAllFood(String text);
 
+    @Query("SELECT * FROM food " +
+            "WHERE favor = 1 AND food_name LIKE :text " +
+            "ORDER BY food_name = :text DESC, food_name LIKE :text DESC ")
+    LiveData<List<Food>> searchFavorFood(String text);
 
-    //TODO Find food by food_name
+    @Query("SELECT * FROM food " +
+            "WHERE usr = 1 AND food_name LIKE :text " +
+            "ORDER BY food_name = :text DESC, food_name LIKE :text DESC ")
+    LiveData<List<Food>> searchUsrFood(String text);
 
+    //FTS4?
 }

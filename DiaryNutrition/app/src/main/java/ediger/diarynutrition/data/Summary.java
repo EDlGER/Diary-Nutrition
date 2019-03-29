@@ -2,35 +2,19 @@ package ediger.diarynutrition.data;
 
 public class Summary {
 
-    private int cal;
-    private int prot;
-    private int fat;
-    private int carbo;
+    private float cal;
+    private float prot;
+    private float fat;
+    private float carbo;
 
-    private int serving;
-
-    private int waterAmount;
-
-    public Summary(int cal, int prot, int fat, int carbo) {
+    public Summary(float cal, float prot, float fat, float carbo) {
         this.cal = cal;
         this.prot = prot;
         this.fat = fat;
         this.carbo = carbo;
     }
 
-    public Summary(int cal, int prot, int fat, int carbo, int serving) {
-        this.cal = cal;
-        this.prot = prot;
-        this.fat = fat;
-        this.carbo = carbo;
-        this.serving = serving;
-    }
-
-    public Summary(int waterAmount) {
-        this.waterAmount = waterAmount;
-    }
-
-    public int getCal() {
+    public float getCal() {
         return cal;
     }
 
@@ -38,7 +22,7 @@ public class Summary {
         this.cal = cal;
     }
 
-    public int getProt() {
+    public float getProt() {
         return prot;
     }
 
@@ -46,7 +30,7 @@ public class Summary {
         this.prot = prot;
     }
 
-    public int getFat() {
+    public float getFat() {
         return fat;
     }
 
@@ -54,19 +38,11 @@ public class Summary {
         this.fat = fat;
     }
 
-    public int getCarbo() {
+    public float getCarbo() {
         return carbo;
     }
 
     public void setCarbo(int carbo) {
         this.carbo = carbo;
-    }
-
-    public int getServing() {
-        return serving;
-    }
-
-    public void setServing(int serving) {
-        this.serving = serving;
     }
 }

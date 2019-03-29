@@ -26,4 +26,11 @@ public interface WaterDao {
     @Query("DELETE FROM water WHERE _id = :id")
     int deleteWaterById(int id);
 
+    @Query("SELECT " +
+            "_id, " +
+            "sum(amount) AS amount, " +
+            "datetime " +
+            "FROM water WHERE datetime BETWEEN :from AND :to")
+    LiveData<Water> getWaterSum(long from, long to);
+
 }

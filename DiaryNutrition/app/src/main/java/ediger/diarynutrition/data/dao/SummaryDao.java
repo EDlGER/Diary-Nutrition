@@ -3,6 +3,7 @@ package ediger.diarynutrition.data.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
+import ediger.diarynutrition.data.GroupSummary;
 import ediger.diarynutrition.data.Summary;
 
 @Dao
@@ -23,6 +24,7 @@ public interface SummaryDao {
             "WHERE record_datetime BETWEEN :from AND :to")
     LiveData<Summary> getDaySummary(long from, long to);
 
+
     /**
      * Summary of macronutrients for specific period and group
      * @param mealId id of the meal
@@ -38,17 +40,17 @@ public interface SummaryDao {
             "FROM record " +
             "INNER JOIN food ON record.food_id = food._id " +
             "WHERE (record_datetime BETWEEN :from AND :to) AND meal_id = :mealId")
-    LiveData<Summary> getGroupSummary(int mealId, long from, long to);
+    LiveData<GroupSummary> getGroupSummary(int mealId, long from, long to);
 
 
-    /**
-     * Summary of total water amount for specific period
-     * @param from beginning of the period in milliseconds
-     * @param to end of the period in milliseconds
-     */
-    @Query("SELECT sum(amount) FROM water " +
-            "WHERE datetime BETWEEN :from AND :to")
-    LiveData<Summary> getWaterSummary(long from, long to);
+//    /**
+//     * Summary of total water amount for specific period
+//     * @param from beginning of the period in milliseconds
+//     * @param to end of the period in milliseconds
+//     */
+//    @Query("SELECT sum(amount) FROM water " +
+//            "WHERE datetime BETWEEN :from AND :to")
+//    LiveData<Summary> getWaterSummary(long from, long to);
 
 
 }

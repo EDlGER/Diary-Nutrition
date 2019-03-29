@@ -4,13 +4,13 @@ import androidx.room.Embedded;
 
 public class RecordWithFoodAndMeal {
 
-    @Embedded(prefix = "record.")
-    Record record;
+    @Embedded(prefix = "record_")
+    public Record record;
 
-    @Embedded(prefix = "food.")
-    Food food;
+    @Embedded(prefix = "food_")
+    public Food food;
 
-    @Embedded(prefix = "meal.")
-    Meal meal;
+    @Embedded(prefix = "meal_")
+    public Meal meal;
 
 }
