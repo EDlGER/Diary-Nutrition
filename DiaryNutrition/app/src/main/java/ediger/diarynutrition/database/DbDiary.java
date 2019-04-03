@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import java.util.Locale;
 
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.objects.AppContext;
 
 public class DbDiary {
 
@@ -104,6 +106,10 @@ public class DbDiary {
 
         dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
+        //BackupDb method won't work without it
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            db.disableWriteAheadLogging();
+        }
     }
 
     public String getDbName() {
@@ -132,6 +138,7 @@ public class DbDiary {
                 src.close();
                 dst.close();
 
+                AppContext.getInstance().recreateDatabase();
                 Toast.makeText(context, R.string.message_data_backup, Toast.LENGTH_SHORT).show();
             }
 
@@ -161,17 +168,8 @@ public class DbDiary {
                 src.close();
                 dst.close();
 
+                AppContext.getInstance().recreateDatabase();
                 Toast.makeText(context, R.string.message_data_restore, Toast.LENGTH_SHORT).show();
-
-                //Перезагрузка приложения для того, чтобы сработало автоматическое обновление БД
-                Intent restartIntent = context.getPackageManager()
-                        .getLaunchIntentForPackage(context.getPackageName() );
-                PendingIntent intent = PendingIntent.getActivity(
-                        context, 0,
-                        restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                manager.set(AlarmManager.RTC, System.currentTimeMillis() + 10, intent);
-                System.exit(2);
 
             }
 

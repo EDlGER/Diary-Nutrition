@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
 
+import android.os.Process;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.DatePicker;
@@ -245,14 +246,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             listPref.setSummary("%s");
         }
         if (key.equals(KEY_PREF_DATA_LANGUAGE)) {
-            Intent restartIntent = getActivity().getPackageManager()
-                    .getLaunchIntentForPackage(getActivity().getPackageName() );
-            PendingIntent intent = PendingIntent.getActivity(
-                    getActivity(), 0,
-                    restartIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-            AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-            manager.set(AlarmManager.RTC, System.currentTimeMillis() + 10, intent);
-            System.exit(2);
+            AppContext.getInstance().recreateDatabase();
         }
         if (key.equals(KEY_PREF_BIRTHDAY)) {
             Preference birthdayPref = findPreference(key);

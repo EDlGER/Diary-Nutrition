@@ -1,15 +1,13 @@
 package ediger.diarynutrition.objects;
 
 import android.app.Application;
+import android.content.res.Configuration;
 
 import ediger.diarynutrition.database.DbDiary;
 
-/**
- * Created by root on 17.05.15.
- */
-public class AppContext extends Application{
+public class AppContext extends Application {
 
-    /* Date of chosen day (begin of the day - 00:00) in milliseconds */
+    /** Date of chosen day (begin of the day - 00:00) in milliseconds */
     private static long sDate;
 
     private static DbDiary sDbDiary;
@@ -32,7 +30,6 @@ public class AppContext extends Application{
     public static DbDiary getDbDiary() {
             return sDbDiary;
     }
-
     public static long getDate() {
         return sDate;
     }
@@ -41,4 +38,7 @@ public class AppContext extends Application{
         sDate = date;
     }
 
+    public void recreateDatabase() {
+        sDbDiary = new DbDiary(this);
+    }
 }
