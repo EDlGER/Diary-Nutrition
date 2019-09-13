@@ -1,27 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:gravity="center_horizontal">
 
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/weightInputLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp">
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="5"
-            android:textSize="22sp"
-            android:id="@+id/editWeight"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="41dp"
+            android:ems="5"
+            android:textSize="20sp"
+            android:hint="@string/dialog_weight"
             android:inputType="number|numberDecimal"
-            android:maxLength="5" />
+            android:maxLength="4" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-</RelativeLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent"
+        app:endIconDrawable="@drawable/ic_menu_down_grey600_24dp"
+        app:endIconMode="custom">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:textSize="20sp"
+            android:focusable="false"
+            android:hint="@string/dialog_date"
+            android:cursorVisible="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

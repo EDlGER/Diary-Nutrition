@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ediger.diarynutrition.R;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class ChangeFoodDialog extends DialogFragment {
     @Override
@@ -20,7 +20,7 @@ public class ChangeFoodDialog extends DialogFragment {
 
         View relative1 = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
         builder.setView(relative1);
-        builder.setTitle(getString(R.string.dialog_tittle_change));
+        builder.setTitle(getString(R.string.dialog_title_change));
 
         final EditText txtNameF = (EditText) relative1.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative1.findViewById(R.id.txtCalF);
@@ -31,8 +31,11 @@ public class ChangeFoodDialog extends DialogFragment {
         long id = getArguments().getLong("id");
         String[] asColumnsToResult = AppContext.getDbDiary().getListFood();
         String selections = "_id = "+id;
-        Cursor c = AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
-                null, null, null);
+
+        //TODO mock
+        Cursor c = null;
+        /*Cursor c = AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
+                null, null, null);*/
         c.moveToFirst();
 
         txtNameF.setText(c.getString(0));

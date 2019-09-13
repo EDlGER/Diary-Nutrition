@@ -34,9 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class AddActivity extends AppCompatActivity {
 

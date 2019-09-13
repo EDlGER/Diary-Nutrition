@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    android:animateLayoutChanges="true"
-    tools:context=".activity.MainActivity">
+    android:animateLayoutChanges="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -16,8 +12,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:expanded="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:elevation="0dp">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -25,122 +20,17 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:fitsSystemWindows="true"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?attr/actionBarSize"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-                    android:textColor="@android:color/white" />
-
-                <RelativeLayout
-                    android:id="@+id/date_picker_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/title">
-
-                    <View
-                        android:id="@+id/centerInParent"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_centerVertical="true" />
-
-                    <TextView
-                        android:id="@+id/date_picker_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/centerInParent"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                        android:textColor="@android:color/white" />
-
-                    <ImageView
-                        android:id="@+id/date_picker_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/date_picker_text_view"
-                        android:layout_toRightOf="@id/date_picker_text_view"
-                        android:src="@drawable/ic_arrow_drop_down_white_24dp" />
-
-                </RelativeLayout>
-
-            </FrameLayout>
-
-        </androidx.appcompat.widget.Toolbar>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.github.sundeepk.compactcalendarview.CompactCalendarView
-        android:id="@+id/compactcalendar_view"
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/app_bar_layout"
-        android:fitsSystemWindows="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarBackgroundColor="?attr/colorPrimary"
-        app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
-        app:compactCalendarTextColor="#fff"
-        app:compactCalendarTextSize="12sp" />
+        android:layout_height="match_parent"
+        app:defaultNavHost = "true"
+        app:navGraph = "@navigation/nav_graph"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <include layout="@layout/content_main" />
-
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        fab:fab_addButtonColorNormal="@color/colorAccent"
-        fab:fab_addButtonColorPressed="@color/colorAccentPressed"
-        fab:fab_addButtonPlusIconColor="@android:color/white"
-        fab:fab_labelStyle="@style/menu_labels_style">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_icon="@drawable/ic_scale_white"
-            fab:fab_title="@string/menu_action_weight" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_water"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_icon="@drawable/ic_water_white"
-            fab:fab_title="@string/menu_action_water" />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_food"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccentPressed"
-            fab:fab_icon="@drawable/ic_food_menu_white"
-            fab:fab_title="@string/menu_action_food" />
-
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

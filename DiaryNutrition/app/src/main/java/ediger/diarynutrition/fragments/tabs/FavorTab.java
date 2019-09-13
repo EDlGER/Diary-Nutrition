@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.widget.SearchView;
 import android.text.InputType;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,9 +34,9 @@ import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.settings.SettingsFragment;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -146,16 +145,18 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
-                    null, null, null, orderBy);
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
+                    null, null, null, orderBy);*/
         }
         else {
             String value = "%"+constraint.toString()+"%";
             String orderBySearch = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
                     constraint.toString() + "%\" desc";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "favor = 1 AND usr > -1 AND food_name like ? ",
-                    new String[]{value}, null, null, orderBySearch);
+                    new String[]{value}, null, null, orderBySearch);*/
         }
     }
 

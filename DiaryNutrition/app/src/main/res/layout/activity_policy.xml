@@ -4,7 +4,7 @@
     android:id="@+id/activity_policy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ediger.diarynutrition.activity.PolicyActivity">
+    tools:context="ediger.diarynutrition.intro.PolicyActivity">
 
     <WebView
         android:id="@+id/web_policy"

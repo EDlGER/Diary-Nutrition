@@ -13,9 +13,9 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import ediger.diarynutrition.LiveDataTestUtil;
-import ediger.diarynutrition.data.DiaryDatabase;
-import ediger.diarynutrition.data.Food;
-import ediger.diarynutrition.data.dao.FoodDao;
+import ediger.diarynutrition.data.source.DiaryDatabase;
+import ediger.diarynutrition.data.source.entities.Food;
+import ediger.diarynutrition.data.source.dao.FoodDao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -84,23 +84,23 @@ public class FoodDaoTest {
     public void insertAndUpdate() {
         mFoodDao.insertFood(FOOD);
         Food food = mFoodDao.getFood(1);
-        food.setFavor(1);
-        food.setUsr(1);
+        food.setFavorite(1);
+        food.setUser(1);
         mFoodDao.updateFood(food);
 
         food = mFoodDao.getFood(1);
 
         assertFood(food, 1, FOOD.getFoodName(), FOOD.getCal(),
                 FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavor(), is(1));
-        assertThat(food.getUsr(), is(1));
+        assertThat(food.getFavorite(), is(1));
+        assertThat(food.getUser(), is(1));
     }
 
     @Test
     public void insertAndGetFavor() throws Exception {
         Food food = new Food(FOOD.getFoodName(), FOOD.getCal(),
                 FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        food.setFavor(1);
+        food.setFavorite(1);
         mFoodDao.insertFood(food);
         mFoodDao.insertFood(food);
 
@@ -111,14 +111,14 @@ public class FoodDaoTest {
 
         assertFood(food, 1, FOOD.getFoodName(), FOOD.getCal(),
                 FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavor(), is(1));
+        assertThat(food.getFavorite(), is(1));
     }
 
     @Test
     public void insertAndGetUsr() throws Exception {
         Food food = new Food(FOOD.getFoodName(), FOOD.getCal(),
                 FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        food.setUsr(1);
+        food.setUser(1);
         mFoodDao.insertFood(food);
         mFoodDao.insertFood(food);
 
@@ -129,8 +129,8 @@ public class FoodDaoTest {
 
         assertFood(food, 1, FOOD.getFoodName(), FOOD.getCal(),
                 FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavor(), is(0));
-        assertThat(food.getUsr(), is(1));
+        assertThat(food.getFavorite(), is(0));
+        assertThat(food.getUser(), is(1));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class FoodDaoTest {
     @Test
     public void insertAndSearchFavor() throws Exception {
         Food food = new Food("test food", 1, 1, 1, 1);
-        food.setFavor(1);
+        food.setFavorite(1);
         mFoodDao.insertFood(food);
         food.setFoodName("food");
         mFoodDao.insertFood(food);
@@ -162,8 +162,13 @@ public class FoodDaoTest {
         foods = LiveDataTestUtil.getValue(mFoodDao.searchFavorFood("%test%"));
         assertThat(foods.size(), is(1));
 
-        assertThat(foods.get(0).getFavor(), is(1));
+        assertThat(foods.get(0).getFavorite(), is(1));
         assertThat(foods.get(0).getFoodName(), is("test food"));
+    }
+
+    @Test
+    public void insertAndGetSummary() throws Exception {
+
     }
 
     static void assertFood(Food food, int id, String foodName,

@@ -5,8 +5,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.google.gms:google-services:4.3.1'
     }
 }
 allprojects {
@@ -24,8 +24,7 @@ allprojects {
 
 ext {
     // Sdk and tools
-    // Support library and architecture components support minSdk 14 and above.
-    minSdkVersion = 15
+    minSdkVersion = 16
     targetSdkVersion = 28
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
@@ -34,10 +33,11 @@ ext {
 
 
     // Architecture Components dependencies
-    roomVersion = '1.1.1'
-    archLifecycleVersion = '1.1.1'
+    roomVersion = '2.2.0-beta01'
+    archLifecycleVersion = '2.2.0-alpha03'
+    navVersion = '2.2.0-alpha01'
 
     //Testing
     atsl = '1.1.0-alpha4'
-    archCore = "2.0.0"
+    archCore = '2.0.1'
 }

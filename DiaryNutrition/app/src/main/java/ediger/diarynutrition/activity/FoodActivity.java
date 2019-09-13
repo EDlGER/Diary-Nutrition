@@ -14,7 +14,7 @@ import android.view.View;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.SlidingTabLayout;
 import ediger.diarynutrition.adapters.ViewPagerAdapter;
-import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.settings.SettingsFragment;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

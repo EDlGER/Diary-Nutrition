@@ -13,13 +13,16 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import ediger.diarynutrition.LiveDataTestUtil;
-import ediger.diarynutrition.data.DiaryDatabase;
-import ediger.diarynutrition.data.Meal;
-import ediger.diarynutrition.data.Record;
-import ediger.diarynutrition.data.RecordWithFoodAndMeal;
-import ediger.diarynutrition.data.dao.RecordDao;
+import ediger.diarynutrition.data.source.DiaryDatabase;
+import ediger.diarynutrition.data.source.entities.Food;
+import ediger.diarynutrition.data.source.entities.Meal;
+import ediger.diarynutrition.data.source.entities.MealAndRecords;
+import ediger.diarynutrition.data.source.entities.Record;
+import ediger.diarynutrition.data.source.entities.RecordAndFood;
+import ediger.diarynutrition.data.source.dao.RecordDao;
 
 import static ediger.diarynutrition.db.FoodDaoTest.FOOD;
+import static ediger.diarynutrition.db.MealDaoTest.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -84,26 +87,28 @@ public class RecordDaoTest {
         record = mRecordDao.getRecord(1);
         assertRecord(record, 2, RECORD.getFoodId(), RECORD.getServing(), RECORD.getDatetime());
     }
-
+    // TODO: Test it!
     @Test
-    public void insertFewAndLoadAll() throws Exception {
+    public void insertFewAndGetAll() {
         mRecordDao.insertRecord(RECORD);
         mRecordDao.insertRecord(RECORD);
         mRecordDao.insertRecord(RECORD);
 
-        List<RecordWithFoodAndMeal> records = LiveDataTestUtil.getValue(mRecordDao
-                .loadRecords(RECORD.getMealId(), 0, 200000));
+        List<MealAndRecords> mealAndRecords = mRecordDao.getMealsAndRecords(0, 200000);
 
+        assertThat(mealAndRecords.size(), is(1));
+        assertMeal(MEAL, mealAndRecords.get(0).meal.getName());
+
+        List<RecordAndFood> records = mealAndRecords.get(0).records;
         assertThat(records.size(), is(3));
 
-        Record record = records.get(1).record;
-        assertRecord(record, RECORD.getMealId(), RECORD.getFoodId(), RECORD.getServing(), RECORD.getDatetime());
+        Record record = records.get(0).record;
+        assertRecord(RECORD, record.getMealId(), record.getFoodId(), record.getServing(), record.getDatetime());
 
-        float testValue = FOOD.getCal() / 100 * RECORD.getServing();
+        Food food = records.get(0).food;
+        assertThat(food.getFoodName(), is("test food"));
+        assertThat(food.getCal(), is(FOOD.getCal() / 100 * record.getServing()));
 
-        //Id field doesn't change
-        FoodDaoTest.assertFood(records.get(1).food, 0, FOOD.getFoodName(),
-                testValue, testValue, testValue, testValue);
     }
 
     private void assertRecord(Record record, int mealId, int foodId, int serving, long datetime) {

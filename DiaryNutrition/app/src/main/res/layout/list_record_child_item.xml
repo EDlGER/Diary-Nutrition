@@ -1,141 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<!-- if (isLastChild) height = 70 else height = 64-->
-<FrameLayout
-    android:id="@+id/background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@color/listview_background">
-
-    <RelativeLayout
-        android:id="@+id/container"
-        style="@style/commonListItemStyle"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="record" type="ediger.diarynutrition.data.source.entities.Record" />
+        <variable
+            name="food" type="ediger.diarynutrition.data.source.entities.Food" />
+        <variable
+            name="isLastChild" type="boolean" />
+    </data>
+    <FrameLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/bg_child_item_normal"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        tools:ignore="UselessParent">
+        android:background="@color/listview_background"
+        app:customHeight="@{isLastChild ? @dimen/list_item_last_height : @dimen/list_item_height}">
 
-        <TextView
-            android:id="@+id/txt_time"
-            android:layout_width="38dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:gravity="center_vertical"
-            android:maxLength="5"
-            android:text="00:00"
-            android:textSize="@dimen/abc_text_size_small_material" />
-
-        <TextView
-            android:id="@+id/txt_food_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/txt_cal"
-            android:layout_toRightOf="@+id/txt_time"
-            android:text="Овсяная каша"
-            android:textColor="@color/listview_primary_text"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/txt_cal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:gravity="center_vertical"
-            android:text="350"
-            android:textColor="@color/colorPrimary"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/txt_carbo"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="70dp"
-            android:layout_marginRight="700dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="99999"
-            android:textColor="@color/listview_second_text"
-            android:textSize="14sp" />
-
-
-        <TextView
-            android:id="@+id/txt_fat"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toStartOf="@+id/txt_carbo"
-            android:layout_toLeftOf="@+id/txt_carbo"
-            android:gravity="center"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="99999"
-            android:textColor="@color/listview_second_text"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/txt_prot"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toStartOf="@+id/txt_fat"
-            android:layout_toLeftOf="@+id/txt_fat"
-            android:gravity="center"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="99999"
-            android:textColor="@color/listview_second_text"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/txt_serving"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/txt_food_name"
-            android:layout_alignLeft="@+id/txt_food_name"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:text="200 g"
-            android:textColor="@color/listview_second_text"
-            android:textSize="14sp" />
-
-        <View
-            android:id="@+id/divider"
+        <RelativeLayout
+            android:id="@+id/container"
+            style="@style/commonListItemStyle"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="?android:listDivider"/>
+            android:layout_height="@dimen/list_item_height"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:animateLayoutChanges="true"
+            android:background="@{isLastChild ? @drawable/bg_child_item_last : @drawable/bg_child_item_normal}"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="38dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:gravity="center_vertical"
+                android:maxLength="5"
+                android:textSize="@dimen/abc_text_size_small_material"
+                app:timeMillis="@{record.datetime}"/>
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/txt_food_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toLeftOf="@+id/txt_cal"
+                android:layout_toRightOf="@+id/txt_time"
+                android:text="@{food.foodName}"
+                android:textColor="@color/listview_primary_text"
+                android:textSize="@{food.foodName.length() > 18 ? 12 : 16}" />
+
+            <TextView
+                android:id="@+id/txt_cal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:gravity="center_vertical"
+                android:text="@{String.format(`%d`, (int) food.cal)}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/txt_carbo"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="70dp"
+                android:layout_marginRight="700dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="@{String.format(`%.1f`, food.carbo)}"
+                android:textColor="@color/listview_second_text"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/txt_fat"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@+id/txt_carbo"
+                android:layout_toLeftOf="@+id/txt_carbo"
+                android:gravity="center"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="@{String.format(`%.1f`, food.fat)}"
+                android:textColor="@color/listview_second_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_prot"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toStartOf="@+id/txt_fat"
+                android:layout_toLeftOf="@+id/txt_fat"
+                android:gravity="center"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="@{String.format(`%.1f`, food.prot)}"
+                android:textColor="@color/listview_second_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_serving"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/txt_food_name"
+                android:layout_alignLeft="@+id/txt_food_name"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:text="@{String.format(@string/diary_list_gram, record.serving)}"
+                android:textColor="@color/listview_second_text"
+                android:textSize="14sp" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="?android:listDivider"
+                android:visibility="@{isLastChild ? View.GONE : View.VISIBLE}"/>
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

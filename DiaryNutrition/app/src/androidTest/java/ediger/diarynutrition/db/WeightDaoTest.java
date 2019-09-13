@@ -13,9 +13,9 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import ediger.diarynutrition.LiveDataTestUtil;
-import ediger.diarynutrition.data.DiaryDatabase;
-import ediger.diarynutrition.data.Weight;
-import ediger.diarynutrition.data.dao.WeightDao;
+import ediger.diarynutrition.data.source.DiaryDatabase;
+import ediger.diarynutrition.data.source.entities.Weight;
+import ediger.diarynutrition.data.source.dao.WeightDao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;

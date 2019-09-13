@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ediger.diarynutrition.R;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class AddFoodDialog extends DialogFragment {
     @NonNull
@@ -21,7 +21,7 @@ public class AddFoodDialog extends DialogFragment {
 
         View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
         builder.setView(relative);
-        builder.setTitle(getString(R.string.dialog_tittle_f));
+        builder.setTitle(getString(R.string.dialog_title_f));
 
         final EditText txtNameF = (EditText) relative.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative.findViewById(R.id.txtCalF);

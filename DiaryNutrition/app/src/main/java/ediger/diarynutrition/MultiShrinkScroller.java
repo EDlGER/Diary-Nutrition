@@ -1519,7 +1519,7 @@ public class MultiShrinkScroller extends FrameLayout {
         }
 
         private float getRefreshRate() {
-//            DisplayInfo di = DisplayManagerGlobal.getInstance().getDisplayInfo(
+//            DisplayInfo di = DisplayManagerGlobal.getPreferences().getDisplayInfo(
 //                    Display.DEFAULT_DISPLAY);
 //            return di.refreshRate;
             return 30f;

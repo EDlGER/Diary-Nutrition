@@ -3,7 +3,7 @@
     <string name="act_food">Продукты</string>
 
     <string name="action_search">Поиск</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
     <string name="action_back">Назад</string>
 
     <string name="diary_date_today">Сегодня</string>
@@ -12,11 +12,11 @@
     <string name="menu_action_food">Еда</string>
     <string name="menu_action_weight">Вес</string>
 
-    <string name="title_sec1">Дневник</string>
-    <string name="title_sec2">Настройки</string>
-    <string name="title_sec3">Вес</string>
-    <string name="title_sec4">Сводка</string>
-    <string name="tittle_search">Поиск продукта</string>
+    <string name="title_diary">Дневник</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_weight">Вес</string>
+    <string name="title_summary">Сводка</string>
+    <string name="title_search">Поиск продукта</string>
 
     <string name="food_tab1">Добавленные</string>
     <string name="food_tab2">Избранные</string>
@@ -53,11 +53,11 @@
     <string name="dialog_meal">Прием пищи</string>
 
     <string name="dialog_change_date">Выбрать</string>
-    <string name="dialog_tittle_date">Выберите дату</string>
+    <string name="dialog_title_date">Выберите дату</string>
 
-    <string name="dialog_tittle_change">Изменение продукта</string>
-    <string name="dialog_tittle_f">Добавление своего продукта</string>
-    <string name="dialog_tittle_w">Введите Ваш вес, кг</string>
+    <string name="dialog_title_change">Изменение продукта</string>
+    <string name="dialog_title_f">Добавление своего продукта</string>
+    <string name="dialog_title_w">Введите Ваш вес, кг</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
     <string name="dialog_name_f">Название продукта</string>
@@ -118,7 +118,7 @@
 
     <string name="add_food">Добавить продукт</string>
 
-    <string name="elv_gram"> г</string>
+    <string name="diary_list_gram">%dг</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -231,16 +231,16 @@
     <string name="dialog_title_c">Введите целевые калории</string>
     <string name="dialog_change">Изменить</string>
     <string name="message_dialog_cal">Калории не введены</string>
-    <string name="title_activity_program">Программа питания</string>
+    <string name="title_program">Программа питания</string>
     <string name="message_program_perc">Сумма процентов должна быть 100</string>
     <string name="message_program_gram">При изменении макронутриентов изменится количество калорий и соотношение БЖУ</string>
     <string name="macro_carbo_short">У</string>
     <string name="macro_fat_short">Ж</string>
     <string name="macro_prot_short">Б</string>
     <string name="intro_nutrition_info">Вы можете изменить эти значения в настройках</string>
-    <string name="title_sec5">Оценить приложение</string>
+    <string name="title_rate">Оценить приложение</string>
     <string name="message_program_null">Количество макронутриентов должно быть больше нуля</string>
-    <string name="title_sec6">Убрать рекламу</string>
+    <string name="title_premium">Убрать рекламу</string>
     <string name="message_food_del">Продукт не появится в следующий раз</string>
     <string name="add_food_more">Добавить еще продукт</string>
     <string name="context_menu_copy">Копировать</string>
@@ -280,6 +280,9 @@
     <string name="menu_action_switch">Осталось/Всего</string>
     <string name="message_record_meal_insert_fail">Прием пищи не скопирован</string>
     <string name="message_record_meal_insert">"Вставка успешна "</string>
+    <string name="calendar">Календарь</string>
+    <string name="dialog_weight_add">Добавить вес</string>
+    <string name="dialog_date">Дата</string>
 
 
 </resources>

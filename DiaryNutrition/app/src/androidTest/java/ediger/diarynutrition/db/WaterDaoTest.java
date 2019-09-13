@@ -14,9 +14,9 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import ediger.diarynutrition.LiveDataTestUtil;
-import ediger.diarynutrition.data.DiaryDatabase;
-import ediger.diarynutrition.data.Water;
-import ediger.diarynutrition.data.dao.WaterDao;
+import ediger.diarynutrition.data.source.DiaryDatabase;
+import ediger.diarynutrition.data.source.entities.Water;
+import ediger.diarynutrition.data.source.dao.WaterDao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -52,7 +52,7 @@ public class WaterDaoTest {
         mWaterDao.insertWater(WATER);
         mWaterDao.deleteWaterById(1);
 
-        List<Water> waterList = LiveDataTestUtil.getValue(mWaterDao.loadWater(0, 200000));
+        List<Water> waterList = LiveDataTestUtil.getValue(mWaterDao.getWaterList(0, 200000));
         assertThat(waterList.size(), is(0));
     }
 
@@ -61,7 +61,7 @@ public class WaterDaoTest {
         mWaterDao.insertWater(WATER);
         mWaterDao.insertWater(new Water(100, 111111));
 
-        List<Water> waterList = LiveDataTestUtil.getValue(mWaterDao.loadWater(0, 200000));
+        List<Water> waterList = LiveDataTestUtil.getValue(mWaterDao.getWaterList(0, 200000));
         assertThat(waterList.size(), is(2));
         assertWater(waterList.get(0), 1, WATER.getAmount(), WATER.getDatetime());
     }

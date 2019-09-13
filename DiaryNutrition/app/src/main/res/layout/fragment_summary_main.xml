@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <ediger.diarynutrition.SlidingTabLayout
-        android:id="@+id/tabs_summary"
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:elevation="4dp"/>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager_summary"
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

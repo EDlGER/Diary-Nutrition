@@ -30,7 +30,7 @@ import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class SearchTab extends Fragment {
 
@@ -180,15 +180,17 @@ public class SearchTab extends Fragment {
         //String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0) {
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
-                    null, null, null);
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections, null,
+                    null, null, null);*/
         }
         else {
             String value = "%" +constraint.toString() + "%";
             String orderBy = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
                     constraint.toString() + "%\" desc";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name LIKE ? ",
-                    new String[]{value}, null, null, orderBy);
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,"usr > -1 AND food_name LIKE ? ",
+                    new String[]{value}, null, null, orderBy);*/
         }
     }
 }

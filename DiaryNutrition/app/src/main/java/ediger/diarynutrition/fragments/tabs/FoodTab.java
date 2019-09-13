@@ -3,7 +3,6 @@ package ediger.diarynutrition.fragments.tabs;
 import android.app.SearchManager;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.fragment.app.DialogFragment;
@@ -32,13 +31,13 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import ediger.diarynutrition.activity.AddActivity;
-import ediger.diarynutrition.fragments.SettingsFragment;
+import ediger.diarynutrition.settings.SettingsFragment;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.objects.AppContext;
+import ediger.diarynutrition.AppContext;
 
 public class FoodTab extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -168,16 +167,18 @@ public class FoodTab extends Fragment implements
         String orderBy = "food_name asc";
 
         if(constraint == null || constraint.length() == 0){
-            return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
-                    null, null, null, orderBy);
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food", asColumnsToResult, selections,
+                    null, null, null, orderBy);*/
         }
         else {
             String value = "%"+constraint.toString()+"%";
             String orderBySearch = "food_name = \"" + constraint.toString() + "\" desc, food_name LIKE \"" +
                     constraint.toString() + "%\" desc";
-            return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
+            return null;
+            /*return AppContext.getDbDiary().getDb().query("food",asColumnsToResult,
                     "usr > 0 AND food_name like ?",
-                    new String[]{value},null,null,orderBySearch);
+                    new String[]{value},null,null,orderBySearch);*/
         }
     }
 

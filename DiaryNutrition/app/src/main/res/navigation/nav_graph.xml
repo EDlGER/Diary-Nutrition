@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/nav_diary">
+
+    <fragment
+        android:id="@+id/nav_diary"
+        android:name="ediger.diarynutrition.diary.DiaryFragment"
+        android:label="@string/title_diary"
+        tools:layout="@layout/fragment_diary">
+        <action
+            android:id="@+id/action_diary_to_add_water_dialog"
+            app:destination="@+id/nav_dialog_water"/>
+        <action
+            android:id="@+id/action_diary_to_add_weight_dialog"
+            app:destination="@+id/nav_dialog_weight"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_weight"
+        android:name="ediger.diarynutrition.weight.WeightFragment"
+        android:label="@string/title_weight"
+        tools:layout="@layout/fragment_weight">
+        <action
+            android:id="@+id/action_weight_to_action_add_weight_dialog"
+            app:destination="@+id/nav_dialog_weight"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_summary"
+        android:name="ediger.diarynutrition.summary.SummaryFragment"
+        android:label="@string/title_summary"
+        tools:layout="@layout/fragment_summary_main"/>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="ediger.diarynutrition.settings.SettingsFragment"
+        android:label="@string/title_settings" />
+
+    <fragment
+        android:id="@+id/nav_premium"
+        android:name="ediger.diarynutrition.BillingFragment"
+        android:label="@string/title_premium"
+        tools:layout="@layout/fragment_billing"/>
+
+    <deepLink
+        app:uri="http://play.google.com/store/apps/details?id=diarynutrition">
+
+    </deepLink>
+
+    <dialog
+        android:id="@+id/nav_dialog_water"
+        android:name="ediger.diarynutrition.diary.water.AddWaterDialog"
+        android:label="@string/dialog_title_water"
+        tools:layout="@layout/dialog_add_water">
+        <argument
+            android:name="date"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_weight"
+        android:name="ediger.diarynutrition.weight.AddWeightDialog"
+        android:label="@string/dialog_weight"
+        tools:layout="@layout/dialog_add_weight">
+        <argument
+            android:name="date"
+            android:defaultValue="0L"
+            app:argType="long"/>
+
+    </dialog>
+
+</navigation>

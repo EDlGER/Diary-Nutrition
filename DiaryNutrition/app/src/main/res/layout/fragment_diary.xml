@@ -1,237 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/contentFrame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:id="@+id/expansion_view"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="isRemaining" type="boolean" />
+        <variable
+            name="goal"
+            type="ediger.diarynutrition.data.source.entities.Summary" />
+        <variable
+            name="actual"
+            type="ediger.diarynutrition.data.source.entities.Summary" />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
-    <LinearLayout
-        android:id="@+id/header_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        android:elevation="5dp">
-
-        <RelativeLayout
-            android:id="@+id/consume_layout"
+        <com.github.sundeepk.compactcalendarview.CompactCalendarView
+            android:id="@+id/calendar_view"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="2dp"
-            android:background="@drawable/diary_header"
-            android:elevation="7dp">
+            android:layout_height="0dp"
+            android:fitsSystemWindows="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:elevation="5dp"
+            app:compactCalendarBackgroundColor="@color/colorPrimary"
+            app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
+            app:compactCalendarTargetHeight="250dp"
+            app:compactCalendarTextColor="@color/toolbar_text"
+            app:compactCalendarTextSize="12sp" />
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginRight="4dp"
-                android:layout_alignParentRight="true">
-
-                <TextView
-                    android:id="@+id/consCal"
-                    android:layout_width="44dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="9999"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:singleLine="true" />
-
-                <info.abdolahi.CircularMusicProgressBar
-                    android:id="@+id/pb_cal"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/background_material_2"
-                    app:border_color="#bdbdbd"
-                    app:border_width="2dp"
-                    app:centercircle_diammterer="0"
-                    app:progress_color="@color/colorAccentPressed"
-                    app:progress_startAngle="270" />
-
-            </FrameLayout>
-
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="66dp"
-                android:layout_marginTop="6dp"
-                android:layout_alignParentRight="true">
-
-                <TextView
-                    android:id="@+id/consCarbo"
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="999"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:singleLine="true" />
-
-                <info.abdolahi.CircularMusicProgressBar
-                    android:id="@+id/pb_carbo"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/background_material_2"
-                    app:border_color="#bdbdbd"
-                    app:border_width="2dp"
-                    app:centercircle_diammterer="0"
-                    app:progress_color="@color/colorAccentPressed"
-                    app:progress_startAngle="270" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="116dp"
-                android:layout_marginTop="6dp"
-                android:layout_alignParentRight="true">
-
-                <TextView
-                    android:id="@+id/consFat"
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="999"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:singleLine="true" />
-
-                <info.abdolahi.CircularMusicProgressBar
-                    android:id="@+id/pb_fat"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/background_material_2"
-                    app:border_color="#bdbdbd"
-                    app:border_width="2dp"
-                    app:centercircle_diammterer="0"
-                    app:progress_color="@color/colorAccentPressed"
-                    app:progress_startAngle="270" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="166dp"
-                android:layout_marginTop="6dp"
-                android:layout_alignParentRight="true">
-
-                <TextView
-                    android:id="@+id/consProt"
-                    android:layout_width="36dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="999"
-                    android:textSize="14sp"
-                    android:singleLine="true"
-                    android:gravity="center" />
-
-                <info.abdolahi.CircularMusicProgressBar
-                    android:id="@+id/pb_prot"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/background_material_2"
-                    app:border_color="#bdbdbd"
-                    app:border_width="2dp"
-                    app:centercircle_diammterer="0"
-                    app:progress_color="@color/colorAccentPressed"
-                    app:progress_startAngle="270" />
-
-            </FrameLayout>
-
-            <TextSwitcher
-                android:id="@+id/headerSwitcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="12dp"
-                android:layout_centerVertical="true" />
-
-        </RelativeLayout>
-
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/linearLayout"
+        <View
+            android:id="@+id/expansion_view"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:orientation="horizontal"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp" />
+
+        <LinearLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:background="@color/colorPrimary"
-            android:gravity="right">
+            android:elevation="5dp"
+            android:layout_below="@id/calendar_view"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/info_prot"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="18dp"
-                android:text="@string/record_prot"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal" />
+            <RelativeLayout
+                android:id="@+id/consume_layout"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/diary_header"
+                android:elevation="7dp">
 
-            <TextView
-                android:id="@+id/info_fat"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="18dp"
-                android:text="@string/record_fat"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_alignParentRight="true">
 
-            <TextView
-                android:id="@+id/info_carbo"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="32dp"
-                android:text="@string/record_carbo"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
+                    <TextView
+                        android:id="@+id/txt_cons_cal"
+                        android:layout_width="44dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{isRemaining ? String.valueOf((int)goal.cal - (int)actual.cal) : String.valueOf((int)actual.cal)}"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:singleLine="true" />
 
-            <TextView
-                android:id="@+id/info_cal"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:text="@string/record_cal"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
+                    <info.abdolahi.CircularMusicProgressBar
+                        android:id="@+id/pb_cal"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/background_material_2"
+                        android:value="@{actual.cal * 100 / goal.cal}"
+                        app:border_color="#bdbdbd"
+                        app:border_width="2dp"
+                        app:centercircle_diammterer="0"
+                        app:progress_color="@color/colorAccentPressed"
+                        app:progress_startAngle="270" />
+
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="66dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:id="@+id/txt_cons_carbo"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{isRemaining ? String.valueOf((int)goal.carbo - (int)actual.carbo) : String.valueOf((int)actual.carbo)}"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:singleLine="true" />
+
+                    <info.abdolahi.CircularMusicProgressBar
+                        android:id="@+id/pb_carbo"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/background_material_2"
+                        android:value="@{actual.carbo * 100 / goal.carbo}"
+                        app:border_color="#bdbdbd"
+                        app:border_width="2dp"
+                        app:centercircle_diammterer="0"
+                        app:progress_color="@color/colorAccentPressed"
+                        app:progress_startAngle="270" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="116dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:id="@+id/txt_cons_fat"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{isRemaining ? String.valueOf((int)goal.fat - (int)actual.fat) : String.valueOf((int)actual.fat)}"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:singleLine="true" />
+
+                    <info.abdolahi.CircularMusicProgressBar
+                        android:id="@+id/pb_fat"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/background_material_2"
+                        android:value="@{actual.fat * 100 / goal.fat}"
+                        app:border_color="#bdbdbd"
+                        app:border_width="2dp"
+                        app:centercircle_diammterer="0"
+                        app:progress_color="@color/colorAccentPressed"
+                        app:progress_startAngle="270" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_prot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="166dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_alignParentRight="true">
+
+                    <TextView
+                        android:id="@+id/txt_cons_prot"
+                        android:layout_width="36dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{isRemaining ? String.valueOf((int)goal.prot - (int)actual.prot) : String.valueOf((int)actual.prot)}"
+                        android:textSize="14sp"
+                        android:singleLine="true"
+                        android:gravity="center" />
+
+                    <info.abdolahi.CircularMusicProgressBar
+                        android:id="@+id/pb_prot"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/background_material_2"
+                        android:value="@{actual.prot * 100 / goal.prot}"
+                        app:border_color="#bdbdbd"
+                        app:border_width="2dp"
+                        app:centercircle_diammterer="0"
+                        app:progress_color="@color/colorAccentPressed"
+                        app:progress_startAngle="270" />
+
+                </FrameLayout>
+
+                <TextSwitcher
+                    android:id="@+id/txt_sw_consume"
+                    android:text="@{isRemaining ? @string/diary_header_remain : @string/diary_header_total}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginEnd="232dp"
+                    android:layout_marginRight="232dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:orientation="horizontal"
+                android:background="@color/colorPrimary"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/info_prot"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="18dp"
+                    android:text="@string/record_prot"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/info_fat"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="18dp"
+                    android:text="@string/record_fat"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/info_carbo"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="32dp"
+                    android:text="@string/record_carbo"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/info_cal"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/record_cal"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_records"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/header_layout"
+            android:background="@color/listview_background"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/bottom_offset_dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_records"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/header_layout"
-        android:background="@color/listview_background"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/bottom_offset_dp"/>
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            app:fab_addButtonColorNormal="@color/colorAccent"
+            app:fab_addButtonColorPressed="@color/colorAccentPressed"
+            app:fab_addButtonPlusIconColor="@android:color/white"
+            app:fab_labelStyle="@style/menu_labels_style">
 
-</RelativeLayout>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccentPressed"
+                app:fab_icon="@drawable/ic_scale_white"
+                app:fab_title="@string/menu_action_weight" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_water"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccentPressed"
+                app:fab_icon="@drawable/ic_water_white"
+                app:fab_title="@string/menu_action_water" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_action_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/colorAccent"
+                app:fab_colorPressed="@color/colorAccentPressed"
+                app:fab_icon="@drawable/ic_food_menu_white"
+                app:fab_title="@string/menu_action_food" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+</layout>

@@ -25,14 +25,14 @@
     <string name="menu_action_water">Water</string>
     <string name="menu_action_switch">Remaining/Total</string>
 
-    <string name="title_sec1">Diary</string>
-    <string name="title_sec2">Settings</string>
-    <string name="title_sec3">Weight</string>
-    <string name="title_sec4">Summary</string>
-    <string name="title_sec5">Rate app</string>
-    <string name="title_sec6">Remove ads</string>
-    <string name="tittle_search">Food search</string>
-    <string name="title_activity_program">Nutrition program</string>
+    <string name="title_diary">Diary</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_weight">Weight</string>
+    <string name="title_summary">Summary</string>
+    <string name="title_rate">Rate app</string>
+    <string name="title_premium">Remove ads</string>
+    <string name="title_search">Food search</string>
+    <string name="title_program">Nutrition program</string>
 
     <string name="card_button_more">View more</string>
 
@@ -73,10 +73,10 @@
     <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>
     <string name="dialog_change_date">Select</string>
-    <string name="dialog_tittle_date">Select date</string>
-    <string name="dialog_tittle_change">Food change</string>
-    <string name="dialog_tittle_f">Adding food</string>
-    <string name="dialog_tittle_w">Type your weight, kg</string>
+    <string name="dialog_title_date">Select date</string>
+    <string name="dialog_title_change">Food change</string>
+    <string name="dialog_title_f">Adding food</string>
+    <string name="dialog_title_w">Type your weight, kg</string>
     <string name="dialog_title_c">Enter the goal calories</string>
     <string name="dialog_title_water_edit">Enter the goal amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
@@ -85,6 +85,8 @@
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_name_f">Food name</string>
     <string name="dialog_weight">Weight</string>
+    <string name="dialog_weight_add">Add weight</string>
+    <string name="dialog_date">Date</string>
     <string name="dialog_change">Change</string>
     <string name="dialog_amount_water">Amount, ml</string>
     <string name="dialog_ml">ml</string>
@@ -94,16 +96,14 @@
     <string name="dialog_water_value4" translatable="false">1000</string>
     <string name="dialog_water_help">Hold to change values</string>
 
-    <string name="empty_list_weight">Add current weight</string>
-    <string name="empty_list_food">No food added</string>
-    <string name="empty_list_favor">No favorites food</string>
-
     <string name="context_menu_del">Delete</string>
     <string name="context_menu_change">Change</string>
     <string name="context_menu_favor">To favorite</string>
     <string name="context_menu_favor_del">Remove</string>
     <string name="context_menu_copy">Copy</string>
     <string name="context_menu_paste">Paste</string>
+
+    <string name="calendar">Calendar</string>
 
     <string name="pref_title_user">Personal data</string>
     <string name="pref_title_program">Nutrition program</string>
@@ -129,6 +129,7 @@
     <string name="intro_gender">Choose gender</string>
     <string name="intro_birthday">Birthday</string>
     <string name="intro_height">Height, cm</string>
+    <string name="intro_height_default" translatable="false">170</string>
     <string name="intro_height_error">Type your height</string>
     <string name="intro_weight">Weight, kg</string>
     <string name="intro_weight_error">Type your weight</string>
@@ -145,7 +146,7 @@
     <string name="intro_nutrition_cal">kcal</string>
     <string name="intro_nutrition_consume">You should consume</string>
     <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
-    <string name="intro_nutrition_info">You can change this values in settings</string>
+    <string name="intro_nutrition_info">You can change these values in settings</string>
 
     <string name="macronutrients">Macronutrients</string>
     <string name="water">Water</string>
@@ -200,7 +201,7 @@
     <string name="add_food">Add food</string>
     <string name="add_food_more">Add more food</string>
 
-    <string name="elv_gram"> g</string>
+    <string name="diary_list_gram">%dg</string>
     <string name="percent" translatable="false">%</string>
 
     <string name="macro_cal">Calories</string>
@@ -294,5 +295,8 @@
         <item>Month</item>
         <item>Two months</item>
     </string-array>
+    <string name="empty_list_weight">Add current weight</string>
+    <string name="empty_list_food">No food added</string>
+    <string name="empty_list_favor">No favorite food</string>
 
 </resources>

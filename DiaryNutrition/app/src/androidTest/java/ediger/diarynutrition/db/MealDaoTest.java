@@ -13,9 +13,9 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import ediger.diarynutrition.LiveDataTestUtil;
-import ediger.diarynutrition.data.DiaryDatabase;
-import ediger.diarynutrition.data.Meal;
-import ediger.diarynutrition.data.dao.MealDao;
+import ediger.diarynutrition.data.source.DiaryDatabase;
+import ediger.diarynutrition.data.source.entities.Meal;
+import ediger.diarynutrition.data.source.dao.MealDao;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -86,7 +86,7 @@ public class MealDaoTest {
         assertMeal(meals.get(1), MEAL2.getName());
     }
 
-    private void assertMeal(Meal meal, String name) {
+    static void assertMeal(Meal meal, String name) {
         assertThat(meal, notNullValue());
         assertThat(meal.getName(), is(name));
     }
