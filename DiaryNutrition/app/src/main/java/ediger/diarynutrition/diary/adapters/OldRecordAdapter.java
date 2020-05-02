@@ -138,7 +138,7 @@ public class OldRecordAdapter extends CursorTreeRecyclerAdapter<OldRecordAdapter
             c.moveToFirst();
 
             String serv = c.getString(c.getColumnIndex(DbDiary.ALIAS_SERVING))
-                    + mContext.getString(R.string.diary_list_gram);
+                    + mContext.getString(R.string.gram);
             int cal = (int) c.getFloat(c.getColumnIndex(DbDiary.ALIAS_CAL));
             String prot = String.format(Locale.getDefault(), "%.1f",
                     c.getFloat(c.getColumnIndex(DbDiary.ALIAS_PROT)));
@@ -230,7 +230,7 @@ public class OldRecordAdapter extends CursorTreeRecyclerAdapter<OldRecordAdapter
         holder.mFat.setText(fat);
 
         holder.mServing.setText(cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_SERVING))
-                + mContext.getString(R.string.diary_list_gram));
+                + mContext.getString(R.string.gram));
 
         long dateTime = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_RECORD_DATETIME));
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));

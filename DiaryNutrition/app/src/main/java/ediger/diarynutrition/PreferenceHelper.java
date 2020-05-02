@@ -7,17 +7,21 @@ import androidx.preference.PreferenceManager;
 
 public class PreferenceHelper {
 
+    //String
     public static final String KEY_GENDER = "gender";
     public static final String KEY_BIRTHDAY = "birthday";
     public static final String KEY_HEIGHT = "height";
     public static final String KEY_PURPOSE = "purpose";
-    public static final String KEY_WEIGHT = "weight";
     public static final String KEY_ACTIVITY = "activity";
 
+    //Float
+    public static final String KEY_WEIGHT = "weight";
     public static final String KEY_PROGRAM_CAL = "calories";
     public static final String KEY_PROGRAM_PROT = "prot";
     public static final String KEY_PROGRAM_FAT = "fat";
     public static final String KEY_PROGRAM_CARBO = "carbo";
+
+    //Integer
     public static final String KEY_PROGRAM_PROT_PERCENT = "prot_pers";
     public static final String KEY_PROGRAM_FAT_PERCENT = "fat_percs";
     public static final String KEY_PROGRAM_CARBO_PERCENT = "carbo_pers";

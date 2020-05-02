@@ -118,7 +118,7 @@
 
     <string name="add_food">Добавить продукт</string>
 
-    <string name="diary_list_gram">%dг</string>
+    <string name="gram">%dг</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

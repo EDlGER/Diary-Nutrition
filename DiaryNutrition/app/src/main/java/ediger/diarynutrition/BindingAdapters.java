@@ -3,7 +3,8 @@ package ediger.diarynutrition;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextSwitcher;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
@@ -38,4 +39,24 @@ public class BindingAdapters {
         ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
     }
 
+    @BindingAdapter("show")
+    public static void show(TextView textView, boolean shouldShow) {
+        if (textView.getVisibility() == View.VISIBLE && shouldShow) {
+            return;
+        }
+        Animation animation;
+        if (shouldShow) {
+            textView.setVisibility(View.VISIBLE);
+            animation = new TranslateAnimation(0, 0, 300, 0);
+            animation.setDuration(1000);
+            animation.setFillAfter(true);
+            textView.startAnimation(animation);
+        } else {
+            animation = new TranslateAnimation(0, 0, 0, 300);
+            animation.setDuration(1000);
+            animation.setFillAfter(true);
+            textView.startAnimation(animation);
+            textView.setVisibility(View.INVISIBLE);
+        }
+    }
 }

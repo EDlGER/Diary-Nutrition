@@ -27,7 +27,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
     private LifecycleOwner mLifecycleOwner;
     private View.OnClickListener mOnClickListener;
 
-    ListRecordFooterBinding mBinding;
+    private ListRecordFooterBinding mBinding;
 
     public WaterFooterAdapter(RecyclerView.Adapter adapter, LifecycleOwner lifecycleOwner, DiaryViewModel viewModel,
                               View.OnClickListener onClickListener) {
@@ -55,17 +55,13 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
 
     }
 
-    //TODO Footer
     @Override
     public void onBindFooterItemViewHolder(@NonNull FooterViewHolder holder, int localPosition) {
-//        int goal = PreferenceHelper.getValue(KEY_PROGRAM_WATER, Integer.class, 1);
-//        holder.binding.setGoal(goal);
         holder.binding.setLifecycleOwner(mLifecycleOwner);
         holder.binding.setViewModel(mViewModel);
         holder.binding.cardWater.setOnClickListener(mOnClickListener);
         holder.binding.executePendingBindings();
 
-        // TODO: -----------------
         mLifecycleOwner.getLifecycle().addObserver(this);
     }
 

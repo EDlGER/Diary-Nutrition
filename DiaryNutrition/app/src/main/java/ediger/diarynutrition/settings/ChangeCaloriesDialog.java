@@ -32,13 +32,13 @@ public class ChangeCaloriesDialog extends DialogFragment {
         builder.setPositiveButton(R.string.dialog_change, (dialog, which) -> {
                     Toast toast;
 
-                    if (changeCal.getText().toString().equals("") ||
-                            changeCal.getText().toString().startsWith("0")) {
+                    if (changeCal.getText().toString().equals("")
+                            || changeCal.getText().toString().startsWith("0")) {
                         toast = Toast.makeText(requireContext(),
                                 getString(R.string.message_dialog_cal), Toast.LENGTH_SHORT);
                         toast.show();
                     } else {
-                        int cal = Integer.parseInt(changeCal.getText().toString());
+                        float cal = Float.parseFloat(changeCal.getText().toString());
                         PreferenceHelper.setValue(PreferenceHelper.KEY_PROGRAM_CAL, cal);
                     }
                 });

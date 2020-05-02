@@ -40,7 +40,7 @@ public class SummaryViewModel extends AndroidViewModel {
         mWater.addSource(mSinceDate, date -> mWater.setValue(mRepository.getWaterSummary(date, mNumOfDays)));
     }
 
-    public  LiveData<List<Summary>> getSummary() {
+    public LiveData<List<Summary>> getSummary() {
         return mSummary;
     }
 

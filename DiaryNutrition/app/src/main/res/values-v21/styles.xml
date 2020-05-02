@@ -12,4 +12,17 @@
         <item name="android:elevation">@dimen/list_item_elevation</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/DialogButton</item>
+        <item name="android:background">@color/dialog_background</item>
+    </style>
+
+    <style name="DialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="rippleColor">@color/colorPrimaryLight</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:backgroundTint">@color/dialog_background</item>
+    </style>
+
 </resources>

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -45,12 +46,12 @@ public class AddWeightDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogStyle);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.DialogStyle);
 
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_add_weight, null);
-
         builder.setView(root);
         builder.setTitle(getString(R.string.dialog_title_w));
+
 
         mEdWeight = root.findViewById(R.id.ed_weight);
         mEdDate = root.findViewById(R.id.ed_date);

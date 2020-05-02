@@ -12,7 +12,10 @@
         android:id="@+id/inputLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        app:boxStrokeColor="@color/colorAccent">
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        app:boxStrokeColor="@color/colorAccent"
+        app:hintTextColor="@color/colorAccent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit"
@@ -21,7 +24,7 @@
             android:ems="8"
             android:maxLength="4"
             android:textSize="22sp"
-            android:inputType="number" />
+            android:inputType="number"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

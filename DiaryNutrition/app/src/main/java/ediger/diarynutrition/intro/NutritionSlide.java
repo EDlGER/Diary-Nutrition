@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
-import ediger.diarynutrition.NutritionProgramManager;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.databinding.FragmentIntroNutritionBinding;
+import ediger.diarynutrition.util.NutritionProgramUtils;
+
 import static ediger.diarynutrition.PreferenceHelper.*;
 
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
@@ -31,7 +32,6 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     private int protPercent;
     private int fatPercent;
     private int carboPercent;
-    private int water;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,39 +40,12 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
         return mBinding.getRoot();
     }
 
-    private void calculateProgram() {
-        NutritionProgramManager nutrition = NutritionProgramManager.getInstance();
-        nutrition.updateProgram();
-        cal = nutrition.getCal();
-        prot = nutrition.getProt();
-        fat = nutrition.getFat();
-        carbo = nutrition.getCarbo();
-        protPercent = nutrition.getProtPercent();
-        fatPercent = nutrition.getFatPercent();
-        carboPercent = nutrition.getCarboPercent();
-        water = nutrition.getWater();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        savePreference();
-    }
-
-    private void savePreference() {
-        PreferenceHelper.setValue(KEY_PROGRAM_CAL, cal);
-        PreferenceHelper.setValue(KEY_PROGRAM_PROT, prot);
-        PreferenceHelper.setValue(KEY_PROGRAM_FAT, fat);
-        PreferenceHelper.setValue(KEY_PROGRAM_CARBO, carbo);
-        PreferenceHelper.setValue(KEY_PROGRAM_PROT_PERCENT, protPercent);
-        PreferenceHelper.setValue(KEY_PROGRAM_FAT_PERCENT, fatPercent);
-        PreferenceHelper.setValue(KEY_PROGRAM_CARBO_PERCENT, carboPercent);
-        PreferenceHelper.setValue(KEY_PROGRAM_WATER, water);
-    }
-
     @Override
     public void onSlideSelected() {
-        calculateProgram();
+
+        NutritionProgramUtils.setToDefault();
+        initValues();
+
         mBinding.txtCal.setText(String.valueOf((int) cal));
 
         mBinding.txtProtPercent.setText(String.format(Locale.getDefault(), "%d%%", protPercent));
@@ -87,6 +60,16 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     @Override
     public void onSlideDeselected() {
 
+    }
+
+    private void initValues() {
+        cal = PreferenceHelper.getValue(KEY_PROGRAM_CAL, Float.class, 0f);
+        prot = PreferenceHelper.getValue(KEY_PROGRAM_PROT, Float.class, 0f);
+        fat = PreferenceHelper.getValue(KEY_PROGRAM_FAT, Float.class, 0f);
+        carbo = PreferenceHelper.getValue(KEY_PROGRAM_CARBO, Float.class, 0f);
+        protPercent = PreferenceHelper.getValue(KEY_PROGRAM_PROT_PERCENT, Integer.class, 0);
+        fatPercent = PreferenceHelper.getValue(KEY_PROGRAM_FAT_PERCENT, Integer.class, 0);
+        carboPercent = PreferenceHelper.getValue(KEY_PROGRAM_CARBO_PERCENT, Integer.class, 0);
     }
 
 }

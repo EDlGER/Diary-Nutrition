@@ -135,7 +135,7 @@
                 android:layout_alignLeft="@+id/txt_food_name"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
-                android:text="@{String.format(@string/diary_list_gram, record.serving)}"
+                android:text="@{String.format(@string/gram, record.serving)}"
                 android:textColor="@color/listview_second_text"
                 android:textSize="14sp" />
 

@@ -77,8 +77,8 @@
     <string name="dialog_title_change">Food change</string>
     <string name="dialog_title_f">Adding food</string>
     <string name="dialog_title_w">Type your weight, kg</string>
-    <string name="dialog_title_c">Enter the goal calories</string>
-    <string name="dialog_title_water_edit">Enter the goal amount of water, ml</string>
+    <string name="dialog_title_c">Enter calories</string>
+    <string name="dialog_title_water_edit">Enter amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
     <string name="dialog_title_water">Adding water</string>
     <string name="dialog_add_f">Add</string>
@@ -154,8 +154,8 @@
     <string name="message_backpress">Press back again to exit</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_program_perc">Amount of percent must be equal 100</string>
-    <string name="message_program_gram">Amount of calories and ratio of PFC will change while editing of macronutrients</string>
-    <string name="message_program_null">Amount of macro must be above zero</string>
+    <string name="message_program_gram">Calories amount and PFC ratio will change while editing of macronutrients</string>
+    <string name="message_program_null">Macronutrients amount must be above zero</string>
     <string name="message_favorite">Added to favorite</string>
     <string name="message_food_del">Product will not appear next time</string>
     <string name="message_dialog_food_empty">Not all fields are filled</string>
@@ -201,8 +201,8 @@
     <string name="add_food">Add food</string>
     <string name="add_food_more">Add more food</string>
 
-    <string name="diary_list_gram">%dg</string>
-    <string name="percent" translatable="false">%</string>
+    <string name="gram">%dg</string>
+    <string name="percent" translatable="false">%d%%</string>
 
     <string name="macro_cal">Calories</string>
     <string name="macro_carbo">Carbohydrates</string>

@@ -94,6 +94,13 @@ public class DiaryFragment extends Fragment implements
     //Header
     private boolean isRemaining = true;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mViewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,13 +126,11 @@ public class DiaryFragment extends Fragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
-
         //Recycler
-        mViewModel.getRecords().observe(this, records -> mRecordAdapter.setRecordList(records));
+        mViewModel.getRecords().observe(getViewLifecycleOwner(), records -> mRecordAdapter.setRecordList(records));
 
         //Header
-        mViewModel.getDaySummary().observe(this, summary -> mBinding.setActual(summary));
+        mViewModel.getDaySummary().observe(getViewLifecycleOwner(), summary -> mBinding.setActual(summary));
 
         //Snackbar
         mViewModel.getSnackbarMessage().observe(this,

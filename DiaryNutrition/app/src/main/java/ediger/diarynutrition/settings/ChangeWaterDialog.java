@@ -33,8 +33,8 @@ public class ChangeWaterDialog extends DialogFragment {
         builder.setPositiveButton(R.string.dialog_change, (dialog, which) -> {
                     Toast toast;
 
-                    if (changeWater.getText().toString().equals("") ||
-                            changeWater.getText().toString().startsWith("0")) {
+                    if (changeWater.getText().toString().equals("")
+                            || changeWater.getText().toString().startsWith("0")) {
                         toast = Toast.makeText(requireContext(),
                                 getString(R.string.message_dialog_water),
                                 Toast.LENGTH_SHORT);

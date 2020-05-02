@@ -26,34 +26,27 @@ import java.util.Locale;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import ediger.diarynutrition.MainActivity;
-import ediger.diarynutrition.NutritionProgramManager;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.DatabaseCopier;
 import ediger.diarynutrition.intro.PolicyActivity;
 import ediger.diarynutrition.AppContext;
+import ediger.diarynutrition.util.NutritionProgramUtils;
 
 import static ediger.diarynutrition.PreferenceHelper.*;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener {
 
-//    public static final String KEY_PREF_GENDER = "gender";
-//    public static final String KEY_PREF_BIRTHDAY = "birthday";
-//    public static final String KEY_PREF_HEIGHT = "height";
-//    public static final String KEY_PREF_ACTIVITY = "activity";
-//    public static final String KEY_PREF_PURPOSE = "purpose";
-//    public static final String KEY_PREF_CALORIES = "calories";
-//    public static final String KEY_PREF_WATER = "water";
-    public static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
-    public static final String KEY_PREF_PROGRAM_RESET = "program_reset";
-//    public static final String KEY_PREF_UI_WATER_CARD = "water_card";
     public static final String KEY_PREF_UI_DEFAULT_TAB = "default_tab";
     public static final String KEY_PREF_DATA_LANGUAGE= "data_language";
     public static final String KEY_PREF_DATA_PATH = "data_path";
     public static final String KEY_PREF_DATA_BACKUP = "data_backup";
     public static final String KEY_PREF_DATA_RESTORE = "data_restore";
     public static final String KEY_PREF_POLICY = "policy";
+
+    private static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
+    private static final String KEY_PREF_PROGRAM_RESET = "program_reset";
 
     private static final int REQ_WRITE_STORAGE = 112;
 
@@ -83,7 +76,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Preference caloriesPref = findPreference(KEY_PROGRAM_CAL);
         caloriesPref.setSummary(String.valueOf((int) cal));
         caloriesPref.setOnPreferenceClickListener(preference -> {
-            new ChangeCaloriesDialog().show(requireFragmentManager(), null);
+            new ChangeCaloriesDialog().show(getParentFragmentManager(), null);
             return false;
         });
 
@@ -91,9 +84,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         waterPref.setSummary(String.valueOf(PreferenceHelper.getValue(
                 KEY_PROGRAM_WATER,
                 Integer.class,
-                NutritionProgramManager.getInstance().getDefaultWater())));
+                NutritionProgramUtils.getDefaultWater()
+        )));
         waterPref.setOnPreferenceClickListener(preference -> {
-            new ChangeWaterDialog().show(requireFragmentManager(), null);
+            new ChangeWaterDialog().show(getParentFragmentManager(), null);
             return false;
         });
 
@@ -105,7 +99,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Preference resetProgram = findPreference(KEY_PREF_PROGRAM_RESET);
         resetProgram.setOnPreferenceClickListener(preference -> {
-            NutritionProgramManager.getInstance().updateProgram();
+            NutritionProgramUtils.setToDefault();
             return false;
         });
 
@@ -167,7 +161,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 startActivity(intent);
                 Toast.makeText(requireActivity(), "Now app can write", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(requireActivity(), "The app not allowed to write to your storage",
+                Toast.makeText(requireActivity(), "The app is not allowed to write to your storage",
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -179,7 +173,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 key.equals(KEY_ACTIVITY) || key.equals(KEY_PURPOSE)) {
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
-            NutritionProgramManager.getInstance().updateProgram();
+            NutritionProgramUtils.setToDefault();
         }
         if (key.equals(KEY_PREF_UI_DEFAULT_TAB)) {
             Preference listPref = findPreference(key);
@@ -200,25 +194,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             date.setTime(sharedPreferences.getLong(key, 0L));
 
             birthdayPref.setSummary(dateFormat.format(date));
-            NutritionProgramManager.getInstance().updateProgram();
+            NutritionProgramUtils.setToDefault();
         }
         if (key.equals(KEY_HEIGHT)) {
             Preference heightPref = findPreference(key);
             heightPref.setSummary(sharedPreferences.getString(key, ""));
-            NutritionProgramManager.getInstance().updateProgram();
+            NutritionProgramUtils.setToDefault();
         }
 
         if (key.equals(KEY_PROGRAM_CAL)) {
             Preference caloriesPref = findPreference(key);
-            caloriesPref.setSummary(String.valueOf(sharedPreferences.getFloat(key, 1f)));
-            calculateUserProgram();
+            caloriesPref.setSummary(
+                    String.valueOf((int) sharedPreferences.getFloat(key, 1f))
+            );
+            NutritionProgramUtils.update();
         }
 
         if (key.equals(KEY_PROGRAM_WATER)) {
             Preference waterPref = findPreference(key);
-            waterPref.setSummary(String.valueOf(sharedPreferences.getInt(
-                    key,
-                    NutritionProgramManager.getInstance().getDefaultWater())));
+            waterPref.setSummary(
+                    String.valueOf(sharedPreferences.getInt(key, NutritionProgramUtils.getDefaultWater()))
+            );
         }
     }
 
@@ -237,18 +233,4 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 birthday.get(Calendar.DAY_OF_MONTH)).show();
 
     }
-
-    // TODO: move from View
-    private void calculateUserProgram() {
-        int cal = PreferenceHelper.getValue(KEY_PROGRAM_CAL, Integer.class, 1);
-
-        float prot = (float) NutritionProgramManager.getInstance().getProtPercent() / 100 * (float) cal / 4;
-        float fat = (float) NutritionProgramManager.getInstance().getFatPercent() / 100 * (float) cal / 9;
-        float carbo = (float) NutritionProgramManager.getInstance().getCarboPercent() / 100 * (float) cal /4;
-
-        PreferenceHelper.setValue(KEY_PROGRAM_PROT, prot);
-        PreferenceHelper.setValue(KEY_PROGRAM_FAT, fat);
-        PreferenceHelper.setValue(KEY_PROGRAM_PROT, carbo);
-    }
-
 }
