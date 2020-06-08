@@ -53,7 +53,7 @@ public class AddFoodDialog extends DialogFragment {
                                     Toast.LENGTH_SHORT);
                             toast.show();
                         } else {
-                            AppContext.getDbDiary().addFood(txtNameF.getText().toString(),
+                            AppContext.Companion.getDbDiary().addFood(txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
                                     Float.parseFloat(txtCarboF.getText().toString()),
                                     Float.parseFloat(txtProtF.getText().toString()),

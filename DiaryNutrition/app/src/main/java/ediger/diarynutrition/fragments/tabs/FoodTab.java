@@ -73,8 +73,8 @@ public class FoodTab extends Fragment implements
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
         //Данные для адаптера
-        cursor = AppContext.getDbDiary().getUserFood();
-        from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.Companion.getDbDiary().getUserFood();
+        from = AppContext.Companion.getDbDiary().getListFood();
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
 
@@ -116,8 +116,8 @@ public class FoodTab extends Fragment implements
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODE_ADD_FOOD || requestCode == REQ_CODE_CHANGE){
-            cursor = AppContext.getDbDiary().getUserFood();
-            from = AppContext.getDbDiary().getListFood();
+            cursor = AppContext.Companion.getDbDiary().getUserFood();
+            from = AppContext.Companion.getDbDiary().getListFood();
             foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
             listFood.setAdapter(foodAdapter);
             listFood.setTextFilterEnabled(true);
@@ -146,8 +146,8 @@ public class FoodTab extends Fragment implements
         super.onResume();
         hideKeyboard();
 
-        cursor = AppContext.getDbDiary().getUserFood();
-        from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.Companion.getDbDiary().getUserFood();
+        from = AppContext.Companion.getDbDiary().getListFood();
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
@@ -162,7 +162,7 @@ public class FoodTab extends Fragment implements
 
     //Поиск по введенным буквам
     public Cursor getFilterList(CharSequence constraint) {
-        String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
+        String[] asColumnsToResult = AppContext.Companion.getDbDiary().getFilterFood();
         String selections = "usr > 0";
         String orderBy = "food_name asc";
 
@@ -256,7 +256,7 @@ public class FoodTab extends Fragment implements
         if(item.getItemId() == 2) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
-            AppContext.getDbDiary().delFood(acmi.id);
+            AppContext.Companion.getDbDiary().delFood(acmi.id);
             getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
@@ -264,7 +264,7 @@ public class FoodTab extends Fragment implements
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
 
-            AppContext.getDbDiary().setFavor(acmi.id,1);
+            AppContext.Companion.getDbDiary().setFavor(acmi.id,1);
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
             snackbar.show();
@@ -284,7 +284,7 @@ public class FoodTab extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new MyCursorLoader(getActivity(),AppContext.getDbDiary());
+        return new MyCursorLoader(getActivity(),AppContext.Companion.getDbDiary());
     }
 
     @Override

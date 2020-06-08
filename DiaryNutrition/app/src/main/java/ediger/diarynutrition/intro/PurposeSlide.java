@@ -40,8 +40,10 @@ public class PurposeSlide extends Fragment implements ISlidePolicy, ISlideSelect
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_intro_purpose, container, false);
 
-        mViewModel = new WeightViewModel(AppContext.getInstance());
-
+        //TODO: Test new access to AppContext
+        //mViewModel = new WeightViewModel(AppContext.getInstance());
+        mViewModel = new WeightViewModel((AppContext) requireContext().getApplicationContext());
+        
         mBinding.rgPurpose.setOnCheckedChangeListener((group, checkedId) -> {
             AppCompatRadioButton checkedButton = mBinding.rgPurpose.findViewById(checkedId);
             purposeId = mBinding.rgPurpose.indexOfChild(checkedButton) + 1;

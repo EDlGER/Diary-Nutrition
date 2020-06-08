@@ -28,4 +28,6 @@ public interface MealDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMeal(Meal meal);
 
+    //get and set user field
+
 }

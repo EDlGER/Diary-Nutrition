@@ -70,20 +70,20 @@ public class RecordAdapter extends AbstractExpandableItemAdapter<
     @Override
     public void onBindGroupViewHolder(@NonNull GroupViewHolder holder, int groupPosition, int viewType) {
         holder.binding.container.setOnCreateContextMenuListener(mOnCreateContextMenuListener);
-        holder.binding.setMeal(mRecords.get(groupPosition).meal);
+        holder.binding.setMeal(mRecords.get(groupPosition).getMeal());
 
         int cal = 0;
         float prot = 0;
         float fat = 0;
         float carbo = 0;
 
-        List<RecordAndFood> records = mRecords.get(groupPosition).records;
+        List<RecordAndFood> records = mRecords.get(groupPosition).getRecords();
 
         for (RecordAndFood record : records) {
-            cal += record.food.getCal();
-            prot += record.food.getProt();
-            fat += record.food.getFat();
-            carbo += record.food.getCarbo();
+            cal += record.getFood().getCal();
+            prot += record.getFood().getProt();
+            fat += record.getFood().getFat();
+            carbo += record.getFood().getCarbo();
         }
         Food food = new Food("", cal, prot, fat, carbo);
         holder.binding.setFood(food);
@@ -102,8 +102,8 @@ public class RecordAdapter extends AbstractExpandableItemAdapter<
     @Override
     public void onBindChildViewHolder(@NonNull ChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         holder.binding.container.setOnCreateContextMenuListener(mOnCreateContextMenuListener);
-        holder.binding.setRecord(mRecords.get(groupPosition).records.get(childPosition).record);
-        holder.binding.setFood(mRecords.get(groupPosition).records.get(childPosition).food);
+        holder.binding.setRecord(mRecords.get(groupPosition).getRecords().get(childPosition).getRecord());
+        holder.binding.setFood(mRecords.get(groupPosition).getRecords().get(childPosition).getFood());
 
         if (childPosition == getChildCount(groupPosition) - 1) {
             //isLastChild
@@ -121,17 +121,17 @@ public class RecordAdapter extends AbstractExpandableItemAdapter<
 
     @Override
     public int getChildCount(int groupPosition) {
-        return mRecords.get(groupPosition).records.size();
+        return mRecords.get(groupPosition).getRecords().size();
     }
 
     @Override
     public long getGroupId(int groupPosition) {
-        return mRecords.get(groupPosition).meal.getId();
+        return mRecords.get(groupPosition).getMeal().getId();
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return mRecords.get(groupPosition).records.get(childPosition).record.getId();
+        return mRecords.get(groupPosition).getRecords().get(childPosition).getRecord().getId();
     }
 
     @Override
@@ -143,7 +143,7 @@ public class RecordAdapter extends AbstractExpandableItemAdapter<
     }
 
     public Record getChildRecordData(int groupPos, int childPos) {
-        Record childData = mRecords.get(groupPos).records.get(childPos).record;
+        Record childData = mRecords.get(groupPos).getRecords().get(childPos).getRecord();
         return new Record(childData.getMealId(),
                 childData.getFoodId(),
                 childData.getServing(),
@@ -151,7 +151,7 @@ public class RecordAdapter extends AbstractExpandableItemAdapter<
     }
 
     public void deleteChild(int groupPos, int childPos) {
-        mRecords.get(groupPos).records.remove(childPos);
+        mRecords.get(groupPos).getRecords().remove(childPos);
         mItemManager.notifyChildItemRemoved(groupPos, childPos);
         mItemManager.notifyGroupAndChildrenItemsChanged(groupPos);
         if (getChildCount(groupPos) == 0) {

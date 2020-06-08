@@ -26,7 +26,7 @@ public abstract class SummaryDao {
             "sum(food.carbo / 100 * record.serving) as carbo " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food.id " +
-            "WHERE record_datetime BETWEEN :from AND :to")
+            "WHERE datetime BETWEEN :from AND :to")
     public abstract LiveData<Summary> getDaySummary(long from, long to);
 
     @Query("SELECT " +
@@ -36,7 +36,7 @@ public abstract class SummaryDao {
             "sum(food.carbo / 100 * record.serving) as carbo " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food.id " +
-            "WHERE record_datetime BETWEEN :from AND :to")
+            "WHERE datetime BETWEEN :from AND :to")
     abstract Summary getSummary(long from, long to);
 
     @Transaction

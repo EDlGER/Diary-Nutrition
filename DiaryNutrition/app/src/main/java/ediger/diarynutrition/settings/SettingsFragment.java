@@ -107,7 +107,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Preference pathData = findPreference(KEY_PREF_DATA_PATH);
         String path = Environment.getExternalStorageDirectory().getPath() +
                 "/DiaryNutrition/" +
-                DatabaseCopier.getInstance(AppContext.getInstance()).getDatabaseName();
+                DatabaseCopier.getInstance(requireContext().getApplicationContext()).getDatabaseName();
         pathData.setSummary(path);
 
         Preference backupData = findPreference(KEY_PREF_DATA_BACKUP);

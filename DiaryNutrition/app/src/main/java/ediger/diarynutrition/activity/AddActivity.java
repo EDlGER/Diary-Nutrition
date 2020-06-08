@@ -129,7 +129,8 @@ public class AddActivity extends AppCompatActivity {
         if (recordId == -1) {
             foodId = intent.getLongExtra("FoodId", 0);
 
-            date = AppContext.getDate();
+            //date = AppContext.getDate();
+            date = 1111111;
 
             hour = calendar.get(Calendar.HOUR_OF_DAY);
             min = calendar.get(Calendar.MINUTE);
@@ -157,7 +158,7 @@ public class AddActivity extends AppCompatActivity {
                     R.id.rb_meal5
             };
 
-            cursor = AppContext.getDbDiary().getRecordById(recordId);
+            cursor = AppContext.Companion.getDbDiary().getRecordById(recordId);
             cursor.moveToFirst();
             foodId = cursor.getLong(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_ID));
 
@@ -177,7 +178,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Title
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.title_text);
-        cursor = AppContext.getDbDiary().getNameFood(foodId);
+        cursor = AppContext.Companion.getDbDiary().getNameFood(foodId);
         cursor.moveToFirst();
         String title = cursor.getString(cursor.getColumnIndex(DbDiary.ALIAS_FOOD_NAME));
         cursor.close();
@@ -249,11 +250,11 @@ public class AddActivity extends AppCompatActivity {
                     }
 
                     if (recordId == -1) {
-                        AppContext.getDbDiary().addRec(foodId,
+                        AppContext.Companion.getDbDiary().addRec(foodId,
                                 serving * gram,
                                 date, mealId);
                     } else {
-                        AppContext.getDbDiary().editRec(recordId, foodId,
+                        AppContext.Companion.getDbDiary().editRec(recordId, foodId,
                                 serving * gram,
                                 date, mealId);
                     }
@@ -315,7 +316,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void setInfo() {
-        Cursor cursor = AppContext.getDbDiary().getFood(foodId);
+        Cursor cursor = AppContext.Companion.getDbDiary().getFood(foodId);
         cursor.moveToFirst();
         float serv;
 

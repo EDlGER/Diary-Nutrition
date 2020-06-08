@@ -70,8 +70,8 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
 
-        cursor = AppContext.getDbDiary().getFavorFood();
-        from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.Companion.getDbDiary().getFavorFood();
+        from = AppContext.Companion.getDbDiary().getListFood();
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
         listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
@@ -124,8 +124,8 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         super.onResume();
         hideKeyboard();
 
-        cursor = AppContext.getDbDiary().getFavorFood();
-        from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.Companion.getDbDiary().getFavorFood();
+        from = AppContext.Companion.getDbDiary().getListFood();
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
@@ -140,7 +140,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
     //Поиск по введенным буквам
     public Cursor getFilterList(CharSequence constraint) {
-        String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
+        String[] asColumnsToResult = AppContext.Companion.getDbDiary().getFilterFood();
         String selections = "favor = 1 AND usr > -1";
         String orderBy = "food_name asc";
 
@@ -171,7 +171,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         if (item.getItemId() == 4) {
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item
                     .getMenuInfo();
-            AppContext.getDbDiary().setFavor(acmi.id, 0);
+            AppContext.Companion.getDbDiary().setFavor(acmi.id, 0);
             getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;
         }
@@ -237,7 +237,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new MyCursorLoader(getActivity(),AppContext.getDbDiary());
+        return new MyCursorLoader(getActivity(),AppContext.Companion.getDbDiary());
     }
 
     @Override

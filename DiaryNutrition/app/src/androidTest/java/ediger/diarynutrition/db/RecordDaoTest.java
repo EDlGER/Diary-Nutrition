@@ -78,7 +78,7 @@ public class RecordDaoTest {
     @Test
     public void insertAndUpdate() {
         mRecordDao.insertRecord(RECORD);
-        mDatabase.mealDao().insertMeal(new Meal("Lunch"));
+        mDatabase.mealDao().insertMeal(new Meal("Lunch", 0));
 
         Record record = mRecordDao.getRecord(1);
         record.setMealId(2);
@@ -97,16 +97,16 @@ public class RecordDaoTest {
         List<MealAndRecords> mealAndRecords = mRecordDao.getMealsAndRecords(0, 200000);
 
         assertThat(mealAndRecords.size(), is(1));
-        assertMeal(MEAL, mealAndRecords.get(0).meal.getName());
+        assertMeal(MEAL, mealAndRecords.get(0).getMeal().getName());
 
-        List<RecordAndFood> records = mealAndRecords.get(0).records;
+        List<RecordAndFood> records = mealAndRecords.get(0).getRecords();
         assertThat(records.size(), is(3));
 
-        Record record = records.get(0).record;
+        Record record = records.get(0).getRecord();
         assertRecord(RECORD, record.getMealId(), record.getFoodId(), record.getServing(), record.getDatetime());
 
-        Food food = records.get(0).food;
-        assertThat(food.getFoodName(), is("test food"));
+        Food food = records.get(0).getFood();
+        assertThat(food.getName(), is("test food"));
         assertThat(food.getCal(), is(FOOD.getCal() / 100 * record.getServing()));
 
     }

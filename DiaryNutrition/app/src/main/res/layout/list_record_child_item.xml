@@ -57,9 +57,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_toLeftOf="@+id/txt_cal"
                 android:layout_toRightOf="@+id/txt_time"
-                android:text="@{food.foodName}"
+                android:text="@{food.name}"
                 android:textColor="@color/listview_primary_text"
-                android:textSize="@{food.foodName.length() > 18 ? 12 : 16}" />
+                android:textSize="@{food.name.length() > 18 ? 12 : 16}" />
 
             <TextView
                 android:id="@+id/txt_cal"

@@ -62,8 +62,8 @@ public class SearchTab extends Fragment {
         setHasOptionsMenu(true);
 
         //Данные для адаптера
-        cursor = AppContext.getDbDiary().getAllFood();
-        from = AppContext.getDbDiary().getListFood();
+        cursor = AppContext.Companion.getDbDiary().getAllFood();
+        from = AppContext.Companion.getDbDiary().getListFood();
 
         foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
 
@@ -107,7 +107,7 @@ public class SearchTab extends Fragment {
                 .getMenuInfo();
 
         if (item.getItemId() == 3) {
-            AppContext.getDbDiary().setFavor(acmi.id, 1);
+            AppContext.Companion.getDbDiary().setFavor(acmi.id, 1);
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
             snackbar.show();
@@ -116,7 +116,7 @@ public class SearchTab extends Fragment {
         }
 
         if (item.getItemId() == 4) {
-            AppContext.getDbDiary().delFood(acmi.id);
+            AppContext.Companion.getDbDiary().delFood(acmi.id);
             Snackbar snackbar = Snackbar
                     .make(rootview, getString(R.string.message_food_del),
                             Snackbar.LENGTH_LONG);
@@ -175,7 +175,7 @@ public class SearchTab extends Fragment {
 
     //Поиск по введенным буквам
     private Cursor getFilterList(CharSequence constraint) {
-        String[] asColumnsToResult = AppContext.getDbDiary().getFilterFood();
+        String[] asColumnsToResult = AppContext.Companion.getDbDiary().getFilterFood();
         String selections = "usr = -3";
         //String orderBy = "food_name asc";
 

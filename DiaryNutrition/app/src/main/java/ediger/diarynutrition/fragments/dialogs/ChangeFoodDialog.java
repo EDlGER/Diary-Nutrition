@@ -29,7 +29,7 @@ public class ChangeFoodDialog extends DialogFragment {
         final EditText txtFatF = (EditText) relative1.findViewById(R.id.txtFatF);
 
         long id = getArguments().getLong("id");
-        String[] asColumnsToResult = AppContext.getDbDiary().getListFood();
+        String[] asColumnsToResult = AppContext.Companion.getDbDiary().getListFood();
         String selections = "_id = "+id;
 
         //TODO mock
@@ -69,7 +69,7 @@ public class ChangeFoodDialog extends DialogFragment {
                             toast.show();
                         } else {
                             long food_id = getArguments().getLong("id");
-                            AppContext.getDbDiary().editFood(food_id, txtNameF.getText().toString(),
+                            AppContext.Companion.getDbDiary().editFood(food_id, txtNameF.getText().toString(),
                                     Float.parseFloat(txtCalF.getText().toString()),
                                     Float.parseFloat(txtCarboF.getText().toString()),
                                     Float.parseFloat(txtProtF.getText().toString()),

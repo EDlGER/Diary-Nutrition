@@ -26,8 +26,8 @@ import static org.junit.Assert.assertNull;
 @RunWith(AndroidJUnit4.class)
 public class MealDaoTest {
 
-    static final Meal MEAL = new Meal("Breakfast");
-    static final Meal MEAL2 = new Meal("Lunch");
+    static final Meal MEAL = new Meal("Breakfast", 0);
+    static final Meal MEAL2 = new Meal("Lunch", 0);
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();

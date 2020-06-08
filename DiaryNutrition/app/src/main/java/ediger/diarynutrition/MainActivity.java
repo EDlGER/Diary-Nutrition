@@ -6,6 +6,7 @@ import ediger.diarynutrition.inapputil.IabResult;
 import ediger.diarynutrition.inapputil.Inventory;
 import ediger.diarynutrition.intro.IntroActivity;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -63,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
     private Toast mBackPressToast;
 
 
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // TODO: Suppressed
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //First app start

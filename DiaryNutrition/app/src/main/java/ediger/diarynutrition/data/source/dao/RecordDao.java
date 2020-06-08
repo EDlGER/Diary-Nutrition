@@ -26,14 +26,14 @@ public abstract class RecordDao {
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
     @Query("SELECT " +
             "record.*, " +
-            "food.food_name as f_food_name, " +
+            "food.name as f_name, " +
             "(food.cal / 100 * record.serving) as f_cal, " +
             "(food.prot / 100 * record.serving) as f_prot, " +
             "(food.fat / 100 * record.serving) as f_fat, " +
             "(food.carbo / 100 * record.serving) as f_carbo " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food.id " +
-            "WHERE meal_id = :mealId AND record_datetime BETWEEN :from AND :to")
+            "WHERE meal_id = :mealId AND datetime BETWEEN :from AND :to")
     abstract List<RecordAndFood> getRecordsAndFoods(long mealId, long from, long to);
 
     @Transaction
@@ -43,9 +43,10 @@ public abstract class RecordDao {
         List<MealAndRecords> mealAndRecordsList = new ArrayList<>();
         List<Meal> meals = getMeals();
         for (Meal meal : meals) {
-            MealAndRecords mealAndRecords = new MealAndRecords();
-            mealAndRecords.meal = meal;
-            mealAndRecords.records = getRecordsAndFoods(meal.getId(), from, to);
+            MealAndRecords mealAndRecords = new MealAndRecords(
+                    meal,
+                    getRecordsAndFoods(meal.getId(), from, to)
+            );
             mealAndRecordsList.add(mealAndRecords);
         }
         //result.postValue(mealAndRecordsList);
