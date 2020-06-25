@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import static ediger.diarynutrition.PreferenceHelper.*;
 import static ediger.diarynutrition.data.source.model.ProgramElement.*;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.model.Program;
@@ -26,13 +27,13 @@ public class ProgramViewModel extends AndroidViewModel {
         super(application);
 
         program = new MutableLiveData<>(new Program(
-                PreferenceHelper.getValue(KEY_PROGRAM_CAL, Float.class, 1f),
-                PreferenceHelper.getValue(KEY_PROGRAM_PROT, Float.class, 1f),
-                PreferenceHelper.getValue(KEY_PROGRAM_FAT, Float.class, 1f),
-                PreferenceHelper.getValue(KEY_PROGRAM_CARBO, Float.class, 1f),
-                PreferenceHelper.getValue(KEY_PROGRAM_PROT_PERCENT, Integer.class, 1),
-                PreferenceHelper.getValue(KEY_PROGRAM_FAT_PERCENT, Integer.class, 1),
-                PreferenceHelper.getValue(KEY_PROGRAM_CARBO_PERCENT, Integer.class, 1)
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CAL, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT_PERCENT, Integer.class, 1),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT_PERCENT, Integer.class, 1),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO_PERCENT, Integer.class, 1)
         ));
     }
 

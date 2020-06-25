@@ -37,7 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import ediger.diarynutrition.Consts;
@@ -139,7 +138,7 @@ public class DiaryFragment extends Fragment implements
     }
 
     private void setupActionBar() {
-        mActionBar = ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar();
+        mActionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
         if (mActionBar == null) {
             return;
         }
@@ -238,7 +237,7 @@ public class DiaryFragment extends Fragment implements
 
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mRecordAdapter);
 
-        if (PreferenceHelper.getValue(PreferenceHelper.KEY_PREF_UI_WATER_CARD, Boolean.class, true)) {
+        if (PreferenceHelper.getValue(Consts.KEY_PREF_UI_WATER_CARD, Boolean.class, true)) {
             setupWaterFooter();
         }
 
@@ -314,10 +313,10 @@ public class DiaryFragment extends Fragment implements
         super.onStart();
 
         Summary goalSummary = new Summary(
-                PreferenceHelper.getValue(PreferenceHelper.KEY_PROGRAM_CAL, Float.class, 1f),
-                PreferenceHelper.getValue(PreferenceHelper.KEY_PROGRAM_PROT, Float.class, 1f),
-                PreferenceHelper.getValue(PreferenceHelper.KEY_PROGRAM_FAT, Float.class, 1f),
-                PreferenceHelper.getValue(PreferenceHelper.KEY_PROGRAM_CARBO, Float.class, 1f));
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CAL, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT, Float.class, 1f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO, Float.class, 1f));
         mBinding.setGoal(goalSummary);
     }
 
@@ -325,7 +324,7 @@ public class DiaryFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).appBar
+            ((MainActivity) requireActivity()).appBar
                     .setStateListAnimator(AnimatorInflater
                             .loadStateListAnimator(getActivity(), R.animator.appbar_unelevated_animator)
             );
@@ -344,7 +343,7 @@ public class DiaryFragment extends Fragment implements
         } else {
             super.onPause();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((MainActivity) Objects.requireNonNull(getActivity())).appBar
+                ((MainActivity) requireActivity()).appBar
                         .setStateListAnimator(AnimatorInflater
                                 .loadStateListAnimator(getActivity(), R.animator.appbar_elevated_animator)
                         );

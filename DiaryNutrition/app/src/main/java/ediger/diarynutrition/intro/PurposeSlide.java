@@ -13,15 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ediger.diarynutrition.AppContext;
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.entities.Weight;
 import ediger.diarynutrition.databinding.FragmentIntroPurposeBinding;
 import ediger.diarynutrition.util.SnackbarUtils;
 import ediger.diarynutrition.weight.WeightViewModel;
-
-import static ediger.diarynutrition.PreferenceHelper.KEY_PURPOSE;
-import static ediger.diarynutrition.PreferenceHelper.KEY_WEIGHT;
 
 import com.github.paolorotolo.appintro.ISlidePolicy;
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
@@ -70,8 +68,8 @@ public class PurposeSlide extends Fragment implements ISlidePolicy, ISlideSelect
 
     @Override
     public void onSlideDeselected() {
-        PreferenceHelper.setValue(KEY_PURPOSE, String.valueOf(purposeId));
-        PreferenceHelper.setValue(KEY_WEIGHT, Float.parseFloat(mBinding.edWeight.getText().toString()));
+        PreferenceHelper.setValue(Consts.KEY_PURPOSE, String.valueOf(purposeId));
+        PreferenceHelper.setValue(Consts.KEY_WEIGHT, Float.parseFloat(mBinding.edWeight.getText().toString()));
         mViewModel.addWeight(new Weight(Float.parseFloat(mBinding.edWeight.getText().toString()),
                 Calendar.getInstance().getTimeInMillis()));
     }

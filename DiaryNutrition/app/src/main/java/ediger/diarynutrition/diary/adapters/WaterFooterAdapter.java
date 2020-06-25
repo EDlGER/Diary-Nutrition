@@ -10,15 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag;
 import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFooterWrapperAdapter;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.databinding.ListRecordFooterBinding;
 import ediger.diarynutrition.diary.DiaryViewModel;
 
-import static ediger.diarynutrition.PreferenceHelper.KEY_PROGRAM_WATER;
 
 public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<WaterFooterAdapter.HeaderViewHolder,
         WaterFooterAdapter.FooterViewHolder> implements LifecycleEventObserver {
@@ -84,7 +83,7 @@ public class WaterFooterAdapter extends AbstractHeaderFooterWrapperAdapter<Water
     @Override
     public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
         if (source.getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
-            int goal = PreferenceHelper.getValue(KEY_PROGRAM_WATER, Integer.class, 1);
+            int goal = PreferenceHelper.getValue(Consts.KEY_PROGRAM_WATER, Integer.class, 1);
             mBinding.setGoal(goal);
         }
     }

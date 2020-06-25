@@ -27,7 +27,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.entities.Weight;
 import ediger.diarynutrition.databinding.FragmentWeightBinding;

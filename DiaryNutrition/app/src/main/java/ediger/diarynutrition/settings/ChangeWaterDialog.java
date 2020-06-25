@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.Toast;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 
@@ -41,7 +42,7 @@ public class ChangeWaterDialog extends DialogFragment {
                         toast.show();
                     } else {
                         int water = Integer.parseInt(changeWater.getText().toString());
-                        PreferenceHelper.setValue(PreferenceHelper.KEY_PROGRAM_WATER, water);
+                        PreferenceHelper.setValue(Consts.KEY_PROGRAM_WATER, water);
                     }
                 });
 

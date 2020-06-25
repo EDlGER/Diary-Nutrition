@@ -18,11 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.databinding.FragmentIntroPersonBinding;
 import ediger.diarynutrition.util.SnackbarUtils;
-import static ediger.diarynutrition.PreferenceHelper.*;
 
 import com.github.paolorotolo.appintro.ISlidePolicy;
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
@@ -91,8 +91,8 @@ public class PersonSlide extends Fragment implements ISlidePolicy,ISlideSelectio
     private void savePreference() {
         calendar.set(year,month,day);
 
-        PreferenceHelper.setValue(KEY_GENDER, String.valueOf(genderId));
-        PreferenceHelper.setValue(KEY_BIRTHDAY, calendar.getTimeInMillis());
-        PreferenceHelper.setValue(KEY_HEIGHT, mBinding.edHeight.getText().toString());
+        PreferenceHelper.setValue(Consts.KEY_GENDER, String.valueOf(genderId));
+        PreferenceHelper.setValue(Consts.KEY_BIRTHDAY, calendar.getTimeInMillis());
+        PreferenceHelper.setValue(Consts.KEY_HEIGHT, mBinding.edHeight.getText().toString());
     }
 }

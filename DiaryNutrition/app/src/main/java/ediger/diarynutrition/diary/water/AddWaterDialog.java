@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.entities.Water;
@@ -74,7 +75,7 @@ public class AddWaterDialog extends DialogFragment implements View.OnClickListen
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_add_water, container, false);
 
-        isAdsRemoved = PreferenceHelper.getValue(PREF_ADS_REMOVED, Boolean.class, false);
+        isAdsRemoved = PreferenceHelper.getValue(Consts.PREF_ADS_REMOVED, Boolean.class, false);
 
         mInterstitialAd = new InterstitialAd(getActivity());
         mInterstitialAd.setAdUnitId(getString(R.string.banner_ad_inter_water_id));
@@ -230,10 +231,10 @@ public class AddWaterDialog extends DialogFragment implements View.OnClickListen
 
     private void waterValuesInit() {
         String[] consts = {
-                PREF_WATER_SERVING_1,
-                PREF_WATER_SERVING_2,
-                PREF_WATER_SERVING_3,
-                PREF_WATER_SERVING_4,
+                Consts.PREF_WATER_SERVING_1,
+                Consts.PREF_WATER_SERVING_2,
+                Consts.PREF_WATER_SERVING_3,
+                Consts.PREF_WATER_SERVING_4,
         };
 
         TextView[] txtViews = {mBinding.txtWater1, mBinding.txtWater2, mBinding.txtWater3, mBinding.txtWater4};
@@ -264,22 +265,22 @@ public class AddWaterDialog extends DialogFragment implements View.OnClickListen
                 switch (cardId) {
                     case 0:
                         mBinding.txtWater1.setText(edWater.getText().toString());
-                        PreferenceHelper.setValue(PREF_WATER_SERVING_1,
+                        PreferenceHelper.setValue(Consts.PREF_WATER_SERVING_1,
                                 Integer.parseInt(edWater.getText().toString()));
                         break;
                     case 1:
                         mBinding.txtWater2.setText(edWater.getText().toString());
-                        PreferenceHelper.setValue(PREF_WATER_SERVING_2,
+                        PreferenceHelper.setValue(Consts.PREF_WATER_SERVING_2,
                                 Integer.parseInt(edWater.getText().toString()));
                         break;
                     case 2:
                         mBinding.txtWater3.setText(edWater.getText().toString());
-                        PreferenceHelper.setValue(PREF_WATER_SERVING_3,
+                        PreferenceHelper.setValue(Consts.PREF_WATER_SERVING_3,
                                 Integer.parseInt(edWater.getText().toString()));
                         break;
                     case 3:
                         mBinding.txtWater4.setText(edWater.getText().toString());
-                        PreferenceHelper.setValue(PREF_WATER_SERVING_4,
+                        PreferenceHelper.setValue(Consts.PREF_WATER_SERVING_4,
                                 Integer.parseInt(edWater.getText().toString()));
                         break;
                 }

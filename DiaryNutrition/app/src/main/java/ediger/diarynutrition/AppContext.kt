@@ -1,12 +1,10 @@
 package ediger.diarynutrition
 
-import androidx.core.content.getSystemService
 import androidx.multidex.MultiDexApplication
 import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
 import ediger.diarynutrition.database.DbDiary
-import java.util.*
 
 class AppContext : MultiDexApplication() {
     private val mAppExecutors = AppExecutors()

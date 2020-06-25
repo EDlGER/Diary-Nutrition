@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.databinding.FragmentIntroNutritionBinding;
@@ -63,13 +64,13 @@ public class NutritionSlide extends Fragment implements ISlideSelectionListener 
     }
 
     private void initValues() {
-        cal = PreferenceHelper.getValue(KEY_PROGRAM_CAL, Float.class, 0f);
-        prot = PreferenceHelper.getValue(KEY_PROGRAM_PROT, Float.class, 0f);
-        fat = PreferenceHelper.getValue(KEY_PROGRAM_FAT, Float.class, 0f);
-        carbo = PreferenceHelper.getValue(KEY_PROGRAM_CARBO, Float.class, 0f);
-        protPercent = PreferenceHelper.getValue(KEY_PROGRAM_PROT_PERCENT, Integer.class, 0);
-        fatPercent = PreferenceHelper.getValue(KEY_PROGRAM_FAT_PERCENT, Integer.class, 0);
-        carboPercent = PreferenceHelper.getValue(KEY_PROGRAM_CARBO_PERCENT, Integer.class, 0);
+        cal = PreferenceHelper.getValue(Consts.KEY_PROGRAM_CAL, Float.class, 0f);
+        prot = PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT, Float.class, 0f);
+        fat = PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT, Float.class, 0f);
+        carbo = PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO, Float.class, 0f);
+        protPercent = PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT_PERCENT, Integer.class, 0);
+        fatPercent = PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT_PERCENT, Integer.class, 0);
+        carboPercent = PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO_PERCENT, Integer.class, 0);
     }
 
 }

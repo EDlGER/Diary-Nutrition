@@ -3,7 +3,8 @@ package ediger.diarynutrition.data.source.model
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import ediger.diarynutrition.PreferenceHelper.*
+import ediger.diarynutrition.*
+import ediger.diarynutrition.PreferenceHelper.setValue
 import kotlin.math.roundToInt
 import ediger.diarynutrition.data.source.model.ProgramElement.*
 

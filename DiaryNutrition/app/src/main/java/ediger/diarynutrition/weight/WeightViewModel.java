@@ -12,10 +12,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import ediger.diarynutrition.AppContext;
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.data.DiaryRepository;
 import ediger.diarynutrition.data.source.entities.Weight;
-import ediger.diarynutrition.objects.SingleLiveEvent;
 
 public class WeightViewModel extends AndroidViewModel {
 
@@ -67,7 +67,7 @@ public class WeightViewModel extends AndroidViewModel {
         }
 
         //Updates for use of NutritionProgram
-        PreferenceHelper.setValue(PreferenceHelper.KEY_WEIGHT, weight.getAmount());
+        PreferenceHelper.setValue(Consts.KEY_WEIGHT, weight.getAmount());
     }
 
     void deleteWeight(int id) {

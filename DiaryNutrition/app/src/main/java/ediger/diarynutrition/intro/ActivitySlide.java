@@ -11,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.databinding.FragmentIntroActivityBinding;
-
-import static ediger.diarynutrition.PreferenceHelper.KEY_ACTIVITY;
 
 import com.github.paolorotolo.appintro.ISlideSelectionListener;
 
@@ -54,7 +53,7 @@ public class ActivitySlide extends Fragment implements ISlideSelectionListener {
 
     @Override
     public void onSlideDeselected() {
-        PreferenceHelper.setValue(KEY_ACTIVITY, String.valueOf(activityId));
+        PreferenceHelper.setValue(Consts.KEY_ACTIVITY, String.valueOf(activityId));
     }
 
 }

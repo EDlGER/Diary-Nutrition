@@ -73,18 +73,18 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //First app start
-        boolean isFirstRun = PreferenceHelper.getValue(KEY_FIRST_RUN, Boolean.class, true);
+        boolean isFirstRun = PreferenceHelper.getValue(Consts.KEY_FIRST_RUN, Boolean.class, true);
 
         //startIntroActivity
         if (isFirstRun) {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
         }
-        PreferenceHelper.setValue(KEY_FIRST_RUN, false);
+        PreferenceHelper.setValue(Consts.KEY_FIRST_RUN, false);
 
         //Ads
-        isAdsRemoved = getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
-                .getBoolean(PREF_ADS_REMOVED, false);
+        isAdsRemoved = getSharedPreferences(Consts.PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
+                .getBoolean(Consts.PREF_ADS_REMOVED, false);
         MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
 
 
@@ -187,10 +187,10 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d(TAG, "Query inventory was successful");
 
-            isAdsRemoved = inv.hasPurchase(SKU_REMOVE_ADS);
-            SharedPreferences.Editor spe = getSharedPreferences(PREF_FILE_PREMIUM,
+            isAdsRemoved = inv.hasPurchase(Consts.SKU_REMOVE_ADS);
+            SharedPreferences.Editor spe = getSharedPreferences(Consts.PREF_FILE_PREMIUM,
                     Context.MODE_PRIVATE).edit();
-            spe.putBoolean(PREF_ADS_REMOVED, isAdsRemoved);
+            spe.putBoolean(Consts.PREF_ADS_REMOVED, isAdsRemoved);
             spe.apply();
         }
     };

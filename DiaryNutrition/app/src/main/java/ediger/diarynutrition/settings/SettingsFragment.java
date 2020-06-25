@@ -25,12 +25,13 @@ import java.util.Locale;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.data.source.DatabaseCopier;
 import ediger.diarynutrition.intro.PolicyActivity;
-import ediger.diarynutrition.AppContext;
 import ediger.diarynutrition.util.NutritionProgramUtils;
 
 import static ediger.diarynutrition.PreferenceHelper.*;
@@ -61,28 +62,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         PreferenceHelper.getPreferences().registerOnSharedPreferenceChangeListener(this);
 
-        Preference heightPref = findPreference(KEY_HEIGHT);
-        heightPref.setSummary(PreferenceHelper.getValue(KEY_HEIGHT, String.class, ""));
+        Preference heightPref = findPreference(Consts.KEY_HEIGHT);
+        heightPref.setSummary(PreferenceHelper.getValue(Consts.KEY_HEIGHT, String.class, ""));
 
-        Preference birthdayPref = findPreference(KEY_BIRTHDAY);
-        date.setTime(PreferenceHelper.getValue(KEY_BIRTHDAY, Long.class, 0L));
+        Preference birthdayPref = findPreference(Consts.KEY_BIRTHDAY);
+        date.setTime(PreferenceHelper.getValue(Consts.KEY_BIRTHDAY, Long.class, 0L));
         birthdayPref.setSummary(dateFormat.format(date));
         birthdayPref.setOnPreferenceClickListener(preference -> {
             showDateDialog();
             return false;
         });
 
-        float cal = PreferenceHelper.getValue(KEY_PROGRAM_CAL, Float.class, 0f);
-        Preference caloriesPref = findPreference(KEY_PROGRAM_CAL);
+        float cal = PreferenceHelper.getValue(Consts.KEY_PROGRAM_CAL, Float.class, 0f);
+        Preference caloriesPref = findPreference(Consts.KEY_PROGRAM_CAL);
         caloriesPref.setSummary(String.valueOf((int) cal));
         caloriesPref.setOnPreferenceClickListener(preference -> {
             new ChangeCaloriesDialog().show(getParentFragmentManager(), null);
             return false;
         });
 
-        Preference waterPref = findPreference(KEY_PROGRAM_WATER);
+        Preference waterPref = findPreference(Consts.KEY_PROGRAM_WATER);
         waterPref.setSummary(String.valueOf(PreferenceHelper.getValue(
-                KEY_PROGRAM_WATER,
+                Consts.KEY_PROGRAM_WATER,
                 Integer.class,
                 NutritionProgramUtils.getDefaultWater()
         )));
@@ -169,8 +170,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_GENDER) ||
-                key.equals(KEY_ACTIVITY) || key.equals(KEY_PURPOSE)) {
+        if (key.equals(Consts.KEY_GENDER) ||
+                key.equals(Consts.KEY_ACTIVITY) || key.equals(Consts.KEY_PURPOSE)) {
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
             NutritionProgramUtils.setToDefault();
@@ -189,20 +190,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             manager.set(AlarmManager.RTC, System.currentTimeMillis() + 10, intent);
             System.exit(2);
         }
-        if (key.equals(KEY_BIRTHDAY)) {
+        if (key.equals(Consts.KEY_BIRTHDAY)) {
             Preference birthdayPref = findPreference(key);
             date.setTime(sharedPreferences.getLong(key, 0L));
 
             birthdayPref.setSummary(dateFormat.format(date));
             NutritionProgramUtils.setToDefault();
         }
-        if (key.equals(KEY_HEIGHT)) {
+        if (key.equals(Consts.KEY_HEIGHT)) {
             Preference heightPref = findPreference(key);
             heightPref.setSummary(sharedPreferences.getString(key, ""));
             NutritionProgramUtils.setToDefault();
         }
 
-        if (key.equals(KEY_PROGRAM_CAL)) {
+        if (key.equals(Consts.KEY_PROGRAM_CAL)) {
             Preference caloriesPref = findPreference(key);
             caloriesPref.setSummary(
                     String.valueOf((int) sharedPreferences.getFloat(key, 1f))
@@ -210,7 +211,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             NutritionProgramUtils.update();
         }
 
-        if (key.equals(KEY_PROGRAM_WATER)) {
+        if (key.equals(Consts.KEY_PROGRAM_WATER)) {
             Preference waterPref = findPreference(key);
             waterPref.setSummary(
                     String.valueOf(sharedPreferences.getInt(key, NutritionProgramUtils.getDefaultWater()))
@@ -221,11 +222,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         birthday.set(year,monthOfYear,dayOfMonth);
-        PreferenceHelper.setValue(KEY_BIRTHDAY, birthday.getTimeInMillis());
+        PreferenceHelper.setValue(Consts.KEY_BIRTHDAY, birthday.getTimeInMillis());
     }
 
     private void showDateDialog() {
-        birthday.setTimeInMillis(PreferenceHelper.getValue(KEY_BIRTHDAY, Long.class, 0L));
+        birthday.setTimeInMillis(PreferenceHelper.getValue(Consts.KEY_BIRTHDAY, Long.class, 0L));
 
         new DatePickerDialog(requireActivity(),this,
                 birthday.get(Calendar.YEAR),

@@ -8,6 +8,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import ediger.diarynutrition.KEY_LANGUAGE_DB
+import ediger.diarynutrition.KEY_LOCAL_DB_VERSION
 import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.data.source.dao.*
 import ediger.diarynutrition.data.source.entities.*
@@ -41,7 +43,7 @@ abstract class DiaryDatabase : RoomDatabase() {
                     .addCallback(object: Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            PreferenceHelper.setValue(PreferenceHelper.KEY_LOCAL_DB_VERSION, 1)
+                            PreferenceHelper.setValue(KEY_LOCAL_DB_VERSION, 1)
                             defineDbLanguage()
 
                             val request = OneTimeWorkRequestBuilder<FoodDatabaseWorker>().build()
@@ -57,7 +59,7 @@ abstract class DiaryDatabase : RoomDatabase() {
                 "ru", "uk" -> "ru"
                 else -> "en"
             }
-            PreferenceHelper.setValue(PreferenceHelper.KEY_LANGUAGE_DB, definedLanguage)
+            PreferenceHelper.setValue(KEY_LANGUAGE_DB, definedLanguage)
         }
 
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {

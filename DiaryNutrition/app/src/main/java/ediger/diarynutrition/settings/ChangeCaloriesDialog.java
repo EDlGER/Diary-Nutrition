@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import android.view.View;
 import android.widget.Toast;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 
@@ -39,7 +40,7 @@ public class ChangeCaloriesDialog extends DialogFragment {
                         toast.show();
                     } else {
                         float cal = Float.parseFloat(changeCal.getText().toString());
-                        PreferenceHelper.setValue(PreferenceHelper.KEY_PROGRAM_CAL, cal);
+                        PreferenceHelper.setValue(Consts.KEY_PROGRAM_CAL, cal);
                     }
                 });
 

@@ -6,45 +6,6 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 public class PreferenceHelper {
-
-    //String
-    public static final String KEY_GENDER = "gender";
-    public static final String KEY_BIRTHDAY = "birthday";
-    public static final String KEY_HEIGHT = "height";
-    public static final String KEY_PURPOSE = "purpose";
-    public static final String KEY_ACTIVITY = "activity";
-
-    // TODO: init
-    public static final String KEY_LANGUAGE = "language";
-    public static final String KEY_LANGUAGE_DB = "language_db";
-
-    //Float
-    public static final String KEY_WEIGHT = "weight";
-    public static final String KEY_PROGRAM_CAL = "calories";
-    public static final String KEY_PROGRAM_PROT = "prot";
-    public static final String KEY_PROGRAM_FAT = "fat";
-    public static final String KEY_PROGRAM_CARBO = "carbo";
-
-    //Integer
-    public static final String KEY_LOCAL_DB_VERSION = "local_db_version";
-
-    public static final String KEY_PROGRAM_PROT_PERCENT = "prot_pers";
-    public static final String KEY_PROGRAM_FAT_PERCENT = "fat_percs";
-    public static final String KEY_PROGRAM_CARBO_PERCENT = "carbo_pers";
-    public static final String KEY_PROGRAM_WATER = "water";
-
-    public static final String KEY_PREF_UI_WATER_CARD = "water_card";
-    public static final String PREF_WATER_SERVING_1 = "water_serving_1";
-    public static final String PREF_WATER_SERVING_2 = "water_serving_2";
-    public static final String PREF_WATER_SERVING_3 = "water_serving_3";
-    public static final String PREF_WATER_SERVING_4 = "water_serving_4";
-
-    public static final String PREF_FILE_PREMIUM = "premium_data";
-    public static final String PREF_ADS_REMOVED = "ads_removed";
-
-    static final String KEY_FIRST_RUN = "first_run";
-    static final String SKU_REMOVE_ADS = "com.ediger.removeads";
-
     private static SharedPreferences sPref;
 
     private PreferenceHelper() {

@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
@@ -58,14 +58,14 @@ public class DayFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(SummaryViewModel.class);
 
-        mViewModel.getSummary().observe(this, summary -> {
+        mViewModel.getSummary().observe(getViewLifecycleOwner(), summary -> {
             if (summary.size() == 1) {
                 mBinding.setSummary(summary.get(0));
                 generateData(summary.get(0));
             }
         });
 
-        mViewModel.getWater().observe(this, water -> {
+        mViewModel.getWater().observe(getViewLifecycleOwner(), water -> {
             if (water.size() == 1) {
                 mBinding.txtSumWater.setText(String.valueOf(water.get(0).getAmount()));
             }
@@ -78,22 +78,22 @@ public class DayFragment extends Fragment {
 
         Summary macroPercent = new Summary(
                 0,
-                PreferenceHelper.getValue(KEY_PROGRAM_PROT_PERCENT, Integer.class, 0),
-                PreferenceHelper.getValue(KEY_PROGRAM_FAT_PERCENT, Integer.class, 0),
-                PreferenceHelper.getValue(KEY_PROGRAM_CARBO_PERCENT, Integer.class, 0)
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT_PERCENT, Integer.class, 0),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT_PERCENT, Integer.class, 0),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO_PERCENT, Integer.class, 0)
         );
         mBinding.setMacroPercent(macroPercent);
 
         Summary goal = new Summary(
-                PreferenceHelper.getValue(KEY_PROGRAM_CAL, Float.class, 0f),
-                PreferenceHelper.getValue(KEY_PROGRAM_PROT, Float.class, 0f),
-                PreferenceHelper.getValue(KEY_PROGRAM_FAT, Float.class, 0f),
-                PreferenceHelper.getValue(KEY_PROGRAM_CARBO, Float.class, 0f)
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CAL, Float.class, 0f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_PROT, Float.class, 0f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_FAT, Float.class, 0f),
+                PreferenceHelper.getValue(Consts.KEY_PROGRAM_CARBO, Float.class, 0f)
         );
         mBinding.setGoal(goal);
 
         mBinding.txtPurWater.setText(
-                String.valueOf(PreferenceHelper.getValue(KEY_PROGRAM_WATER, Integer.class, 0))
+                String.valueOf(PreferenceHelper.getValue(Consts.KEY_PROGRAM_WATER, Integer.class, 0))
         );
 
 
@@ -124,7 +124,7 @@ public class DayFragment extends Fragment {
         mViewModel.setPeriod(day, 1);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).appBar
+            ((MainActivity) requireActivity()).appBar
                     .setStateListAnimator(AnimatorInflater
                             .loadStateListAnimator(getActivity(), R.animator.appbar_unelevated_animator)
                     );
