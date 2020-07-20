@@ -32,8 +32,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -77,6 +77,7 @@ dependencies {
     implementation 'com.opencsv:opencsv:5.2'
     implementation 'com.google.firebase:firebase-storage-ktx:19.1.1'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0-beta01"
 
     //Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"

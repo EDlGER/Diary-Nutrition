@@ -1,10 +1,13 @@
 package ediger.diarynutrition
 
 import androidx.multidex.MultiDexApplication
+import androidx.work.*
 import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
 import ediger.diarynutrition.database.DbDiary
+import ediger.diarynutrition.workers.RemoteDatabaseVersionWorker
+import java.util.concurrent.TimeUnit
 
 class AppContext : MultiDexApplication() {
     private val mAppExecutors = AppExecutors()
@@ -13,9 +16,20 @@ class AppContext : MultiDexApplication() {
         super.onCreate()
         PreferenceHelper.init(applicationContext)
 
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build()
+        val work = PeriodicWorkRequestBuilder<RemoteDatabaseVersionWorker>(1, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .build()
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                RemoteDatabaseVersionWorker.TAG,
+                ExistingPeriodicWorkPolicy.KEEP,
+                work
+        )
+
         //TODO delete
         //sDbDiary = new DbDiary(this);
-        //DatabaseCopier.getPreferences(this).execute();
     }
 
     val database: DiaryDatabase?

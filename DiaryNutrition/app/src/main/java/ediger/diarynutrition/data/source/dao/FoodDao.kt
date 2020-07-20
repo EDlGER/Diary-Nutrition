@@ -24,6 +24,9 @@ interface FoodDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllFood(foodList: List<Food>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun populateAllFood(foodList: List<Food>)
+
     @Update
     fun updateFood(food: Food)
 

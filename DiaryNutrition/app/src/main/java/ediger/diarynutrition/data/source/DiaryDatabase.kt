@@ -11,10 +11,12 @@ import androidx.work.WorkManager
 import ediger.diarynutrition.KEY_LANGUAGE_DB
 import ediger.diarynutrition.KEY_LOCAL_DB_VERSION
 import ediger.diarynutrition.PreferenceHelper
+import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.dao.*
 import ediger.diarynutrition.data.source.entities.*
-import ediger.diarynutrition.util.DATABASE_NAME
+import ediger.diarynutrition.DATABASE_NAME
 import ediger.diarynutrition.workers.FoodDatabaseWorker
+import kotlinx.coroutines.*
 import java.util.*
 
 @Database(entities = [Record::class, Food::class, Meal::class, Water::class, Weight::class],
@@ -37,8 +39,6 @@ abstract class DiaryDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(appContext: Context): DiaryDatabase {
-            //DatabaseCopier.getInstance(appContext).execute()
-
             return Room.databaseBuilder(appContext, DiaryDatabase::class.java, DATABASE_NAME)
                     .addCallback(object: Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
@@ -46,6 +46,9 @@ abstract class DiaryDatabase : RoomDatabase() {
                             PreferenceHelper.setValue(KEY_LOCAL_DB_VERSION, 1)
                             defineDbLanguage()
 
+                            CoroutineScope(Dispatchers.IO).launch {
+                                launch { populateMeals(appContext) }.join()
+                            }
                             val request = OneTimeWorkRequestBuilder<FoodDatabaseWorker>().build()
                             WorkManager.getInstance(appContext).enqueue(request)
                         }
@@ -55,11 +58,24 @@ abstract class DiaryDatabase : RoomDatabase() {
         }
 
         private fun defineDbLanguage() {
-            val definedLanguage = when (Locale.getDefault().language) {
-                "ru", "uk" -> "ru"
-                else -> "en"
-            }
-            PreferenceHelper.setValue(KEY_LANGUAGE_DB, definedLanguage)
+            PreferenceHelper.setValue(
+                    KEY_LANGUAGE_DB,
+                    when (Locale.getDefault().language) {
+                        "ru", "uk" -> "ru"
+                        else -> "en"
+                    }
+            )
+        }
+
+        private suspend fun populateMeals(appContext: Context) {
+            val meals = listOf(
+                    Meal(appContext.resources.getString(R.string.meal1)),
+                    Meal(appContext.resources.getString(R.string.meal2)),
+                    Meal(appContext.resources.getString(R.string.meal3)),
+                    Meal(appContext.resources.getString(R.string.meal4)),
+                    Meal(appContext.resources.getString(R.string.meal5))
+            )
+            instance?.mealDao()?.insertMeals(meals)
         }
 
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {

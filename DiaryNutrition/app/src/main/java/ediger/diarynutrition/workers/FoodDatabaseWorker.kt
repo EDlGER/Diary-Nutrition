@@ -29,8 +29,8 @@ class FoodDatabaseWorker(appContext: Context, params: WorkerParameters): Corouti
 
                 val database = DiaryDatabase.getInstance(applicationContext)
                 database.foodDao().insertAllFood(foodList)
+                Result.success()
             }
-            Result.success()
         } catch (ex: Exception) {
             //throw ex
             Result.failure()

@@ -30,11 +30,8 @@ import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.MainActivity;
 import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
-import ediger.diarynutrition.data.source.DatabaseCopier;
 import ediger.diarynutrition.intro.PolicyActivity;
 import ediger.diarynutrition.util.NutritionProgramUtils;
-
-import static ediger.diarynutrition.PreferenceHelper.*;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener {
@@ -104,11 +101,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             return false;
         });
 
-        // TODO: fix wrong path
+        // TODO: Fix wrong path (Do I need it?)
         Preference pathData = findPreference(KEY_PREF_DATA_PATH);
         String path = Environment.getExternalStorageDirectory().getPath() +
-                "/DiaryNutrition/" +
-                DatabaseCopier.getInstance(requireContext().getApplicationContext()).getDatabaseName();
+                "/DiaryNutrition/" + Consts.DATABASE_NAME;
         pathData.setSummary(path);
 
         Preference backupData = findPreference(KEY_PREF_DATA_BACKUP);
