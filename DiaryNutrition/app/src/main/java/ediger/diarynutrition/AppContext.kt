@@ -15,24 +15,24 @@ class AppContext : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         PreferenceHelper.init(applicationContext)
-
-        val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.UNMETERED)
-                .build()
-        val work = PeriodicWorkRequestBuilder<RemoteDatabaseVersionWorker>(1, TimeUnit.DAYS)
-                .setConstraints(constraints)
-                .build()
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                RemoteDatabaseVersionWorker.TAG,
-                ExistingPeriodicWorkPolicy.KEEP,
-                work
-        )
-
+        if (!BuildConfig.DEBUG) {
+            val constraints = Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.UNMETERED)
+                    .build()
+            val work = PeriodicWorkRequestBuilder<RemoteDatabaseVersionWorker>(1, TimeUnit.DAYS)
+                    .setConstraints(constraints)
+                    .build()
+            WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                    RemoteDatabaseVersionWorker.TAG,
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    work
+            )
+        }
         //TODO delete
         //sDbDiary = new DbDiary(this);
     }
 
-    val database: DiaryDatabase?
+    val database: DiaryDatabase
         get() = getInstance(this)
 
     val repository: DiaryRepository

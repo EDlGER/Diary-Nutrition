@@ -1,20 +1,13 @@
-package ediger.diarynutrition.data.source.dao;
+package ediger.diarynutrition.data.source.dao
 
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-import ediger.diarynutrition.data.source.entities.Weight;
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import ediger.diarynutrition.data.source.entities.Weight
 
 @Dao
-public interface WeightDao {
-
+interface WeightDao {
     @Query("SELECT * FROM weight ORDER BY datetime DESC")
-    LiveData<List<Weight>> loadWeight();
+    fun loadWeight(): LiveData<List<Weight>>
 
     /**
      * Get all records of weight for specific interval
@@ -22,21 +15,23 @@ public interface WeightDao {
      * @param to end of the period in milliseconds
      */
     @Query("SELECT * FROM weight WHERE datetime BETWEEN :from AND :to ORDER BY datetime ASC")
-    LiveData<List<Weight>> getWeight(long from, long to);
+    fun getWeight(from: Long, to: Long): LiveData<List<Weight>>
+
+    @Query("SELECT * FROM weight")
+    suspend fun getWeight(): List<Weight>
 
     @Query("SELECT * FROM weight ORDER BY datetime DESC LIMIT 1")
-    Weight getLastWeight();
+    fun lastWeight(): Weight
 
     @Query("SELECT * FROM weight WHERE datetime BETWEEN :from AND :to")
-    Weight getWeightForDay(long from, long to);
+    fun getWeightForDay(from: Long, to: Long): Weight
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertWeight(Weight weight);
+    fun insertWeight(weight: Weight)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateWeight(Weight weight);
+    fun updateWeight(weight: Weight)
 
     @Query("DELETE FROM weight WHERE id = :id")
-    int deleteWeightById(int id);
-
+    fun deleteWeightById(id: Int): Int
 }

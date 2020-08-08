@@ -147,8 +147,8 @@ public class DiaryRepository {
     public Weight getRecentWeight() {
         final Weight weight = new Weight(0, 0);
         mAppExecutors.discIO().execute(() -> {
-            weight.setAmount(mDatabase.weightDao().getLastWeight().getAmount());
-            weight.setDatetime(mDatabase.weightDao().getLastWeight().getDatetime());
+            weight.setAmount(mDatabase.weightDao().lastWeight().getAmount());
+            weight.setDatetime(mDatabase.weightDao().lastWeight().getDatetime());
         });
         return weight;
     }

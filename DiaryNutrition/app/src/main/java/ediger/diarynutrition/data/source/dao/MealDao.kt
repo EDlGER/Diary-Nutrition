@@ -12,6 +12,9 @@ interface MealDao {
     @Query("SELECT * FROM meal WHERE id = :id")
     fun getMeal(id: Int): Meal
 
+    @Query("SELECT * FROM meal WHERE user = 1")
+    suspend fun getUserMeals(): List<Meal>
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateMeal(meal: Meal)
 

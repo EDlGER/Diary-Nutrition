@@ -11,8 +11,8 @@ import java.util.List;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.runner.AndroidJUnit4;
-import ediger.diarynutrition.LiveDataTestUtil;
 import ediger.diarynutrition.data.source.DiaryDatabase;
 import ediger.diarynutrition.data.source.entities.Food;
 import ediger.diarynutrition.data.source.entities.Meal;
@@ -41,7 +41,7 @@ public class RecordDaoTest {
 
     @Before
     public void initDb() {
-        mDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+        mDatabase = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),
                 DiaryDatabase.class)
                 .allowMainThreadQueries()
                 .build();
