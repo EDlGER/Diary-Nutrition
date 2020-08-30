@@ -49,8 +49,14 @@ abstract class RecordDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insertRecord(record: Record)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun populateRecords(records: List<Record>)
+
     @Query("DELETE FROM record WHERE id = :id")
     abstract fun delRecordById(id: Int): Int
+
+    @Query("DELETE FROM record")
+    abstract fun deleteAllRecords()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     abstract fun updateRecord(record: Record)

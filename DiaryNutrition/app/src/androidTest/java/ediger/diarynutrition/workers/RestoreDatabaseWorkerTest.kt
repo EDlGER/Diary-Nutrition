@@ -1,36 +1,37 @@
 package ediger.diarynutrition.workers
 
 import android.content.Context
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker.Result
 import androidx.work.testing.TestListenableWorkerBuilder
-import ediger.diarynutrition.BACKUP_NAME
+import androidx.work.testing.WorkManagerTestInitHelper
+import ediger.diarynutrition.LiveDataTestUtil
+import ediger.diarynutrition.data.source.DiaryDatabase
+import ediger.diarynutrition.data.source.entities.Food
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.assertThat
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.io.File
 
 @RunWith(JUnit4::class)
-class BackupDatabaseWorkerTest {
+class RestoreDatabaseWorkerTest {
+
     private lateinit var context: Context
-    private lateinit var worker: BackupDatabaseWorker
+    private lateinit var worker: RestoreDatabaseWorker
 
     @Before
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
-        worker = TestListenableWorkerBuilder<BackupDatabaseWorker>(context).build()
+        worker = TestListenableWorkerBuilder<RestoreDatabaseWorker>(context).build()
     }
 
     @Test
-    fun serializeDatabase_fileCreated() {
-        val result = worker.startWork().get()
+    fun testDoWork_success() = runBlocking {
+        val result = worker.doWork()
         assertThat(result, `is`(Result.success()))
-
-        val backupFile = File(context.filesDir, BACKUP_NAME)
-        assertThat(backupFile.exists(), `is`(true))
     }
-
 }

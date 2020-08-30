@@ -1,6 +1,7 @@
 package ediger.diarynutrition.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.opencsv.bean.*
@@ -17,7 +18,7 @@ class FoodDatabaseWorker(appContext: Context, params: WorkerParameters): Corouti
         try {
             val language = PreferenceHelper.getValue(KEY_LANGUAGE_DB, String::class.java, "en")
             applicationContext.assets.open("databases/food_$language.csv").use {
-                val columns = arrayOf("id", "name", "cal", "carbo", "prot", "fat", "verified", "gi")
+                val columns = arrayOf("name", "cal", "carbo", "prot", "fat", "verified", "gi")
                 val strat = ColumnPositionMappingStrategy<Food>().apply {
                     type = Food::class.java
                     setColumnMapping(*columns)
@@ -28,11 +29,11 @@ class FoodDatabaseWorker(appContext: Context, params: WorkerParameters): Corouti
                         .parse()
 
                 val database = DiaryDatabase.getInstance(applicationContext)
-                database.foodDao().insertAllFood(foodList)
+                database.foodDao().populateFood(foodList)
                 Result.success()
             }
         } catch (ex: Exception) {
-            //throw ex
+            //Log.e("FoodDatabase", ex.message!!)
             Result.failure()
         }
     }

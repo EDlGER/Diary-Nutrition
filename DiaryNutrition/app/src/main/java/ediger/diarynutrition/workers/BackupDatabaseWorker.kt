@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.gson.GsonBuilder
 import ediger.diarynutrition.AppContext
+import ediger.diarynutrition.BACKUP_NAME
 import ediger.diarynutrition.data.source.model.JsonDatabaseBackup
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
@@ -24,7 +25,7 @@ class BackupDatabaseWorker(appContext: Context, params: WorkerParameters) : Coro
             )
             val gson = GsonBuilder().setPrettyPrinting().create()
 
-            applicationContext.openFileOutput("backupFile.json", Context.MODE_PRIVATE).use {
+            applicationContext.openFileOutput(BACKUP_NAME, Context.MODE_PRIVATE).use {
                 it.write(gson.toJson(jsonBackup).toByteArray())
             }
 

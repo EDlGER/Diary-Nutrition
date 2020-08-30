@@ -47,7 +47,7 @@ class RemoteDatabaseVersionWorkerTest {
 
     /*@Test
     fun testPeriodicWork() {
-        val request = PeriodicWorkRequestBuilder<RemoteDatabaseVersionWorker>(1, TimeUnit.DAYS)
+        val request = PeriodicWorkRequestBuilder<RemoteDatabaseVersionWorker>(1, TimeUnit.HOURS)
                 .setInputData(workDataOf(KEY_LOCAL_DB_VERSION to 0))
                 .build()
         val testDriver = WorkManagerTestInitHelper.getTestDriver(context)
@@ -62,6 +62,4 @@ class RemoteDatabaseVersionWorkerTest {
         assertThat(workInfo.state, `is`(WorkInfo.State.ENQUEUED))
 
     }*/
-
-
 }

@@ -2,7 +2,6 @@ package ediger.diarynutrition.workers
 
 import android.content.Context
 import androidx.concurrent.futures.CallbackToFutureAdapter
-import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.google.android.gms.tasks.OnSuccessListener
@@ -15,13 +14,9 @@ import com.opencsv.bean.CsvToBeanBuilder
 import ediger.diarynutrition.*
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.entities.Food
-import kotlinx.coroutines.*
 import java.io.File
-import java.io.IOException
 import java.lang.Exception
-import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
-import kotlin.coroutines.suspendCoroutine
 
 class RemoteDatabaseUpdateWorker(context: Context, params: WorkerParameters): ListenableWorker(context, params) {
 
@@ -35,7 +30,7 @@ class RemoteDatabaseUpdateWorker(context: Context, params: WorkerParameters): Li
 
             val callback = OnSuccessListener<FileDownloadTask.TaskSnapshot> {
                 try {
-                    val columns = arrayOf("id", "name", "cal", "carbo", "prot", "fat", "verified", "gi")
+                    val columns = arrayOf("name", "cal", "carbo", "prot", "fat", "verified", "gi")
                     val strat = ColumnPositionMappingStrategy<Food>().apply {
                         type = Food::class.java
                         setColumnMapping(*columns)
@@ -45,7 +40,16 @@ class RemoteDatabaseUpdateWorker(context: Context, params: WorkerParameters): Li
                             .build()
                             .parse()
                     val database = DiaryDatabase.getInstance(applicationContext)
-                    database.foodDao().populateAllFood(foodList)
+                    val ids = database.foodDao().insertAllFood(foodList)
+                    ids.forEachIndexed { i, id ->
+                        if (id == -1L) database.foodDao().updateFoodByNameAndCal(
+                                foodList[i].name,
+                                foodList[i].cal,
+                                foodList[i].verified,
+                                foodList[i].gi,
+                                foodList[i].user
+                        )
+                    }
                     val version = inputData.getInt(
                             KEY_ONLINE_DB_VERSION,
                             PreferenceHelper.getValue(KEY_LOCAL_DB_VERSION, Integer::class.java, 0)

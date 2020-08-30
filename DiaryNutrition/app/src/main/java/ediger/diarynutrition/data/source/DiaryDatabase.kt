@@ -75,7 +75,7 @@ abstract class DiaryDatabase : RoomDatabase() {
                     Meal(appContext.resources.getString(R.string.meal4)),
                     Meal(appContext.resources.getString(R.string.meal5))
             )
-            instance?.mealDao()?.insertMeals(meals)
+            instance?.mealDao()?.populateMeals(meals)
         }
 
         private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
@@ -89,7 +89,8 @@ abstract class DiaryDatabase : RoomDatabase() {
                         "user INTEGER DEFAULT 0 NOT NULL, " +
                         "verified INTEGER DEFAULT 0 NOT NULL, " +
                         "gi INTEGER DEFAULT 0 NOT NULL, PRIMARY KEY (id))")
-                database.execSQL("INSERT INTO food_new (id, name, cal, carbo, prot, fat, " +
+                database.execSQL("CREATE UNIQUE INDEX index_food_name_cal ON food_new(name, cal)")
+                database.execSQL("INSERT OR IGNORE INTO food_new (id, name, cal, carbo, prot, fat, " +
                         "favorite, user) SELECT _id, food_name, cal, carbo, prot, fat, " +
                         "favor, usr FROM food")
                 database.execSQL("DROP TABLE food")
@@ -106,7 +107,7 @@ abstract class DiaryDatabase : RoomDatabase() {
 
                 //record table
                 database.execSQL("CREATE TABLE record_new (id INTEGER NOT NULL, " +
-                        "food_id INTEGER NOT NULL REFERENCES food(id) ON DELETE RESTRICT," +
+                        "food_id INTEGER NOT NULL REFERENCES food(id) ON DELETE RESTRICT ON UPDATE CASCADE," +
                         "meal_id INTEGER DEFAULT 0 NOT NULL REFERENCES meal(id) ON DELETE SET DEFAULT, " +
                         "datetime INTEGER NOT NULL, " +
                         "serving INTEGER NOT NULL, " +

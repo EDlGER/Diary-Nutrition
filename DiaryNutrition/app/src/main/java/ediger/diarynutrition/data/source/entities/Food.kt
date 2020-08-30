@@ -2,10 +2,11 @@ package ediger.diarynutrition.data.source.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.opencsv.bean.CsvBindByPosition
 
-@Entity(tableName = "food")
+@Entity(tableName = "food", indices = [Index(value = ["name", "cal"], unique = true)])
 class Food(
         var name: String = "",
         var cal: Float = 0f,

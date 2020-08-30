@@ -21,6 +21,9 @@ abstract class WaterDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract fun insertWater(water: Water?)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    abstract suspend fun populateWater(water: List<Water>)
+
     @Query("DELETE FROM water WHERE id = :id")
     abstract fun deleteWaterById(id: Int): Int
 

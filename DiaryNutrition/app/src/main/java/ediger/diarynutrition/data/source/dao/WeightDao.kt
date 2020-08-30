@@ -29,6 +29,9 @@ interface WeightDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeight(weight: Weight)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun populateWeight(weights: List<Weight>)
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateWeight(weight: Weight)
 
