@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/header"
+        android:background="#FAFAFA"
+        android:elevation="5dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/ToolbarTextColor"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:background="?attr/colorPrimary" />
+
+
+        <ediger.diarynutrition.SlidingTabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@color/colorPrimary"
+            android:id="@+id/linearLayout"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/info_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="@string/record_prot"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/info_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="@string/record_fat"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/info_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="@string/record_carbo"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal"
+                 />
+
+            <TextView
+                android:id="@+id/info_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="@string/record_cal"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/header">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        app:adSize="SMART_BANNER"
+        app:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
+
+
+</RelativeLayout>

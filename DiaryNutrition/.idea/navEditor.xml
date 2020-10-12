@@ -13,8 +13,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="148" />
-                            <option name="y" value="-431" />
+                            <option name="x" value="246" />
+                            <option name="y" value="-463" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -53,12 +53,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_nav_diary_self">
+                            <entry key="action_diary_to_food">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_food">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="245" />
+                            <option name="y" value="-153" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

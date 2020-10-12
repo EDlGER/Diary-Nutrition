@@ -32,7 +32,7 @@
             android:foreground="?attr/selectableItemBackground"
             tools:ignore="UselessParent">
 
-            <ediger.diarynutrition.widget.ExpandableItemIndicator
+            <ediger.diarynutrition.widgets.ExpandableItemIndicator
                 android:id="@+id/indicator"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

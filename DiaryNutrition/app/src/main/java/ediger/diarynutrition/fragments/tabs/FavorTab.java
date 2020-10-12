@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 
+import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
@@ -203,7 +204,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(getActivity().SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        if (Integer.parseInt(pref.getString(SettingsFragment.KEY_PREF_UI_DEFAULT_TAB, "0")) == 1) {
+        if (Integer.parseInt(pref.getString(Consts.KEY_PREF_UI_DEFAULT_TAB, "0")) == 1) {
             searchView.setIconified(false);
         } else {
             searchView.setIconifiedByDefault(true);

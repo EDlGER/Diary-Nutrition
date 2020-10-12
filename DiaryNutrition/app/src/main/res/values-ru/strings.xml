@@ -109,7 +109,7 @@
     <string name="message_dialog_food_point">Одно или несколько полей содежат неправильный формат числа</string>
     <string name="message_dialog_weight">Вес не введен</string>
 
-    <string name="tab_database">База данных</string>
+    <string name="tab_products">Продукты</string>
     <string name="tab_user">Добавленные</string>
     <string name="tab_favorite">Избранные</string>
 
@@ -283,6 +283,7 @@
     <string name="calendar">Календарь</string>
     <string name="dialog_weight_add">Добавить вес</string>
     <string name="dialog_date">Дата</string>
+    <string name="action_add_food">Добавить продукт</string>
 
 
 </resources>

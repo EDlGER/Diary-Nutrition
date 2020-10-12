@@ -51,6 +51,7 @@ import ediger.diarynutrition.diary.adapters.RecordAdapter;
 import ediger.diarynutrition.diary.adapters.WaterFooterAdapter;
 import ediger.diarynutrition.diary.water.AddWaterDialog;
 import ediger.diarynutrition.diary.water.WaterActivity;
+import ediger.diarynutrition.food.FoodActivity;
 import ediger.diarynutrition.objects.SnackbarMessage;
 import ediger.diarynutrition.util.SnackbarUtils;
 import ediger.diarynutrition.weight.AddWeightDialog;
@@ -295,8 +296,10 @@ public class DiaryFragment extends Fragment implements
     private void setupFab() {
         //TODO Temporary code
         mBinding.fabActionFood.setOnClickListener(v -> {
-            mViewModel.addRecord(new Record(
-                    1, 1, 100, mSelectedDate.getTimeInMillis()));
+            Intent intent = new Intent(requireActivity(), FoodActivity.class);
+            startActivity(intent);
+//            mViewModel.addRecord(new Record(
+//                    1, 1, 100, mSelectedDate.getTimeInMillis()));
         });
         mBinding.fabActionWater.setOnClickListener(v -> {
             mBinding.fabMenu.collapseImmediately();

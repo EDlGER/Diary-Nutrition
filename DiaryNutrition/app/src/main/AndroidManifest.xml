@@ -38,8 +38,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
-            android:name=".activity.FoodActivity"
+            android:name=".food.FoodActivity"
             android:label="@string/act_food"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -49,12 +50,12 @@
         </activity>
         <activity
             android:name=".activity.AddActivity"
-            android:parentActivityName=".activity.FoodActivity"
+            android:parentActivityName=".food.FoodActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.FoodActivity" />
+                android:value=".food.FoodActivity" />
         </activity>
         <activity
             android:name=".settings.ProgramActivity"

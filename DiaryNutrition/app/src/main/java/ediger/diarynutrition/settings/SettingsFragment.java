@@ -36,7 +36,6 @@ import ediger.diarynutrition.util.NutritionProgramUtils;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener {
 
-    public static final String KEY_PREF_UI_DEFAULT_TAB = "default_tab";
     public static final String KEY_PREF_DATA_LANGUAGE= "data_language";
     public static final String KEY_PREF_DATA_PATH = "data_path";
     public static final String KEY_PREF_DATA_BACKUP = "data_backup";
@@ -172,7 +171,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             listPref.setSummary("%s");
             NutritionProgramUtils.setToDefault();
         }
-        if (key.equals(KEY_PREF_UI_DEFAULT_TAB)) {
+        if (key.equals(Consts.KEY_PREF_UI_DEFAULT_TAB)) {
             Preference listPref = findPreference(key);
             listPref.setSummary("%s");
         }

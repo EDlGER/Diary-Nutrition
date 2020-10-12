@@ -2,10 +2,10 @@
 <resources>
 
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryLight">#80cbc4</color>
-    <color name="colorPrimaryDark">#00796b</color>
-    <color name="colorAccent">#ffa000</color>
-    <color name="colorAccentPressed">#ff8f00</color>
+    <color name="colorPrimaryLight">#26A69A</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FFA000</color>
+    <color name="colorAccentPressed">#FF8F00</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="layout_standart_background">#FAFAFA</color>
     <color name="listview_background">#EEEEEE</color>
@@ -13,14 +13,17 @@
     <color name="listview_second_text">#99000000</color>
     <color name="chart_label_color">#BDBDBD</color>
 
+    <color name="list_background">#FAFAFA</color>
+
     <color name="bg_record_list_item">#FAFAFA</color>
 
     <color name="dialog_background">#FAFAFA</color>
 
-    <color name="toolbar_text">#FFFFFF</color>
+    <color name="bar_primary">#FFFFFF</color>
+    <color name="bar_secondary">#94FFFFFF</color> <!-- opacity 58% -->
     <color name="text_normal">#B2000000</color>
-    <color name="text_medium">#99000000</color> <!--opacity of 60%-->
-    <color name="text_high">#DE000000</color> <!--opacity of 87%-->
+    <color name="text_medium">#99000000</color> <!-- opacity of 60% -->
+    <color name="text_high">#DE000000</color> <!-- opacity of 87% -->
 
 
     <color name="grey100">#F5F5F5</color>

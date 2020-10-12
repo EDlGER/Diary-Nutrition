@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:id="@+id/linearLayout"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -33,11 +33,11 @@
 
                 <TextView
                     android:layout_width="38dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
                     android:text="@string/record_prot"
-                    android:textSize="14sp"
                     android:textColor="#FFFFFF"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="38dp"

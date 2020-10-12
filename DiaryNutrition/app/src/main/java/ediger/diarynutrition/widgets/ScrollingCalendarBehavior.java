@@ -1,7 +1,7 @@
-package ediger.diarynutrition.widget;
+package ediger.diarynutrition.widgets;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
+
 import com.google.android.material.appbar.AppBarLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.util.AttributeSet;

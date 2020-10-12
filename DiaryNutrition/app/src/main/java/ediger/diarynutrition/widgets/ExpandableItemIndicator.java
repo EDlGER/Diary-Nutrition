@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package ediger.diarynutrition.widget;
+package ediger.diarynutrition.widgets;
 
 import android.content.Context;
 import android.os.Build;

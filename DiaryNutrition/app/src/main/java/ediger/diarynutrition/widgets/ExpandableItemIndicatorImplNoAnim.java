@@ -14,12 +14,9 @@
  *    limitations under the License.
  */
 
-package ediger.diarynutrition.widget;
+package ediger.diarynutrition.widgets;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.drawable.Animatable;
-import android.os.Build;
 import androidx.annotation.DrawableRes;
 import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -28,10 +25,7 @@ import android.view.View;
 
 import ediger.diarynutrition.R;
 
-// NOTE: AnimatedVectorDrawableCompat works on API level 11+, using 15
-//@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
+class ExpandableItemIndicatorImplNoAnim extends ExpandableItemIndicator.Impl {
     private AppCompatImageView mImageView;
 
     @Override
@@ -42,13 +36,7 @@ class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
 
     @Override
     public void setExpandedState(boolean isExpanded, boolean animate) {
-        if (animate) {
-            @DrawableRes int resId = isExpanded ? R.drawable.ic_expand_more_to_expand_less : R.drawable.ic_expand_less_to_expand_more;
-            mImageView.setImageResource(resId);
-            ((Animatable) mImageView.getDrawable()).start();
-        } else {
-            @DrawableRes int resId = isExpanded ? R.drawable.ic_expand_less : R.drawable.ic_expand_more;
-            mImageView.setImageResource(resId);
-        }
+        @DrawableRes int resId = (isExpanded) ? R.drawable.ic_expand_less : R.drawable.ic_expand_more;
+        mImageView.setImageResource(resId);
     }
 }

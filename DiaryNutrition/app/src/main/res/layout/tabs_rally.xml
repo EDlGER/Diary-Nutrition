@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:constraint_referenced_ids="image1,textView,image2,image3,stub" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Rally.Button.IconOnly"
+        android:padding="16dp"
+        android:id="@+id/image1"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        app:icon="@drawable/ic_products"
+        app:iconTint="@color/bar_primary"
+        tools:ignore="MissingConstraints"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Rally.Button.IconOnly"
+        android:id="@+id/image2"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:padding="16dp"
+        app:icon="@drawable/ic_favorite"
+        app:iconTint="@color/tabsScrollColor"
+        tools:ignore="MissingConstraints"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Rally.Button.IconOnly"
+        android:id="@+id/image3"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:padding="16dp"
+        app:icon="@drawable/ic_user"
+        app:iconTint="@color/tabsScrollColor"
+        tools:ignore="MissingConstraints"/>
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Rally.Button.IconOnly"
+        android:id="@+id/stub"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:iconTint="@color/tabsScrollColor"
+        tools:ignore="MissingConstraints"/>
+
+    <TextView
+        style="?attr/textAppearanceButton"
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Products"
+        android:textColor="@color/bar_primary"
+        app:layout_constraintWidth_max="130dp"
+        tools:ignore="MissingConstraints"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

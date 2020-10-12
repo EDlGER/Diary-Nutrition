@@ -14,6 +14,7 @@ const val KEY_ACTIVITY = "activity"
 // TODO: init
 const val KEY_LANGUAGE = "language"
 const val KEY_LANGUAGE_DB = "language_db"
+const val KEY_PREF_UI_DEFAULT_TAB = "default_tab"
 
 //Float
 const val KEY_WEIGHT = "weight"
