@@ -35,7 +35,7 @@
                     android:layout_width="38dp"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
-                    android:text="@string/record_prot"
+                    android:text="@string/food_prot"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
@@ -43,7 +43,7 @@
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="@string/record_fat"
+                    android:text="@string/food_fat"
                     android:textSize="14sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>
@@ -52,7 +52,7 @@
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:text="@string/record_carbo"
+                    android:text="@string/food_carbo"
                     android:textSize="14sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>
@@ -61,7 +61,7 @@
                     android:layout_width="38dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="36dp"
-                    android:text="@string/record_cal"
+                    android:text="@string/food_cal"
                     android:textSize="14sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>

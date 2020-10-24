@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.opencsv.bean.CsvBindByPosition
 
 @Entity(tableName = "food", indices = [Index(value = ["name", "cal"], unique = true)])
-class Food(
+data class Food(
         var name: String = "",
         var cal: Float = 0f,
         var prot: Float = 0f,

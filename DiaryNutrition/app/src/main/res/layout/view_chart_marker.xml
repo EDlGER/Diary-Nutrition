@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_prot"
+            android:text="@string/food_prot"
             android:textSize="12sp"
             android:textColor="@color/chart_protein"/>
 
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_fat"
+            android:text="@string/food_fat"
             android:textSize="12sp"
             android:textColor="@color/chart_fat" />
 
@@ -104,7 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_carbo"
+            android:text="@string/food_carbo"
             android:textSize="12sp"
             android:textColor="@color/chart_carbo" />
 

@@ -3,6 +3,7 @@ package ediger.diarynutrition
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import ediger.diarynutrition.data.DiaryRepository
+import ediger.diarynutrition.data.FoodRepository
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
 import ediger.diarynutrition.database.DbDiary
@@ -37,6 +38,9 @@ class AppContext : MultiDexApplication() {
 
     val repository: DiaryRepository
         get() = DiaryRepository.getInstance(database, mAppExecutors)
+
+    val foodRepository: FoodRepository
+        get() = FoodRepository.getInstance(database.foodDao())
 
     companion object {
         //TODO delete

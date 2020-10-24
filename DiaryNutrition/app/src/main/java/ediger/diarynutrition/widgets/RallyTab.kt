@@ -5,17 +5,13 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.helper.widget.Flow
-import androidx.constraintlayout.widget.ConstraintHelper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.transition.AutoTransition
-import androidx.transition.Slide
 import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
@@ -110,11 +106,11 @@ class RallyTab @JvmOverloads constructor(
 
             findViewById<MaterialButton>(refs[position]).iconTint =
                     ColorStateList.valueOf(
-                            ContextCompat.getColor(context, R.color.bar_primary)
+                            ContextCompat.getColor(context, R.color.barPrimary)
                     )
 
             findViewById<TextView>(R.id.textView).setTextColor(
-                    ContextCompat.getColor(context, R.color.bar_primary)
+                    ContextCompat.getColor(context, R.color.barPrimary)
             )
 
             requestLayout()

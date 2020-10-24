@@ -39,6 +39,7 @@
                     android:layout_marginStart="36dp"
                     android:layout_marginLeft="36dp"
                     android:layout_marginTop="34dp"
+                    android:textColorHint="@color/barSecondary"
                     app:boxBackgroundColor="@color/colorPrimaryLight"
                     app:boxCornerRadiusTopStart="6dp"
                     app:boxCornerRadiusTopEnd="6dp"

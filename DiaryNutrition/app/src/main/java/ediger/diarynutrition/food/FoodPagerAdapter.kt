@@ -7,33 +7,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import ediger.diarynutrition.R
-import ediger.diarynutrition.fragments.tabs.FavorTab
-import ediger.diarynutrition.fragments.tabs.FoodTab
-import ediger.diarynutrition.fragments.tabs.SearchTab
 
 class FoodPagerAdapter(
         fa: FragmentActivity,
-        private val tabs: List<TabUiModel>): FragmentStateAdapter(fa) {
+        private val tabs: List<TabUiModel>
+): FragmentStateAdapter(fa) {
+
     override fun getItemCount(): Int = tabs.size
 
     override fun createFragment(position: Int): Fragment {
-        val fragment: Fragment = StubFragment()
-
-        fragment.arguments = bundleOf("position" to position.toString())
+        val fragment = FoodFragment()
+        val tabVariance = when (position) {
+            0 -> FoodVariance.ALL
+            1 -> FoodVariance.FAVORITES
+            2 -> FoodVariance.USER
+            else -> FoodVariance.ALL
+        }
+        fragment.arguments = bundleOf(FoodFragment.VARIANCE to tabVariance)
 
         return fragment
     }
-
-    // TODO: ------------------
-//    override fun createFragment(position: Int): Fragment {
-//        return when (position) {
-//            0 -> SearchTab()
-//            1 -> FavorTab()
-//            2 -> FoodTab()
-//            else -> SearchTab()
-//        }
-//    }
-
 }
 
 fun generateTabs(context: Context): List<TabUiModel> {

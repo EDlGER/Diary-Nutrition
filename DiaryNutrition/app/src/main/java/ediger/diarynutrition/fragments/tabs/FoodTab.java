@@ -32,7 +32,6 @@ import android.widget.SimpleCursorAdapter;
 
 import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.activity.AddActivity;
-import ediger.diarynutrition.settings.SettingsFragment;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.fragments.dialogs.ChangeFoodDialog;
 import ediger.diarynutrition.R;
@@ -50,11 +49,11 @@ public class FoodTab extends Fragment implements
     View rootview;
     public ListView listFood;
     private int[] to = {
-            R.id.txt_f_name,
-            R.id.txt_f_cal,
-            R.id.txt_f_carbo,
-            R.id.txt_f_prot,
-            R.id.txt_f_fat
+            //R.id.txt_f_name,
+            //R.id.txt_f_cal,
+            //R.id.txt_f_carbo,
+            //R.id.txt_f_prot,
+            //R.id.txt_f_fat
     };
     private long addId;
     private String[] from;
@@ -76,7 +75,7 @@ public class FoodTab extends Fragment implements
         //Данные для адаптера
         cursor = AppContext.Companion.getDbDiary().getUserFood();
         from = AppContext.Companion.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.list_food_item, cursor, from, to, 0);
 
 
         listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
@@ -119,7 +118,7 @@ public class FoodTab extends Fragment implements
         if (requestCode == REQ_CODE_ADD_FOOD || requestCode == REQ_CODE_CHANGE){
             cursor = AppContext.Companion.getDbDiary().getUserFood();
             from = AppContext.Companion.getDbDiary().getListFood();
-            foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+            foodAdapter = new FoodAdapter(getActivity(), R.layout.list_food_item, cursor, from, to, 0);
             listFood.setAdapter(foodAdapter);
             listFood.setTextFilterEnabled(true);
             foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
@@ -149,7 +148,7 @@ public class FoodTab extends Fragment implements
 
         cursor = AppContext.Companion.getDbDiary().getUserFood();
         from = AppContext.Companion.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.list_food_item, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {
@@ -267,7 +266,7 @@ public class FoodTab extends Fragment implements
 
             AppContext.Companion.getDbDiary().setFavor(acmi.id,1);
             Snackbar snackbar = Snackbar
-                    .make(rootview, getString(R.string.message_favorite), Snackbar.LENGTH_LONG);
+                    .make(rootview, getString(R.string.message_favorite_add), Snackbar.LENGTH_LONG);
             snackbar.show();
             getLoaderManager().restartLoader(LOADER_ID, null, this);
             return true;

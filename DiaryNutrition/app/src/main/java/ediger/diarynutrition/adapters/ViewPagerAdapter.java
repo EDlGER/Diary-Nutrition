@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import ediger.diarynutrition.fragments.tabs.FavorTab;
 import ediger.diarynutrition.fragments.tabs.FoodTab;
-import ediger.diarynutrition.fragments.tabs.SearchTab;
+import ediger.diarynutrition.food.FoodFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -27,7 +27,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            SearchTab tab1 = new SearchTab();
+            FoodFragment tab1 = new FoodFragment();
             return tab1;
         } else if(position == 1) {
             FavorTab tab2 = new FavorTab();

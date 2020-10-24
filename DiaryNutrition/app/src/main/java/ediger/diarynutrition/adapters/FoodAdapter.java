@@ -28,15 +28,15 @@ public class FoodAdapter extends SimpleCursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
-        View view = layoutInflater.inflate(R.layout.food_item1,parent,false);
+        View view = layoutInflater.inflate(R.layout.list_food_item,parent,false);
 
         ViewHolder holder = new ViewHolder();
-        holder.food_name = (TextView) view.findViewById(R.id.txt_f_name);
-        holder.carbo = (TextView) view.findViewById(R.id.txt_f_carbo);
-        holder.prot = (TextView) view.findViewById(R.id.txt_f_prot);
-        holder.fat = (TextView) view.findViewById(R.id.txt_f_fat);
-        holder.cal = (TextView) view.findViewById(R.id.txt_f_cal);
-        holder.favor = (ImageView) view.findViewById(R.id.star_view);
+        holder.food_name = (TextView) view.findViewById(R.id.txtFoodName);
+        holder.carbo = (TextView) view.findViewById(R.id.txtCarbo);
+        holder.prot = (TextView) view.findViewById(R.id.txtProt);
+        holder.fat = (TextView) view.findViewById(R.id.txtFat);
+        holder.cal = (TextView) view.findViewById(R.id.txtCal);
+        holder.favor = (ImageView) view.findViewById(R.id.imVerified);
 
         view.setTag(holder);
 

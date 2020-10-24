@@ -1,6 +1,7 @@
 package ediger.diarynutrition.data.source.dao
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import androidx.room.*
 import ediger.diarynutrition.data.source.entities.Food
 
@@ -41,26 +42,20 @@ interface FoodDao {
             "WHERE id IN (SELECT id FROM food WHERE name = :name AND cal = :cal)")
     fun updateFoodByNameAndCal(name: String, cal: Float, verified: Int, gi: Int, user: Int)
 
-    @Query("UPDATE food SET favorite = 1 WHERE id = :id")
-    suspend fun updateFavoriteFoodById(id: Int)
+    @Query("UPDATE food SET favorite = CASE WHEN :favorite THEN 1 ELSE 0 END WHERE id = :id")
+    suspend fun updateFavoriteFoodById(id: Int, favorite: Boolean)
 
     @Query("DELETE FROM food WHERE id = :id")
-    fun deleteFoodById(id: Int): Int
+    suspend fun deleteFoodById(id: Int): Int
 
-    @Query("SELECT * FROM food " +
-            "WHERE name LIKE :text " +
-            "ORDER BY name = :text DESC, name LIKE :text DESC ")
-    fun searchAllFood(text: String?): LiveData<List<Food>>
+    @Query("SELECT * FROM food WHERE name LIKE :text ORDER BY name ASC")
+    fun searchAllFood(text: String): PagingSource<Int, Food>
 
-    @Query("SELECT * FROM food " +
-            "WHERE favorite = 1 AND name LIKE :text " +
-            "ORDER BY name = :text DESC, name LIKE :text DESC ")
-    fun searchFavorFood(text: String?): LiveData<List<Food>>
+    @Query("SELECT * FROM food WHERE favorite = 1 AND name LIKE :text ORDER BY name = :text ASC")
+    fun searchFavoriteFood(text: String): PagingSource<Int, Food>
 
-    @Query("SELECT * FROM food " +
-            "WHERE user = 1 AND name LIKE :text " +
-            "ORDER BY name = :text DESC, name LIKE :text DESC ")
-    fun searchUsrFood(text: String?): LiveData<List<Food>>
+    @Query("SELECT * FROM food WHERE user = 1 AND name LIKE :text ORDER BY name = :text ASC")
+    fun searchUserFood(text: String): PagingSource<Int, Food>
 
     //Returns user, favorite, and food that is being used in record table
     @Query("SELECT * FROM food " +

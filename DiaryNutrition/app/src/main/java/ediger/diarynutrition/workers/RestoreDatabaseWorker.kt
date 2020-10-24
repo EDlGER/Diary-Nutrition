@@ -42,7 +42,7 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
                             }
                     backupModel.foodList.forEachIndexed { i, food ->
                         if (food.favorite == 1) {
-                            database.foodDao().updateFavoriteFoodById(foodIds[i].toInt())
+                            database.foodDao().updateFavoriteFoodById(foodIds[i].toInt(), true)
                         }
                     }
 

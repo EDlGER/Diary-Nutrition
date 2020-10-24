@@ -35,7 +35,6 @@ import ediger.diarynutrition.activity.AddActivity;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.adapters.FoodAdapter;
 import ediger.diarynutrition.database.DbDiary;
-import ediger.diarynutrition.settings.SettingsFragment;
 import ediger.diarynutrition.fragments.dialogs.AddFoodDialog;
 import ediger.diarynutrition.AppContext;
 
@@ -48,11 +47,11 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
     public ListView listFood;
     private int[] to = {
-            R.id.txt_f_name,
-            R.id.txt_f_cal,
-            R.id.txt_f_carbo,
-            R.id.txt_f_prot,
-            R.id.txt_f_fat
+            //R.id.txt_f_name,
+            //R.id.txt_f_cal,
+            //R.id.txt_f_carbo,
+            //R.id.txt_f_prot,
+            //R.id.txt_f_fat
     };
     private long addid;
     private String[] from;
@@ -73,7 +72,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
         cursor = AppContext.Companion.getDbDiary().getFavorFood();
         from = AppContext.Companion.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.list_food_item, cursor, from, to, 0);
 
         listFood = (ListView) rootview.findViewById(R.id.ft_listFood);
         listFood.setEmptyView(rootview.findViewById(R.id.empty_ft_list));
@@ -127,7 +126,7 @@ public class FavorTab extends Fragment implements LoaderManager.LoaderCallbacks<
 
         cursor = AppContext.Companion.getDbDiary().getFavorFood();
         from = AppContext.Companion.getDbDiary().getListFood();
-        foodAdapter = new FoodAdapter(getActivity(), R.layout.food_item1, cursor, from, to, 0);
+        foodAdapter = new FoodAdapter(getActivity(), R.layout.list_food_item, cursor, from, to, 0);
         listFood.setAdapter(foodAdapter);
         listFood.setTextFilterEnabled(true);
         foodAdapter.setFilterQueryProvider(new FilterQueryProvider() {

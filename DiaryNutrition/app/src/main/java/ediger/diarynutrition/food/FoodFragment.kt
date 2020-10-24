@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ProductsFoodFragment : Fragment() {
+class FoodFragment : Fragment() {
 
     private lateinit var binding: FragmentTabBinding
     private val viewModel: FoodViewModel by activityViewModels()

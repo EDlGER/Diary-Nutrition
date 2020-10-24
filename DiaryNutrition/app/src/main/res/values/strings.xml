@@ -37,13 +37,11 @@
 
     <string name="card_button_more">View more</string>
 
-    <string name="food_tab1">Custom</string>
-    <string name="food_tab2">Favorites</string>
-
-    <string name="record_carbo">CRB</string>
-    <string name="record_prot">PRT</string>
-    <string name="record_fat">FAT</string>
-    <string name="record_cal">CAL</string>
+    <string name="food_carbo">CRB</string>
+    <string name="food_prot">PRT</string>
+    <string name="food_fat">FAT</string>
+    <string name="food_cal">CAL</string>
+    <string name="food_verified">Verified</string>
 
     <string name="weight_week">Week</string>
     <string name="weight_month">Month</string>
@@ -157,7 +155,7 @@
     <string name="message_program_perc">Amount of percent must be equal 100</string>
     <string name="message_program_gram">Calories amount and PFC ratio will change while editing of macronutrients</string>
     <string name="message_program_null">Macronutrients amount must be above zero</string>
-    <string name="message_favorite">Added to favorite</string>
+    <string name="message_favorite_add">Added to favorite</string>
     <string name="message_food_del">Product will not appear next time</string>
     <string name="message_dialog_food_empty">Not all fields are filled</string>
     <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
@@ -191,7 +189,7 @@
 
     <string name="tab_products">Products</string>
     <string name="tab_favorite">Favorites</string>
-    <string name="tab_user">Custom</string>
+    <string name="tab_user">User</string>
     <string name="tab_day">Day</string>
     <string name="tab_week">Week</string>
     <string name="tab_month">Month</string>

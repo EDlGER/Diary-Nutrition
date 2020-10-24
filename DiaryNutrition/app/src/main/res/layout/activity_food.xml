@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.Group
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:translationZ="8dp"
+            android:elevation="8dp"
             app:constraint_referenced_ids="app_bar_background, toolbar, textInputLayout, textView3, textView4, textView5, textView6"
             tools:targetApi="LOLLIPOP"/>
 
@@ -54,26 +54,29 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:textColorHint="@color/bar_secondary"
-            app:boxStrokeColor="@color/bar_primary"
+            android:textColorHint="@color/barSecondary"
+            android:theme="@style/BarTextInput"
+            app:hintTextColor="@color/barSecondary"
+            app:boxStrokeColor="@color/barPrimary"
             app:boxBackgroundColor="@color/colorPrimaryLight"
-            app:boxCornerRadiusTopEnd="4dp"
-            app:boxCornerRadiusTopStart="4dp"
+            app:boxCornerRadiusTopEnd="6dp"
+            app:boxCornerRadiusTopStart="6dp"
             app:endIconDrawable="@drawable/ic_cancel_white_24dp"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/bar_primary"
+            app:endIconTint="@color/barPrimary"
             app:startIconDrawable="@drawable/ic_search_white_24dp"
-            app:startIconTint="@color/bar_primary"
+            app:startIconTint="@color/barPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/bar_primary"
+                android:textColor="@color/barPrimary"
                 android:textSize="16sp"
-                android:hint="@string/action_search"/>
+                android:hint="@string/action_search" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -84,8 +87,8 @@
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center_horizontal"
-            android:text="@string/record_cal"
-            android:textColor="@color/bar_primary"
+            android:text="@string/food_cal"
+            android:textColor="@color/barPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -98,8 +101,8 @@
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center_horizontal"
-            android:text="@string/record_fat"
-            android:textColor="@color/bar_primary"
+            android:text="@string/food_fat"
+            android:textColor="@color/barPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -112,8 +115,8 @@
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center_horizontal"
-            android:text="@string/record_carbo"
-            android:textColor="@color/bar_primary"
+            android:text="@string/food_carbo"
+            android:textColor="@color/barPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -126,8 +129,8 @@
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:gravity="center_horizontal"
-            android:text="@string/record_prot"
-            android:textColor="@color/bar_primary"
+            android:text="@string/food_prot"
+            android:textColor="@color/barPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -137,11 +140,11 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="4dp"
+            android:background="@color/list_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -23,7 +23,7 @@
     </style>
 
     <style name="ToolbarTextColor" parent="AppTheme.NoActionBar">
-        <item name="android:textColorSecondary">@color/bar_primary</item>
+        <item name="android:textColorSecondary">@color/barPrimary</item>
         <item name="actionMenuTextColor">@color/text_normal</item>
 
     </style>
@@ -68,10 +68,10 @@
     <style name="ButtonCardStyle" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:clickable">false</item>
     </style>
-
-    <style name="BarElementStyle" parent="AppTheme">
-        <item name="android:textColorHint">@color/bar_secondary</item>
-        <item name="backgroundColor">@color/bar_primary</item>
+    
+    <style name="BarTextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/barPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
     <style name="Widget.Rally.Button.IconOnly" parent="@style/Widget.MaterialComponents.Button.TextButton.Icon">
@@ -84,7 +84,7 @@
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@color/bar_primary</item>
+        <item name="android:textColor">@color/barPrimary</item>
     </style>
 
     <style name="title_text" parent="@android:style/TextAppearance.Medium" />

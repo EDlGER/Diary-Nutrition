@@ -18,13 +18,10 @@
     <string name="title_summary">Сводка</string>
     <string name="title_search">Поиск продукта</string>
 
-    <string name="food_tab1">Добавленные</string>
-    <string name="food_tab2">Избранные</string>
-
-    <string name="record_carbo">УГЛ</string>
-    <string name="record_prot">БЛК</string>
-    <string name="record_fat">ЖИР</string>
-    <string name="record_cal">КАЛ</string>
+    <string name="food_carbo">УГЛ</string>
+    <string name="food_prot">БЛК</string>
+    <string name="food_fat">ЖИР</string>
+    <string name="food_cal">КАЛ</string>
 
     <string name="weight_week">Неделя</string>
     <string name="weight_month">Месяц</string>
@@ -104,7 +101,7 @@
     <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
 
     <string name="message_serving">Количество порции не введено</string>
-    <string name="message_favorite">Добавлено в избранное</string>
+    <string name="message_favorite_add">Добавлено в избранное</string>
     <string name="message_dialog_food_empty">Не все поля заполнены</string>
     <string name="message_dialog_food_point">Одно или несколько полей содежат неправильный формат числа</string>
     <string name="message_dialog_weight">Вес не введен</string>
@@ -284,5 +281,6 @@
     <string name="dialog_weight_add">Добавить вес</string>
     <string name="dialog_date">Дата</string>
     <string name="action_add_food">Добавить продукт</string>
+    <string name="food_verified">Проверенный</string>
 
 </resources>

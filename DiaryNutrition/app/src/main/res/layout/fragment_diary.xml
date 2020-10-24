@@ -28,7 +28,7 @@
             app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
             app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
             app:compactCalendarTargetHeight="250dp"
-            app:compactCalendarTextColor="@color/bar_primary"
+            app:compactCalendarTextColor="@color/barPrimary"
             app:compactCalendarTextSize="12sp" />
 
         <View
@@ -218,7 +218,7 @@
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="18dp"
-                    android:text="@string/record_prot"
+                    android:text="@string/food_prot"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal" />
@@ -228,7 +228,7 @@
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="18dp"
-                    android:text="@string/record_fat"
+                    android:text="@string/food_fat"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>
@@ -238,7 +238,7 @@
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="32dp"
-                    android:text="@string/record_carbo"
+                    android:text="@string/food_carbo"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>
@@ -248,7 +248,7 @@
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:text="@string/record_cal"
+                    android:text="@string/food_cal"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_horizontal"/>

@@ -134,38 +134,38 @@ public class FoodDaoTest {
         assertThat(food.getUser(), is(1));
     }
 
-    @Test
-    public void insertAndSearchAll() throws Exception {
-        mFoodDao.insertFood(FOOD);
-        Food food = new Food("food", 1, 1, 1, 1);
-        mFoodDao.insertFood(food);
+//    @Test
+//    public void insertAndSearchAll() throws Exception {
+//        mFoodDao.insertFood(FOOD);
+//        Food food = new Food("food", 1, 1, 1, 1);
+//        mFoodDao.insertFood(food);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.searchAllFood("%food%"));
+//        assertThat(foods.size(), is(2));
+//
+//        foods = LiveDataTestUtil.getValue(mFoodDao.searchAllFood("%test%"));
+//        assertThat(foods.size(), is(1));
+//
+//        assertThat(foods.get(0).getName(), is("test food"));
+//    }
 
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.searchAllFood("%food%"));
-        assertThat(foods.size(), is(2));
-
-        foods = LiveDataTestUtil.getValue(mFoodDao.searchAllFood("%test%"));
-        assertThat(foods.size(), is(1));
-
-        assertThat(foods.get(0).getName(), is("test food"));
-    }
-
-    @Test
-    public void insertAndSearchFavor() throws Exception {
-        Food food = new Food("test food", 1, 1, 1, 1);
-        food.setFavorite(1);
-        mFoodDao.insertFood(food);
-        food.setName("food");
-        mFoodDao.insertFood(food);
-
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.searchFavorFood("%food%"));
-        assertThat(foods.size(), is(2));
-
-        foods = LiveDataTestUtil.getValue(mFoodDao.searchFavorFood("%test%"));
-        assertThat(foods.size(), is(1));
-
-        assertThat(foods.get(0).getFavorite(), is(1));
-        assertThat(foods.get(0).getName(), is("test food"));
-    }
+//    @Test
+//    public void insertAndSearchFavor() throws Exception {
+//        Food food = new Food("test food", 1, 1, 1, 1);
+//        food.setFavorite(1);
+//        mFoodDao.insertFood(food);
+//        food.setName("food");
+//        mFoodDao.insertFood(food);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.searchFavorFood("%food%"));
+//        assertThat(foods.size(), is(2));
+//
+//        foods = LiveDataTestUtil.getValue(mFoodDao.searchFavorFood("%test%"));
+//        assertThat(foods.size(), is(1));
+//
+//        assertThat(foods.get(0).getFavorite(), is(1));
+//        assertThat(foods.get(0).getName(), is("test food"));
+//    }
 
     @Test
     public void insertAndGetSummary() throws Exception {
