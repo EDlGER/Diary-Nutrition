@@ -69,7 +69,10 @@ class FoodActivity: AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // TODO: navigate to AddFoodDialog
+        if (item.itemId == R.id.action_add) {
+            supportFragmentManager.beginTransaction().add(android.R.id.content, AddFoodDialog()).commit()
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 }

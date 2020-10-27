@@ -13,6 +13,8 @@ import ediger.diarynutrition.Event
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.FoodRepository
 import ediger.diarynutrition.data.source.entities.Food
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
@@ -61,12 +63,39 @@ class FoodViewModel(app: Application): AndroidViewModel(app) {
         repository.deleteFood(id)
     }
 
+    fun addFood(name: String?, cal: Float?, prot: Float?, fat: Float?, carbo: Float?, gi: Int?): Boolean {
+        if (name.isNullOrBlank() || cal == null || prot == null || fat == null || carbo == null) {
+            showSnackbarMessage(R.string.message_dialog_food_empty)
+            return false
+        }
+        viewModelScope.launch {
+            val food = Food(name, cal, prot, fat, carbo).apply {
+                this.gi = gi ?: 0
+                user = 1
+            }
+            repository.addFood(food)
+        }
+        return true
+    }
+
+    fun updateFood(food: Food?) =
+        food?.let {
+            viewModelScope.launch { repository.updateFood(food) }
+        }
+
+
+    fun getFood(id: Int?) = id?.let { repository.getFood(id) }
+
     fun setQueryValue(query: String) {
         _queryValue.value = query
     }
 
     private fun showSnackbarMessage(message: Int) {
         _snackbarText.value = Event(message)
+    }
+
+    companion object {
+        const val FOOD_ID = "foodId"
     }
 
 }

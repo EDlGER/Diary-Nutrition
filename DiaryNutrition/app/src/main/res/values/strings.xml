@@ -42,6 +42,7 @@
     <string name="food_fat">FAT</string>
     <string name="food_cal">CAL</string>
     <string name="food_verified">Verified</string>
+    <string name="food_gi">Glycemic index</string>
 
     <string name="weight_week">Week</string>
     <string name="weight_month">Month</string>
@@ -74,7 +75,7 @@
     <string name="dialog_change_date">Select</string>
     <string name="dialog_title_date">Select date</string>
     <string name="dialog_title_change">Food change</string>
-    <string name="dialog_title_f">Adding food</string>
+    <string name="dialog_food_title">New product</string>
     <string name="dialog_title_w">Type your weight, kg</string>
     <string name="dialog_title_c">Enter calories</string>
     <string name="dialog_title_water_edit">Enter amount of water, ml</string>
@@ -82,7 +83,7 @@
     <string name="dialog_title_water">Adding water</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
-    <string name="dialog_name_f">Food name</string>
+    <string name="dialog_food_name">Food name</string>
     <string name="dialog_weight">Weight</string>
     <string name="dialog_weight_add">Add weight</string>
     <string name="dialog_date">Date</string>

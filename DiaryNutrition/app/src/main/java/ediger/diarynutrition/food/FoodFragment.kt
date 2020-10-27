@@ -3,6 +3,7 @@ package ediger.diarynutrition.food
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -63,6 +64,15 @@ class FoodFragment : Fragment() {
                 viewModel.setFavoriteFood(clickedItemId, false)
             R.integer.action_context_delete ->
                 viewModel.deleteFood(clickedItemId)
+            R.integer.action_context_change -> {
+                val dialog = AddFoodDialog().apply {
+                    arguments = bundleOf(FoodViewModel.FOOD_ID to clickedItemId)
+                }
+                requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .add(android.R.id.content, dialog)
+                        .commit()
+            }
             else -> return super.onContextItemSelected(item)
         }
         return true

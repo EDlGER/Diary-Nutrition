@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.*
 import ediger.diarynutrition.data.source.entities.Food
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FoodDao {
@@ -17,7 +18,7 @@ interface FoodDao {
     fun getUserFood(): LiveData<List<Food>>
 
     @Query("SELECT * FROM food WHERE id = :id")
-    fun getFood(id: Int): Food
+    fun getFood(id: Int): LiveData<Food>
 
     @Query("SELECT DISTINCT id FROM food WHERE name = :name AND cal = :cal")
     suspend fun getDuplicateId(name: String, cal: Float): Int
@@ -26,13 +27,13 @@ interface FoodDao {
     suspend fun populateFood(foodList: List<Food>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertFood(food: Food)
+    suspend fun insertFood(food: Food)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllFood(foodList: List<Food>): List<Long>
 
-    @Update
-    fun updateFood(food: Food)
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun updateFood(food: Food)
 
     @Query("UPDATE food " +
             "SET verified = :verified, " +

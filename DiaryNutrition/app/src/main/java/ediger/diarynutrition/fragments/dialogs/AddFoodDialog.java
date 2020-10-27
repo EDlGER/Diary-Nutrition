@@ -19,9 +19,9 @@ public class AddFoodDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
+        View relative = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food_old, null);
         builder.setView(relative);
-        builder.setTitle(getString(R.string.dialog_title_f));
+        builder.setTitle(getString(R.string.dialog_food_title));
 
         final EditText txtNameF = (EditText) relative.findViewById(R.id.txtNameF);
         final EditText txtCalF = (EditText) relative.findViewById(R.id.txtCalF);

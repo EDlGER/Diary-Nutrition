@@ -1,6 +1,7 @@
 package ediger.diarynutrition.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -35,10 +36,13 @@ class FoodRepository(private val foodDao: FoodDao) {
         foodDao.updateFavoriteFoodById(id, favorite)
     }
 
-    suspend fun deleteFood(id: Int) {
-        val id = foodDao.deleteFoodById(id)
-        Log.v("FoodRepository", "Returned: $id")
-    }
+    suspend fun deleteFood(id: Int) = foodDao.deleteFoodById(id)
+
+    suspend fun addFood(food: Food) = foodDao.insertFood(food)
+
+    suspend fun updateFood(food: Food) = foodDao.updateFood(food)
+
+    fun getFood(id: Int) = foodDao.getFood(id)
 
     companion object {
 

@@ -18,7 +18,7 @@ public class ChangeFoodDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        View relative1 = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food, null);
+        View relative1 = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_food_old, null);
         builder.setView(relative1);
         builder.setTitle(getString(R.string.dialog_title_change));
 

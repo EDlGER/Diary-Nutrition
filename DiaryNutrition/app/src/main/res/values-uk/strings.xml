@@ -53,11 +53,11 @@
     <string name="dialog_title_date">Выберите дату</string>
 
     <string name="dialog_title_change">Изменение продукта</string>
-    <string name="dialog_title_f">Добавление своего продукта</string>
+    <string name="dialog_food_title">Новый продукт</string>
     <string name="dialog_title_w">Введите Ваш вес, кг</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
-    <string name="dialog_name_f">Название продукта</string>
+    <string name="dialog_food_name">Название продукта</string>
     <string name="macro_cal">Калории</string>
     <string name="macro_carbo">Углеводы</string>
     <string name="macro_prot">Белки</string>
@@ -282,5 +282,6 @@
     <string name="dialog_date">Дата</string>
     <string name="action_add_food">Добавить продукт</string>
     <string name="food_verified">Проверенный</string>
+    <string name="food_gi">Гликемический индекс</string>
 
 </resources>

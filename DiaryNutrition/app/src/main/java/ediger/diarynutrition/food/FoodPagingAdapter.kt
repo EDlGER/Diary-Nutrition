@@ -65,6 +65,9 @@ class FoodViewHolder(
             menu?.add(Menu.NONE, R.integer.action_context_favorite_add, foodId, R.string.context_menu_favor)
             menu?.add(Menu.NONE, R.integer.action_context_delete, foodId, R.string.context_menu_del)
         }
+        if (binding.food?.user == 1) {
+            menu?.add(Menu.NONE, R.integer.action_context_change, foodId, R.string.context_menu_change)
+        }
 
     }
 
