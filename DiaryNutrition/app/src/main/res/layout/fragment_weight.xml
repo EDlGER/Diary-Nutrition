@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/listview_background">
+        android:background="@color/background_list_record">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/sp_interval"
@@ -36,7 +36,7 @@
                 android:id="@+id/list_weight"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/listview_background"/>
+                android:background="@color/background_list_record"/>
 
             <TextView
                 android:layout_width="wrap_content"

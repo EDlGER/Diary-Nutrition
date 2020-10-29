@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="8dp"
-            app:constraint_referenced_ids="app_bar_background, toolbar, textInputLayout, textView3, textView4, textView5, textView6"
+            app:constraint_referenced_ids="app_bar_background, toolbar, textInputLayout, lbCal, lbFat, lbCarbo, lbProt"
             tools:targetApi="LOLLIPOP"/>
 
         <androidx.appcompat.widget.Toolbar
@@ -80,12 +80,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/lbCal"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_horizontal"
             android:text="@string/food_cal"
             android:textColor="@color/barPrimary"
@@ -94,45 +93,42 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/lbCarbo"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_horizontal"
-            android:text="@string/food_fat"
-            android:textColor="@color/barPrimary"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="32dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="24dp"
             android:gravity="center_horizontal"
             android:text="@string/food_carbo"
             android:textColor="@color/barPrimary"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintEnd_toStartOf="@+id/lbCal"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/lbFat"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/food_fat"
+            android:textColor="@color/barPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/lbCarbo"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        <TextView
+            android:id="@+id/lbProt"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_horizontal"
             android:text="@string/food_prot"
             android:textColor="@color/barPrimary"
             android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/lbFat"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -144,7 +140,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/lbCal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

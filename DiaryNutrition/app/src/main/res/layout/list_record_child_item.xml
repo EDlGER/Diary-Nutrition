@@ -16,7 +16,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
-        android:background="@color/listview_background"
+        android:background="@color/background_list_record"
         app:customHeight="@{isLastChild ? @dimen/list_item_last_height : @dimen/list_item_height}">
 
         <RelativeLayout

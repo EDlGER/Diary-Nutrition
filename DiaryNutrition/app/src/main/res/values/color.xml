@@ -8,12 +8,13 @@
     <color name="colorAccentPressed">#FF8F00</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="layout_standart_background">#FAFAFA</color>
-    <color name="listview_background">#EEEEEE</color>
+    <color name="background_list_record">#EEEEEE</color>
     <color name="listview_primary_text">#DE000000</color>
     <color name="listview_second_text">#99000000</color>
     <color name="chart_label_color">#BDBDBD</color>
 
-    <color name="list_background">#FAFAFA</color>
+    <color name="list_background">#FFFFFF</color>
+    <color name="list_divider">#1F000000</color>
 
     <color name="bg_record_list_item">#FAFAFA</color>
 

@@ -16,13 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="272dp"
         android:gravity="center_horizontal"
-        android:background="@color/listview_background">
+        android:background="@color/background_list_record">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_water"
             android:layout_width="match_parent"
             android:layout_height="208dp"
-            android:background="@color/listview_background"
+            android:background="@color/background_list_record"
             android:layout_marginTop="48dp"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="8dp"

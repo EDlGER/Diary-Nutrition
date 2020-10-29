@@ -13,17 +13,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/list_item_height"
-        android:background="@drawable/food_item_background"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:background="@drawable/food_item_background">
 
         <ImageView
             android:id="@+id/imFilter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:contentDescription="@string/description_filter_result"
             android:src="@drawable/ic_history_24dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,10 +30,12 @@
             android:id="@+id/imVerified"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:contentDescription="@string/food_verified"
             android:src="@drawable/ic_verified_24dp"
-            android:visibility="@{food.verified == 1 ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{food.verified == 1 ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,30 +49,32 @@
             android:lines="1"
             android:text="@{food.name}"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imFilter"
+            app:layout_constraintBottom_toBottomOf="@+id/horIconBottom"
             app:layout_constraintEnd_toStartOf="@+id/txtCal"
-            app:layout_constraintStart_toEndOf="@+id/imFilter"
-            app:layout_constraintTop_toTopOf="@+id/imFilter"
-            tools:text="Some food"/>
+            app:layout_constraintStart_toEndOf="@+id/vertIconEnd"
+            app:layout_constraintTop_toTopOf="@+id/horIconTop"
+            tools:text="Some food" />
 
         <TextView
             android:id="@+id/txtCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:paddingStart="8dp"
             android:text="@{String.format(`%d`, (int) food.cal)}"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imFilter"
+            app:layout_constraintBottom_toBottomOf="@+id/txtFoodName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imFilter"
-            tools:text="300"/>
+            app:layout_constraintTop_toTopOf="@+id/txtFoodName"
+            tools:text="300" />
 
         <TextView
             android:id="@+id/txtCarbo"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="64dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:maxLength="5"
@@ -80,8 +83,8 @@
             android:textColor="@color/text_medium"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txtCal"
-            tools:text="99.9"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="99.9" />
 
         <TextView
             android:id="@+id/txtFat"
@@ -97,7 +100,7 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtCarbo"
-            tools:text="99.9"/>
+            tools:text="99.9" />
 
         <TextView
             android:id="@+id/txtProt"
@@ -113,7 +116,28 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtFat"
-            tools:text="99.9"/>
+            tools:text="99.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertIconEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="40dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horIconTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horIconBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

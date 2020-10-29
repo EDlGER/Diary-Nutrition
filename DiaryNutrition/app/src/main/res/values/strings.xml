@@ -96,6 +96,8 @@
     <string name="dialog_water_value4" translatable="false">1000</string>
     <string name="dialog_water_help">Hold to change values</string>
 
+    <string name="description_filter_result">Filter result</string>
+
     <string name="context_menu_del">Delete</string>
     <string name="context_menu_change">Change</string>
     <string name="context_menu_favor">To favorite</string>
