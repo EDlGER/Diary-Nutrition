@@ -8,7 +8,9 @@ import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.databinding.ListFoodItemBinding
 
-class FoodPagingAdapter: PagingDataAdapter<Food, FoodViewHolder>(FOOD_COMPARATOR) {
+class FoodPagingAdapter : PagingDataAdapter<Food, FoodViewHolder>(FOOD_COMPARATOR) {
+
+    var isDefaultQuery = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
         return FoodViewHolder.create(parent)
@@ -16,7 +18,7 @@ class FoodPagingAdapter: PagingDataAdapter<Food, FoodViewHolder>(FOOD_COMPARATOR
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = getItem(position)
-        food?.let { holder.bind(food) }
+        food?.let { holder.bind(food, isDefaultQuery) }
     }
 
     companion object {
@@ -33,7 +35,7 @@ class FoodPagingAdapter: PagingDataAdapter<Food, FoodViewHolder>(FOOD_COMPARATOR
 }
 
 class FoodViewHolder(
-        val binding: ListFoodItemBinding
+        private val binding: ListFoodItemBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnCreateContextMenuListener {
 
     init {
@@ -45,9 +47,10 @@ class FoodViewHolder(
         binding.root.setOnCreateContextMenuListener(this)
     }
 
-    fun bind(item: Food) {
+    fun bind(item: Food, defaultQuery: Boolean) {
         binding.apply {
             food = item
+            isDefaultQuery = defaultQuery
             executePendingBindings()
         }
     }

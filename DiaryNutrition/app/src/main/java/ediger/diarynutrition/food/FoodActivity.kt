@@ -4,6 +4,8 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -41,6 +43,10 @@ class FoodActivity: AppCompatActivity() {
 
         setupViewPager()
         setupSnackbar()
+
+        binding.edSearch.requestFocus()
+        val im = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
     private fun setupViewPager() {
@@ -55,12 +61,19 @@ class FoodActivity: AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 binding.edSearch.setText("")
+                hideKeyboard()
             }
         })
     }
 
     private fun setupSnackbar() {
         binding.root.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+    }
+
+    private fun hideKeyboard() {
+        val view = binding.root.findFocus()
+        val im = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        view?.let{ im.hideSoftInputFromWindow(view.windowToken, 0) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

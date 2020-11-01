@@ -1,16 +1,13 @@
 package ediger.diarynutrition.food
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentTabBinding
-import ediger.diarynutrition.util.setupSnackbar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,10 +41,11 @@ class FoodFragment : Fragment() {
     private fun observeListQuery() {
         val foodVariance = arguments?.get(VARIANCE) as FoodVariance
 
-        viewModel.queryValue.observe(viewLifecycleOwner) {
+        viewModel.queryValue.observe(viewLifecycleOwner) { query ->
             searchJob?.cancel()
             searchJob = lifecycleScope.launch {
                 viewModel.searchFood(foodVariance)?.collectLatest {
+                    adapter.isDefaultQuery = query.isEmpty() && foodVariance == FoodVariance.ALL
                     adapter.submitData(it)
                     binding.list.scrollToPosition(0)
                 }

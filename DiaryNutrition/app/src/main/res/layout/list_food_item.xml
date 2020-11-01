@@ -8,6 +8,8 @@
         <variable
             name="food"
             type="ediger.diarynutrition.data.source.entities.Food" />
+
+        <variable name="isDefaultQuery" type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
             android:contentDescription="@string/description_filter_result"
             android:src="@drawable/ic_history_24dp"
-            android:visibility="gone"
+            android:visibility="@{isDefaultQuery ? View.VISIBLE : View. GONE }"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:contentDescription="@string/food_verified"
             android:src="@drawable/ic_verified_24dp"
-            android:visibility="@{food.verified == 1 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{food.verified == 1 &amp;&amp; !isDefaultQuery? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

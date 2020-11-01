@@ -47,7 +47,7 @@ public class RecordDaoTest {
                 .build();
         mRecordDao = mDatabase.recordDao();
 
-        mDatabase.foodDao().insertFood(FOOD);
+        //mDatabase.foodDao().insertFood(FOOD);
         mDatabase.mealDao().insertMeal(MealDaoTest.MEAL);
     }
 

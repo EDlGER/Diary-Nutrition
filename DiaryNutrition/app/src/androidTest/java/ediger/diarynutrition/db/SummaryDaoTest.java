@@ -67,7 +67,7 @@ public class SummaryDaoTest {
     }
 
     private void addInitData() {
-        mDatabase.foodDao().insertFood(FoodDaoTest.FOOD);
+        //mDatabase.foodDao().insertFood(FoodDaoTest.FOOD);
         mDatabase.mealDao().insertMeal(MealDaoTest.MEAL);
 
         mDatabase.recordDao().insertRecord(RecordDaoTest.RECORD);

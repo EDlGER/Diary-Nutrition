@@ -28,111 +28,111 @@ public class FoodDaoTest {
 
     static final Food FOOD = new Food("test food", 1, 1, 1, 1);
 
-    @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-
-    private DiaryDatabase mDatabase;
-
-    private FoodDao mFoodDao;
-
-    @Before
-    public void initDb() {
-        mDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
-                DiaryDatabase.class)
-                .allowMainThreadQueries()
-                .build();
-        mFoodDao = mDatabase.foodDao();
-    }
-
-    @After
-    public void closeDb() {
-        mDatabase.close();
-    }
-
-    @Test
-    public void insertFoodAndGetAll() throws Exception {
-        mFoodDao.insertFood(FOOD);
-
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
-
-        assertThat(foods.size(), is(1));
-
-        Food food = foods.get(0);
-
-        assertFood(food, foods.size(), FOOD.getName(), FOOD.getCal(), FOOD.getProt(),
-                FOOD.getFat(), FOOD.getCarbo());
-    }
-
-    @Test
-    public void deleteFoodById() throws Exception {
-        mFoodDao.insertFood(FOOD);
-
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
-
-        Food food = foods.get(0);
-
-        int delCount = mFoodDao.deleteFoodById(food.getId());
-
-        assertThat(delCount, is(1));
-
-        foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
-
-        assertThat(foods.size(), is(0));
-
-    }
-
-    @Test
-    public void insertAndUpdate() {
-        mFoodDao.insertFood(FOOD);
-        Food food = mFoodDao.getFood(1);
-        food.setFavorite(1);
-        food.setUser(1);
-        mFoodDao.updateFood(food);
-
-        food = mFoodDao.getFood(1);
-
-        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
-                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavorite(), is(1));
-        assertThat(food.getUser(), is(1));
-    }
-
-    @Test
-    public void insertAndGetFavor() throws Exception {
-        Food food = new Food(FOOD.getName(), FOOD.getCal(),
-                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        food.setFavorite(1);
-        mFoodDao.insertFood(food);
-        mFoodDao.insertFood(food);
-
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getFavorFood());
-        assertThat(foods.size(), is(2));
-
-        food = foods.get(0);
-
-        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
-                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavorite(), is(1));
-    }
-
-    @Test
-    public void insertAndGetUsr() throws Exception {
-        Food food = new Food(FOOD.getName(), FOOD.getCal(),
-                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        food.setUser(1);
-        mFoodDao.insertFood(food);
-        mFoodDao.insertFood(food);
-
-        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getUserFood());
-        assertThat(foods.size(), is(2));
-
-        food = foods.get(0);
-
-        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
-                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
-        assertThat(food.getFavorite(), is(0));
-        assertThat(food.getUser(), is(1));
-    }
+//    @Rule
+//    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+//
+//    private DiaryDatabase mDatabase;
+//
+//    private FoodDao mFoodDao;
+//
+//    @Before
+//    public void initDb() {
+//        mDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
+//                DiaryDatabase.class)
+//                .allowMainThreadQueries()
+//                .build();
+//        mFoodDao = mDatabase.foodDao();
+//    }
+//
+//    @After
+//    public void closeDb() {
+//        mDatabase.close();
+//    }
+//
+//    @Test
+//    public void insertFoodAndGetAll() throws Exception {
+//        mFoodDao.insertFood(FOOD);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
+//
+//        assertThat(foods.size(), is(1));
+//
+//        Food food = foods.get(0);
+//
+//        assertFood(food, foods.size(), FOOD.getName(), FOOD.getCal(), FOOD.getProt(),
+//                FOOD.getFat(), FOOD.getCarbo());
+//    }
+//
+//    @Test
+//    public void deleteFoodById() throws Exception {
+//        mFoodDao.insertFood(FOOD);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
+//
+//        Food food = foods.get(0);
+//
+//        int delCount = mFoodDao.deleteFoodById(food.getId());
+//
+//        assertThat(delCount, is(1));
+//
+//        foods = LiveDataTestUtil.getValue(mFoodDao.getAllFood());
+//
+//        assertThat(foods.size(), is(0));
+//
+//    }
+//
+//    @Test
+//    public void insertAndUpdate() {
+//        mFoodDao.insertFood(FOOD);
+//        Food food = mFoodDao.getFood(1);
+//        food.setFavorite(1);
+//        food.setUser(1);
+//        mFoodDao.updateFood(food);
+//
+//        food = mFoodDao.getFood(1);
+//
+//        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
+//                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
+//        assertThat(food.getFavorite(), is(1));
+//        assertThat(food.getUser(), is(1));
+//    }
+//
+//    @Test
+//    public void insertAndGetFavor() throws Exception {
+//        Food food = new Food(FOOD.getName(), FOOD.getCal(),
+//                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
+//        food.setFavorite(1);
+//        mFoodDao.insertFood(food);
+//        mFoodDao.insertFood(food);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getFavorFood());
+//        assertThat(foods.size(), is(2));
+//
+//        food = foods.get(0);
+//
+//        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
+//                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
+//        assertThat(food.getFavorite(), is(1));
+//    }
+//
+//    @Test
+//    public void insertAndGetUsr() throws Exception {
+//        Food food = new Food(FOOD.getName(), FOOD.getCal(),
+//                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
+//        food.setUser(1);
+//        mFoodDao.insertFood(food);
+//        mFoodDao.insertFood(food);
+//
+//        List<Food> foods = LiveDataTestUtil.getValue(mFoodDao.getUserFood());
+//        assertThat(foods.size(), is(2));
+//
+//        food = foods.get(0);
+//
+//        assertFood(food, 1, FOOD.getName(), FOOD.getCal(),
+//                FOOD.getProt(), FOOD.getFat(), FOOD.getCarbo());
+//        assertThat(food.getFavorite(), is(0));
+//        assertThat(food.getUser(), is(1));
+//    }
 
 //    @Test
 //    public void insertAndSearchAll() throws Exception {

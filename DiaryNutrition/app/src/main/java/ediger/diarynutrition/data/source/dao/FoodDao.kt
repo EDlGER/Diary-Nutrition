@@ -20,6 +20,12 @@ interface FoodDao {
     @Query("SELECT * FROM food WHERE id = :id")
     fun getFood(id: Int): LiveData<Food>
 
+    @Query("SELECT food.* FROM food INNER JOIN record ON record.food_id = food.id " +
+            "WHERE datetime between :from AND :to " +
+            "GROUP BY food.id " +
+            "ORDER BY count(record.datetime) DESC")
+    fun getPopularFood(from: Long, to: Long): PagingSource<Int, Food>
+
     @Query("SELECT DISTINCT id FROM food WHERE name = :name AND cal = :cal")
     suspend fun getDuplicateId(name: String, cal: Float): Int
 

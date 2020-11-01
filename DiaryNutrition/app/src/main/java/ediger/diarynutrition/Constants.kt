@@ -4,6 +4,7 @@ package ediger.diarynutrition
 const val DATABASE_NAME = "diary.db"
 const val BACKUP_NAME = "backupFile.json"
 const val DEFAULT_MEALS_COUNT = 5
+const val MILLIS_WEEK = 604800000
 
 //String
 const val KEY_GENDER = "gender"

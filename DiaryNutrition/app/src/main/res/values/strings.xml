@@ -185,9 +185,9 @@
     </string-array>
 
     <string-array name="pref_tab_array">
-        <item>Database</item>
-        <item>Favorites</item>
-        <item>Custom</item>
+        <item>@string/tab_products</item>
+        <item>@string/tab_favorite</item>
+        <item>@string/tab_user</item>
     </string-array>
 
     <string name="tab_products">Products</string>
@@ -298,7 +298,7 @@
         <item>Two months</item>
     </string-array>
     <string name="empty_list_weight">Add current weight</string>
-    <string name="empty_list_food">No food added</string>
+    <string name="empty_list_food">No user food</string>
     <string name="empty_list_favor">No favorite food</string>
 
 </resources>

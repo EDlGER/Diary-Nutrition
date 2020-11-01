@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class FoodViewModel(app: Application): AndroidViewModel(app) {
+class FoodViewModel(app: Application) : AndroidViewModel(app) {
 
     private var repository: FoodRepository = (app as AppContext).foodRepository
 
@@ -39,7 +39,12 @@ class FoodViewModel(app: Application): AndroidViewModel(app) {
 
         val newSearchResult = when (foodVariance) {
 
-            FoodVariance.ALL -> repository.searchAllFood(query)
+            FoodVariance.ALL -> {
+                if (query.isEmpty())
+                    repository.getPopularFood()
+                else
+                    repository.searchAllFood(query)
+            }
 
             FoodVariance.FAVORITES -> repository.searchFavoriteFood(query)
 
@@ -54,9 +59,7 @@ class FoodViewModel(app: Application): AndroidViewModel(app) {
 
     fun setFavoriteFood(id: Int, favorite: Boolean) = viewModelScope.launch {
         repository.setFavorite(id, favorite)
-        if (favorite) {
-            showSnackbarMessage(R.string.message_favorite_add)
-        }
+        if (favorite) showSnackbarMessage(R.string.message_favorite_add)
     }
 
     fun deleteFood(id: Int) = viewModelScope.launch {
