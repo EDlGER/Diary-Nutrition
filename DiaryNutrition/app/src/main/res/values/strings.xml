@@ -35,6 +35,8 @@
     <string name="title_search">Food search</string>
     <string name="title_program">Nutrition program</string>
 
+    <string name="text_helper_optional">optional</string>
+
     <string name="card_button_more">View more</string>
 
     <string name="food_carbo">CRB</string>

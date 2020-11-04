@@ -284,5 +284,6 @@
     <string name="food_verified">Проверенный</string>
     <string name="food_gi">Гликемический индекс</string>
     <string name="description_filter_result">Результат фильтрации</string>
+    <string name="text_helper_optional">необязательно</string>
 
 </resources>
