@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/tilMeal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:startIconDrawable="@drawable/ic_dining_white_24dp"
+            app:startIconTint="@color/barPrimary"
+            app:endIconDrawable="@drawable/ic_arrow_drop_down_white_18dp"
+            app:endIconTint = "@color/barPrimary"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="@color/colorPrimaryLight">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edMeal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/barPrimary"
+                android:textSize="16sp"
+                android:text="Завтрак"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/tilTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilMeal"
+            app:startIconDrawable="@drawable/ic_clock_white_24dp"
+            app:startIconTint="@color/barPrimary"
+            app:endIconDrawable="@drawable/ic_arrow_drop_down_white_18dp"
+            app:endIconTint = "@color/barPrimary"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="@color/colorPrimaryLight">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/barPrimary"
+                android:textSize="16sp"
+                android:text="11:30"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/lbCal"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/food_cal"
+            android:textColor="@color/barPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilTime" />
+
+        <TextView
+            android:id="@+id/lbCarbo"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center_horizontal"
+            android:text="@string/food_carbo"
+            android:textColor="@color/barPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/lbCal"
+            app:layout_constraintTop_toBottomOf="@+id/tilTime" />
+
+        <TextView
+            android:id="@+id/lbFat"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/food_fat"
+            android:textColor="@color/barPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/lbCarbo"
+            app:layout_constraintTop_toBottomOf="@+id/tilTime" />
+
+        <TextView
+            android:id="@+id/lbProt"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/food_prot"
+            android:textColor="@color/barPrimary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/lbFat"
+            app:layout_constraintTop_toBottomOf="@+id/tilTime" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_front_layer"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbCal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/sum_total"
+                android:textSize="12sp"
+                android:textAppearance="?textAppearanceOverline"
+                android:textColor="@color/text_high"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtCal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_horizontal"
+                android:text="999"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/txtCarbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="24dp"
+                android:gravity="center_horizontal"
+                android:text="99.9"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtCal" />
+
+            <TextView
+                android:id="@+id/txtFat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_horizontal"
+                android:text="99.9"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtCarbo"/>
+
+            <TextView
+                android:id="@+id/txtProt"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="center_horizontal"
+                android:text="99.9"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtFat"/>
+
+            <!-- D I V I D E R -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/list_background"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtCal" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

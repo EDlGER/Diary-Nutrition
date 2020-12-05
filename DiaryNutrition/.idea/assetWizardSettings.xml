@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_verified_24dp" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/verified-black-24dp.svg" />
+                            <entry key="outputName" value="ic_arrow_drop_down_white_18dp" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/arrow_drop_down-white-18dp.svg" />
                           </map>
                         </option>
                       </PersistentState>
