@@ -14,7 +14,7 @@ import androidx.room.*
                     parentColumns = arrayOf("id"),
                     childColumns = arrayOf("meal_id"),
                     onDelete = ForeignKey.SET_DEFAULT)])
-class Record(
+data class Record(
         @field:ColumnInfo(name = "meal_id") var mealId: Int,
         @field:ColumnInfo(name = "food_id") var foodId: Int,
         var serving: Int,

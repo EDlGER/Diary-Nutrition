@@ -15,12 +15,11 @@ import com.google.android.gms.ads.AdView
 import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.R
 import ediger.diarynutrition.SlidingTabLayout
-import ediger.diarynutrition.adapters.ViewPagerAdapter
 import ediger.diarynutrition.settings.SettingsFragment
 
 class OldFoodActivity : AppCompatActivity(), OnPageChangeListener {
     private val tabsNum = 3
-    private var adapter: ViewPagerAdapter? = null
+//    private var adapter: ViewPagerAdapter? = null
     private val titles = arrayOfNulls<CharSequence>(tabsNum)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,11 +54,11 @@ class OldFoodActivity : AppCompatActivity(), OnPageChangeListener {
         titles[2] = getString(R.string.tab_user)
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter = ViewPagerAdapter(supportFragmentManager, titles, tabsNum)
+//        adapter = ViewPagerAdapter(supportFragmentManager, titles, tabsNum)
 
         // Assigning ViewPager View and setting the adapter
         val pager = findViewById<ViewPager>(R.id.pager)
-        pager.adapter = adapter
+//        pager.adapter = adapter
         invalidateFragmentMenus(pager.currentItem)
         pref = PreferenceManager.getDefaultSharedPreferences(baseContext)
         pager.currentItem = pref.getString(KEY_PREF_UI_DEFAULT_TAB, "0")!!.toInt()
@@ -81,9 +80,9 @@ class OldFoodActivity : AppCompatActivity(), OnPageChangeListener {
     }
 
     private fun invalidateFragmentMenus(position: Int) {
-        for (i in 0 until adapter!!.count) {
-            adapter!!.getItem(i).setHasOptionsMenu(i == position)
-        }
+//        for (i in 0 until adapter!!.count) {
+//            adapter!!.getItem(i).setHasOptionsMenu(i == position)
+//        }
         invalidateOptionsMenu()
     }
 
