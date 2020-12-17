@@ -10,7 +10,7 @@
         <variable
             name="serving" type="int" />
         <variable
-            name="textChangedCallback" type="androidx.core.util.Consumer" />
+            name="onServingChangedCallback" type="ediger.diarynutrition.food.meal.OnServingChangedCallback" />
     </data>
 
     <!-- android:descendantFocusability="afterDescendants" -->
@@ -119,7 +119,7 @@
                     android:textSize="14sp"
                     android:maxLength="4"
                     android:inputType="number"
-                    android:onTextChanged="@{(text,start,before,count) -> textChangedCallback.accept(text)}"/>
+                    android:onTextChanged="@{(text,start,before,count) -> onServingChangedCallback.onChange(food.id, text)}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

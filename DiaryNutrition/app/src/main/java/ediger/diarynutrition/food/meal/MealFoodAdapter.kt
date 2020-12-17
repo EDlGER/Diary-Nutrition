@@ -1,6 +1,7 @@
 package ediger.diarynutrition.food.meal
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.util.Consumer
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +11,9 @@ import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.data.source.entities.RecordAndFood
 import ediger.diarynutrition.databinding.ListMealFoodItemBinding
 
-class MealFoodAdapter : ListAdapter<RecordAndFood, MealFoodViewHolder>(FOOD_COMPARATOR) {
+class MealFoodAdapter(
+        private val onServingChangedCallback: OnServingChangedCallback
+) : ListAdapter<RecordAndFood, MealFoodViewHolder>(FOOD_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealFoodViewHolder {
         return MealFoodViewHolder(
@@ -32,7 +35,7 @@ class MealFoodAdapter : ListAdapter<RecordAndFood, MealFoodViewHolder>(FOOD_COMP
                     it.carbo * serving / 100
             )
         }
-        holder.bind(food, serving)
+        holder.bind(food, serving, onServingChangedCallback)
     }
 
     companion object {
@@ -54,21 +57,8 @@ class MealFoodViewHolder(
         val binding: ListMealFoodItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: Food, serving: Int) {
-        val textChangedCallback = Consumer<String> { text ->
-            if (text.isNotBlank()) {
-                binding.serving = text.toInt()
-                binding.food?.apply {
-                    cal = food.cal * binding.serving / 100
-                    prot = food.prot * binding.serving / 100
-                    fat = food.fat * binding.serving / 100
-                    carbo = food.carbo * binding.serving / 100
-                }
-                binding.executePendingBindings()
-            }
-        }
-
-        binding.textChangedCallback = textChangedCallback
+    fun bind(food: Food, serving: Int, onServingChangedCallback: OnServingChangedCallback) {
+        binding.onServingChangedCallback = onServingChangedCallback
         binding.food = food
         binding.serving = serving
         binding.executePendingBindings()
