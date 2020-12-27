@@ -4,6 +4,7 @@ import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.FoodRepository
+import ediger.diarynutrition.data.MealRepository
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
 import ediger.diarynutrition.database.DbDiary
@@ -22,6 +23,8 @@ class AppContext : MultiDexApplication() {
     val foodRepository: FoodRepository
         get() = FoodRepository.getInstance(database.foodDao())
 
+    val mealRepository: MealRepository
+        get() = MealRepository.getInstance(database.mealDao())
 
     override fun onCreate() {
         super.onCreate()

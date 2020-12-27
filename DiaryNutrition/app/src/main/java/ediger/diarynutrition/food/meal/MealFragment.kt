@@ -41,16 +41,18 @@ class MealFragment : Fragment() {
 
         timeSelectionInit()
 
+        // When `id` is received from another Fragment, call viewModel.foodSelected(id)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         viewModel.recordAndFoodList.observe(viewLifecycleOwner) { adapter.submitList(it) }
-
-        // TODO: Pass viewModel and lifecycleOwner to the binding
-
     }
 
     private fun mealSelectionInit() = with(binding) {

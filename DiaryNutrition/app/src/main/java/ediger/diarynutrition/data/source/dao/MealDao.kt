@@ -7,7 +7,7 @@ import ediger.diarynutrition.data.source.entities.Meal
 @Dao
 interface MealDao {
     @Query("SELECT * FROM meal ORDER BY id ASC")
-    fun getMeals(): LiveData<List<Meal>>
+    suspend fun getMeals(): List<Meal>
 
     @Query("SELECT * FROM meal WHERE id = :id")
     fun getMeal(id: Int): Meal

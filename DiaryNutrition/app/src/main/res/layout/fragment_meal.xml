@@ -2,7 +2,8 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="viewModel" type="ediger.diarynutrition.food.meal.MealViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -164,7 +165,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_horizontal"
-                android:text="999"
+                android:text="@{String.format(`%d`, (int) viewModel.totalMacro.cal)}"
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -177,7 +178,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="24dp"
                 android:gravity="center_horizontal"
-                android:text="99.9"
+                android:text="@{String.format(`%.1f`, viewModel.totalMacro.carbo)}"
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -190,7 +191,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_horizontal"
-                android:text="99.9"
+                android:text="@{String.format(`%.1f`, viewModel.totalMacro.fat)}"
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -203,7 +204,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center_horizontal"
-                android:text="99.9"
+                android:text="@{String.format(`%.1f`, viewModel.totalMacro.prot)}"
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintTop_toTopOf="parent"
