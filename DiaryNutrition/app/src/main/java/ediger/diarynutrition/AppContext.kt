@@ -13,6 +13,16 @@ import java.util.concurrent.TimeUnit
 class AppContext : MultiDexApplication() {
     private val mAppExecutors = AppExecutors()
 
+    val database: DiaryDatabase
+        get() = getInstance(this)
+
+    val repository: DiaryRepository
+        get() = DiaryRepository.getInstance(database, mAppExecutors)
+
+    val foodRepository: FoodRepository
+        get() = FoodRepository.getInstance(database.foodDao())
+
+
     override fun onCreate() {
         super.onCreate()
         PreferenceHelper.init(applicationContext)
@@ -33,15 +43,6 @@ class AppContext : MultiDexApplication() {
         //sDbDiary = new DbDiary(this);
     }
 
-    val database: DiaryDatabase
-        get() = getInstance(this)
-
-    val repository: DiaryRepository
-        get() = DiaryRepository.getInstance(database, mAppExecutors)
-
-    val foodRepository: FoodRepository
-        get() = FoodRepository.getInstance(database.foodDao())
-
     companion object {
         //TODO delete
         //Date of chosen day (begin of the day - 00:00) in milliseconds
@@ -50,8 +51,4 @@ class AppContext : MultiDexApplication() {
         lateinit var instance: AppContext
 
     }
-//
-//    init {
-//        instance = this
-//    }
 }

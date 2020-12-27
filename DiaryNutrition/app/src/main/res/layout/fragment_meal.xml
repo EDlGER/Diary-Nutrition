@@ -38,13 +38,18 @@
             app:boxStrokeWidth="0dp"
             app:boxBackgroundColor="@color/colorPrimaryLight">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edMeal"
+            <AutoCompleteTextView
+                android:id="@+id/atvMeal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="@string/dialog_meal"
                 android:textColor="@color/barPrimary"
                 android:textSize="16sp"
-                android:text="Завтрак"/>
+                android:cursorVisible="false"
+                android:maxLines="1"
+                android:focusable="true"
+                android:clickable="true"
+                android:inputType="none"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,8 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/barPrimary"
-                android:textSize="16sp"
-                android:text="11:30"/>
+                android:textSize="16sp"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

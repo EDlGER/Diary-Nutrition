@@ -1,6 +1,6 @@
 package ediger.diarynutrition.food.meal
 
-interface OnServingChangedCallback {
+fun interface OnServingChangedCallback {
 
     fun onChange(foodId: Int, serving: String)
 

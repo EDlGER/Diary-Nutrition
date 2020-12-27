@@ -6,15 +6,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.data.DiaryRepository
+import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.data.source.entities.RecordAndFood
 import java.util.*
 
-class MealFoodViewModel(val app: Application) : AndroidViewModel(app) {
+class MealViewModel(val app: Application) : AndroidViewModel(app) {
 
     private var repository: DiaryRepository = (app as AppContext).repository
 
     private val _recordAndFoodList: MutableLiveData<MutableList<RecordAndFood>> = MutableLiveData(mutableListOf())
     val recordAndFoodList: LiveData<MutableList<RecordAndFood>> = _recordAndFoodList
+
+    // TODO: total PFC for the meal
+
+    // TODO: acquire meal list
+    val mealList: List<Meal> = emptyList()
 
     var selectedTime = System.currentTimeMillis()
         set(value) {
@@ -27,7 +33,6 @@ class MealFoodViewModel(val app: Application) : AndroidViewModel(app) {
             field = value
             updateMeal()
         }
-
 
     fun updateServing(foodId: Int, serving: Int) {
         _recordAndFoodList.value
