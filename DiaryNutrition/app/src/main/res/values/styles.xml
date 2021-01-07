@@ -80,6 +80,10 @@
         <item name="iconTint">?attr/colorPrimaryVariant</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+    </style>
+
     <style name="commonListItemStyle"/>
 
     <style name="menu_labels_style">

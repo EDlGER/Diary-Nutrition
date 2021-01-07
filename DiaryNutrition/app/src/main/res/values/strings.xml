@@ -68,9 +68,9 @@
 
     <string name="dialog_cancel">Back</string>
     <string name="dialog_add">Add</string>
-    <string name="dialog_time">Time</string>
-    <string name="dialog_serv">Serving</string>
-    <string name="dialog_meal">Meal</string>
+    <string name="time">Time</string>
+    <string name="serving">Serving</string>
+    <string name="meal">Meal</string>
 
     <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>

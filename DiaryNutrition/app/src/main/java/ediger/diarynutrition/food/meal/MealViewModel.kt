@@ -9,6 +9,7 @@ import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.data.source.entities.Record
 import ediger.diarynutrition.data.source.entities.RecordAndFood
+import ediger.diarynutrition.objects.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -23,7 +24,8 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
 
     val totalMacro = MediatorLiveData<Food>()
 
-    var mealList: List<Meal> = emptyList()
+    private val _mealList: MutableLiveData<List<Meal>> = MutableLiveData(emptyList())
+    val mealList: LiveData<List<Meal>> = _mealList
 
     var selectedTime = System.currentTimeMillis()
         set(value) {
@@ -39,13 +41,14 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
 
     init {
         viewModelScope.launch {
-            mealList = mealRepository.getMeals()
+            _mealList.value = mealRepository.getMeals()
         }
         totalMacro.addSource(_recordAndFoodList) { totalMacro.value = getUpdatedMacro() }
     }
 
-    fun foodSelected(id: Int) {
-        val food = foodRepository.getFood(id).value
+    fun getFood(id: Int) = foodRepository.getFood(id)
+
+    fun foodSelected(food: Food?) {
         food?.let {
             val recordAndFood = RecordAndFood(
                     Record(selectedMealId, food.id, 100, selectedTime),

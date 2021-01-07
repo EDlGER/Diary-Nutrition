@@ -14,7 +14,7 @@
     <color name="chart_label_color">#BDBDBD</color>
 
     <color name="list_background">#FFFFFF</color>
-    <color name="list_divider">#1F000000</color>
+    <color name="stroke">#1F000000</color>
 
     <color name="bg_record_list_item">#FAFAFA</color>
 

@@ -2,6 +2,7 @@ package ediger.diarynutrition.food.meal
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class MealAdapter(
     }
 
     override fun onBindViewHolder(holder: MealFoodViewHolder, position: Int) {
-        var food= Food()
+        var food = Food()
         var serving = 100
 
         currentList[position].record?.let { serving = it.serving }
@@ -31,16 +32,15 @@ class MealAdapter(
                     it.prot * serving / 100,
                     it.fat * serving / 100,
                     it.carbo * serving / 100
-            )
+            ).apply { id = it.id }
         }
-        holder.bind(food, serving, onServingChangedCallback)
+        holder.bind(food, serving, position, onServingChangedCallback)
     }
 
     companion object {
         private val FOOD_COMPARATOR = object : DiffUtil.ItemCallback<RecordAndFood>() {
             override fun areItemsTheSame(oldItem: RecordAndFood, newItem: RecordAndFood): Boolean {
-                return (oldItem.record?.id == newItem.record?.id) &&
-                        (oldItem.food?.id == newItem.record?.id)
+                return oldItem.record?.foodId == newItem.record?.foodId
             }
 
             override fun areContentsTheSame(oldItem: RecordAndFood, newItem: RecordAndFood): Boolean {
@@ -55,10 +55,11 @@ class MealFoodViewHolder(
         val binding: ListMealFoodItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: Food, serving: Int, onServingChangedCallback: OnServingChangedCallback) {
+    fun bind(food: Food, serving: Int, position: Int, onServingChangedCallback: OnServingChangedCallback) {
         binding.onServingChangedCallback = onServingChangedCallback
         binding.food = food
         binding.serving = serving
+        binding.position = position
         binding.executePendingBindings()
     }
 

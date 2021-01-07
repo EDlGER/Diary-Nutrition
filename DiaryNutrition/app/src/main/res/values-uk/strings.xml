@@ -45,9 +45,9 @@
 
     <string name="dialog_cancel">Назад</string>
     <string name="dialog_add">Добавить</string>
-    <string name="dialog_time">Время</string>
-    <string name="dialog_serv">Порция</string>
-    <string name="dialog_meal">Прием пищи</string>
+    <string name="time">Время</string>
+    <string name="serving">Порция</string>
+    <string name="meal">Прием пищи</string>
 
     <string name="dialog_change_date">Выбрать</string>
     <string name="dialog_title_date">Выберите дату</string>

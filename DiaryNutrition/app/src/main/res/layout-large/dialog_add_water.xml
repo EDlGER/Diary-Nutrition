@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="24sp"
                         android:focusable="false"
-                        android:hint="@string/dialog_time"
+                        android:hint="@string/time"
                         android:cursorVisible="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>

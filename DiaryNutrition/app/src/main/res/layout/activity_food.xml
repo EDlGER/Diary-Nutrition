@@ -142,5 +142,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lbCal" />
 
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="16dp"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,18 +2,26 @@ package ediger.diarynutrition.food.meal
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MealFragment : Fragment() {
 
@@ -25,23 +33,33 @@ class MealFragment : Fragment() {
 
     private val timeFormatter = SimpleDateFormat("kk:mm", Locale.getDefault())
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMealBinding.inflate(inflater, container, false)
 
-        adapter = MealAdapter { foodId, serving ->
-            if (serving.isNotBlank()) {
-                viewModel.updateServing(foodId, serving.toInt())
-            }
+        adapter = MealAdapter { foodId, serving, position ->
+            val servingValue = when(serving) { "" -> 100 else -> serving.toInt() }
+            viewModel.updateServing(foodId, servingValue)
+
+            val holder = binding.list.findViewHolderForAdapterPosition(position) as MealFoodViewHolder
+            adapter.onBindViewHolder(holder, position)
+        }
+        binding.toolbar.navigationIcon?.let {
+            DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.barPrimary) )
         }
 
+        // TODO: Clicking behavior
+        binding.toolbar.setNavigationOnClickListener {
+            Log.d("MealFragment", "Nav icon was clicked")
+        }
         binding.list.adapter = adapter
         binding.list.setHasFixedSize(false)
 
-        mealSelectionInit()
-
         timeSelectionInit()
 
-        // When `id` is received from another Fragment, call viewModel.foodSelected(id)
+        val id = arguments?.getInt(FOOD_ID)
+        id?.let {
+            viewModel.getFood(id).observe(viewLifecycleOwner) { viewModel.foodSelected(it) }
+        }
 
         return binding.root
     }
@@ -52,27 +70,35 @@ class MealFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.recordAndFoodList.observe(viewLifecycleOwner) { adapter.submitList(it) }
-    }
-
-    private fun mealSelectionInit() = with(binding) {
-        val mealSelectionAdapter = ArrayAdapter(
-                requireContext(), android.R.layout.simple_list_item_1, viewModel.mealList.toTypedArray()
-        )
-        atvMeal.setAdapter(mealSelectionAdapter)
-        atvMeal.setText(
-                viewModel.mealList.findLast { it.id == viewModel.selectedMealId }?.name
-        )
-        atvMeal.setOnClickListener { (it as AutoCompleteTextView).showDropDown() }
-        atvMeal.setOnItemClickListener { parent, _, position, _ ->
-            val mealId = (parent.getItemAtPosition(position) as Meal).id
-            viewModel.selectedMealId = mealId
+        viewModel.recordAndFoodList.observe(viewLifecycleOwner) { adapter.submitList(it.toList()) }
+        viewModel.mealList.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                mealSelectionInit(it)
+            }
         }
     }
 
-    private fun timeSelectionInit() = with(binding) {
-        edTime.setText(timeFormatter.format(Date(viewModel.selectedTime)))
-        edTime.setOnClickListener {
+    private fun mealSelectionInit(mealList: List<Meal>) {
+        binding.edMeal.setText(
+                mealList.findLast { it.id == viewModel.selectedMealId }?.name
+        )
+
+        binding.edMeal.setOnClickListener {
+            AlertDialog.Builder(requireContext()).apply {
+                setItems(
+                        mealList.map { it.name }.toTypedArray()
+                ) { _, which ->
+                    binding.edMeal.setText(mealList[which].name)
+                    viewModel.selectedMealId = mealList[which].id
+                }
+                create()
+            }.show()
+        }
+    }
+
+    private fun timeSelectionInit() {
+        binding.edTime.setText(timeFormatter.format(Date(viewModel.selectedTime)))
+        binding.edTime.setOnClickListener {
             val calendar = Calendar.getInstance().apply { timeInMillis = viewModel.selectedTime }
             TimePickerDialog(
                     requireContext(),
@@ -80,13 +106,18 @@ class MealFragment : Fragment() {
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
                         calendar.set(Calendar.MINUTE, minute)
                         viewModel.selectedTime = calendar.timeInMillis
-                        edTime.setText(timeFormatter.format(calendar.time))
+                        binding.edTime.setText(timeFormatter.format(calendar.time))
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
                     true
             ).show()
         }
+    }
+
+    companion object {
+        const val TAG = "MealFragment"
+        const val FOOD_ID = "foodId"
     }
 
 }

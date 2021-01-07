@@ -1,12 +1,16 @@
 package ediger.diarynutrition.food
 
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.findFragment
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.databinding.ListFoodItemBinding
+import ediger.diarynutrition.food.meal.MealFragment
 
 class FoodPagingAdapter : PagingDataAdapter<Food, FoodViewHolder>(FOOD_COMPARATOR) {
 
@@ -56,7 +60,16 @@ class FoodViewHolder(
     }
 
     private fun navigateTo(food: Food, view: View) {
-        // TODO: navigate to AddActivity(or Fragment) passing food item or id
+        val fragment = MealFragment()
+        fragment.arguments = bundleOf(MealFragment.FOOD_ID to food.id)
+
+        val fragmentManager = view.findFragment<FoodFragment>().activity?.supportFragmentManager
+        fragmentManager?.beginTransaction()?.apply {
+            setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+            replace(R.id.fragmentContainer, fragment)
+            addToBackStack(MealFragment.TAG)
+            commit()
+        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
