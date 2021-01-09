@@ -28,7 +28,7 @@
                 android:background="?attr/colorPrimary"
                 android:fitsSystemWindows="true"
                 app:title="@string/dialog_title_water"
-                app:titleTextColor="@color/barPrimary"
+                app:titleTextColor="@color/onBarPrimary"
                 app:navigationIcon="@drawable/ic_close"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:elevation="5dp"/>

@@ -23,7 +23,7 @@
         android:layout_width="52dp"
         android:layout_height="52dp"
         app:icon="@drawable/ic_products"
-        app:iconTint="@color/barPrimary"
+        app:iconTint="@color/onBarPrimary"
         tools:ignore="MissingConstraints"/>
 
     <com.google.android.material.button.MaterialButton
@@ -60,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Products"
-        android:textColor="@color/barPrimary"
+        android:textColor="@color/onBarPrimary"
         app:layout_constraintWidth_max="130dp"
         tools:ignore="MissingConstraints"/>
 

@@ -28,7 +28,7 @@
             app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
             app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
             app:compactCalendarTargetHeight="250dp"
-            app:compactCalendarTextColor="@color/barPrimary"
+            app:compactCalendarTextColor="@color/onBarPrimary"
             app:compactCalendarTextSize="12sp" />
 
         <View

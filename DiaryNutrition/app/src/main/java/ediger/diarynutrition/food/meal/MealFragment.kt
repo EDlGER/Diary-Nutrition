@@ -1,16 +1,11 @@
 package ediger.diarynutrition.food.meal
 
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -21,7 +16,6 @@ import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MealFragment : Fragment() {
 
@@ -44,7 +38,7 @@ class MealFragment : Fragment() {
             adapter.onBindViewHolder(holder, position)
         }
         binding.toolbar.navigationIcon?.let {
-            DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.barPrimary) )
+            DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.onBarPrimary) )
         }
 
         // TODO: Clicking behavior

@@ -23,7 +23,7 @@
     </style>
 
     <style name="ToolbarTextColor" parent="AppTheme.NoActionBar">
-        <item name="android:textColorSecondary">@color/barPrimary</item>
+        <item name="android:textColorSecondary">@color/onBarPrimary</item>
         <item name="actionMenuTextColor">@color/text_normal</item>
 
     </style>
@@ -70,7 +70,7 @@
     </style>
     
     <style name="BarTextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="android:textColorHint">@color/barPrimary</item>
+        <item name="android:textColorHint">@color/onBarPrimary</item>
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
@@ -88,7 +88,7 @@
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@color/barPrimary</item>
+        <item name="android:textColor">@color/onBarPrimary</item>
     </style>
 
     <style name="title_text" parent="@android:style/TextAppearance.Medium" />

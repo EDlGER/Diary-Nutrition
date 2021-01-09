@@ -20,8 +20,9 @@
 
     <color name="dialog_background">#FAFAFA</color>
 
-    <color name="barPrimary">#FFFFFF</color>
-    <color name="barSecondary">#94FFFFFF</color> <!-- opacity 58% -->
+    <color name="onBarPrimary">#FFFFFF</color>
+    <color name="onBarSecondary">#94FFFFFF</color> <!-- opacity 58% -->
+    <color name="text_inactive">#61000000</color>
     <color name="text_normal">#B2000000</color>
     <color name="text_medium">#99000000</color> <!-- opacity of 60% -->
     <color name="text_high">#DE000000</color> <!-- opacity of 87% -->

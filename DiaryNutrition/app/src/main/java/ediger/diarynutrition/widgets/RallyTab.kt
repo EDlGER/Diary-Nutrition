@@ -106,11 +106,11 @@ class RallyTab @JvmOverloads constructor(
 
             findViewById<MaterialButton>(refs[position]).iconTint =
                     ColorStateList.valueOf(
-                            ContextCompat.getColor(context, R.color.barPrimary)
+                            ContextCompat.getColor(context, R.color.onBarPrimary)
                     )
 
             findViewById<TextView>(R.id.textView).setTextColor(
-                    ContextCompat.getColor(context, R.color.barPrimary)
+                    ContextCompat.getColor(context, R.color.onBarPrimary)
             )
 
             requestLayout()

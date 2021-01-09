@@ -28,7 +28,7 @@
             app:menu="@menu/dialog_food_add"
             app:navigationIcon="@drawable/ic_close"
             app:title="@string/dialog_food_title"
-            app:titleTextColor="@color/barPrimary" />
+            app:titleTextColor="@color/onBarPrimary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFoodName"

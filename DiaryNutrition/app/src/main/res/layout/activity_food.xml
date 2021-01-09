@@ -54,18 +54,18 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:textColorHint="@color/barSecondary"
+            android:textColorHint="@color/onBarSecondary"
             android:theme="@style/BarTextInput"
-            app:hintTextColor="@color/barSecondary"
-            app:boxStrokeColor="@color/barPrimary"
+            app:hintTextColor="@color/onBarSecondary"
+            app:boxStrokeColor="@color/onBarPrimary"
             app:boxBackgroundColor="@color/colorPrimaryLight"
             app:boxCornerRadiusTopEnd="6dp"
             app:boxCornerRadiusTopStart="6dp"
             app:endIconDrawable="@drawable/ic_cancel_white_24dp"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/barPrimary"
+            app:endIconTint="@color/onBarPrimary"
             app:startIconDrawable="@drawable/ic_search_white_24dp"
-            app:startIconTint="@color/barPrimary"
+            app:startIconTint="@color/onBarPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -74,7 +74,7 @@
                 android:id="@+id/edSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/barPrimary"
+                android:textColor="@color/onBarPrimary"
                 android:textSize="16sp"
                 android:hint="@string/action_search" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +87,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_horizontal"
             android:text="@string/food_cal"
-            android:textColor="@color/barPrimary"
+            android:textColor="@color/onBarPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -100,7 +100,7 @@
             android:layout_marginRight="24dp"
             android:gravity="center_horizontal"
             android:text="@string/food_carbo"
-            android:textColor="@color/barPrimary"
+            android:textColor="@color/onBarPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/lbCal"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -113,7 +113,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_horizontal"
             android:text="@string/food_fat"
-            android:textColor="@color/barPrimary"
+            android:textColor="@color/onBarPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/lbCarbo"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
@@ -126,7 +126,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_horizontal"
             android:text="@string/food_prot"
-            android:textColor="@color/barPrimary"
+            android:textColor="@color/onBarPrimary"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/lbFat"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />

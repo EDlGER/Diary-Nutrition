@@ -105,6 +105,8 @@
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                app:suffixText="@string/add_rec_gram1"
+                app:suffixTextColor="@color/text_inactive"
                 app:hintEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/foodName"
