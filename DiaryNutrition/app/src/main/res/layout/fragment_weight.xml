@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/layout_standart_background"
+            android:background="@color/background_standard"
             android:elevation="2dp">
 
             <lecho.lib.hellocharts.view.LineChartView

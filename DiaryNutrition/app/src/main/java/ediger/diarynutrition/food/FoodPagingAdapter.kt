@@ -1,7 +1,6 @@
 package ediger.diarynutrition.food
 
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.findFragment
 import androidx.paging.PagingDataAdapter
@@ -66,7 +65,7 @@ class FoodViewHolder(
         val fragmentManager = view.findFragment<FoodFragment>().activity?.supportFragmentManager
         fragmentManager?.beginTransaction()?.apply {
             setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-            replace(R.id.fragmentContainer, fragment)
+            replace(R.id.fragment_container, fragment)
             addToBackStack(MealFragment.TAG)
             commit()
         }

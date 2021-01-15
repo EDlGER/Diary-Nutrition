@@ -172,9 +172,9 @@ public class MonthFragment extends Fragment implements CompoundButton.OnCheckedC
         mBinding.chartMacro.setDragEnabled(false);
         mBinding.chartMacro.setScaleEnabled(false);
         mBinding.chartMacro.setBackgroundColor(ContextCompat.getColor(requireActivity(),
-                R.color.layout_standart_background));
+                R.color.background_standard));
         mBinding.chartMacro.setGridBackgroundColor(ContextCompat.getColor(requireActivity(),
-                R.color.layout_standart_background));
+                R.color.background_standard));
     }
 
     private void generateCalData(List<Summary> summaryList) {

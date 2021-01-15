@@ -119,7 +119,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:background="@color/layout_standart_background"
+                    android:background="@color/background_standard"
                     android:elevation="2dp"
                     android:gravity="center_vertical">
 
@@ -165,7 +165,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/layout_standart_background"
+                    android:background="@color/background_standard"
                     android:elevation="2dp"
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"

@@ -7,6 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_back">Back</string>
     <string name="action_add_food">Add food</string>
+    <string name="action_add_meal">Add meal</string>
 
     <string name="ad_app_id" translatable="false">ca-app-pub-2180848868226246~4003747218</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2180848868226246/4304798415</string>
@@ -59,6 +60,7 @@
     <string name="meal4">Dinner</string>
     <string name="meal5">Snacks</string>
     <string name="meal_choose">Select meal</string>
+    <string name="meal_food_count">Selected %d</string>
 
     <string name="radio_gender_male">Male</string>
     <string name="radio_gender_female">Female</string>
