@@ -29,6 +29,8 @@ class MealFragment : Fragment() {
 
     private lateinit var adapter: MealAdapter
 
+    private lateinit var bottomSheet: BottomSheetBehavior<ViewGroup>
+
     private val timeFormatter = SimpleDateFormat("kk:mm", Locale.getDefault())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -44,12 +46,21 @@ class MealFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bottomSheet = BottomSheetBehavior.from(binding.root.parent as ViewGroup)
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         navigationInit()
 
         subscribeUi()
+    }
+
+    fun submitFood(id: Int) {
+        viewModel.getFood(id).observe(viewLifecycleOwner) {
+            viewModel.foodSelected(it)
+            bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
     private fun subscribeUi() {
@@ -71,7 +82,7 @@ class MealFragment : Fragment() {
             DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.onBarPrimary) )
         }
 
-        val behavior = BottomSheetBehavior.from(root.parent as ViewGroup).apply {
+        bottomSheet.apply {
             state = BottomSheetBehavior.STATE_EXPANDED
 
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -88,11 +99,11 @@ class MealFragment : Fragment() {
         }
 
         toolbar.setNavigationOnClickListener {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         fabAddFood.setOnClickListener {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         fabAddMeal.setOnClickListener {
@@ -113,17 +124,15 @@ class MealFragment : Fragment() {
     }
 
     private fun mealSelectionInit(mealList: List<Meal>) {
-        val behavior = BottomSheetBehavior.from(binding.root.parent as ViewGroup)
-
         binding.edMeal.setText(
                 mealList.findLast { it.id == viewModel.selectedMealId }?.name
         )
 
         binding.edMeal.setOnClickListener {
-            if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            if (bottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
                 showMealDialog(mealList)
-            } else if (behavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            } else if (bottomSheet.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
     }

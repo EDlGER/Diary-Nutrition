@@ -47,7 +47,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtCal"
+                android:id="@+id/txt_cal"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="@+id/tilServing" />
 
             <TextView
-                android:id="@+id/txtCarbo"
+                android:id="@+id/txt_carbo"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -69,11 +69,11 @@
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tilServing"
-                app:layout_constraintEnd_toStartOf="@+id/txtCal"
+                app:layout_constraintEnd_toStartOf="@+id/txt_cal"
                 app:layout_constraintTop_toTopOf="@+id/tilServing" />
 
             <TextView
-                android:id="@+id/txtFat"
+                android:id="@+id/txt_fat"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -82,11 +82,11 @@
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tilServing"
-                app:layout_constraintEnd_toStartOf="@+id/txtCarbo"
+                app:layout_constraintEnd_toStartOf="@+id/txt_carbo"
                 app:layout_constraintTop_toTopOf="@+id/tilServing" />
 
             <TextView
-                android:id="@+id/txtProt"
+                android:id="@+id/txt_prot"
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -95,7 +95,7 @@
                 android:textColor="@color/text_high"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tilServing"
-                app:layout_constraintEnd_toStartOf="@+id/txtFat"
+                app:layout_constraintEnd_toStartOf="@+id/txt_fat"
                 app:layout_constraintTop_toTopOf="@+id/tilServing" />
 
             <com.google.android.material.textfield.TextInputLayout
