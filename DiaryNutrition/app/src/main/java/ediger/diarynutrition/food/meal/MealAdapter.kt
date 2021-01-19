@@ -1,5 +1,6 @@
 package ediger.diarynutrition.food.meal
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.data.source.entities.RecordAndFood
 import ediger.diarynutrition.databinding.ListMealFoodItemBinding
+import ediger.diarynutrition.util.showKeyboard
 
 class MealAdapter(
         private val onServingChangedCallback: OnServingChangedCallback
@@ -35,6 +37,10 @@ class MealAdapter(
             ).apply { id = it.id }
         }
         holder.bind(food, serving, position, onServingChangedCallback)
+
+        if (holder.binding.position == currentList.lastIndex) {
+            holder.binding.edServing.requestFocus()
+        }
     }
 
     companion object {

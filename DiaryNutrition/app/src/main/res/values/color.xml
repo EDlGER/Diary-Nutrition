@@ -16,6 +16,7 @@
 
     <color name="list_background">#FFFFFF</color>
     <color name="stroke">#1F000000</color>
+    <color name="divider">#1F000000</color>
 
     <color name="bg_record_list_item">#FAFAFA</color>
 

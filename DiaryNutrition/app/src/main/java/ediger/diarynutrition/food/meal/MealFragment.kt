@@ -17,6 +17,8 @@ import com.google.android.material.textfield.TextInputLayout
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
+import ediger.diarynutrition.util.hideKeyboard
+import ediger.diarynutrition.util.showKeyboard
 import kotlinx.android.synthetic.main.activity_food.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,7 +89,17 @@ class MealFragment : Fragment() {
 
             addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            activity?.hideKeyboard(binding.root.findFocus())
+                            isDraggable = true
+                        }
 
+                        BottomSheetBehavior.STATE_EXPANDED ->
+                            isDraggable = false
+
+                        else -> { }
+                    }
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {

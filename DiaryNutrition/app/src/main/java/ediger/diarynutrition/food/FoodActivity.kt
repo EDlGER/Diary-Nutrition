@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.PreferenceHelper
@@ -87,5 +88,13 @@ class FoodActivity: AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() = with(BottomSheetBehavior.from(binding.fragmentContainer)) {
+        if (state == BottomSheetBehavior.STATE_EXPANDED) {
+            state = BottomSheetBehavior.STATE_COLLAPSED
+        } else {
+            super.onBackPressed()
+        }
     }
 }
