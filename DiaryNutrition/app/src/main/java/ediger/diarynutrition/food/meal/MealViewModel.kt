@@ -50,6 +50,13 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun foodSelected(food: Food?) {
         food?.let {
+            // Check if that food is already selected
+            _recordAndFoodList.value?.let { list ->
+                if (list.map { it.food }.contains(food)) {
+                    return
+                }
+            }
+
             val recordAndFood = RecordAndFood(
                     Record(selectedMealId, food.id, 100, selectedTime),
                     food
@@ -63,6 +70,15 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
         _recordAndFoodList.value
                 ?.findLast { it.food?.id == foodId }
                 ?.apply { record?.serving = serving }
+        _recordAndFoodList.value = _recordAndFoodList.value
+    }
+
+    fun removeFood(id: Int) {
+        _recordAndFoodList.value?.let { list ->
+            list.remove(
+                    list.firstOrNull { it.food?.id == id }
+            )
+        }
         _recordAndFoodList.value = _recordAndFoodList.value
     }
 

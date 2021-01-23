@@ -287,5 +287,6 @@
     <string name="text_helper_optional">необязательно</string>
     <string name="action_add_meal">Добавить прием пищи</string>
     <string name="meal_food_count">Выбрано %d</string>
+    <string name="context_menu_remove">Убрать</string>
 
 </resources>

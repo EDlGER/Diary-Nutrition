@@ -10,12 +10,8 @@
         <variable
             name="serving" type="int" />
         <variable
-            name="position" type="int" />
-        <variable
             name="onServingChangedCallback" type="ediger.diarynutrition.food.meal.OnServingChangedCallback" />
     </data>
-
-    <!-- android:descendantFocusability="afterDescendants" -->
 
     <com.google.android.material.card.MaterialCardView
         android:layout_height="wrap_content"
@@ -121,9 +117,10 @@
                     android:hint="@string/dialog_serv_std"
                     android:textColor="@color/text_high"
                     android:textSize="14sp"
+                    android:text=""
                     android:maxLength="3"
                     android:inputType="number"
-                    android:onTextChanged="@{(text,start,before,count) -> onServingChangedCallback.onChange(food.id, text.toString(), position)}"/>
+                    android:onTextChanged="@{(text,start,before,count) -> onServingChangedCallback.onChange(food.id, text.toString())}"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

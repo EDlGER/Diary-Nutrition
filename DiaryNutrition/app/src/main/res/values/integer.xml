@@ -8,5 +8,6 @@
     <integer name="action_context_favorite_remove">2</integer>
     <integer name="action_context_change">3</integer>
     <integer name="action_context_delete">4</integer>
+    <integer name="action_context_remove">5</integer>
 
 </resources>

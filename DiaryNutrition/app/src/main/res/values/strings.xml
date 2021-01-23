@@ -106,6 +106,7 @@
     <string name="context_menu_change">Change</string>
     <string name="context_menu_favor">To favorite</string>
     <string name="context_menu_favor_del">Remove</string>
+    <string name="context_menu_remove">Remove</string>
     <string name="context_menu_copy">Copy</string>
     <string name="context_menu_paste">Paste</string>
 

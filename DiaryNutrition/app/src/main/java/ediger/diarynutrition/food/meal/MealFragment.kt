@@ -2,24 +2,20 @@ package ediger.diarynutrition.food.meal
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.textfield.TextInputLayout
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
 import ediger.diarynutrition.util.hideKeyboard
-import ediger.diarynutrition.util.showKeyboard
-import kotlinx.android.synthetic.main.activity_food.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -124,12 +120,12 @@ class MealFragment : Fragment() {
     }
 
     private fun listInit() {
-        adapter = MealAdapter { foodId, serving, position ->
+        adapter = MealAdapter { id, serving ->
             val servingValue = when(serving) { "" -> 100 else -> serving.toInt() }
-            viewModel.updateServing(foodId, servingValue)
+            viewModel.updateServing(id, servingValue)
+            val holder = binding.list.findViewHolderForItemId(id.toLong()) as MealFoodViewHolder
 
-            val holder = binding.list.findViewHolderForAdapterPosition(position) as MealFoodViewHolder
-            adapter.onBindViewHolder(holder, position)
+            adapter.onBindViewHolder(holder, holder.bindingAdapterPosition)
         }
         binding.list.adapter = adapter
         binding.list.setHasFixedSize(false)
@@ -178,6 +174,21 @@ class MealFragment : Fragment() {
             }
             create()
         }.show()
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val clickedItemId = item.order
+        return when (item.itemId) {
+            R.integer.action_context_remove -> {
+                viewModel.removeFood(clickedItemId)
+
+                if (viewModel.recordAndFoodList.value?.size == 0) {
+                    activity?.supportFragmentManager?.popBackStack()
+                }
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
     }
 
     companion object {
