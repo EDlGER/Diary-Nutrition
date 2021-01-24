@@ -127,7 +127,7 @@ public class DiaryFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
 
         //Recycler
-        mViewModel.getRecords().observe(getViewLifecycleOwner(), records -> mRecordAdapter.setRecordList(records));
+        mViewModel.getRecordsList().observe(getViewLifecycleOwner(), records -> mRecordAdapter.setRecordList(records));
 
         //Header
         mViewModel.getDaySummary().observe(getViewLifecycleOwner(), summary -> mBinding.setActual(summary));
@@ -297,6 +297,7 @@ public class DiaryFragment extends Fragment implements
         //TODO Temporary code
         mBinding.fabActionFood.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), FoodActivity.class);
+            // TODO: Pass a date
             startActivity(intent);
 //            mViewModel.addRecord(new Record(
 //                    1, 1, 100, mSelectedDate.getTimeInMillis()));

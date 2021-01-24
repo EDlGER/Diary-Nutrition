@@ -1,4 +1,4 @@
-package ediger.diarynutrition.data
+package ediger.diarynutrition.data.repositories
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

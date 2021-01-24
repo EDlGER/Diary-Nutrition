@@ -65,13 +65,13 @@ public class DiaryRepository {
         return result;
     }
 
-    public void addRecord(final Record record) {
-        mAppExecutors.discIO().execute(() -> mDatabase.recordDao().insertRecord(record));
-    }
+//    public void addRecord(final Record record) {
+//        mAppExecutors.discIO().execute(() -> mDatabase.recordDao().insertRecord(record));
+//    }
 
-    public void delRecord(int id) {
-        mAppExecutors.discIO().execute(() -> mDatabase.recordDao().delRecordById(id));
-    }
+//    public void delRecord(int id) {
+//        mAppExecutors.discIO().execute(() -> mDatabase.recordDao().delRecordById(id));
+//    }
 
     public LiveData<Summary> getDaySummary(Calendar day) {
         long from = getDayBeginning(day);

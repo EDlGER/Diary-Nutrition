@@ -11,10 +11,8 @@ import kotlinx.coroutines.flow.Flow
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.Event
 import ediger.diarynutrition.R
-import ediger.diarynutrition.data.FoodRepository
+import ediger.diarynutrition.data.repositories.FoodRepository
 import ediger.diarynutrition.data.source.entities.Food
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 

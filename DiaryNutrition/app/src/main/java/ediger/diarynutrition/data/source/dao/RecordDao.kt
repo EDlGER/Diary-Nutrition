@@ -5,6 +5,8 @@ import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.data.source.entities.MealAndRecords
 import ediger.diarynutrition.data.source.entities.Record
 import ediger.diarynutrition.data.source.entities.RecordAndFood
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.util.*
 
 @Dao
@@ -29,6 +31,7 @@ abstract class RecordDao {
         //MutableLiveData<List<MealAndRecords>> result = new MutableLiveData<>();
         val mealAndRecordsList: MutableList<MealAndRecords> = ArrayList()
         val meals = getMeals()
+
         for (meal in meals) {
             val mealAndRecords = MealAndRecords(
                     meal,
@@ -47,13 +50,13 @@ abstract class RecordDao {
     abstract suspend fun getRecords(): List<Record>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract fun insertRecord(record: Record)
+    abstract suspend fun insertRecord(record: Record)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun populateRecords(records: List<Record>)
 
     @Query("DELETE FROM record WHERE id = :id")
-    abstract fun delRecordById(id: Int): Int
+    abstract suspend fun delRecordById(id: Int): Int
 
     @Query("DELETE FROM record")
     abstract fun deleteAllRecords()

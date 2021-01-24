@@ -3,21 +3,23 @@ package ediger.diarynutrition.food.meal
 import android.app.Application
 import androidx.lifecycle.*
 import ediger.diarynutrition.AppContext
-import ediger.diarynutrition.data.FoodRepository
-import ediger.diarynutrition.data.MealRepository
+import ediger.diarynutrition.data.repositories.FoodRepository
+import ediger.diarynutrition.data.repositories.MealRepository
+import ediger.diarynutrition.data.repositories.RecordRepository
 import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.data.source.entities.Record
 import ediger.diarynutrition.data.source.entities.RecordAndFood
-import ediger.diarynutrition.objects.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.util.*
 
 class MealViewModel(val app: Application) : AndroidViewModel(app) {
 
-    private var mealRepository: MealRepository = (app as AppContext).mealRepository
+    private val mealRepository: MealRepository = (app as AppContext).mealRepository
 
-    private var foodRepository: FoodRepository = (app as AppContext).foodRepository
+    private val foodRepository: FoodRepository = (app as AppContext).foodRepository
+
+    private val recordRepository: RecordRepository = (app as AppContext).recordRepository
 
     private val _recordAndFoodList: MutableLiveData<MutableList<RecordAndFood>> = MutableLiveData(mutableListOf())
     val recordAndFoodList: LiveData<MutableList<RecordAndFood>> = _recordAndFoodList
@@ -71,6 +73,12 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
                 ?.findLast { it.food?.id == foodId }
                 ?.apply { record?.serving = serving }
         _recordAndFoodList.value = _recordAndFoodList.value
+    }
+
+    fun addRecords() = viewModelScope.launch {
+        _recordAndFoodList.value?.let { list ->
+            recordRepository.addRecords(list.mapNotNull { it.record })
+        }
     }
 
     fun removeFood(id: Int) {

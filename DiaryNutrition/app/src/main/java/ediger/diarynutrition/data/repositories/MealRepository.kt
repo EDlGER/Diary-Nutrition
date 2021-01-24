@@ -1,4 +1,4 @@
-package ediger.diarynutrition.data
+package ediger.diarynutrition.data.repositories
 
 import ediger.diarynutrition.data.source.dao.MealDao
 import ediger.diarynutrition.data.source.entities.Meal

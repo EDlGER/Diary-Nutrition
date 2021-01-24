@@ -3,8 +3,9 @@ package ediger.diarynutrition
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import ediger.diarynutrition.data.DiaryRepository
-import ediger.diarynutrition.data.FoodRepository
-import ediger.diarynutrition.data.MealRepository
+import ediger.diarynutrition.data.repositories.FoodRepository
+import ediger.diarynutrition.data.repositories.MealRepository
+import ediger.diarynutrition.data.repositories.RecordRepository
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
 import ediger.diarynutrition.database.DbDiary
@@ -25,6 +26,9 @@ class AppContext : MultiDexApplication() {
 
     val mealRepository: MealRepository
         get() = MealRepository.getInstance(database.mealDao())
+
+    val recordRepository: RecordRepository
+        get() = RecordRepository.getInstance(database.recordDao())
 
     override fun onCreate() {
         super.onCreate()

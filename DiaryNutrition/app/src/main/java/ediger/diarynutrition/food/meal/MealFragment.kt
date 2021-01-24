@@ -1,6 +1,7 @@
 package ediger.diarynutrition.food.meal
 
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
@@ -77,7 +79,7 @@ class MealFragment : Fragment() {
 
     private fun navigationInit() = with(binding) {
         toolbar.navigationIcon?.let {
-            DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.onBarPrimary) )
+            DrawableCompat.setTint(it, ContextCompat.getColor(requireContext(), R.color.onBarPrimary))
         }
 
         bottomSheet.apply {
@@ -115,13 +117,15 @@ class MealFragment : Fragment() {
         }
 
         fabAddMeal.setOnClickListener {
-            // TODO: Implement [requires changing MVVM design]
+            this@MealFragment.viewModel.addRecords()
+            navigateToDiary()
         }
     }
 
     private fun listInit() {
         adapter = MealAdapter { id, serving ->
-            val servingValue = when(serving) { "" -> 100 else -> serving.toInt() }
+            val servingValue = when(serving) {
+                "", "0" -> 100 else -> serving.toInt() }
             viewModel.updateServing(id, servingValue)
             val holder = binding.list.findViewHolderForItemId(id.toLong()) as MealFoodViewHolder
 
@@ -174,6 +178,15 @@ class MealFragment : Fragment() {
             }
             create()
         }.show()
+    }
+
+    private fun navigateToDiary() {
+        // TODO: hardcoded date
+        val intent = Intent(requireActivity(), MainActivity::class.java).apply {
+            putExtra("date", viewModel.selectedTime)
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        startActivity(intent)
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
