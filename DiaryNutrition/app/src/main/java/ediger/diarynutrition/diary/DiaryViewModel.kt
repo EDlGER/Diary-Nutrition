@@ -23,12 +23,13 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
     private val _recordsList: MediatorLiveData<List<MealAndRecords>?> = MediatorLiveData()
     val recordsList: LiveData<List<MealAndRecords>?> = _recordsList
 
-    private val _date = MutableLiveData<Calendar>()
+    private val _date = MutableLiveData(Calendar.getInstance())
     var date: Calendar?
         get() = _date.value
-        set(calendar) {
-            _date.value = calendar
-        }
+        set(calendar) { _date.value = calendar }
+
+    private val _isRemaining = MutableLiveData(true)
+    val isRemaining: LiveData<Boolean> = _isRemaining
 
     @JvmField
     val water: LiveData<Water>
@@ -39,9 +40,6 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         mRepository = (app as AppContext).repository
-
-        _date.value = Calendar.getInstance()
-
         //mRecords.value = null
 
         _recordsList.addSource(_date) { date: Calendar ->
@@ -63,6 +61,10 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addWater(water: Water) = mRepository.addWater(water)
+
+    fun switchIsRemaining() {
+        _isRemaining.value?.let { _isRemaining.value = !it }
+    }
 
     fun pasteChildren() {
         _date.value = _date.value

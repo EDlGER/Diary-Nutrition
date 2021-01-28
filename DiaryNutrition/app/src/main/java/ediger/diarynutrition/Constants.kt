@@ -6,6 +6,8 @@ const val BACKUP_NAME = "backupFile.json"
 const val DEFAULT_MEALS_COUNT = 5
 const val MILLIS_WEEK = 604800000
 
+const val ARG_DATE = "date"
+
 //String
 const val KEY_GENDER = "gender"
 const val KEY_BIRTHDAY = "birthday"

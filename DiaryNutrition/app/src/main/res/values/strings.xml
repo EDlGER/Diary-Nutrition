@@ -19,6 +19,8 @@
     <string name="billing_ads_enable">Ads is enabled</string>
 
     <string name="diary_date_today">Today</string>
+    <string name="diary_date_yesterday">Yesterday</string>
+    <string name="diary_date_tomorrow">Tomorrow</string>
     <string name="diary_header_remain">Remaining</string>
     <string name="diary_header_total">Total</string>
 

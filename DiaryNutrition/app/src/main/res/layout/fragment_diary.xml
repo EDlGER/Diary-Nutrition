@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="viewModel" type="ediger.diarynutrition.diary.DiaryViewModel" />
+        <variable
             name="isRemaining" type="boolean" />
         <variable
             name="goal"
-            type="ediger.diarynutrition.data.source.entities.Summary" />
-        <variable
-            name="actual"
             type="ediger.diarynutrition.data.source.entities.Summary" />
     </data>
     <RelativeLayout
@@ -64,15 +63,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_alignParentRight="true">
+                    android:layout_marginEnd="4dp"
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         android:id="@+id/txt_cons_cal"
                         android:layout_width="44dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{isRemaining ? String.valueOf((int)goal.cal - (int)actual.cal) : String.valueOf((int)actual.cal)}"
+                        android:text="@{viewModel.isRemaining() ? String.valueOf((int)goal.cal - (int)viewModel.daySummary.cal) : String.valueOf((int)viewModel.daySummary.cal)}"
                         android:textSize="14sp"
                         android:gravity="center"
                         android:singleLine="true" />
@@ -83,7 +82,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:src="@drawable/background_material_2"
-                        android:value="@{actual.cal * 100 / goal.cal}"
+                        android:value="@{viewModel.daySummary.cal * 100 / goal.cal}"
                         app:border_color="#bdbdbd"
                         app:border_width="2dp"
                         app:centercircle_diammterer="0"
@@ -96,16 +95,16 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="66dp"
+                    android:layout_marginEnd="66dp"
                     android:layout_marginTop="6dp"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         android:id="@+id/txt_cons_carbo"
                         android:layout_width="36dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{isRemaining ? String.valueOf((int)goal.carbo - (int)actual.carbo) : String.valueOf((int)actual.carbo)}"
+                        android:text="@{viewModel.isRemaining() ? String.valueOf((int)goal.carbo - (int)viewModel.daySummary.carbo) : String.valueOf((int)viewModel.daySummary.carbo)}"
                         android:textSize="14sp"
                         android:gravity="center"
                         android:singleLine="true" />
@@ -116,7 +115,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:src="@drawable/background_material_2"
-                        android:value="@{actual.carbo * 100 / goal.carbo}"
+                        android:value="@{viewModel.daySummary.carbo * 100 / goal.carbo}"
                         app:border_color="#bdbdbd"
                         app:border_width="2dp"
                         app:centercircle_diammterer="0"
@@ -128,16 +127,16 @@
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="116dp"
+                    android:layout_marginEnd="116dp"
                     android:layout_marginTop="6dp"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         android:id="@+id/txt_cons_fat"
                         android:layout_width="36dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{isRemaining ? String.valueOf((int)goal.fat - (int)actual.fat) : String.valueOf((int)actual.fat)}"
+                        android:text="@{viewModel.isRemaining() ? String.valueOf((int)goal.fat - (int)viewModel.daySummary.fat) : String.valueOf((int)viewModel.daySummary.fat)}"
                         android:textSize="14sp"
                         android:gravity="center"
                         android:singleLine="true" />
@@ -148,7 +147,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:src="@drawable/background_material_2"
-                        android:value="@{actual.fat * 100 / goal.fat}"
+                        android:value="@{viewModel.daySummary.fat * 100 / goal.fat}"
                         app:border_color="#bdbdbd"
                         app:border_width="2dp"
                         app:centercircle_diammterer="0"
@@ -161,16 +160,16 @@
                     android:id="@+id/frame_prot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="166dp"
+                    android:layout_marginEnd="166dp"
                     android:layout_marginTop="6dp"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         android:id="@+id/txt_cons_prot"
                         android:layout_width="36dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{isRemaining ? String.valueOf((int)goal.prot - (int)actual.prot) : String.valueOf((int)actual.prot)}"
+                        android:text="@{viewModel.isRemaining() ? String.valueOf((int)goal.prot - (int)viewModel.daySummary.prot) : String.valueOf((int)viewModel.daySummary.prot)}"
                         android:textSize="14sp"
                         android:singleLine="true"
                         android:gravity="center" />
@@ -181,7 +180,7 @@
                         android:layout_height="45dp"
                         android:layout_gravity="center"
                         android:src="@drawable/background_material_2"
-                        android:value="@{actual.prot * 100 / goal.prot}"
+                        android:value="@{viewModel.daySummary.prot * 100 / goal.prot}"
                         app:border_color="#bdbdbd"
                         app:border_width="2dp"
                         app:centercircle_diammterer="0"
@@ -192,16 +191,13 @@
 
                 <TextSwitcher
                     android:id="@+id/txt_sw_consume"
-                    android:text="@{isRemaining ? @string/diary_header_remain : @string/diary_header_total}"
+                    android:text="@{viewModel.isRemaining() ? @string/diary_header_remain : @string/diary_header_total}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginEnd="232dp"
-                    android:layout_marginRight="232dp" />
+                    android:layout_marginEnd="232dp" />
 
             </RelativeLayout>
 
@@ -211,13 +207,13 @@
                 android:layout_height="15dp"
                 android:orientation="horizontal"
                 android:background="@color/colorPrimary"
-                android:gravity="right">
+                android:gravity="end">
 
                 <TextView
                     android:id="@+id/info_prot"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="18dp"
+                    android:layout_marginEnd="18dp"
                     android:text="@string/food_prot"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
@@ -227,7 +223,7 @@
                     android:id="@+id/info_fat"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="18dp"
+                    android:layout_marginEnd="18dp"
                     android:text="@string/food_fat"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
@@ -237,7 +233,7 @@
                     android:id="@+id/info_carbo"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="32dp"
+                    android:layout_marginEnd="32dp"
                     android:text="@string/food_carbo"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
@@ -247,7 +243,7 @@
                     android:id="@+id/info_cal"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:text="@string/food_cal"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
@@ -261,22 +257,20 @@
             android:id="@+id/list_records"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="false"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/header_layout"
             android:background="@color/background_list_record"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/bottom_offset_dp"/>
+            android:paddingBottom="@dimen/bottom_offset_dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/fab_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
