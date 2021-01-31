@@ -1,5 +1,6 @@
 package ediger.diarynutrition.food.meal
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +12,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import ediger.diarynutrition.ARG_DATE
 import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Meal
@@ -118,6 +121,7 @@ class MealFragment : Fragment() {
 
         fabAddMeal.setOnClickListener {
             this@MealFragment.viewModel.addRecords()
+            requireActivity().hideKeyboard(view)
             navigateToDiary()
         }
     }
@@ -150,6 +154,7 @@ class MealFragment : Fragment() {
     }
 
     private fun timeSelectionInit() {
+        viewModel.selectedTime = requireActivity().intent.getLongExtra(ARG_DATE, viewModel.selectedTime)
         binding.edTime.setText(timeFormatter.format(Date(viewModel.selectedTime)))
         binding.edTime.setOnClickListener {
             val calendar = Calendar.getInstance().apply { timeInMillis = viewModel.selectedTime }
@@ -181,12 +186,11 @@ class MealFragment : Fragment() {
     }
 
     private fun navigateToDiary() {
-        // TODO: hardcoded date
-        val intent = Intent(requireActivity(), MainActivity::class.java).apply {
-            putExtra("date", viewModel.selectedTime)
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        startActivity(intent)
+        requireActivity().setResult(
+                Activity.RESULT_OK,
+                Intent().apply { putExtra(ARG_DATE, viewModel.selectedTime) }
+        )
+        requireActivity().finish()
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

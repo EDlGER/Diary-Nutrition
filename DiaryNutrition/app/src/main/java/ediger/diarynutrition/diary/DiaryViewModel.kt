@@ -26,7 +26,12 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
     private val _date = MutableLiveData(Calendar.getInstance())
     var date: Calendar?
         get() = _date.value
-        set(calendar) { _date.value = calendar }
+        set(calendar) {
+            _date.value = calendar?.apply {
+                set(Calendar.HOUR_OF_DAY, _date.value?.get(Calendar.HOUR_OF_DAY) ?: 0)
+                set(Calendar.MINUTE, _date.value?.get(Calendar.MINUTE) ?: 0)
+            }
+        }
 
     private val _isRemaining = MutableLiveData(true)
     val isRemaining: LiveData<Boolean> = _isRemaining
@@ -40,7 +45,6 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
     init {
         mRepository = (app as AppContext).repository
-        //mRecords.value = null
 
         _recordsList.addSource(_date) { date: Calendar ->
             viewModelScope.launch {

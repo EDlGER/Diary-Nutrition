@@ -1,5 +1,7 @@
 package ediger.diarynutrition.food
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.Menu
@@ -13,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
+import ediger.diarynutrition.ARG_DATE
 import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
@@ -96,5 +99,10 @@ class FoodActivity: AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    companion object {
+        fun getIntent(context: Context, date: Long): Intent =
+            Intent(context, FoodActivity::class.java).apply { putExtra(ARG_DATE, date) }
     }
 }

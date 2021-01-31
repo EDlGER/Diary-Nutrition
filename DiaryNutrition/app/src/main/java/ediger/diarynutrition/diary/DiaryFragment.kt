@@ -2,29 +2,23 @@ package ediger.diarynutrition.diary
 
 import android.animation.AnimatorInflater
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
-import android.widget.ExpandableListView
-import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
-import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils
@@ -42,7 +36,6 @@ import ediger.diarynutrition.objects.SnackbarMessage.SnackbarObserver
 import ediger.diarynutrition.util.SnackbarUtils
 import ediger.diarynutrition.weight.AddWeightDialog
 import ediger.diarynutrition.widgets.CalendarTitleView
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DiaryFragment : Fragment() {
@@ -57,15 +50,29 @@ class DiaryFragment : Fragment() {
     // TODO: Delete (move logic into the viewModel)
     private val mChildBuf: MutableList<Record> = ArrayList()
 
-    private lateinit var actionBar: ActionBar
+    private var actionBar: ActionBar? = null
 
     private var isCalendarExpanded = false
+
+    private val foodActivityContract =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    result.data?.let {
+                        val date = it.getLongExtra(ARG_DATE, -1)
+                        if (date != -1L) {
+                            val calendar = Calendar.getInstance().apply { timeInMillis = date }
+                            viewModel.date = calendar
+                            binding.calendarView.setCurrentDate(calendar.time)
+                            (actionBar?.customView as? CalendarTitleView)?.setSubtitle(calendar)
+                        }
+                    }
+                }
+            }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDiaryBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
 
-        setupActionBar()
         setupHeaderSwitcher()
         setupList(savedInstanceState)
         setupFab()
@@ -89,14 +96,9 @@ class DiaryFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-
     }
 
     private fun setupActionBar() {
-        (requireActivity() as AppCompatActivity).supportActionBar?.let {
-            actionBar = it
-        }
-
         val customToolbar = CalendarTitleView(requireContext()).apply {
             setDateClickListener {
                 if (!binding.calendarView.isAnimating) {
@@ -112,9 +114,7 @@ class DiaryFragment : Fragment() {
             }
             viewModel.date?.let { setSubtitle(it) }
         }
-        if (this::actionBar.isInitialized) {
-            actionBar.customView = customToolbar
-        }
+        actionBar?.customView = customToolbar
         setupCalendar(customToolbar)
     }
 
@@ -190,7 +190,13 @@ class DiaryFragment : Fragment() {
 
     private fun setupFab() {
         binding.fabActionFood.setOnClickListener {
-            navigateToFoodActivity()
+            viewModel.date?.let {
+                if (isCalendarExpanded) {
+                    hideCalendar()
+                }
+                binding.fabMenu.collapseImmediately()
+                foodActivityContract.launch(FoodActivity.getIntent(requireActivity(), it.timeInMillis))
+            }
         }
         binding.fabActionWater.setOnClickListener {
             binding.fabMenu.collapseImmediately()
@@ -210,6 +216,9 @@ class DiaryFragment : Fragment() {
                 PreferenceHelper.getValue(KEY_PROGRAM_FAT, Float::class.javaObjectType, 1f),
                 PreferenceHelper.getValue(KEY_PROGRAM_CARBO, Float::class.javaObjectType, 1f))
         binding.goal = goalSummary
+
+        actionBar = (context as AppCompatActivity).supportActionBar
+        setupActionBar()
     }
 
     override fun onResume() {
@@ -218,23 +227,22 @@ class DiaryFragment : Fragment() {
             (requireActivity() as MainActivity).appBar.stateListAnimator = AnimatorInflater
                     .loadStateListAnimator(activity, R.animator.appbar_unelevated_animator)
         }
-        if (this::actionBar.isInitialized) {
-            actionBar.setDisplayShowCustomEnabled(true)
-            actionBar.setDisplayShowTitleEnabled(false)
-        }
+        actionBar?.setDisplayShowCustomEnabled(true)
+        actionBar?.setDisplayShowTitleEnabled(false)
     }
 
     override fun onPause() {
         super.onPause()
+        if (isCalendarExpanded) {
+            hideCalendar()
+        }
         if (!(requireActivity() as MainActivity).navigationView.menu.findItem(R.id.nav_diary).isChecked) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 (requireActivity() as MainActivity).appBar.stateListAnimator = AnimatorInflater
                         .loadStateListAnimator(activity, R.animator.appbar_elevated_animator)
             }
-            if (this::actionBar.isInitialized) {
-                actionBar.setDisplayShowCustomEnabled(false)
-                actionBar.setDisplayShowTitleEnabled(true)
-            }
+            actionBar?.setDisplayShowCustomEnabled(false)
+            actionBar?.setDisplayShowTitleEnabled(true)
         }
     }
 
@@ -335,14 +343,6 @@ class DiaryFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun navigateToFoodActivity()  {
-        startActivity(
-                Intent(requireActivity(), FoodActivity::class.java).apply {
-                    putExtra(ARG_DATE, viewModel.date!!.timeInMillis)
-                }
-        )
-    }
-
     private fun navigateToWaterActivity() {
         val location = IntArray(2)
         binding.expansionView.getLocationInWindow(location)
@@ -358,15 +358,25 @@ class DiaryFragment : Fragment() {
     }
 
     private fun showWaterDialog() {
-        val bundle = Bundle().apply { putLong(AddWaterDialog.ARG_DATE, viewModel.date!!.timeInMillis) }
-        NavHostFragment.findNavController(this)
-                .navigate(R.id.action_diary_to_add_water_dialog, bundle)
+        viewModel.date?.let { date ->
+            val bundle = Bundle().apply { putLong(AddWaterDialog.ARG_DATE, date.timeInMillis) }
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_diary_to_add_water_dialog, bundle)
+        }
     }
 
     private fun showWeightDialog() {
-        val bundle = Bundle().apply { putLong(AddWeightDialog.ARG_DATE, viewModel.date!!.timeInMillis) }
-        NavHostFragment.findNavController(this)
-                .navigate(R.id.action_diary_to_add_weight_dialog, bundle)
+        viewModel.date?.let { date ->
+            val bundle = Bundle().apply { putLong(AddWeightDialog.ARG_DATE, date.timeInMillis) }
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_diary_to_add_weight_dialog, bundle)
+        }
+    }
+
+    private fun hideCalendar() {
+        binding.calendarView.hideCalendar()
+        (actionBar?.customView as CalendarTitleView).animateArrow()
+        isCalendarExpanded = false
     }
 
     private fun adjustScrollPositionOnGroupExpanded(groupPosition: Int) {
