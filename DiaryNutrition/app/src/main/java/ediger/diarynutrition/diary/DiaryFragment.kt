@@ -2,29 +2,28 @@ package ediger.diarynutrition.diary
 
 import android.animation.AnimatorInflater
 import android.app.Activity
-import android.content.Context
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.view.ContextMenu.ContextMenuInfo
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager
-import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils
-import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils
 import ediger.diarynutrition.*
-import ediger.diarynutrition.data.source.entities.Record
 import ediger.diarynutrition.data.source.entities.Summary
 import ediger.diarynutrition.databinding.FragmentDiaryBinding
 import ediger.diarynutrition.diary.adapters.RecordAdapter
@@ -32,7 +31,7 @@ import ediger.diarynutrition.diary.adapters.WaterFooterAdapter
 import ediger.diarynutrition.diary.water.AddWaterDialog
 import ediger.diarynutrition.diary.water.WaterActivity
 import ediger.diarynutrition.food.FoodActivity
-import ediger.diarynutrition.objects.SnackbarMessage.SnackbarObserver
+import ediger.diarynutrition.objects.SnackbarMessage
 import ediger.diarynutrition.util.SnackbarUtils
 import ediger.diarynutrition.weight.AddWeightDialog
 import ediger.diarynutrition.widgets.CalendarTitleView
@@ -46,9 +45,6 @@ class DiaryFragment : Fragment() {
     private lateinit var adapter: RecordAdapter
     private lateinit var wrappedAdapter: RecyclerView.Adapter<*>
     private lateinit var listItemManager: RecyclerViewExpandableItemManager
-
-    // TODO: Delete (move logic into the viewModel)
-    private val mChildBuf: MutableList<Record> = ArrayList()
 
     private var actionBar: ActionBar? = null
 
@@ -82,17 +78,18 @@ class DiaryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //Recycler
+
         viewModel.recordsList.observe(viewLifecycleOwner) { records ->
             adapter.setRecordList(records)
         }
 
-        //Snackbar
-        viewModel.snackbarMessage.observe(this,
-                SnackbarObserver { snackbarMessageResourceId: Int ->
+        viewModel.snackbarMessage.observe(viewLifecycleOwner,
+                SnackbarMessage.SnackbarObserver { snackbarMessageResourceId: Int ->
                     SnackbarUtils.showSnackbar(view, getString(snackbarMessageResourceId))
                 }
         )
+
+        observeServingChange()
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -128,6 +125,7 @@ class DiaryFragment : Fragment() {
                     viewModel.date = Calendar.getInstance().apply { time = dateClicked }.also {
                         customToolbar.setSubtitle(it)
                     }
+                    listItemManager.collapseAll()
                     customToolbar.datePickerClick()
                 }
 
@@ -135,6 +133,7 @@ class DiaryFragment : Fragment() {
                     viewModel.date = Calendar.getInstance().apply { time = firstDayOfNewMonth }.also {
                         customToolbar.setSubtitle(it)
                     }
+                    listItemManager.collapseAll()
                 }
             })
         }
@@ -143,7 +142,7 @@ class DiaryFragment : Fragment() {
     private fun setupList(savedInstanceState: Bundle?) {
         listItemManager = RecyclerViewExpandableItemManager(savedInstanceState)
 
-        adapter = RecordAdapter(listItemManager, this)
+        adapter = RecordAdapter(listItemManager)
         wrappedAdapter = listItemManager.createWrappedAdapter(adapter)
 
         listItemManager.setOnGroupExpandListener { groupPosition, fromUser, _ ->
@@ -208,6 +207,28 @@ class DiaryFragment : Fragment() {
         }
     }
 
+    private fun observeServingChange() {
+        val currentEntry = NavHostFragment.findNavController(this).getBackStackEntry(R.id.nav_diary)
+
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME
+                    && currentEntry.savedStateHandle.contains(ChangeRecordDialog.ARG_SERVING)) {
+                currentEntry.savedStateHandle.get<Int>(ChangeRecordDialog.ARG_SERVING)?.let { serving ->
+                    viewModel.updateRecord(serving)
+                    currentEntry.savedStateHandle.remove<Int>(ChangeRecordDialog.ARG_SERVING)
+                }
+            }
+        }
+
+        currentEntry.lifecycle.addObserver(observer)
+
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                currentEntry.lifecycle.removeObserver(observer)
+            }
+        })
+    }
+
     override fun onStart() {
         super.onStart()
         val goalSummary = Summary(
@@ -246,89 +267,50 @@ class DiaryFragment : Fragment() {
         }
     }
 
-    // TODO: Refactor
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val rv = RecyclerViewAdapterUtils.getParentRecyclerView(v) ?: return
-        val vh = rv.findContainingViewHolder(v)
-        val rootPosition = vh!!.bindingAdapterPosition
-        if (rootPosition == RecyclerView.NO_POSITION) {
-            return
-        }
-        val rootAdapter = rv.adapter
-        val localFlatPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter!!, adapter, rootPosition)
-        val expandablePosition = listItemManager.getExpandablePosition(localFlatPosition)
-        val groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition)
-        val childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition)
-        val childCount = adapter.getChildCount(groupPosition)
-        if (childPosition == RecyclerView.NO_POSITION) {
-            //group
-            if (listItemManager.isGroupExpanded(groupPosition) && childCount != 0) {
-                menu.add(0, 1, 0, R.string.context_menu_copy).actionView = v
-            }
-            menu.add(0, 2, 0, R.string.context_menu_paste).actionView = v
-        } else {
-            //child
-            menu.add(0, 3, 0, R.string.context_menu_del).actionView = v
-            menu.add(0, 4, 0, R.string.context_menu_change).actionView = v
-        }
-        adapter.setContextMenuState(true)
-    }
-
     fun onContextMenuClosed() {
         adapter.setContextMenuState(false)
     }
 
-    // TODO: Refactor
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val rv = RecyclerViewAdapterUtils.getParentRecyclerView(item.actionView)
-                ?: return super.onContextItemSelected(item)
-        val vh = rv.findContainingViewHolder(item.actionView)
-        val rootPosition = vh!!.bindingAdapterPosition
-        if (rootPosition == RecyclerView.NO_POSITION) {
-            return false
-        }
-        val rootAdapter = rv.adapter
-        val localFlatPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter!!, adapter, rootPosition)
-        val expandablePosition = listItemManager.getExpandablePosition(localFlatPosition)
-        val groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition)
-        val childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition)
-        val childCount = adapter.getChildCount(groupPosition)
+        val groupPosition = item.groupId
+        val childPosition = item.order
+        //val viewHolder = binding.listRecords.findContainingViewHolder(item.actionView) as? ExpandableItemViewHolder
+
         when (item.itemId) {
-            1 -> {
-                var i = 0
-                while (i < childCount) {
-                    mChildBuf.add(adapter.getChildRecordData(groupPosition, i))
-                    i++
-                }
-                SnackbarUtils.showSnackbar(view, getString(R.string.message_record_meal_copy))
-            }
-            2 -> {
-                if (mChildBuf.size == 0) {
-                    SnackbarUtils.showSnackbar(view,
-                            getString(R.string.message_record_meal_insert_fail))
-                    return true
-                }
-                var i = 0
-                while (i < mChildBuf.size) {
-                    val datetime = Calendar.getInstance()
-                    datetime.timeInMillis = mChildBuf[i].datetime
-                    //datetime[Calendar.DAY_OF_YEAR] = mSelectedDate[Calendar.DAY_OF_YEAR]
-                    mChildBuf[i].datetime = datetime.timeInMillis
-                    mChildBuf[i].mealId = groupPosition + 1
-                    viewModel.addRecord(mChildBuf[i])
-                    i++
-                }
-                viewModel.pasteChildren()
-                listItemManager.notifyGroupAndChildrenItemsChanged(groupPosition)
-                mChildBuf.clear()
-            }
-            3 -> {
-                viewModel.delRecord(adapter.getChildId(groupPosition, childPosition).toInt())
+            R.integer.action_context_delete -> {
+                val childId = adapter.getChildId(groupPosition, childPosition).toInt()
+                viewModel.delRecord(childId)
                 adapter.deleteChild(groupPosition, childPosition)
             }
+            R.integer.action_context_change_serving -> {
+                adapter.getChildRecordData(groupPosition, childPosition)?.let { record ->
+                    viewModel.selectedRecordId = record.id
+                    showServingChangeDialog(record.serving)
+                }
+            }
+            R.integer.action_context_change_time -> {
+                adapter.getChildRecordData(groupPosition, childPosition)?.let { record ->
+                    showTimeChangeDialog(record.datetime) { datetime ->
+                        viewModel.selectedRecordId = record.id
+                        viewModel.updateRecordTime(datetime)
+                    }
+                }
+            }
+            R.integer.action_context_copy -> {
+                viewModel.copyMeal(
+                        mealId = adapter.getGroupId(groupPosition).toInt()
+                )
+            }
+            R.integer.action_context_paste -> {
+                viewModel.pasteMeal(
+                        mealId = adapter.getGroupId(groupPosition).toInt()
+                )
+                listItemManager.notifyGroupAndChildrenItemsChanged(groupPosition)
+
+            }
+            else -> return super.onContextItemSelected(item)
         }
-        return super.onContextItemSelected(item)
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -359,7 +341,7 @@ class DiaryFragment : Fragment() {
 
     private fun showWaterDialog() {
         viewModel.date?.let { date ->
-            val bundle = Bundle().apply { putLong(AddWaterDialog.ARG_DATE, date.timeInMillis) }
+            val bundle = bundleOf(AddWaterDialog.ARG_DATE to date.timeInMillis)
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_diary_to_add_water_dialog, bundle)
         }
@@ -367,10 +349,31 @@ class DiaryFragment : Fragment() {
 
     private fun showWeightDialog() {
         viewModel.date?.let { date ->
-            val bundle = Bundle().apply { putLong(AddWeightDialog.ARG_DATE, date.timeInMillis) }
+            val bundle = bundleOf(AddWeightDialog.ARG_DATE to date.timeInMillis)
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_diary_to_add_weight_dialog, bundle)
         }
+    }
+
+    private fun showServingChangeDialog(initialServing: Int) {
+        val bundle = bundleOf(ChangeRecordDialog.ARG_SERVING to initialServing)
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_diary_to_change_record_dialog, bundle)
+    }
+
+    private fun showTimeChangeDialog(initialDatetime: Long, onTimeSetListener: (Long) -> Unit) {
+        val calendar = Calendar.getInstance().apply { timeInMillis = initialDatetime }
+        TimePickerDialog(requireActivity(),
+                { _, hourOfDay, minute ->
+                    calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    calendar.set(Calendar.MINUTE, minute)
+
+                    onTimeSetListener.invoke(calendar.timeInMillis)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+        ).show()
     }
 
     private fun hideCalendar() {

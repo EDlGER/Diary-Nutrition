@@ -276,7 +276,6 @@
     <string name="diary_header_total">Всего</string>
     <string name="menu_action_switch">Осталось/Всего</string>
     <string name="message_record_meal_insert_fail">Прием пищи не скопирован</string>
-    <string name="message_record_meal_insert">"Вставка успешна "</string>
     <string name="calendar">Календарь</string>
     <string name="dialog_weight_add">Добавить вес</string>
     <string name="dialog_date">Дата</string>
@@ -290,6 +289,9 @@
     <string name="context_menu_remove">Убрать</string>
     <string name="diary_date_yesterday">Вчера</string>
     <string name="diary_date_tomorrow">Завтра</string>
+    <string name="dialog_title_change_serving">Изменение порции</string>
+    <string name="context_menu_change_serving">Изменить порцию</string>
+    <string name="context_menu_change_time">Изменить время</string>
 
 
 </resources>

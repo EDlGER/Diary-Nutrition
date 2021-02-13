@@ -81,6 +81,7 @@
     <string name="dialog_change_date">Select</string>
     <string name="dialog_title_date">Select date</string>
     <string name="dialog_title_change">Food change</string>
+    <string name="dialog_title_change_serving">Change serving size</string>
     <string name="dialog_food_title">New product</string>
     <string name="dialog_title_w">Type your weight, kg</string>
     <string name="dialog_title_c">Enter calories</string>
@@ -106,6 +107,8 @@
 
     <string name="context_menu_del">Delete</string>
     <string name="context_menu_change">Change</string>
+    <string name="context_menu_change_serving">Change serving</string>
+    <string name="context_menu_change_time">Change time</string>
     <string name="context_menu_favor">To favorite</string>
     <string name="context_menu_favor_del">Remove</string>
     <string name="context_menu_remove">Remove</string>
@@ -172,9 +175,8 @@
     <string name="message_dialog_weight">Weight is not entered</string>
     <string name="message_dialog_cal">Calories is not entered</string>
     <string name="message_dialog_water">Water is not entered</string>
-    <string name="message_record_meal_copy">Meal is copied</string>
-    <string name="message_record_meal_insert">Inserting is successful</string>
-    <string name="message_record_meal_insert_fail">Meal is not copied</string>
+    <string name="message_record_meal_copy">Meal was copied</string>
+    <string name="message_record_meal_insert_fail">Meal was not copied</string>
     <string name="message_data_restore">Restore database is successful!</string>
     <string name="message_data_backup">Backup database is successful!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>

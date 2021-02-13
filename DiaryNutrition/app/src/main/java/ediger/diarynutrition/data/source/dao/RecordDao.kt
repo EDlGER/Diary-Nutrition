@@ -23,12 +23,12 @@ abstract class RecordDao {
             "(food.carbo / 100 * record.serving) as f_carbo " +
             "FROM record " +
             "INNER JOIN food ON record.food_id = food.id " +
-            "WHERE meal_id = :mealId AND datetime BETWEEN :from AND :to")
+            "WHERE meal_id = :mealId AND datetime BETWEEN :from AND :to " +
+            "ORDER BY record.datetime ASC")
     abstract fun getRecordsAndFoods(mealId: Long, from: Long, to: Long): List<RecordAndFood>
 
     @Transaction
     open fun getMealsAndRecords(from: Long, to: Long): List<MealAndRecords> {
-        //MutableLiveData<List<MealAndRecords>> result = new MutableLiveData<>();
         val mealAndRecordsList: MutableList<MealAndRecords> = ArrayList()
         val meals = getMeals()
 
@@ -39,12 +39,11 @@ abstract class RecordDao {
             )
             mealAndRecordsList.add(mealAndRecords)
         }
-        //result.postValue(mealAndRecordsList);
         return mealAndRecordsList
     }
 
     @Query("SELECT * FROM record WHERE id = :id")
-    abstract fun getRecord(id: Int): Record
+    abstract suspend fun getRecord(id: Int): Record
 
     @Query("SELECT * FROM record")
     abstract suspend fun getRecords(): List<Record>
@@ -62,5 +61,5 @@ abstract class RecordDao {
     abstract fun deleteAllRecords()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun updateRecord(record: Record)
+    abstract suspend fun updateRecord(record: Record)
 }

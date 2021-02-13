@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="nav_dialog_record_change">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="243" />
+                            <option name="y" value="-154" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="nav_dialog_water">
                     <value>
                       <LayoutPositions>
@@ -53,24 +65,12 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_diary_to_food">
+                            <entry key="action_diary_to_change_record_dialog">
                               <value>
                                 <LayoutPositions />
                               </value>
                             </entry>
                           </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="nav_food">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="245" />
-                            <option name="y" value="-153" />
-                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

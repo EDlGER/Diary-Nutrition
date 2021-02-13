@@ -17,6 +17,8 @@
         <action
             android:id="@+id/action_diary_to_add_weight_dialog"
             app:destination="@+id/nav_dialog_weight"/>
+        <action android:id="@+id/action_diary_to_change_record_dialog"
+            app:destination="@+id/nav_dialog_record_change"/>
     </fragment>
 
     <fragment
@@ -71,5 +73,18 @@
             app:argType="long"/>
 
     </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_record_change"
+        android:name="ediger.diarynutrition.diary.ChangeRecordDialog"
+        android:label="@string/serving"
+        tools:layout="@layout/dialog_change_record">
+        <argument
+            android:name="serving"
+            android:defaultValue="100"
+            app:argType="integer"/>
+
+    </dialog>
+
 
 </navigation>

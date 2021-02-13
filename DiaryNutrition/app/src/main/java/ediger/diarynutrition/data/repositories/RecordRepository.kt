@@ -24,6 +24,8 @@ class RecordRepository(private val recordDao: RecordDao) {
 
     suspend fun addRecord(record: Record) = recordDao.insertRecord(record)
 
+    suspend fun updateRecord(record: Record) = recordDao.updateRecord(record)
+
     suspend fun deleteRecord(id: Int) = recordDao.delRecordById(id)
 
     companion object {
