@@ -25,6 +25,7 @@ import ediger.diarynutrition.data.source.entities.Summary;
 import ediger.diarynutrition.data.source.entities.Water;
 import ediger.diarynutrition.data.source.entities.Weight;
 
+// TODO: Delete
 public class DiaryRepository {
 
     private static DiaryRepository sInstance;
@@ -73,112 +74,112 @@ public class DiaryRepository {
 //        mAppExecutors.discIO().execute(() -> mDatabase.recordDao().delRecordById(id));
 //    }
 
-    public LiveData<Summary> getDaySummary(Calendar day) {
-        long from = getDayBeginning(day);
-        long to = getDayEnding(day);
-        return mDatabase.summaryDao().getDaySummary(from, to);
-    }
+//    public LiveData<Summary> getDaySummary(Calendar day) {
+//        long from = getDayBeginning(day);
+//        long to = getDayEnding(day);
+//        return mDatabase.summaryDao().getDaySummary(from, to);
+//    }
 
-    public List<Summary> getSummary(Calendar since, int numberOfDays) {
-        List<Summary> result = new ArrayList<>();
+//    public List<Summary> getSummary(Calendar since, int numberOfDays) {
+//        List<Summary> result = new ArrayList<>();
+//
+//        Calendar before = (Calendar) since.clone();
+//        before.add(Calendar.DAY_OF_YEAR, numberOfDays - 1);
+//        long from = getDayBeginning(since);
+//        long to = getDayEnding(before);
+//
+//        try {
+//            result = new GetSummaryAsyncTask(mDatabase.summaryDao()).execute(from, to).get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
-        Calendar before = (Calendar) since.clone();
-        before.add(Calendar.DAY_OF_YEAR, numberOfDays - 1);
-        long from = getDayBeginning(since);
-        long to = getDayEnding(before);
+//    public List<Water> getWaterSummary(Calendar since, int numberOfDays) {
+//        List<Water> result = new ArrayList<>();
+//
+//        Calendar before = (Calendar) since.clone();
+//        before.add(Calendar.DAY_OF_YEAR, numberOfDays - 1);
+//        long from = getDayBeginning(since);
+//        long to = getDayEnding(before);
+//
+//        try {
+//            result = new GetWaterSummaryAsyncTask(mDatabase.waterDao()).execute(from, to).get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
-        try {
-            result = new GetSummaryAsyncTask(mDatabase.summaryDao()).execute(from, to).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+//    public LiveData<List<Water>> getWaterList(Calendar day) {
+//        long from = getDayBeginning(day);
+//        long to = getDayEnding(day);
+//        return mDatabase.waterDao().getWaterList(from, to);
+//    }
 
-    public List<Water> getWaterSummary(Calendar since, int numberOfDays) {
-        List<Water> result = new ArrayList<>();
+//    public LiveData<Water> getWaterSum(Calendar day) {
+//        long from = getDayBeginning(day);
+//        long to = getDayEnding(day);
+//        return mDatabase.waterDao().getWaterSum(from, to);
+//    }
 
-        Calendar before = (Calendar) since.clone();
-        before.add(Calendar.DAY_OF_YEAR, numberOfDays - 1);
-        long from = getDayBeginning(since);
-        long to = getDayEnding(before);
+//    public void addWater(final Water water) {
+//        //mAppExecutors.discIO().execute(() -> mDatabase.waterDao().insertWater(water));
+//    }
 
-        try {
-            result = new GetWaterSummaryAsyncTask(mDatabase.waterDao()).execute(from, to).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+//    public void deleteWater(int id) {
+//        //mAppExecutors.discIO().execute(() -> mDatabase.waterDao().deleteWaterById(id));
+//    }
 
-    public LiveData<List<Water>> getWaterList(Calendar day) {
-        long from = getDayBeginning(day);
-        long to = getDayEnding(day);
-        return mDatabase.waterDao().getWaterList(from, to);
-    }
+//    public LiveData<List<Weight>> getWeight() {
+//        return mDatabase.weightDao().loadWeight();
+//    }
 
-    public LiveData<Water> getWaterSum(Calendar day) {
-        long from = getDayBeginning(day);
-        long to = getDayEnding(day);
-        return mDatabase.waterDao().getWaterSum(from, to);
-    }
+//    public LiveData<List<Weight>> getWeight(Calendar since) {
+//        return mDatabase.weightDao()
+//                .getWeight(since.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+//    }
 
-    public void addWater(final Water water) {
-        mAppExecutors.discIO().execute(() -> mDatabase.waterDao().insertWater(water));
-    }
+//    public Weight getRecentWeight() {
+//        final Weight weight = new Weight(0, 0);
+//        mAppExecutors.discIO().execute(() -> {
+//            weight.setAmount(mDatabase.weightDao().lastWeight().getAmount());
+//            weight.setDatetime(mDatabase.weightDao().lastWeight().getDatetime());
+//        });
+//        return weight;
+//    }
 
-    public void deleteWater(int id) {
-        mAppExecutors.discIO().execute(() -> mDatabase.waterDao().deleteWaterById(id));
-    }
+//    @Nullable
+//    public Weight getWeightForDay(Calendar day) {
+//        long from = getDayBeginning(day);
+//        long to = getDayEnding(day);
+//        Weight weight = null;
+//        try {
+//            weight = new GetWeightAsyncTask(mDatabase.weightDao()).execute(from, to).get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return weight;
+//    }
 
-    public LiveData<List<Weight>> getWeight() {
-        return mDatabase.weightDao().loadWeight();
-    }
+//    public void addWeight(final Weight weight) {
+//        mAppExecutors.discIO().execute(() -> mDatabase.weightDao().insertWeight(weight));
+//    }
 
-    public LiveData<List<Weight>> getWeight(Calendar since) {
-        return mDatabase.weightDao()
-                .getWeight(since.getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
-    }
+//    public void updateWeight(final Weight weight) {
+//        //mAppExecutors.discIO().execute(() -> mDatabase.weightDao().updateWeight(weight));
+//    }
 
-    public Weight getRecentWeight() {
-        final Weight weight = new Weight(0, 0);
-        mAppExecutors.discIO().execute(() -> {
-            weight.setAmount(mDatabase.weightDao().lastWeight().getAmount());
-            weight.setDatetime(mDatabase.weightDao().lastWeight().getDatetime());
-        });
-        return weight;
-    }
-
-    @Nullable
-    public Weight getWeightForDay(Calendar day) {
-        long from = getDayBeginning(day);
-        long to = getDayEnding(day);
-        Weight weight = null;
-        try {
-            weight = new GetWeightAsyncTask(mDatabase.weightDao()).execute(from, to).get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return weight;
-    }
-
-    public void addWeight(final Weight weight) {
-        mAppExecutors.discIO().execute(() -> mDatabase.weightDao().insertWeight(weight));
-    }
-
-    public void updateWeight(final Weight weight) {
-        mAppExecutors.discIO().execute(() -> mDatabase.weightDao().updateWeight(weight));
-    }
-
-    public void deleteWeight(int id) {
-        mAppExecutors.discIO().execute(() -> mDatabase.weightDao().deleteWeightById(id));
-    }
+//    public void deleteWeight(int id) {
+//        mAppExecutors.discIO().execute(() -> mDatabase.weightDao().deleteWeightById(id));
+//    }
 
     private long getDayBeginning(Calendar calendar) {
         Calendar day = (Calendar) calendar.clone();
@@ -222,7 +223,8 @@ public class DiaryRepository {
 
         @Override
         protected Weight doInBackground(Long... longs) {
-            return mAsyncWeightDao.getWeightForDay(longs[0], longs[1]);
+            return new Weight(0f, 0);
+            //return mAsyncWeightDao.getWeightForDay(longs[0], longs[1]);
         }
     }
 
@@ -236,7 +238,8 @@ public class DiaryRepository {
 
         @Override
         protected List<Summary> doInBackground(Long... longs) {
-            return mAsyncSummaryDao.getMacroSummary(longs[0], longs[1]);
+            return Collections.emptyList();
+            //return mAsyncSummaryDao.getMacroSummary(longs[0], longs[1]);
         }
     }
 
@@ -250,7 +253,8 @@ public class DiaryRepository {
 
         @Override
         protected List<Water> doInBackground(Long... longs) {
-            return mAsyncWaterDao.getWaterSummary(longs[0], longs[1]);
+            //return mAsyncWaterDao.getWaterSummary(longs[0], longs[1]);
+            return Collections.emptyList();
         }
     }
 

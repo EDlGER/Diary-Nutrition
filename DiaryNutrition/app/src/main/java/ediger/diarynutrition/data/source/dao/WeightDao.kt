@@ -24,17 +24,17 @@ interface WeightDao {
     fun lastWeight(): Weight
 
     @Query("SELECT * FROM weight WHERE datetime BETWEEN :from AND :to")
-    fun getWeightForDay(from: Long, to: Long): Weight
+    suspend fun getWeightForDay(from: Long, to: Long): Weight?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWeight(weight: Weight)
+    suspend fun insertWeight(weight: Weight)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun populateWeight(weights: List<Weight>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateWeight(weight: Weight)
+    suspend fun updateWeight(weight: Weight)
 
     @Query("DELETE FROM weight WHERE id = :id")
-    fun deleteWeightById(id: Int): Int
+    suspend fun deleteWeightById(id: Int): Int
 }

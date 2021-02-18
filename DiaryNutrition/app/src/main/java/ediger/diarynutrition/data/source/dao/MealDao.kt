@@ -19,13 +19,13 @@ interface MealDao {
     fun updateMeal(meal: Meal)
 
     @Query("DELETE FROM meal WHERE id = :id")
-    fun deleteMealById(id: Int): Int
+    suspend fun deleteMealById(id: Int): Int
 
     @Query("DELETE FROM meal WHERE user = 1")
     fun deleteUserMeals()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertMeal(meal: Meal)
+    suspend fun insertMeal(meal: Meal)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun populateMeals(meals: List<Meal>): List<Long>

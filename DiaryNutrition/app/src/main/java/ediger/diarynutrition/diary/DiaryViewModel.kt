@@ -17,8 +17,9 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val recordRepository = (app as AppContext).recordRepository
 
-    // TODO: delete
-    private val mRepository: DiaryRepository
+    private val summaryRepository = (app as AppContext).summaryRepository
+
+    private val waterRepository = (app as AppContext).waterRepository
 
     private val _recordsList: MediatorLiveData<List<MealAndRecords>?> = MediatorLiveData()
     val recordsList: LiveData<List<MealAndRecords>?> = _recordsList
@@ -48,16 +49,14 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
     val snackbarMessage = SnackbarMessage()
 
     init {
-        mRepository = (app as AppContext).repository
-
         _recordsList.addSource(_date) { date: Calendar ->
             viewModelScope.launch {
                 _recordsList.setValue(recordRepository.getRecords(date))
             }
         }
 
-        daySummary = Transformations.switchMap(_date) { date: Calendar -> mRepository.getDaySummary(date) }
-        water = Transformations.switchMap(_date) { date: Calendar -> mRepository.getWaterSum(date) }
+        daySummary = Transformations.switchMap(_date) { date: Calendar -> summaryRepository.getDaySummary(date) }
+        water = Transformations.switchMap(_date) { date: Calendar -> waterRepository.getWaterSum(date) }
     }
 
     fun addRecord(record: Record) = viewModelScope.launch {
@@ -128,7 +127,7 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun addWater(water: Water) = mRepository.addWater(water)
+    fun addWater(water: Water) = viewModelScope.launch { waterRepository.addWater(water) }
 
     fun switchIsRemaining() {
         _isRemaining.value?.let { _isRemaining.value = !it }
