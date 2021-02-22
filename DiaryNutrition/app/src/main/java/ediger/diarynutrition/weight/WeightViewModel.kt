@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.KEY_WEIGHT
 import ediger.diarynutrition.PreferenceHelper
-import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.source.entities.Weight
 import kotlinx.coroutines.launch
 import java.util.*

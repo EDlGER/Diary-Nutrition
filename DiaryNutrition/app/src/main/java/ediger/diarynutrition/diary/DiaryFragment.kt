@@ -250,6 +250,8 @@ class DiaryFragment : Fragment() {
         }
         actionBar?.setDisplayShowCustomEnabled(true)
         actionBar?.setDisplayShowTitleEnabled(false)
+
+        viewModel.updateDate()
     }
 
     override fun onPause() {

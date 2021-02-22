@@ -2,7 +2,6 @@ package ediger.diarynutrition
 
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
-import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.repositories.*
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
@@ -11,13 +10,9 @@ import ediger.diarynutrition.workers.RemoteDatabaseVersionWorker
 import java.util.concurrent.TimeUnit
 
 class AppContext : MultiDexApplication() {
-    private val mAppExecutors = AppExecutors()
 
     val database: DiaryDatabase
         get() = getInstance(this)
-
-    val repository: DiaryRepository
-        get() = DiaryRepository.getInstance(database, mAppExecutors)
 
     val foodRepository: FoodRepository
         get() = FoodRepository.getInstance(database.foodDao())
@@ -53,8 +48,6 @@ class AppContext : MultiDexApplication() {
                     work
             )
         }
-        //TODO delete
-        //sDbDiary = new DbDiary(this);
     }
 
     companion object {
@@ -62,7 +55,6 @@ class AppContext : MultiDexApplication() {
         //Date of chosen day (begin of the day - 00:00) in milliseconds
         // var date: Long = 0
         val dbDiary: DbDiary? = null
-        lateinit var instance: AppContext
 
     }
 }

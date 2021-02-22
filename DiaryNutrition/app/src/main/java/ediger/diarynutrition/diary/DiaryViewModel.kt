@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.R
-import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.source.entities.MealAndRecords
 import ediger.diarynutrition.data.source.entities.Record
 import ediger.diarynutrition.data.source.entities.Summary
@@ -57,10 +56,6 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
         daySummary = Transformations.switchMap(_date) { date: Calendar -> summaryRepository.getDaySummary(date) }
         water = Transformations.switchMap(_date) { date: Calendar -> waterRepository.getWaterSum(date) }
-    }
-
-    fun addRecord(record: Record) = viewModelScope.launch {
-        recordRepository.addRecord(record)
     }
 
     fun delRecord(id: Int) = viewModelScope.launch {
@@ -131,6 +126,10 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
     fun switchIsRemaining() {
         _isRemaining.value?.let { _isRemaining.value = !it }
+    }
+
+    fun updateDate() {
+        _date.value = _date.value
     }
 
     private fun showSnackbarMessage(message: Int) {

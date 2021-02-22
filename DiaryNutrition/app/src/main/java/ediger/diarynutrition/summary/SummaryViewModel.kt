@@ -3,7 +3,6 @@ package ediger.diarynutrition.summary
 import android.app.Application
 import androidx.lifecycle.*
 import ediger.diarynutrition.AppContext
-import ediger.diarynutrition.data.DiaryRepository
 import ediger.diarynutrition.data.source.entities.Summary
 import ediger.diarynutrition.data.source.entities.Water
 import kotlinx.coroutines.launch
