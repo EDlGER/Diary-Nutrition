@@ -10,8 +10,8 @@
     <color name="background_standard">#FAFAFA</color>
     <color name="background_standard_pressed">#F5F5F5</color>
     <color name="background_list_record">#EEEEEE</color>
-    <color name="listview_primary_text">#DE000000</color>
-    <color name="listview_second_text">#99000000</color>
+    <color name="list_primary_text">#DE000000</color>
+    <color name="list_second_text">#99000000</color>
     <color name="chart_label_color">#BDBDBD</color>
 
     <color name="list_background">#FFFFFF</color>

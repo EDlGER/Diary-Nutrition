@@ -18,7 +18,7 @@
         android:background="@color/background_list_record"
         app:customHeight="@{isExpanded ? @dimen/list_group_item_expanded_height : @dimen/list_group_item_height}">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             style="@style/commonListItemStyle"
             android:layout_width="match_parent"
@@ -36,22 +36,23 @@
                 android:id="@+id/indicator"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                 android:id="@+id/txt_meal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top|start"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_toEndOf="@id/indicator"
-                android:gravity="center"
                 android:text="@{meal.name}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/indicator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Breakfast"/>
 
             <!--
             <TextView
@@ -59,82 +60,86 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/txt_meal"
-                android:layout_alignLeft="@+id/txt_meal"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
                 android:text="200 g"
                 android:textSize="14sp"
-                android:textColor="@color/listview_second_text"/> -->
-
+                android:textColor="@color/list_second_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/txt_meal"/>
+            -->
             <TextView
                 android:id="@+id/txt_group_cal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="6dp"
                 android:gravity="center_vertical"
                 android:text="@{String.format(`%d`, (int) food.cal)}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="25sp"
-                android:visibility="@{food.cal == 0 ? View.GONE : View.VISIBLE}"/>
+                android:textSize="20sp"
+                android:visibility="@{food.cal == 0 ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="999"/>
 
             <TextView
                 android:id="@+id/txt_group_carbo"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="70dp"
                 android:gravity="center"
                 android:maxLines="1"
                 android:maxLength="5"
                 android:text="@{String.format(`%.1f`, food.carbo)}"
-                android:textColor="@color/listview_second_text"
+                android:textColor="@color/list_second_text"
                 android:textSize="14sp"
-                android:visibility="@{food.carbo == 0 ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{food.carbo == 0 ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="56.8"/>
 
             <TextView
                 android:id="@+id/txt_group_fat"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/txt_group_carbo"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:maxLines="1"
                 android:maxLength="5"
                 android:text="@{String.format(`%.1f`, food.fat)}"
-                android:textColor="@color/listview_second_text"
+                android:textColor="@color/list_second_text"
                 android:textSize="14sp"
-                android:visibility="@{food.fat == 0 ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{food.fat == 0 ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_group_carbo"
+                tools:text="99.9"/>
 
             <TextView
                 android:id="@+id/txt_group_prot"
                 android:layout_width="45dp"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/txt_group_fat"
-                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="4dp"
                 android:gravity="center"
                 android:maxLines="1"
                 android:maxLength="5"
                 android:text="@{String.format(`%.1f`, food.prot)}"
-                android:textColor="@color/listview_second_text"
+                android:textColor="@color/list_second_text"
                 android:textSize="14sp"
-                android:visibility="@{food.prot == 0 ? View.GONE : View.VISIBLE}"/>
+                android:visibility="@{food.prot == 0 ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toStartOf="@+id/txt_group_fat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="99.9"/>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_alignParentBottom="true"
                 android:background="?android:listDivider"
-                android:visibility="@{isExpanded ? View.VISIBLE : View.GONE}"/>
+                android:visibility="@{isExpanded ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 </layout>
