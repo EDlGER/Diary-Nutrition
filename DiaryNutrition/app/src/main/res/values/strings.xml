@@ -83,7 +83,7 @@
     <string name="dialog_title_change">Food change</string>
     <string name="dialog_title_change_serving">Change serving size</string>
     <string name="dialog_food_title">New product</string>
-    <string name="dialog_title_w">Type your weight, kg</string>
+    <string name="dialog_title_weight">Type your weight</string>
     <string name="dialog_title_c">Enter calories</string>
     <string name="dialog_title_water_edit">Enter amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
@@ -225,6 +225,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="unit_kilogram">kg</string>
 
     <string-array name="values">
         <item>1</item>

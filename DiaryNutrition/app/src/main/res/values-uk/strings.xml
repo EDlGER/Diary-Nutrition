@@ -54,7 +54,7 @@
 
     <string name="dialog_title_change">Изменение продукта</string>
     <string name="dialog_food_title">Новый продукт</string>
-    <string name="dialog_title_w">Введите Ваш вес, кг</string>
+    <string name="dialog_title_weight">Введите Ваш вес</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
     <string name="dialog_food_name">Название продукта</string>
@@ -292,5 +292,6 @@
     <string name="dialog_title_change_serving">Изменение порции</string>
     <string name="context_menu_change_serving">Изменить порцию</string>
     <string name="context_menu_change_time">Изменить время</string>
+    <string name="unit_kilogram">кг</string>
 
 </resources>

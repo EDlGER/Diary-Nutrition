@@ -19,6 +19,13 @@ class WeightViewModel(application: Application) : AndroidViewModel(application) 
 
     val weightSinceDate: LiveData<List<Weight>>
 
+    init {
+        val from = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -8) }
+        mDateSince.value = from
+        weightSinceDate = Transformations
+                .switchMap(mDateSince) { date: Calendar -> weightRepository.getWeight(date) }
+    }
+
     fun addWeight(weight: Weight) = viewModelScope.launch {
         val day = Calendar.getInstance().apply { timeInMillis = weight.datetime }
         val lastWeight = weightRepository.getWeightForDay(day)
@@ -38,12 +45,5 @@ class WeightViewModel(application: Application) : AndroidViewModel(application) 
 
     fun setDate(since: Calendar) {
         mDateSince.value = since
-    }
-
-    init {
-        val from = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -8) }
-        mDateSince.value = from
-        weightSinceDate = Transformations
-                .switchMap(mDateSince) { date: Calendar -> weightRepository.getWeight(date) }
     }
 }
