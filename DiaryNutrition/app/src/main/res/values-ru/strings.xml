@@ -293,6 +293,17 @@
     <string name="context_menu_change_serving">Изменить порцию</string>
     <string name="context_menu_change_time">Изменить время</string>
     <string name="unit_kilogram">кг</string>
+    <string name="description_drag_handle">Перетянуть элемент</string>
+    <string name="description_meal_user">Пользовательский прием пищи</string>
+    <string name="description_meal_default">Стандартный прием пищи</string>
+    <string name="dialog_title_change_meal">Изменение названия</string>
+    <string name="message_meal">Название приема пищи не введено</string>
+    <string name="action_edit">Изменить</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_hide">Скрыть</string>
+    <string name="action_show">Показать</string>
+    <string name="title_user_meal">Приемы пищи</string>
+    <string name="pref_program_meals">Настроить приемы пищи</string>
 
 
 </resources>

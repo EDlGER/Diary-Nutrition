@@ -1,22 +1,25 @@
 package ediger.diarynutrition.data.source.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import ediger.diarynutrition.data.source.entities.Meal
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MealDao {
     @Query("SELECT * FROM meal ORDER BY id ASC")
     suspend fun getMeals(): List<Meal>
 
+    @Query("SELECT * FROM meal ORDER BY id ASC")
+    fun getMealsFlow(): Flow<List<Meal>>
+
     @Query("SELECT * FROM meal WHERE id = :id")
-    fun getMeal(id: Int): Meal
+    suspend fun getMeal(id: Int): Meal
 
     @Query("SELECT * FROM meal WHERE user = 1")
     suspend fun getUserMeals(): List<Meal>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateMeal(meal: Meal)
+    suspend fun updateMeal(meal: Meal)
 
     @Query("DELETE FROM meal WHERE id = :id")
     suspend fun deleteMealById(id: Int): Int

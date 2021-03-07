@@ -7,6 +7,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.entities.Meal
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
@@ -81,6 +84,18 @@ class MealDaoTest {
         database.mealDao().insertMeal(MEAL_2)
 
         val mealList = database.mealDao().getMeals()
+        assertThat(mealList.size, `is`(2))
+
+        mealList.find { it.name == MEAL.name }!!.assertMeal(MEAL)
+        mealList.find { it.name == MEAL_2.name }!!.assertMeal(MEAL_2)
+    }
+
+    @Test
+    fun insertAndGetFlow() = runBlockingTest {
+        database.mealDao().insertMeal(MEAL)
+        database.mealDao().insertMeal(MEAL_2)
+
+        val mealList = database.mealDao().getMealsFlow().first()
         assertThat(mealList.size, `is`(2))
 
         mealList.find { it.name == MEAL.name }!!.assertMeal(MEAL)

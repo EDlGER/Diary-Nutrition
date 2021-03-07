@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -44,6 +45,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private static final String KEY_PREF_PROGRAM_EDIT = "program_edit";
     private static final String KEY_PREF_PROGRAM_RESET = "program_reset";
+    private static final String KEY_PREF_PROGRAM_MEALS = "program_meals";
 
     private static final int REQ_WRITE_STORAGE = 112;
 
@@ -91,6 +93,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         Preference editProgram = findPreference(KEY_PREF_PROGRAM_EDIT);
         editProgram.setOnPreferenceClickListener(preference -> {
             startActivity(new Intent(requireActivity(), ProgramActivity.class));
+            return false;
+        });
+
+        findPreference(KEY_PREF_PROGRAM_MEALS).setOnPreferenceClickListener(preference -> {
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_setting_to_user_meal);
             return false;
         });
 

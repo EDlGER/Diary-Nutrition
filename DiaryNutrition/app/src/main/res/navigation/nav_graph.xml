@@ -40,7 +40,22 @@
     <fragment
         android:id="@+id/nav_settings"
         android:name="ediger.diarynutrition.settings.SettingsFragment"
-        android:label="@string/title_settings" />
+        android:label="@string/title_settings">
+
+        <action
+            android:id="@+id/action_setting_to_user_meal"
+            app:destination="@+id/nav_user_meal"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_meal"
+        android:name="ediger.diarynutrition.usermeal.UserMealFragment"
+        android:label="@string/title_user_meal">
+        <action
+            android:id="@+id/action_nav_user_meal_to_nav_dialog_meal_options"
+            app:destination="@id/nav_dialog_meal_options" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_premium"
@@ -85,6 +100,21 @@
             app:argType="integer"/>
 
     </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_meal_options"
+        android:name="ediger.diarynutrition.usermeal.MealOptionsBottomDialog"
+        tools:layout="@layout/dialog_bottom_meal_options">
+        <action
+            android:id="@+id/action_nav_dialog_meal_options_to_nav_dialog_change_meal"
+            app:destination="@id/nav_dialog_change_meal" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_change_meal"
+        android:name="ediger.diarynutrition.usermeal.ChangeMealDialog"
+        android:label="@string/dialog_title_change_meal"
+        tools:layout="@layout/dialog_change_meal"/>
 
 
 </navigation>

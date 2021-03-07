@@ -55,6 +55,10 @@
             android:title="@string/pref_program_edit"/>
 
         <Preference
+            android:key="program_meals"
+            android:title="@string/pref_program_meals"/>
+
+        <Preference
             android:key="program_reset"
             android:title="@string/pref_program_reset"/>
 

@@ -8,6 +8,10 @@
     <string name="action_back">Back</string>
     <string name="action_add_food">Add food</string>
     <string name="action_add_meal">Add meal</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_hide">Hide</string>
+    <string name="action_show">Show</string>
 
     <string name="ad_app_id" translatable="false">ca-app-pub-2180848868226246~4003747218</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2180848868226246/4304798415</string>
@@ -37,6 +41,7 @@
     <string name="title_premium">Remove ads</string>
     <string name="title_search">Food search</string>
     <string name="title_program">Nutrition program</string>
+    <string name="title_user_meal">Meals</string>
 
     <string name="text_helper_optional">optional</string>
 
@@ -82,6 +87,7 @@
     <string name="dialog_title_date">Select date</string>
     <string name="dialog_title_change">Food change</string>
     <string name="dialog_title_change_serving">Change serving size</string>
+    <string name="dialog_title_change_meal">Change meal name</string>
     <string name="dialog_food_title">New product</string>
     <string name="dialog_title_weight">Type your weight</string>
     <string name="dialog_title_c">Enter calories</string>
@@ -104,6 +110,9 @@
     <string name="dialog_water_help">Hold to change values</string>
 
     <string name="description_filter_result">Filter result</string>
+    <string name="description_drag_handle">Drag item</string>
+    <string name="description_meal_user">User meal</string>
+    <string name="description_meal_default">Default meal</string>
 
     <string name="context_menu_del">Delete</string>
     <string name="context_menu_change">Change</string>
@@ -127,6 +136,7 @@
     <string name="pref_activity">Activity</string>
     <string name="pref_purpose">Goal</string>
     <string name="pref_program_edit">Customize PFC</string>
+    <string name="pref_program_meals">Customize meals</string>
     <string name="pref_program_reset">Reset program</string>
     <string name="pref_ui_tab_default">Default tab</string>
     <string name="pref_ui_water_card">Water counter</string>
@@ -164,6 +174,7 @@
     <string name="water">Water</string>
 
     <string name="message_backpress">Press back again to exit</string>
+    <string name="message_meal">Meal name is not entered</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_program_perc">Amount of percent must be equal 100</string>
     <string name="message_program_gram">Calories amount and PFC ratio will change while editing of macronutrients</string>

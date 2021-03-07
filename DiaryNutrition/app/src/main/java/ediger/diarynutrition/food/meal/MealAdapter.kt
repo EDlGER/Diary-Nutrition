@@ -1,9 +1,6 @@
 package ediger.diarynutrition.food.meal
 
-import android.app.Activity
-import android.util.Log
 import android.view.*
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +8,6 @@ import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Food
 import ediger.diarynutrition.data.source.entities.RecordAndFood
 import ediger.diarynutrition.databinding.ListMealFoodItemBinding
-import ediger.diarynutrition.util.showKeyboard
 
 class MealAdapter(
         private val onServingChangedCallback: OnServingChangedCallback

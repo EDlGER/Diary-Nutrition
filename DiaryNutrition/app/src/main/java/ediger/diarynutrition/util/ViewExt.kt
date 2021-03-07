@@ -30,3 +30,14 @@ fun View.setupSnackbar(
         }
     }
 }
+
+fun View.hitTest(x: Int, y: Int): Boolean {
+    val tx = (translationX + 0.5f).toInt()
+    val ty = (translationY + 0.5f).toInt()
+    val left = left + tx
+    val right = right + tx
+    val top = top + ty
+    val bottom = bottom + ty
+
+    return x in left..right && y >= top && y <= bottom
+}
