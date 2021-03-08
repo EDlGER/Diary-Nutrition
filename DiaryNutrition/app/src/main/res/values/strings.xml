@@ -80,6 +80,7 @@
     <string name="time">Time</string>
     <string name="serving">Serving</string>
     <string name="meal">Meal</string>
+    <string name="name">Name</string>
 
     <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>
@@ -94,6 +95,7 @@
     <string name="dialog_title_water_edit">Enter amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
     <string name="dialog_title_water">Adding water</string>
+    <string name="dialog_title_meal_add">Enter meal name</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_food_name">Food name</string>

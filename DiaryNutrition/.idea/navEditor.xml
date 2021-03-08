@@ -8,13 +8,25 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="nav_dialog_add_meal">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="489" />
+                            <option name="y" value="901" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="nav_dialog_change_meal">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="754" />
-                            <option name="y" value="721" />
+                            <option name="x" value="751" />
+                            <option name="y" value="602" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -26,8 +38,17 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="487" />
-                            <option name="y" value="724" />
+                            <option name="y" value="599" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_nav_dialog_meal_options_to_nav_dialog_change_meal">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -155,6 +176,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_nav_user_meal_to_nav_dialog_add_meal">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_nav_user_meal_to_nav_dialog_meal_options">
                               <value>
                                 <LayoutPositions />

@@ -45,16 +45,20 @@ class UserMealAdapter: RecyclerView.Adapter<MealViewHolder>(), DraggableItemAdap
 
     override fun onCheckCanStartDrag(holder: MealViewHolder, position: Int, x: Int, y: Int): Boolean {
         return with(holder.binding) {
-            val offsetX = container.right + (container.translationX + 0.5f).toInt()
+            val offsetX = container.left + (container.translationX + 0.5f).toInt()
             val offsetY = container.top + (container.translationY + 0.5f).toInt()
 
-            imDragHandle.hitTest(offsetX, offsetY)
+            imDragHandle.hitTest(x - offsetX, y - offsetY)
         }
 
     }
 
     override fun onMoveItem(fromPosition: Int, toPosition: Int) {
-        Collections.swap(mealList, fromPosition, toPosition)
+        if (fromPosition == toPosition) {
+            return
+        }
+        val item = mealList.removeAt(fromPosition)
+        mealList.add(toPosition, item)
     }
 
     override fun onGetItemDraggableRange(holder: MealViewHolder, position: Int): ItemDraggableRange? = null

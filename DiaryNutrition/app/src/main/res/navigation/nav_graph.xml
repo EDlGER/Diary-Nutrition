@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_nav_user_meal_to_nav_dialog_meal_options"
             app:destination="@id/nav_dialog_meal_options" />
+        <action
+            android:id="@+id/action_nav_user_meal_to_nav_dialog_add_meal"
+            app:destination="@id/nav_dialog_add_meal" />
     </fragment>
 
     <fragment
@@ -116,5 +119,10 @@
         android:label="@string/dialog_title_change_meal"
         tools:layout="@layout/dialog_change_meal"/>
 
+    <dialog
+        android:id="@+id/nav_dialog_add_meal"
+        android:name="ediger.diarynutrition.usermeal.AddMealDialog"
+        android:label="@string/dialog_title_meal_add"
+        tools:layout="@layout/dialog_add_meal"/>
 
 </navigation>

@@ -304,6 +304,8 @@
     <string name="action_show">Показать</string>
     <string name="title_user_meal">Приемы пищи</string>
     <string name="pref_program_meals">Настроить приемы пищи</string>
+    <string name="dialog_title_meal_add">Введите название приема пищи</string>
+    <string name="name">Название</string>
 
 
 </resources>
