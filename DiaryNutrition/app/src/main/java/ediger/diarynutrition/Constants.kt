@@ -18,7 +18,7 @@ const val KEY_ACTIVITY = "activity"
 const val KEY_LANGUAGE = "language"
 const val KEY_LANGUAGE_DB = "language_db"
 const val KEY_PREF_UI_DEFAULT_TAB = "default_tab"
-const val KEY_MEAL_SORT = "meal_sort"
+const val KEY_MEAL_ORDER = "meal_order"
 
 //Float
 const val KEY_WEIGHT = "weight"

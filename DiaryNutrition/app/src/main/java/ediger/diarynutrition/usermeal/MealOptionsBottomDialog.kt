@@ -21,10 +21,10 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
 
     private val viewModel: MealOptionsViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DialogBottomMealOptionsBinding.inflate(inflater, container, false)
 
-        arguments?.getInt(MEAL_ID)?.let { mealId ->
+        arguments?.getInt(ARG_MEAL_ID)?.let { mealId ->
             viewModel.setMealId(mealId)
         }
 
@@ -37,6 +37,12 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         observeMealNameChange()
+
+        viewModel.shouldDismiss.observe(viewLifecycleOwner) { isDismissRequested ->
+            if (isDismissRequested) {
+                dialog?.dismiss()
+            }
+        }
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -74,7 +80,7 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
     }
 
     companion object {
-        const val MEAL_ID = "meal_id"
+        const val ARG_MEAL_ID = "meal_id"
     }
 
 }

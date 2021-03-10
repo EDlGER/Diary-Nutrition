@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -30,7 +31,7 @@ class UserMealFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMealUserBinding.inflate(inflater, container, false)
 
-        initList(savedInstanceState)
+        initList()
 
         binding.fabAddMeal.setOnClickListener { showAddMealDialog() }
 
@@ -47,14 +48,16 @@ class UserMealFragment: Fragment() {
         observeNewMealName()
     }
 
-    private fun initList(savedInstanceState: Bundle?) = with(binding) {
+    private fun initList() = with(binding) {
         dragListItemManager = RecyclerViewDragDropManager().apply {
             setDraggingItemShadowDrawable(
                     ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z3) as NinePatchDrawable
             )
         }
 
-        adapter = UserMealAdapter()
+        adapter = UserMealAdapter { mealId ->
+            showMealOptionsDialog(mealId)
+        }
 
         val wrappedAdapter = dragListItemManager.createWrappedAdapter(adapter)
         list.adapter = wrappedAdapter
@@ -72,6 +75,7 @@ class UserMealFragment: Fragment() {
                     && currentEntry.savedStateHandle.contains(AddMealDialog.ARG_MEAL_NAME_NEW)) {
                 currentEntry.savedStateHandle.get<String>(AddMealDialog.ARG_MEAL_NAME_NEW)?.let { mealName ->
                     viewModel.insertMeal(mealName)
+                    currentEntry.savedStateHandle.remove<String>(AddMealDialog.ARG_MEAL_NAME_NEW)
                 }
             }
         }
@@ -89,6 +93,12 @@ class UserMealFragment: Fragment() {
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_nav_user_meal_to_nav_dialog_add_meal)
 
+    }
+
+    private fun showMealOptionsDialog(mealId: Int) {
+        val bundle = bundleOf(MealOptionsBottomDialog.ARG_MEAL_ID to mealId)
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_user_meal_to_nav_dialog_meal_options, bundle)
     }
 
     override fun onPause() {
