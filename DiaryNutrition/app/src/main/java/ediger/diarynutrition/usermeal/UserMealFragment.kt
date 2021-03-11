@@ -46,6 +46,7 @@ class UserMealFragment: Fragment() {
         }
 
         observeNewMealName()
+        observeOptionsDialogDismiss()
     }
 
     private fun initList() = with(binding) {
@@ -88,6 +89,27 @@ class UserMealFragment: Fragment() {
         })
     }
 
+    private fun observeOptionsDialogDismiss() {
+        val currentEntry = NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.nav_user_meal)
+
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME
+                    && currentEntry.savedStateHandle.contains(MealOptionsBottomDialog.ARG_DIALOG_DISMISSED)) {
+                currentEntry.savedStateHandle.get<Boolean>(MealOptionsBottomDialog.ARG_DIALOG_DISMISSED)?.let {
+                    adapter.notifyDataSetChanged()
+                    currentEntry.savedStateHandle.remove<Boolean>(MealOptionsBottomDialog.ARG_DIALOG_DISMISSED)
+                }
+            }
+        }
+        currentEntry.lifecycle.addObserver(observer)
+
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                currentEntry.lifecycle.removeObserver(observer)
+            }
+        })
+    }
 
     private fun showAddMealDialog() {
         NavHostFragment.findNavController(this)

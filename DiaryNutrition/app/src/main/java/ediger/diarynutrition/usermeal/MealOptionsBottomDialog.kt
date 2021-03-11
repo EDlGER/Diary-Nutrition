@@ -1,19 +1,20 @@
 package ediger.diarynutrition.usermeal
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.DialogBottomMealOptionsBinding
-import ediger.diarynutrition.diary.ChangeRecordDialog
 
 class MealOptionsBottomDialog: BottomSheetDialogFragment() {
 
@@ -38,11 +39,16 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
 
         observeMealNameChange()
 
+        initUserMealsIconColor()
+
         viewModel.shouldDismiss.observe(viewLifecycleOwner) { isDismissRequested ->
             if (isDismissRequested) {
+                NavHostFragment.findNavController(this)
+                        .previousBackStackEntry?.savedStateHandle?.set(ARG_DIALOG_DISMISSED, true)
                 dialog?.dismiss()
             }
         }
+
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -71,6 +77,23 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
         })
     }
 
+    private fun initUserMealsIconColor() {
+        viewModel.isUserMeal.observe(viewLifecycleOwner) { isUser ->
+            val color = when(isUser) { true -> R.color.text_medium else -> R.color.text_inactive}
+
+            binding.txtActionEdit.compoundDrawablesRelative.first()?.let { icon ->
+                DrawableCompat.setTintList(
+                        icon, ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+                )
+            }
+            binding.txtActionDelete.compoundDrawablesRelative.first()?.let { icon ->
+                DrawableCompat.setTintList(
+                        icon, ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+                )
+            }
+        }
+    }
+
     private fun showChangeMealDialog() {
         viewModel.selectedMeal?.let { meal ->
             val bundle = bundleOf(ChangeMealDialog.ARG_MEAL_NAME to meal.name)
@@ -81,6 +104,7 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
 
     companion object {
         const val ARG_MEAL_ID = "meal_id"
+        const val ARG_DIALOG_DISMISSED = "dialog_dismissed"
     }
 
 }

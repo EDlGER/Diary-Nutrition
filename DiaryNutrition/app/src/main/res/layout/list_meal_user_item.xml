@@ -5,6 +5,8 @@
     <data>
         <variable
             name="meal" type="ediger.diarynutrition.data.source.entities.Meal" />
+        <variable
+            name="isHidden" type="boolean" />
     </data>
     <FrameLayout
         android:id="@+id/background"
@@ -26,12 +28,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@{meal.user == 1 ? @string/description_meal_user : @string/description_meal_default}"
-                android:src="@{meal.user == 1 ? @drawable/ic_user : @drawable/ic_lock}"
+                android:src="@{meal.user == 1 ? @drawable/ic_user : @drawable/ic_food_variant}"
                 app:tint="@color/text_medium"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:src="@drawable/ic_lock" />
+                tools:src="@drawable/ic_food_variant" />
 
             <TextView
                 android:id="@+id/txt_meal"
@@ -41,7 +43,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="@{meal.name}"
                 android:textSize="16sp"
-                android:textColor="@color/text_medium"
+                android:textColor="@{isHidden ? @color/text_inactive : @color/text_normal}"
                 android:singleLine="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

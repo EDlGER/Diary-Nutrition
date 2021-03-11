@@ -2,12 +2,9 @@ package ediger.diarynutrition.diary
 
 import android.app.Application
 import androidx.lifecycle.*
-import ediger.diarynutrition.AppContext
-import ediger.diarynutrition.R
-import ediger.diarynutrition.data.source.entities.MealAndRecords
-import ediger.diarynutrition.data.source.entities.Record
-import ediger.diarynutrition.data.source.entities.Summary
-import ediger.diarynutrition.data.source.entities.Water
+import com.google.gson.Gson
+import ediger.diarynutrition.*
+import ediger.diarynutrition.data.source.entities.*
 import ediger.diarynutrition.objects.SnackbarMessage
 import kotlinx.coroutines.launch
 import java.util.*
@@ -47,15 +44,48 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
 
     val snackbarMessage = SnackbarMessage()
 
+    private val mealsSortOrder: List<Int>
+        get() {
+            val jsonString = PreferenceHelper.getValue(KEY_MEAL_ORDER, String::class.java, "[]")
+            return Gson().fromJson(jsonString, Array<Int>::class.java).toList()
+        }
+
+    private val hiddenMealsList: MutableList<Int>
+        get() {
+            val hiddenMealsString = PreferenceHelper.getValue(KEY_MEAL_HIDDEN, String::class.java, "[]")
+            return Gson().fromJson(hiddenMealsString, Array<Int>::class.java).toMutableList()
+        }
+
     init {
         _recordsList.addSource(_date) { date: Calendar ->
             viewModelScope.launch {
-                _recordsList.setValue(recordRepository.getRecords(date))
+                val originalList = recordRepository.getRecords(date)
+                val filteredList = reorderList(originalList, mealsSortOrder).filter {
+                    !hiddenMealsList.contains(it.meal?.id)
+                            && !(it.meal?.user == 1 && it.records?.isEmpty() ?: true)
+                }
+                _recordsList.setValue(filteredList)
             }
         }
-
         daySummary = Transformations.switchMap(_date) { date: Calendar -> summaryRepository.getDaySummary(date) }
         water = Transformations.switchMap(_date) { date: Calendar -> waterRepository.getWaterSum(date) }
+    }
+
+    private fun reorderList(list: List<MealAndRecords>, mealsOrder: List<Int>): List<MealAndRecords> {
+        return if (mealsOrder.isEmpty()) {
+            list
+        } else {
+            val sortedList: MutableList<MealAndRecords> = mutableListOf()
+
+            mealsOrder.forEach { id ->
+                list.find { it.meal?.id == id }?.let { sortedList.add(it) }
+            }
+            if (mealsOrder.size < list.size) {
+                val startIndex = mealsOrder.size
+                list.subList(startIndex, list.size).forEach { sortedList.add(it) }
+            }
+            sortedList
+        }
     }
 
     fun delRecord(id: Int) = viewModelScope.launch {
