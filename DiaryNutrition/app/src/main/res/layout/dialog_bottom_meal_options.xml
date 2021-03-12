@@ -76,7 +76,6 @@
             android:textColor="@{viewModel.isUserMeal() ? @color/text_normal : @color/text_inactive}"
             android:drawablePadding="32dp"
             android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{() -> viewModel.deleteSelectedMeal()}"
             app:drawableStartCompat="@drawable/ic_delete"
             app:drawableTint="@color/text_medium"
             app:layout_constraintStart_toStartOf="parent"

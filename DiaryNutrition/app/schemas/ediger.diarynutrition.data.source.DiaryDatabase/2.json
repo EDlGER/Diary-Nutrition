@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0a594595ffc60dbad18c79411f2e7888",
+    "identityHash": "5f4532523f52edc0c8d8c5d49337d96a",
     "entities": [
       {
         "tableName": "record",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `meal_id` INTEGER NOT NULL, `food_id` INTEGER NOT NULL, `serving` INTEGER NOT NULL, `datetime` INTEGER NOT NULL, FOREIGN KEY(`food_id`) REFERENCES `food`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT , FOREIGN KEY(`meal_id`) REFERENCES `meal`(`id`) ON UPDATE NO ACTION ON DELETE SET DEFAULT )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `meal_id` INTEGER NOT NULL DEFAULT 5, `food_id` INTEGER NOT NULL, `serving` INTEGER NOT NULL, `datetime` INTEGER NOT NULL, FOREIGN KEY(`food_id`) REFERENCES `food`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT , FOREIGN KEY(`meal_id`) REFERENCES `meal`(`id`) ON UPDATE NO ACTION ON DELETE SET DEFAULT )",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,7 +18,8 @@
             "fieldPath": "mealId",
             "columnName": "meal_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "5"
           },
           {
             "fieldPath": "foodId",
@@ -277,7 +278,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0a594595ffc60dbad18c79411f2e7888')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f4532523f52edc0c8d8c5d49337d96a')"
     ]
   }
 }

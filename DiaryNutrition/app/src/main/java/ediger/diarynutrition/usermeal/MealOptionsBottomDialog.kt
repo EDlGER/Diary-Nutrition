@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.DialogBottomMealOptionsBinding
 
@@ -30,6 +31,8 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
         }
 
         binding.txtActionEdit.setOnClickListener { showChangeMealDialog() }
+
+        binding.txtActionDelete.setOnClickListener { showDeleteAlertDialog() }
 
         return binding.root
     }
@@ -100,6 +103,15 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
             NavHostFragment.findNavController(this)
                     .navigate(R.id.action_nav_dialog_meal_options_to_nav_dialog_change_meal, bundle)
         }
+    }
+
+    private fun showDeleteAlertDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.dialog_title_delete_alert))
+                .setMessage(getString(R.string.dialog_message_delete_alert) + " " + getString(R.string.meal5))
+                .setPositiveButton(getString(R.string.action_delete)) { _, _ -> viewModel.deleteSelectedMeal()}
+                .setNegativeButton(getString(R.string.action_back)) { dialog, _ -> dialog.dismiss()}
+                .show()
     }
 
     companion object {

@@ -84,6 +84,8 @@
 
     <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>
+    <string name="dialog_title_delete_alert">Delete the meal?</string>
+    <string name="dialog_message_delete_alert">Entries added to this meal will be moved to </string>
     <string name="dialog_change_date">Select</string>
     <string name="dialog_title_date">Select date</string>
     <string name="dialog_title_change">Food change</string>

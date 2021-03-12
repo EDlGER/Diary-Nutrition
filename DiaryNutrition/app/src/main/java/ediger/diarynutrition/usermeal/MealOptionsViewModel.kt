@@ -42,7 +42,6 @@ class MealOptionsViewModel(val app: Application): AndroidViewModel(app) {
         _isHidden.value = hiddenMealsList.contains(selectedMeal?.id)
     }
 
-    // TODO: Foreign key violation
     fun deleteSelectedMeal() {
         selectedMeal?.let { meal ->
             viewModelScope.launch {

@@ -108,7 +108,7 @@ abstract class DiaryDatabase : RoomDatabase() {
                 //record table
                 database.execSQL("CREATE TABLE record_new (id INTEGER NOT NULL, " +
                         "food_id INTEGER NOT NULL REFERENCES food(id) ON DELETE RESTRICT ON UPDATE CASCADE," +
-                        "meal_id INTEGER DEFAULT 0 NOT NULL REFERENCES meal(id) ON DELETE SET DEFAULT, " +
+                        "meal_id INTEGER DEFAULT 0 NOT NULL REFERENCES meal(id) ON DELETE SET DEFAULT 5, " +
                         "datetime INTEGER NOT NULL, " +
                         "serving INTEGER NOT NULL, " +
                         "PRIMARY KEY (id))")
