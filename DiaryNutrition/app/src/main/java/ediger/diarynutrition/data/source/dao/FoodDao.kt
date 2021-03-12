@@ -11,7 +11,7 @@ interface FoodDao {
     @Query("SELECT * FROM food ORDER BY name ASC")
     fun getAllFood(): LiveData<List<Food>>
 
-    @Query("SELECT * FROM food WHERE favorite = 1 ORDER BY name ASC")
+    @Query("SELECT * FROM food WHERE favorite = 1 AND user != 2 ORDER BY name ASC")
     fun getFavorFood(): LiveData<List<Food>>
 
     @Query("SELECT * FROM food WHERE user = 1 ORDER BY name ASC")
@@ -21,7 +21,7 @@ interface FoodDao {
     fun getFood(id: Int): LiveData<Food>
 
     @Query("SELECT food.* FROM food INNER JOIN record ON record.food_id = food.id " +
-            "WHERE datetime between :from AND :to " +
+            "WHERE (datetime between :from AND :to) AND food.user != 2 " +
             "GROUP BY food.id " +
             "ORDER BY count(record.datetime) DESC")
     fun getPopularFood(from: Long, to: Long): PagingSource<Int, Food>
@@ -52,13 +52,16 @@ interface FoodDao {
     @Query("UPDATE food SET favorite = CASE WHEN :favorite THEN 1 ELSE 0 END WHERE id = :id")
     suspend fun updateFavoriteFoodById(id: Int, favorite: Boolean)
 
+    @Query("UPDATE food SET user = 2 WHERE id = :id")
+    suspend fun hideUserFood(id: Int)
+
     @Query("DELETE FROM food WHERE id = :id")
     suspend fun deleteFoodById(id: Int): Int
 
-    @Query("SELECT * FROM food WHERE name LIKE :text ORDER BY name ASC")
+    @Query("SELECT * FROM food WHERE name LIKE :text AND user != 2 ORDER BY name ASC")
     fun searchAllFood(text: String): PagingSource<Int, Food>
 
-    @Query("SELECT * FROM food WHERE favorite = 1 AND name LIKE :text ORDER BY name = :text ASC")
+    @Query("SELECT * FROM food WHERE favorite = 1 AND name LIKE :text AND user != 2 ORDER BY name = :text ASC")
     fun searchFavoriteFood(text: String): PagingSource<Int, Food>
 
     @Query("SELECT * FROM food WHERE user = 1 AND name LIKE :text ORDER BY name = :text ASC")
@@ -66,7 +69,7 @@ interface FoodDao {
 
     //Returns user, favorite, and food that is being used in record table
     @Query("SELECT * FROM food " +
-            "WHERE favorite = 1 OR user = 1 " +
+            "WHERE favorite = 1 OR user > 0 " +
             "OR id IN (SELECT food_id FROM record)")
     suspend fun getBackupFood(): List<Food>
 

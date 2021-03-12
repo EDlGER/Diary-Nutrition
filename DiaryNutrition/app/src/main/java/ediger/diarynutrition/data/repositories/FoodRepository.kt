@@ -35,7 +35,7 @@ class FoodRepository(private val foodDao: FoodDao) {
         foodDao.updateFavoriteFoodById(id, favorite)
     }
 
-    suspend fun deleteFood(id: Int) = foodDao.deleteFoodById(id)
+    suspend fun deleteFood(id: Int) = foodDao.hideUserFood(id)
 
     suspend fun addFood(food: Food) = foodDao.insertFood(food)
 
