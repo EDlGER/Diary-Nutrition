@@ -75,6 +75,7 @@ class MealFragment : Fragment() {
 
         viewModel.mealList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
+                viewModel.updateMealId()
                 mealSelectionInit(it)
             }
         }

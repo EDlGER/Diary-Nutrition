@@ -2,14 +2,15 @@ package ediger.diarynutrition.food.meal
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.google.gson.Gson
 import ediger.diarynutrition.AppContext
+import ediger.diarynutrition.KEY_MEAL_HIDDEN
+import ediger.diarynutrition.KEY_MEAL_ORDER
+import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.data.repositories.FoodRepository
 import ediger.diarynutrition.data.repositories.MealRepository
 import ediger.diarynutrition.data.repositories.RecordRepository
-import ediger.diarynutrition.data.source.entities.Food
-import ediger.diarynutrition.data.source.entities.Meal
-import ediger.diarynutrition.data.source.entities.Record
-import ediger.diarynutrition.data.source.entities.RecordAndFood
+import ediger.diarynutrition.data.source.entities.*
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -41,9 +42,23 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
             updateMeal()
         }
 
+    private val mealsSortOrder: List<Int>
+        get() {
+            val jsonString = PreferenceHelper.getValue(KEY_MEAL_ORDER, String::class.java, "[]")
+            return Gson().fromJson(jsonString, Array<Int>::class.java).toList()
+        }
+
+    private val hiddenMealsList: MutableList<Int>
+        get() {
+            val hiddenMealsString = PreferenceHelper.getValue(KEY_MEAL_HIDDEN, String::class.java, "[]")
+            return Gson().fromJson(hiddenMealsString, Array<Int>::class.java).toMutableList()
+        }
+
     init {
         viewModelScope.launch {
             _mealList.value = mealRepository.getMeals()
+                    .reorderList(mealsSortOrder)
+                    .filter { meal -> !hiddenMealsList.contains(meal.id)}
         }
         totalMacro.addSource(_recordAndFoodList) { totalMacro.value = getUpdatedMacro() }
     }
@@ -90,6 +105,27 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
         _recordAndFoodList.value = _recordAndFoodList.value
     }
 
+    fun updateMealId() {
+        selectedMealId = chooseMealId()
+    }
+
+    private fun List<Meal>.reorderList(mealsOrder: List<Int>): List<Meal> {
+        return if (mealsOrder.isEmpty()) {
+            this
+        } else {
+            val sortedList: MutableList<Meal> = mutableListOf()
+
+            mealsOrder.forEach { id ->
+                this.find { it.id == id }?.let { sortedList.add(it) }
+            }
+            if (mealsOrder.size < this.size) {
+                val startIndex = mealsOrder.size
+                this.subList(startIndex, this.size).forEach { sortedList.add(it) }
+            }
+            sortedList
+        }
+    }
+
     private fun getUpdatedMacro(): Food {
         var cal = 0f
         var prot = 0f
@@ -121,12 +157,22 @@ class MealViewModel(val app: Application) : AndroidViewModel(app) {
         val hour = Calendar.getInstance()
                 .apply { timeInMillis = selectedTime }
                 .get(Calendar.HOUR_OF_DAY)
-        return when (hour) {
-            in 3..8 -> 1
+        val mealId = when (hour) {
+            in 3..8  -> 1
             in 9..11 -> 2
             in 12..14 -> 3
             in 15..17 -> 4
             else -> 5
         }
+        _mealList.value
+                ?.map { it.id }
+                ?.let { list ->
+                    if (list.isNotEmpty() && !list.contains(mealId)) {
+                        return list.last()
+                    }
+                }
+
+        return mealId
     }
+
 }
