@@ -308,5 +308,6 @@
     <string name="name">Название</string>
     <string name="dialog_title_delete_alert">Удалить прием пищи?</string>
     <string name="dialog_message_delete_alert">"Записи, добавленные в этот прием пищи, будут перенесены на "</string>
+    <string name="pref_program_meals_user_hide">Скрывать пустые пользовательские приемы пищи</string>
 
 </resources>

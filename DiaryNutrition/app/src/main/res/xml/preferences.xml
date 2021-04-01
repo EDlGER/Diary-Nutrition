@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
             android:title="@string/pref_title_user">
@@ -57,6 +57,11 @@
         <Preference
             android:key="program_meals"
             android:title="@string/pref_program_meals"/>
+
+        <SwitchPreference
+            android:key="meals_user_hide"
+            android:title="@string/pref_program_meals_user_hide"
+            android:defaultValue="true"/>
 
         <Preference
             android:key="program_reset"

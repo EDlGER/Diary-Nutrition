@@ -59,10 +59,12 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
     init {
         _recordsList.addSource(_date) { date: Calendar ->
             viewModelScope.launch {
+                val hideEmptyUserMeal: Boolean =
+                        PreferenceHelper.getValue(KEY_MEALS_USER_HIDE, Boolean::class.javaObjectType, true)
                 val originalList = recordRepository.getRecords(date)
                 val filteredList = reorderList(originalList, mealsSortOrder).filter {
                     !hiddenMealsList.contains(it.meal?.id)
-                            && !(it.meal?.user == 1 && it.records?.isEmpty() ?: true)
+                            && !(hideEmptyUserMeal && it.meal?.user == 1 && it.records?.isEmpty() ?: true)
                 }
                 _recordsList.setValue(filteredList)
             }
