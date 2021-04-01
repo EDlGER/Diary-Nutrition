@@ -58,13 +58,15 @@ interface FoodDao {
     @Query("DELETE FROM food WHERE id = :id")
     suspend fun deleteFoodById(id: Int): Int
 
-    @Query("SELECT * FROM food WHERE name LIKE :text AND user != 2 ORDER BY name ASC")
+    @Query("SELECT * FROM food WHERE name LIKE '%' || :text || '%' AND user != 2 " +
+            "ORDER BY (name LIKE :text || '%') DESC, verified DESC, name ASC")
     fun searchAllFood(text: String): PagingSource<Int, Food>
 
-    @Query("SELECT * FROM food WHERE favorite = 1 AND name LIKE :text AND user != 2 ORDER BY name = :text ASC")
+    @Query("SELECT * FROM food WHERE favorite = 1 AND name LIKE '%' || :text || '%' AND user != 2 " +
+            "ORDER BY (name LIKE :text || '%') DESC, name ASC")
     fun searchFavoriteFood(text: String): PagingSource<Int, Food>
 
-    @Query("SELECT * FROM food WHERE user = 1 AND name LIKE :text ORDER BY name = :text ASC")
+    @Query("SELECT * FROM food WHERE user = 1 AND name LIKE '%' || :text || '%' ORDER BY (name LIKE :text || '%') DESC, name ASC")
     fun searchUserFood(text: String): PagingSource<Int, Food>
 
     //Returns user, favorite, and food that is being used in record table
@@ -73,5 +75,4 @@ interface FoodDao {
             "OR id IN (SELECT food_id FROM record)")
     suspend fun getBackupFood(): List<Food>
 
-    //FTS4?
 }

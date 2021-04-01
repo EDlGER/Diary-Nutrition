@@ -11,23 +11,23 @@ import kotlinx.coroutines.flow.Flow
 class FoodRepository(private val foodDao: FoodDao) {
 
     fun searchAllFood(query: String): Flow<PagingData<Food>> {
-        val newQuery = query.replace(" ", "%")
+        val newQuery = query.trim().replace(" ", "%")
         return Pager(PagingConfig(pageSize = PAGE_SIZE)) {
-            foodDao.searchAllFood("%$newQuery%")
+            foodDao.searchAllFood(newQuery)
         }.flow
     }
 
     fun searchFavoriteFood(query: String): Flow<PagingData<Food>> {
-        val newQuery = query.replace(" ", "%")
+        val newQuery = query.trim().replace(" ", "%")
         return Pager(PagingConfig(pageSize = PAGE_SIZE)) {
-            foodDao.searchFavoriteFood("%$newQuery%")
+            foodDao.searchFavoriteFood(newQuery)
         }.flow
     }
 
     fun searchUserFood(query: String): Flow<PagingData<Food>> {
-        val newQuery = query.replace(" ", "%")
+        val newQuery = query.trim().replace(" ", "%")
         return Pager(PagingConfig(pageSize = PAGE_SIZE)) {
-            foodDao.searchUserFood("%$newQuery%")
+            foodDao.searchUserFood(newQuery)
         }.flow
     }
 
