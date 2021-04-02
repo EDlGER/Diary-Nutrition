@@ -23,10 +23,10 @@ const val KEY_MEAL_HIDDEN = "hidden_meals"
 
 //Float
 const val KEY_WEIGHT = "weight"
-const val KEY_PROGRAM_CAL = "calories"
-const val KEY_PROGRAM_PROT = "prot"
-const val KEY_PROGRAM_FAT = "fat"
-const val KEY_PROGRAM_CARBO = "carbo"
+const val KEY_PROGRAM_CAL = "program_calories"
+const val KEY_PROGRAM_PROT = "program_prot"
+const val KEY_PROGRAM_FAT = "program_fat"
+const val KEY_PROGRAM_CARBO = "program_carbo"
 //Int
 const val KEY_ONLINE_DB_VERSION = "online_db_version"
 const val KEY_LOCAL_DB_VERSION = "local_db_version"

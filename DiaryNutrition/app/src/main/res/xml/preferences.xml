@@ -43,7 +43,7 @@
         android:title="@string/pref_title_program">
 
         <Preference
-            android:key="calories"
+            android:key="program_calories"
             android:title="@string/macro_cal" />
 
         <Preference
