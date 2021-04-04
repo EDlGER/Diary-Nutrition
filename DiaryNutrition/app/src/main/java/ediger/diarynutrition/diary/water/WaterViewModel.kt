@@ -15,14 +15,22 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
 
     val water: LiveData<List<Water>>
 
-    fun setDate(day: Calendar) {
-        date.value = day
-    }
-
-    fun deleteWater(id: Int) = viewModelScope.launch { waterRepository.deleteWater(id) }
+    var addTime: Calendar = Calendar.getInstance()
 
     init {
         date.value = Calendar.getInstance()
         water = Transformations.switchMap(date) { day: Calendar -> waterRepository.getWaterList(day) }
     }
+
+    fun setDate(day: Calendar) {
+        date.value = day
+    }
+
+    fun addWater(amount: Int) = viewModelScope.launch {
+        waterRepository.addWater(
+                Water(amount, addTime.timeInMillis)
+        )
+    }
+
+    fun deleteWater(id: Int) = viewModelScope.launch { waterRepository.deleteWater(id) }
 }

@@ -154,8 +154,6 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun addWater(water: Water) = viewModelScope.launch { waterRepository.addWater(water) }
-
     fun switchIsRemaining() {
         _isRemaining.value?.let { _isRemaining.value = !it }
     }
