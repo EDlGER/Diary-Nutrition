@@ -28,10 +28,10 @@ class OldFoodActivity : AppCompatActivity(), OnPageChangeListener {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val mAdView = findViewById<AdView>(R.id.adView)
         //AdRequest adRequest = new AdRequest.Builder().build();
-        val adRequest = AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("E8B8A18280F8D8867639D5CF594195AD")
-                .build()
+//        val adRequest = AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                .addTestDevice("E8B8A18280F8D8867639D5CF594195AD")
+//                .build()
         var pref = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
         val isAdsRemoved = pref.getBoolean(PREF_ADS_REMOVED, false)
         if (isAdsRemoved) {
@@ -40,7 +40,7 @@ class OldFoodActivity : AppCompatActivity(), OnPageChangeListener {
         } else {
             mAdView.isEnabled = true
             mAdView.visibility = View.VISIBLE
-            mAdView.loadAd(adRequest)
+            //mAdView.loadAd(adRequest)
         }
         val toolbar = findViewById<View>(R.id.toolbar1) as Toolbar
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))

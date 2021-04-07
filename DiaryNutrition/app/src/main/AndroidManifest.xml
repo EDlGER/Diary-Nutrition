@@ -50,15 +50,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".activity.AddActivity"
-            android:parentActivityName=".food.FoodActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".food.FoodActivity" />
-        </activity>
-        <activity
             android:name=".settings.ProgramActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"

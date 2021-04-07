@@ -2,6 +2,7 @@ package ediger.diarynutrition.food.meal
 
 import android.app.Activity
 import android.app.TimePickerDialog
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +15,14 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import ediger.diarynutrition.ARG_DATE
-import ediger.diarynutrition.MainActivity
-import ediger.diarynutrition.R
+import ediger.diarynutrition.*
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
 import ediger.diarynutrition.util.hideKeyboard
@@ -34,14 +39,23 @@ class MealFragment : Fragment() {
 
     private lateinit var bottomSheet: BottomSheetBehavior<ViewGroup>
 
+    private var interstitialAd: InterstitialAd? = null
+
+    private var isAdRemoved = false
+
     private val timeFormatter = SimpleDateFormat("kk:mm", Locale.getDefault())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMealBinding.inflate(inflater, container, false)
 
+        val pref = requireActivity().getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
+        isAdRemoved = pref.getBoolean(PREF_ADS_REMOVED, false)
+
         timeSelectionInit()
 
         listInit()
+
+        adInit()
 
         return binding.root
     }
@@ -123,6 +137,9 @@ class MealFragment : Fragment() {
         fabAddMeal.setOnClickListener {
             this@MealFragment.viewModel.addRecords()
             requireActivity().hideKeyboard(view)
+
+            interstitialAd?.show(requireActivity())
+
             navigateToDiary()
         }
     }
@@ -138,6 +155,35 @@ class MealFragment : Fragment() {
         }
         binding.list.adapter = adapter
         binding.list.setHasFixedSize(false)
+    }
+
+    private fun adInit() {
+        if (isAdRemoved) {
+            return
+        }
+        val adRequest = AdRequest.Builder().build()
+
+        //TODO: getString(R.string.banner_ad_inter_id)
+        InterstitialAd.load(
+                requireActivity().applicationContext,
+                "ca-app-pub-3940256099942544/1033173712",
+                adRequest,
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        interstitialAd = null
+                    }
+
+                    override fun onAdLoaded(p0: InterstitialAd) {
+                        interstitialAd = p0
+                    }
+                }
+        )
+
+        interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdShowedFullScreenContent() {
+                interstitialAd = null
+            }
+        }
     }
 
     private fun mealSelectionInit(mealList: List<Meal>) {

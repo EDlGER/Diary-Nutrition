@@ -158,7 +158,7 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
             val edWater: TextInputEditText = root.findViewById(R.id.ed_water_serving)
             edWater.requestFocus()
 
-            setPositiveButton(R.string.dialog_change) { dialog: DialogInterface?, which: Int ->
+            setPositiveButton(R.string.dialog_change) { _, _ ->
                 if (edWater.text.toString().isEmpty() || edWater.text.toString().startsWith("0")) {
                     SnackbarUtils.showSnackbar(view, getString(R.string.message_dialog_water))
                 } else {

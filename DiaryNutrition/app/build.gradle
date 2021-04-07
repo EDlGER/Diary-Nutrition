@@ -42,6 +42,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
 }
 
 repositories {
@@ -69,16 +73,14 @@ dependencies {
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     implementation 'com.github.paolorotolo:appintro:4.1.0'
-    implementation 'com.google.firebase:firebase-ads:19.8.0'
+    implementation 'com.google.firebase:firebase-ads:20.0.0'
     implementation 'com.github.aliab:circular-music-progressbar:v1.0'
     implementation 'com.klinkerapps:sliding-activity:1.5.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
-    implementation('com.opencsv:opencsv:5.3') {
-        exclude module: 'commons-logging'
-    }
+    implementation 'com.opencsv:opencsv:5.4'
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.2'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"

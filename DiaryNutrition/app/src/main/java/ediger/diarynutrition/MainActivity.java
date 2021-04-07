@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         //Ads
         isAdsRemoved = getSharedPreferences(Consts.PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
                 .getBoolean(Consts.PREF_ADS_REMOVED, false);
-        MobileAds.initialize(getApplicationContext(), getString(R.string.ad_app_id));
+        MobileAds.initialize(getApplicationContext());
 
 
         //TODO replace old billing
