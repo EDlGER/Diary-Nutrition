@@ -1,16 +1,15 @@
 package ediger.diarynutrition.food
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import ediger.diarynutrition.*
 import kotlinx.coroutines.flow.Flow
-import ediger.diarynutrition.AppContext
-import ediger.diarynutrition.Event
-import ediger.diarynutrition.R
 import ediger.diarynutrition.data.repositories.FoodRepository
 import ediger.diarynutrition.data.source.entities.Food
 import kotlinx.coroutines.launch
@@ -25,12 +24,17 @@ class FoodViewModel(app: Application) : AndroidViewModel(app) {
 
     private var searchResult: Flow<PagingData<Food>>? = null
 
+    val isSheetActive = MutableLiveData(false)
+
+    val isAdVisible = MutableLiveData(true)
+
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     init {
         _queryValue.value = ""
     }
+
 
     fun searchFood(foodVariance: FoodVariance): Flow<PagingData<Food>>? {
         val query = queryValue.value ?: return searchResult

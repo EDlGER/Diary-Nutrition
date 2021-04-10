@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
@@ -25,6 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ediger.diarynutrition.*
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
+import ediger.diarynutrition.food.FoodViewModel
 import ediger.diarynutrition.util.hideKeyboard
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,6 +36,8 @@ class MealFragment : Fragment() {
     private lateinit var binding: FragmentMealBinding
 
     private val viewModel: MealViewModel by viewModels()
+
+    private val foodViewModel: FoodViewModel by activityViewModels()
 
     private lateinit var adapter: MealAdapter
 
@@ -238,6 +242,16 @@ class MealFragment : Fragment() {
                 Intent().apply { putExtra(ARG_DATE, viewModel.selectedTime) }
         )
         requireActivity().finish()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        foodViewModel.isSheetActive.value = true
+    }
+
+    override fun onDestroyView() {
+        foodViewModel.isSheetActive.value = false
+        super.onDestroyView()
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {

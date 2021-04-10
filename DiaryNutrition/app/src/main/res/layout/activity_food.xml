@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-
+        <variable
+            name="viewModel"
+            type="ediger.diarynutrition.food.FoodViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -89,7 +91,7 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
                 android:text="@string/food_cal"
                 android:textColor="@color/onBarPrimary"
@@ -102,7 +104,7 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginEnd="24dp"
                 android:gravity="center_horizontal"
                 android:text="@string/food_carbo"
                 android:textColor="@color/onBarPrimary"
@@ -115,7 +117,7 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
                 android:text="@string/food_fat"
                 android:textColor="@color/onBarPrimary"
@@ -128,7 +130,7 @@
                 android:layout_width="32dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
                 android:gravity="center_horizontal"
                 android:text="@string/food_prot"
                 android:textColor="@color/onBarPrimary"
@@ -146,6 +148,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lb_cal" />
+
+            <FrameLayout
+                android:id="@+id/ad_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:show="@{viewModel.isAdVisible &amp;&amp; !viewModel.isSheetActive() ? true : false}"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

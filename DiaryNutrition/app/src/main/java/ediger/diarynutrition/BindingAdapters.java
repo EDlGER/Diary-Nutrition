@@ -40,23 +40,24 @@ public class BindingAdapters {
     }
 
     @BindingAdapter("show")
-    public static void show(TextView textView, boolean shouldShow) {
-        if (textView.getVisibility() == View.VISIBLE && shouldShow) {
+    public static void show(View view, boolean shouldShow) {
+        if (view.getVisibility() == View.VISIBLE && shouldShow
+                || view.getVisibility() == View.INVISIBLE && !shouldShow) {
             return;
         }
         Animation animation;
         if (shouldShow) {
-            textView.setVisibility(View.VISIBLE);
+            view.setVisibility(View.VISIBLE);
             animation = new TranslateAnimation(0, 0, 300, 0);
-            animation.setDuration(1000);
+            animation.setDuration(750);
             animation.setFillAfter(true);
-            textView.startAnimation(animation);
+            view.startAnimation(animation);
         } else {
             animation = new TranslateAnimation(0, 0, 0, 300);
-            animation.setDuration(1000);
+            animation.setDuration(750);
             animation.setFillAfter(true);
-            textView.startAnimation(animation);
-            textView.setVisibility(View.INVISIBLE);
+            view.startAnimation(animation);
+            view.setVisibility(View.INVISIBLE);
         }
     }
 }
