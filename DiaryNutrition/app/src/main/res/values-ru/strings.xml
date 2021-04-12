@@ -309,6 +309,11 @@
     <string name="dialog_title_delete_alert">Удалить прием пищи?</string>
     <string name="dialog_message_delete_alert">"Записи, добавленные в этот прием пищи, будут перенесены на "</string>
     <string name="pref_program_meals_user_hide">Скрывать пустые пользовательские приемы пищи</string>
+    <string name="message_ad_reward_success">Количество добавлений еды было увеличено</string>
+    <string name="dialog_title_food_reward_ad">Лимит своих продуктов достигнут</string>
+    <string name="dialog_message_food_ad">Для дальнейшего добавления своих продуктов необходимо иметь Премиум или посмотреть рекламу</string>
+    <string name="dialog_watch_ad">Посмотреть рекламу</string>
+    <string name="dialog_premium">Получить Премиум</string>
 
 
 </resources>

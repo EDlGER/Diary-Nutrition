@@ -14,6 +14,7 @@
     <string name="action_show">Show</string>
 
     <string name="ad_app_id" translatable="false">ca-app-pub-2180848868226246~4003747218</string>
+    <string name="ad_rewarded_user_food" translatable="false">ca-app-pub-2180848868226246/4738143943</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2180848868226246/4304798415</string>
     <string name="banner_ad_inter_id" translatable="false">ca-app-pub-2180848868226246/9729746416</string>
     <string name="banner_ad_inter_water_id" translatable="false">ca-app-pub-2180848868226246/2409214497</string>
@@ -98,6 +99,10 @@
     <string name="dialog_title_water_serving">Enter amount of water</string>
     <string name="dialog_title_water">Adding water</string>
     <string name="dialog_title_meal_add">Enter meal name</string>
+    <string name="dialog_title_food_reward_ad">User food limit reached</string>
+    <string name="dialog_message_food_ad">You need to have Premium or watch an advertisement to add food further</string>
+    <string name="dialog_watch_ad">Watch an ad</string>
+    <string name="dialog_premium">Get Premium</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_food_name">Food name</string>
@@ -197,6 +202,7 @@
     <string name="message_data_backup">Backup database is successful!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
     <string name="message_card_water">You didn\'t add water this day</string>
+    <string name="message_ad_reward_success">Amount of food additions were increased</string>
 
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 

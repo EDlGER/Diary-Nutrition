@@ -8,21 +8,20 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.*
+import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.ActivityFoodBinding
 import ediger.diarynutrition.util.hideKeyboard
 import ediger.diarynutrition.util.setupSnackbar
@@ -36,6 +35,7 @@ class FoodActivity: AppCompatActivity() {
 
     private var isAdRemoved = false
     private var adView: AdView? = null
+    private var rewardedAd: RewardedAd? = null
     private var initialLayoutComplete = false
     private val adSize: AdSize
         get() {
@@ -80,7 +80,8 @@ class FoodActivity: AppCompatActivity() {
         setupSnackbar()
 
         if (!isAdRemoved) {
-            initAd()
+            initBannerAd()
+            initRewardedAd()
         }
 
         this.showKeyboard(binding.edSearch)
@@ -110,7 +111,7 @@ class FoodActivity: AppCompatActivity() {
         })
     }
 
-    private fun initAd() {
+    private fun initBannerAd() {
         adView = AdView(applicationContext)
 
         binding.adViewContainer.addView(adView)
@@ -131,6 +132,38 @@ class FoodActivity: AppCompatActivity() {
         }
     }
 
+    private fun initRewardedAd() {
+        val adRequest = AdRequest.Builder().build()
+
+        // TODO: getString(R.string.ad_rewarded_user_food)
+        RewardedAd.load(applicationContext, "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdLoaded(ad: RewardedAd) {
+                Log.d(TAG, "Rewarded ad was loaded")
+                rewardedAd = ad
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError.message)
+                rewardedAd = null
+            }
+        })
+
+        rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                Log.d(TAG, "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d(TAG, "Ad showed fullscreen content")
+                rewardedAd = null
+            }
+
+            override fun onAdDismissedFullScreenContent() {
+                Log.d(TAG, "Ad was dismissed")
+            }
+        }
+    }
+
     private fun setupSnackbar() {
         binding.root.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
@@ -140,13 +173,40 @@ class FoodActivity: AppCompatActivity() {
         return true
     }
 
+    // TODO: Delete options and add this code to the FAB click listener
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_add) {
-            supportFragmentManager.beginTransaction().add(android.R.id.content, AddFoodDialog()).commit()
+            if (viewModel.userFoodConstraint <= 0 && rewardedAd != null) {
+                MaterialAlertDialogBuilder(this)
+                        .setTitle(getString(R.string.dialog_title_food_reward_ad))
+                        .setMessage(getString(R.string.dialog_message_food_ad))
+                        .setPositiveButton(getString(R.string.dialog_watch_ad)) { _, _ ->
+                            rewardedAd?.show(this) { rewardItem: RewardItem ->
+                                viewModel.userFoodConstraint = rewardItem.amount
+                                showAddFoodDialog()
+                                viewModel.showSnackbarMessage(R.string.message_ad_reward_success)
+                            }
+                        }
+                        .setNeutralButton(getString(R.string.dialog_premium)) { dialog, _ ->
+                            dialog.dismiss()
+                            // TODO: show Premium fragment
+                        }
+                        .setNegativeButton(getString(R.string.action_back)) { dialog, _ -> dialog.dismiss()}
+                        .show()
+                return false
+            }
+            showAddFoodDialog()
             return true
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showAddFoodDialog() {
+        supportFragmentManager.beginTransaction()
+                .add(android.R.id.content, AddFoodDialog())
+                .commit()
+    }
+
 
     override fun onBackPressed() = with(BottomSheetBehavior.from(binding.fragmentContainer)) {
         if (state == BottomSheetBehavior.STATE_EXPANDED) {
@@ -174,6 +234,7 @@ class FoodActivity: AppCompatActivity() {
     }
 
     companion object {
+        const val TAG = "FoodActivity"
         const val USER_TAB_POSITION = 2
 
         fun getIntent(context: Context, date: Long): Intent =

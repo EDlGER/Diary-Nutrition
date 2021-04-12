@@ -1,6 +1,7 @@
 package ediger.diarynutrition.food
 
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,13 +29,24 @@ class FoodViewModel(app: Application) : AndroidViewModel(app) {
 
     val isAdVisible = MutableLiveData(true)
 
+    var userFoodConstraint: Int = PreferenceHelper
+            .getValue(KEY_USER_FOOD_CONSTRAINT, Int::class.javaObjectType, 5)
+        set(value) {
+            if (field != value) {
+                PreferenceHelper.setValue(KEY_USER_FOOD_CONSTRAINT, value)
+            }
+            field = value
+        }
+
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     init {
         _queryValue.value = ""
+        if (userFoodConstraint !in 0..10) {
+            userFoodConstraint = 0
+        }
     }
-
 
     fun searchFood(foodVariance: FoodVariance): Flow<PagingData<Food>>? {
         val query = queryValue.value ?: return searchResult
@@ -80,6 +92,7 @@ class FoodViewModel(app: Application) : AndroidViewModel(app) {
             }
             repository.addFood(food)
         }
+        userFoodConstraint--
         return true
     }
 
@@ -95,7 +108,7 @@ class FoodViewModel(app: Application) : AndroidViewModel(app) {
         _queryValue.value = query
     }
 
-    private fun showSnackbarMessage(message: Int) {
+    fun showSnackbarMessage(message: Int) {
         _snackbarText.value = Event(message)
     }
 
