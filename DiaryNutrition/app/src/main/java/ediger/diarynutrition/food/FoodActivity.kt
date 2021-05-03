@@ -68,7 +68,7 @@ class FoodActivity: AppCompatActivity() {
         }
 
         isAdRemoved = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
-                .getBoolean(PREF_ADS_REMOVED, false)
+                .getBoolean(PREF_PREMIUM, false)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

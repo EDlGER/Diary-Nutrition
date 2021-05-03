@@ -2,6 +2,7 @@ package ediger.diarynutrition
 
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
+import ediger.diarynutrition.billing.BillingClientLifecycle
 import ediger.diarynutrition.data.repositories.*
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
@@ -31,6 +32,9 @@ class AppContext : MultiDexApplication() {
 
     val weightRepository: WeightRepository
         get() = WeightRepository.getInstance(database.weightDao())
+
+    val billingClientLifecycle: BillingClientLifecycle
+        get() = BillingClientLifecycle.getInstance(this)
 
     override fun onCreate() {
         super.onCreate()

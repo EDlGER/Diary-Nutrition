@@ -1,45 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
-        android:id="@+id/billing_header_layout"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/colorPrimary"
-        android:elevation="3dp">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/crd_subscription_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="200dp"
+                    android:checkable="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/list_background"
+                    app:cardForegroundColor="@null"
+                    app:cardCornerRadius="8dp"
+                    app:checkedIcon="@null"
+                    app:strokeColor="@color/stroke"
+                    app:strokeWidth="1dp"
+                    app:rippleColor="@color/stroke">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:text="@string/subscription_1"
+                        android:textSize="18sp"
+                        android:textColor="@color/text_high" />
+
+                    <TextView
+                        android:id="@+id/txt_price_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
+                        tools:text="79 РУБ"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/crd_subscription_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    android:checkable="true"
+                    app:layout_constraintTop_toBottomOf="@+id/crd_subscription_1"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/list_background"
+                    app:cardForegroundColor="@null"
+                    app:cardCornerRadius="8dp"
+                    app:checkedIcon="@null"
+                    app:strokeColor="@color/stroke"
+                    app:strokeWidth="1dp"
+                    app:rippleColor="@color/stroke">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:text="@string/subscription_2"
+                        android:textSize="18sp"
+                        android:textColor="@color/text_high" />
+
+                    <TextView
+                        android:id="@+id/txt_price_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
+                        tools:text="220 РУБ"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/crd_subscription_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    android:checkable="true"
+                    app:layout_constraintTop_toBottomOf="@+id/crd_subscription_2"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/list_background"
+                    app:cardForegroundColor="@null"
+                    app:cardCornerRadius="8dp"
+                    app:checkedIcon="@null"
+                    app:strokeColor="@color/stroke"
+                    app:strokeWidth="1dp"
+                    app:rippleColor="@color/stroke">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_gravity="start|center_vertical"
+                        android:text="@string/subscription_3"
+                        android:textSize="18sp"
+                        android:textColor="@color/text_high" />
+
+                    <TextView
+                        android:id="@+id/txt_price_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorAccent"
+                        tools:text="799 РУБ"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_payment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ads_off_white_192x192"/>
+            android:text="@string/action_subscribe"
+            android:textColor="@color/onBarPrimary"
+            app:backgroundTint="@color/colorAccentPressed"
+            app:icon="@drawable/ic_payment"
+            app:iconTint="@color/onBarPrimary" />
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/txt_ads_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/billing_header_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btn_buy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:text="@string/billing_button_buy"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"/>
 
-</RelativeLayout>
+</layout>

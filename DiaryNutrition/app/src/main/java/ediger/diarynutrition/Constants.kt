@@ -8,6 +8,12 @@ const val MILLIS_WEEK = 604800000
 
 const val ARG_DATE = "date"
 
+const val SKU_REMOVE_ADS = "com.ediger.removeads"
+const val SKU_PREMIUM_UNLIMITED = "com.ediger.premium.unlimited"
+const val SKU_SUB_MONTHLY = "com.ediger.premium.monthly"
+const val SKU_SUB_SEASON = "com.ediger.premium.season"
+const val SKU_SUB_ANNUALLY = "com.ediger.premium.annually"
+
 //String
 const val KEY_GENDER = "gender"
 const val KEY_BIRTHDAY = "birthday"
@@ -40,10 +46,9 @@ const val PREF_WATER_SERVING_2 = "water_serving_2"
 const val PREF_WATER_SERVING_3 = "water_serving_3"
 const val PREF_WATER_SERVING_4 = "water_serving_4"
 const val PREF_FILE_PREMIUM = "premium_data"
-const val PREF_ADS_REMOVED = "ads_removed"
+const val PREF_PREMIUM = "premium"
 const val KEY_USER_FOOD_CONSTRAINT = "user_food_constraint"
 const val KEY_FIRST_RUN = "first_run"
-const val SKU_REMOVE_ADS = "com.ediger.removeads"
 const val ARG_EXPANSION_LEFT_OFFSET = "arg_left_offset"
 const val ARG_EXPANSION_TOP_OFFSET = "arg_top_offset"
 const val ARG_EXPANSION_VIEW_WIDTH = "arg_view_width"

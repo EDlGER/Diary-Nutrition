@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/nav_premium"
-        android:name="ediger.diarynutrition.BillingFragment"
+        android:name="ediger.diarynutrition.billing.BillingFragment"
         android:label="@string/title_premium"
         tools:layout="@layout/fragment_billing"/>
 

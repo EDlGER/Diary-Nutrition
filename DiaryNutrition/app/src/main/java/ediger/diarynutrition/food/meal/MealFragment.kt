@@ -14,9 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -53,7 +51,7 @@ class MealFragment : Fragment() {
         binding = FragmentMealBinding.inflate(inflater, container, false)
 
         val pref = requireActivity().getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
-        isAdRemoved = pref.getBoolean(PREF_ADS_REMOVED, false)
+        isAdRemoved = pref.getBoolean(PREF_PREMIUM, false)
 
         timeSelectionInit()
 

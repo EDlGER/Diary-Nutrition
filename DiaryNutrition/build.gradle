@@ -34,11 +34,12 @@ ext {
     // App dependencies
 
     // Architecture Components dependencies
-    roomVersion = '2.3.0-rc01'
+    roomVersion = '2.4.0-alpha01'
     archLifecycleVersion = '2.2.0'
-    navVersion = '2.3.4'
+    navVersion = '2.3.5'
     workVersion = '2.5.0'
-    pagingVersion = '3.0.0-beta03'
+    pagingVersion = '3.0.0-rc01'
+    billingVersion = '3.0.3'
 
     //Testing
     atsl = '1.1.0-alpha4'

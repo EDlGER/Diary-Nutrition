@@ -76,14 +76,14 @@ public class WeekFragment extends Fragment implements CompoundButton.OnCheckedCh
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(requireActivity()).get(SummaryViewModel.class);
-        mViewModel.getSummary().observe(this, summary -> {
+        mViewModel.getSummary().observe(getViewLifecycleOwner(), summary -> {
             if (summary.size() == mNumberOfDays) {
                 generateCalData(summary);
                 generateMacroData(summary);
                 mBinding.chartMacro.invalidate();
             }
         });
-        mViewModel.getWater().observe(this, water -> {
+        mViewModel.getWater().observe(getViewLifecycleOwner(), water -> {
             if (water.size() == mNumberOfDays) {
                 generateWaterData(water);
             }
@@ -152,7 +152,7 @@ public class WeekFragment extends Fragment implements CompoundButton.OnCheckedCh
         mViewModel.setPeriod(mFirstDayOfWeek, mNumberOfDays);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).appBar
+            ((MainActivity) requireActivity()).appBar
                     .setStateListAnimator(AnimatorInflater
                             .loadStateListAnimator(getActivity(), R.animator.appbar_unelevated_animator)
                     );
@@ -163,7 +163,7 @@ public class WeekFragment extends Fragment implements CompoundButton.OnCheckedCh
     public void onStop() {
         super.onStop();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).appBar
+            ((MainActivity) requireActivity()).appBar
                     .setStateListAnimator(AnimatorInflater
                             .loadStateListAnimator(getActivity(), R.animator.appbar_elevated_animator)
                     );
