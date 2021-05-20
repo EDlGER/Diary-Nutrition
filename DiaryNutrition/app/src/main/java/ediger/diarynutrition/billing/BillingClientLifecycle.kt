@@ -233,9 +233,6 @@ class BillingClientLifecycle private constructor(
     }
 
     fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
-        val sku = params.sku
-        val oldSku = params.oldSku
-        Log.i(TAG, "launchBillingFlow: sku: $sku, oldSku: $oldSku")
         if (!billingClient.isReady) {
             Log.e(TAG, "launchBillingFlow: BillingClient is not ready")
         }
