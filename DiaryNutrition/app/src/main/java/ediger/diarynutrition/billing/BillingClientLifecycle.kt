@@ -14,7 +14,7 @@ import ediger.diarynutrition.objects.SingleLiveEvent
 class BillingClientLifecycle private constructor(
         private val app: Application
 ) : LifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
-    SkuDetailsResponseListener {
+    SkuDetailsResponseListener, PurchasesResponseListener {
 
     val purchaseUpdateEvent = SingleLiveEvent<List<Purchase>>()
 
@@ -188,17 +188,17 @@ class BillingClientLifecycle private constructor(
         if (!billingClient.isReady) {
             Log.e(TAG, "queryPurchases: BillingClient is not ready")
         }
-        val purchasesResultList = mutableListOf<Purchase>()
 
         Log.d(TAG, "queryPurchases: SUBS")
-        var result = billingClient.queryPurchases(BillingClient.SkuType.SUBS)
-        result.purchasesList?.let { purchasesResultList.addAll(it) }
+        billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS, this)
 
-        Log.d(TAG, "queryPurchases: IN-APP")
-        result = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
-        result.purchasesList?.let { purchasesResultList.addAll(it) }
+        Log.d(TAG, "queryPurchases: INAPP")
+        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP, this)
 
-        processPurchases(purchasesResultList)
+    }
+
+    override fun onQueryPurchasesResponse(billingResult: BillingResult, list: MutableList<Purchase>) {
+        processPurchases(list)
     }
 
     private fun processPurchases(purchasesList: List<Purchase>?) {
@@ -207,11 +207,17 @@ class BillingClientLifecycle private constructor(
             Log.d(TAG, "processPurchases: Purchase list has not changed")
             return
         }
-        purchasesList?.let { list ->
-            purchaseUpdateEvent.postValue(list)
-            purchases.postValue(list)
-            logAcknowledgementStatus(list)
+        val purchasesResult = mutableSetOf<Purchase>()
+        purchases.value?.let {
+            purchasesResult.addAll(it)
         }
+        purchasesList?.let {
+            purchasesResult.addAll(it)
+        }
+
+        purchaseUpdateEvent.postValue(purchasesResult.toList())
+        purchases.postValue(purchasesResult.toList())
+        logAcknowledgementStatus(purchasesResult.toList())
     }
 
     private fun logAcknowledgementStatus(purchasesList: List<Purchase>) {
@@ -228,8 +234,19 @@ class BillingClientLifecycle private constructor(
     }
 
     private fun isUnchangedPurchaseList(purchasesList: List<Purchase>?): Boolean {
-        // TODO: Optimize to avoid updates with identical data.
-        return false
+        if (purchases.value?.isEmpty() == true && purchasesList?.isEmpty() == true) {
+            return true
+        }
+
+        purchases.value?.let { purchases ->
+            purchasesList?.forEach {
+                if (!purchases.contains(it)) {
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 
     fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
