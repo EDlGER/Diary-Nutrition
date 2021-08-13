@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.R
@@ -18,6 +19,8 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     private lateinit var subsCards: List<MaterialCardView>
 
+    private val billingViewModel: BillingViewModel by activityViewModels()
+
     private var selectedSubId = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -29,6 +32,10 @@ class BillingFragment : Fragment(), View.OnClickListener {
         }
 
         subsCards.forEach { it.setOnClickListener(this) }
+
+        binding.fabPayment.setOnClickListener {
+            billingViewModel.buySubscription(BillingClientLifecycle.SUBS_SKUS[selectedSubId])
+        }
 
         return binding.root
     }

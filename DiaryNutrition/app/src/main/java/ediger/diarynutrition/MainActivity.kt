@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -21,6 +22,8 @@ import com.android.billingclient.api.*
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
+import ediger.diarynutrition.billing.BillingClientLifecycle
+import ediger.diarynutrition.billing.BillingViewModel
 import ediger.diarynutrition.diary.DiaryFragment
 import ediger.diarynutrition.inapputil.IabHelper
 import ediger.diarynutrition.intro.IntroActivity
@@ -30,9 +33,12 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var appBar: AppBarLayout
 
+    lateinit var navigationView: NavigationView
+
     private lateinit var drawerLayout: DrawerLayout
 
-    lateinit var navigationView: NavigationView
+    private lateinit var billingClientLifecycle: BillingClientLifecycle
+    private val billingViewModel: BillingViewModel by viewModels()
 
     // TODO: redundant
     private var isAdsRemoved = false
@@ -67,8 +73,14 @@ class MainActivity : AppCompatActivity() {
                 (application as AppContext).billingClientLifecycle
         )
 
-        // TODO: React to a purchase event
+        billingClientLifecycle = (application as AppContext).billingClientLifecycle
+        lifecycle.addObserver(billingClientLifecycle)
 
+        billingViewModel.buyEvent.observe(this) {
+            it?.let {
+                billingClientLifecycle.launchBillingFlow(this, it)
+            }
+        }
 
         setContentView(R.layout.activity_main)
         setupNavigation()

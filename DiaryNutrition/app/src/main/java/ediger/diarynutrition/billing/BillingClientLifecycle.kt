@@ -2,6 +2,7 @@ package ediger.diarynutrition.billing
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -31,13 +32,13 @@ class BillingClientLifecycle private constructor(
     companion object {
         private const val TAG = "BillingLifecycle"
 
-        private val SUBS_SKUS = listOf(
-                SKU_SUB_ANNUALLY,
-                SKU_SUB_SEASON,
-                SKU_SUB_MONTHLY
+        val SUBS_SKUS = listOf(
+            SKU_SUB_MONTHLY,
+            SKU_SUB_SEASON,
+            SKU_SUB_ANNUALLY
         )
 
-        private val INAPP_SKUS = listOf(SKU_REMOVE_ADS, SKU_PREMIUM_UNLIMITED)
+        val INAPP_SKUS = listOf(SKU_PREMIUM_UNLIMITED, SKU_REMOVE_ADS)
 
         private var INSTANCE: BillingClientLifecycle? = null
 
@@ -61,6 +62,14 @@ class BillingClientLifecycle private constructor(
         }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun resume() {
+        Log.d(TAG, "ON_RESUME")
+        if (billingClient.isReady) {
+            queryPurchases()
+        }
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {
         Log.d(TAG, "ON_DESTROY")
@@ -71,6 +80,16 @@ class BillingClientLifecycle private constructor(
         }
     }
 
+    fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
+        if (!billingClient.isReady) {
+            Log.e(TAG, "launchBillingFlow: BillingClient is not ready")
+        }
+        val billingResult = billingClient.launchBillingFlow(activity, params)
+        val responseCode = billingResult.responseCode
+        val debugMessage = billingResult.debugMessage
+        Log.d(TAG, "launchBillingFlow: BillingResponse $responseCode $debugMessage")
+        return responseCode
+    }
 
     override fun onBillingSetupFinished(billingResult: BillingResult) {
         val responseCode = billingResult.responseCode
@@ -215,22 +234,22 @@ class BillingClientLifecycle private constructor(
             purchasesResult.addAll(it)
         }
 
-        purchaseUpdateEvent.postValue(purchasesResult.toList())
         purchases.postValue(purchasesResult.toList())
-        logAcknowledgementStatus(purchasesResult.toList())
-    }
 
-    private fun logAcknowledgementStatus(purchasesList: List<Purchase>) {
-        var ackYes = 0
-        var ackNo = 0
-        for (purchase in purchasesList) {
-            if (purchase.isAcknowledged) {
-                ackYes++
-            } else {
-                ackNo++
+        purchaseUpdateEvent.postValue(purchasesResult.toList())
+
+        if (!purchases.value.isNullOrEmpty()) {
+            entitleUserProducts()
+            Log.d(TAG, "Entitlement user products is done")
+        }
+
+        // Acknowledge purchase
+        purchases.value?.forEach { purchase ->
+            if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                && !purchase.isAcknowledged) {
+                acknowledgePurchase(purchase.purchaseToken)
             }
         }
-        Log.d(TAG, "logAcknowledgementStatus: acknowledged=$ackYes unacknowledged=$ackNo")
     }
 
     private fun isUnchangedPurchaseList(purchasesList: List<Purchase>?): Boolean {
@@ -249,18 +268,14 @@ class BillingClientLifecycle private constructor(
         return true
     }
 
-    fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
-        if (!billingClient.isReady) {
-            Log.e(TAG, "launchBillingFlow: BillingClient is not ready")
-        }
-        val billingResult = billingClient.launchBillingFlow(activity, params)
-        val responseCode = billingResult.responseCode
-        val debugMessage = billingResult.debugMessage
-        Log.d(TAG, "launchBillingFlow: BillingResponse $responseCode $debugMessage")
-        return responseCode
+    private fun entitleUserProducts() {
+        app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
+            .edit()
+            .putBoolean(PREF_PREMIUM, true)
+            .apply()
     }
 
-    fun acknowledgePurchase(purchaseToken: String) {
+    private fun acknowledgePurchase(purchaseToken: String) {
         Log.d(TAG, "acknowledgePurchase")
         val params = AcknowledgePurchaseParams.newBuilder()
                 .setPurchaseToken(purchaseToken)

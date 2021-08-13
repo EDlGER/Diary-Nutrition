@@ -14,23 +14,20 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
 
     val buyEvent = SingleLiveEvent<BillingFlowParams>()
 
+    val openPlayStoreSubscriptionsEvent = SingleLiveEvent<String>()
 
-    /*
-    val client: BillingClient = ...
-    val acknowledgePurchaseResponseListener: AcknowledgePurchaseResponseListener = ...
 
-    suspend fun handlePurchase() {
-        if (purchase.purchaseState === PurchaseState.PURCHASED) {
-            if (!purchase.isAcknowledged) {
-                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
-                        .setPurchaseToken(purchase.purchaseToken)
-                val ackPurchaseResult = withContext(Dispatchers.IO) {
-                   client.acknowledgePurchase(acknowledgePurchaseParams.build())
-                }
-            }
-         }
+    fun buySubscription(sku: String) {
+
     }
 
+    // TODO: Buy subscription
+    /**
+     * It constructs BillingFlowParams for the [sku] and notify buyEvent
+     * Later the activity that subscribed on buyEvent calls billingClientLifecycle.launchBillingFlow
      */
+    fun buy(sku: String) {
+
+    }
 
 }
