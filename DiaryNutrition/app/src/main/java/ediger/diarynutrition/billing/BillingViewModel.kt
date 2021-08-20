@@ -34,7 +34,7 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
             Log.e("Billing", "You cannot buy a SKU that is already owned: $sku.")
             return
         }
-
+        
         val oldSkuToBeReplaced = if (isSkuReplaceable(purchases.value, oldSku)) {
             sku
         } else {
@@ -47,9 +47,9 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
         }
 
         val billingBuilder = BillingFlowParams.newBuilder().setSkuDetails(skuDetails)
-
+        
         if (oldSkuToBeReplaced != null && oldSkuToBeReplaced != sku) {
-            purchaseForSku(purchases.value, oldSkuToBeReplaced)?.apply {
+            purchaseForSku(purchases.value, oldSkuToBeReplaced)?.apply { 
                 billingBuilder.setSubscriptionUpdateParams(
                     BillingFlowParams.SubscriptionUpdateParams.newBuilder()
                         .setOldSkuPurchaseToken(purchaseToken)
@@ -72,5 +72,5 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
         }
         return true
     }
-
+    
 }
