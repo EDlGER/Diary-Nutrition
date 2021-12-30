@@ -43,7 +43,9 @@ class BillingFragment : Fragment(), View.OnClickListener {
     // Subscription cards
     override fun onClick(v: View?) {
         val selectedSub = v as? MaterialCardView
-        toggleSubState(selectedSub)
+        if (selectedSub?.isChecked == false) {
+            toggleSubState(selectedSub)
+        }
         selectedSubId = subsCards.indexOf(selectedSub)
 
         toggleSubState(

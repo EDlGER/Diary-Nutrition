@@ -13,6 +13,10 @@ const val SKU_PREMIUM_UNLIMITED = "com.ediger.premium.unlimited"
 const val SKU_SUB_MONTHLY = "com.ediger.premium.monthly"
 const val SKU_SUB_SEASON = "com.ediger.premium.season"
 const val SKU_SUB_ANNUALLY = "com.ediger.premium.annually"
+const val PLAY_STORE_SUBSCRIPTION_URL
+        = "https://play.google.com/store/account/subscriptions"
+const val PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL
+        = "https://play.google.com/store/account/subscriptions?sku=%s&package=%s"
 
 //String
 const val KEY_GENDER = "gender"

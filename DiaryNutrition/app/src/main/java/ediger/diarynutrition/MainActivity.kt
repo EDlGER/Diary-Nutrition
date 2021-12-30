@@ -69,18 +69,7 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(applicationContext)
 
         // Billing
-        lifecycle.addObserver(
-                (application as AppContext).billingClientLifecycle
-        )
-
-        billingClientLifecycle = (application as AppContext).billingClientLifecycle
-        lifecycle.addObserver(billingClientLifecycle)
-
-        billingViewModel.buyEvent.observe(this) {
-            it?.let {
-                billingClientLifecycle.launchBillingFlow(this, it)
-            }
-        }
+        billingSetup()
 
         setContentView(R.layout.activity_main)
         setupNavigation()
@@ -128,6 +117,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun billingSetup() {
+        lifecycle.addObserver(
+            (application as AppContext).billingClientLifecycle
+        )
+
+        billingClientLifecycle = (application as AppContext).billingClientLifecycle
+        lifecycle.addObserver(billingClientLifecycle)
+
+        billingViewModel.buyEvent.observe(this) {
+            it?.let {
+                billingClientLifecycle.launchBillingFlow(this, it)
+            }
+        }
+
+        billingViewModel.openPlayStoreSubscriptionsEvent.observe(this) {
+            val sku = it
+            val url = if (sku == null) {
+                PLAY_STORE_SUBSCRIPTION_URL
+            } else {
+                String.format(PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL, sku, packageName)
+            }
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(
                 Navigation.findNavController(this, R.id.nav_host_fragment), drawerLayout)
@@ -163,27 +179,6 @@ class MainActivity : AppCompatActivity() {
             activeFragment.onContextMenuClosed()
         }
     }
-
-   /* override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val isPremiumActive: Boolean = purchases?.any {
-                when (it.sku) {
-                    SKU_PREMIUM_UNLIMITED,
-                    SKU_REMOVE_ADS,
-                    SKU_SUB_ANNUALLY,
-                    SKU_SUB_SEASON,
-                    SKU_SUB_MONTHLY -> true
-                    else -> false
-                }
-            } ?: false
-            if (isPremiumActive) {
-                getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE).edit().apply {
-                    putBoolean(PREF_PREMIUM, isPremiumActive)
-                    apply()
-                }
-            }
-        }
-    }*/
 
     companion object {
         const val TAG = "DiaryNutrition"

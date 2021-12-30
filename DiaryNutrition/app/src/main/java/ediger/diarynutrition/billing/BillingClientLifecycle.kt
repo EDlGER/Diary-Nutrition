@@ -10,14 +10,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import com.android.billingclient.api.*
 import ediger.diarynutrition.*
-import ediger.diarynutrition.objects.SingleLiveEvent
 
 class BillingClientLifecycle private constructor(
         private val app: Application
 ) : LifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
     SkuDetailsResponseListener, PurchasesResponseListener {
-
-    val purchaseUpdateEvent = SingleLiveEvent<List<Purchase>>()
 
     /**
      * Purchases are observable. This list will be updated when the Billing Library
@@ -160,11 +157,8 @@ class BillingClientLifecycle private constructor(
         Log.d(TAG, "onPurchasesUpdated: $responseCode $debugMessage")
         when (responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                if (purchases == null) {
-                    Log.d(TAG, "onPurchasesUpdated: null purchase list")
-                    processPurchases(null)
-                } else {
-                    processPurchases(purchases)
+                purchases?.let {
+                    processPurchases(it, null)
                 }
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
@@ -190,7 +184,7 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    fun querySkuDetails(
+    private fun querySkuDetails(
             @BillingClient.SkuType skuType: String,
             skuList: List<String>
     ) {
@@ -203,45 +197,72 @@ class BillingClientLifecycle private constructor(
         billingClient.querySkuDetailsAsync(params, this)
     }
 
-    fun queryPurchases() {
+    private fun queryPurchases() {
         if (!billingClient.isReady) {
             Log.e(TAG, "queryPurchases: BillingClient is not ready")
         }
 
         Log.d(TAG, "queryPurchases: SUBS")
-        billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS, this)
+        billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS) { _, list ->
+            processPurchases(list, BillingClient.SkuType.SUBS)
+        }
 
         Log.d(TAG, "queryPurchases: INAPP")
-        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP, this)
-
+        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP) { _, list ->
+            processPurchases(list, BillingClient.SkuType.INAPP)
+        }
     }
 
+    // TODO: Temporary
     override fun onQueryPurchasesResponse(billingResult: BillingResult, list: MutableList<Purchase>) {
-        processPurchases(list)
+        processPurchases(list, BillingClient.SkuType.SUBS)
     }
 
-    private fun processPurchases(purchasesList: List<Purchase>?) {
-        Log.d(TAG, "processPurchases: ${purchasesList?.size} purchase(s)")
+    private fun processPurchases(
+            purchasesList: List<Purchase>,
+            @BillingClient.SkuType skuType: String?) {
+        Log.d(TAG, "processPurchases: ${purchasesList.size} purchase(s)")
         if (isUnchangedPurchaseList(purchasesList)) {
             Log.d(TAG, "processPurchases: Purchase list has not changed")
             return
         }
-        val purchasesResult = mutableSetOf<Purchase>()
-        purchases.value?.let {
-            purchasesResult.addAll(it)
-        }
-        purchasesList?.let {
-            purchasesResult.addAll(it)
+        //val purchasesResult = mutableSetOf(*purchasesList.toTypedArray())
+
+        //  Multiple threads processing this. It somewhat results in race condition
+        // Possible solution is not save any local purchases at all.
+        // But for that I need to find solution for querying both SUBS and INAPP
+
+
+        // Save local purchase if necessary
+//        purchases.value?.let { localPurchases ->
+//            val skuTypedList = when (skuType) {
+//                BillingClient.SkuType.SUBS -> INAPP_SKUS
+//                BillingClient.SkuType.INAPP -> SUBS_SKUS
+//                else -> null
+//            }
+//            if (skuTypedList.isNullOrEmpty()) {
+//                purchasesResult.addAll(localPurchases)
+//            } else {
+//                localPurchases.forEach {
+//                    if (it.skus.first() in skuTypedList) {
+//                        purchasesResult.add(it)
+//                    }
+//                }
+//            }
+//        }
+//
+//        purchases.postValue(purchasesResult.toList())
+
+        // TODO: empty purchases list override local purchases even when it's not empty
+
+        // TODO: Test or fix
+        if (skuType != null && purchases.value?.isNotEmpty() == true && purchasesList.isNotEmpty()) {
+            return
         }
 
-        purchases.postValue(purchasesResult.toList())
+        purchases.postValue(purchasesList)
 
-        purchaseUpdateEvent.postValue(purchasesResult.toList())
-
-        if (!purchases.value.isNullOrEmpty()) {
-            entitleUserProducts()
-            Log.d(TAG, "Entitlement user products is done")
-        }
+        updatePremiumStatus(isEntitled = !purchases.value.isNullOrEmpty())
 
         // Acknowledge purchase
         purchases.value?.forEach { purchase ->
@@ -252,27 +273,27 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    private fun isUnchangedPurchaseList(purchasesList: List<Purchase>?): Boolean {
-        if (purchases.value?.isEmpty() == true && purchasesList?.isEmpty() == true) {
+    private fun isUnchangedPurchaseList(newPurchases: List<Purchase>?): Boolean {
+        if (purchases.value.isNullOrEmpty() && newPurchases.isNullOrEmpty()) {
             return true
         }
-
-        purchases.value?.let { purchases ->
-            purchasesList?.forEach {
-                if (!purchases.contains(it)) {
-                    return false
+        purchases.value?.let { localPurchases ->
+            if (localPurchases.size == newPurchases?.size) {
+                return newPurchases.all { newPurchase ->
+                    // TODO: check if acknowledged and unacknowledged purchases are considered the same
+                    newPurchase in localPurchases
                 }
             }
         }
-
-        return true
+        return false
     }
 
-    private fun entitleUserProducts() {
+    private fun updatePremiumStatus(isEntitled: Boolean) {
         app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
             .edit()
-            .putBoolean(PREF_PREMIUM, true)
+            .putBoolean(PREF_PREMIUM, isEntitled)
             .apply()
+        Log.d(TAG, "${if (isEntitled) "Entitlement" else "Revoking"} Premium is done")
     }
 
     private fun acknowledgePurchase(purchaseToken: String) {

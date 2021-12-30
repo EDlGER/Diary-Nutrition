@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.Purchase
 import ediger.diarynutrition.AppContext
+import ediger.diarynutrition.SKU_SUB_MONTHLY
 import ediger.diarynutrition.objects.SingleLiveEvent
 
 class BillingViewModel(app: Application): AndroidViewModel(app) {
@@ -19,10 +20,12 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
     val openPlayStoreSubscriptionsEvent = SingleLiveEvent<String>()
 
     fun buySubscription(sku: String) {
-        
-        //TODO: Determine upgrade/downgrade, check if subscription is active
-
-        buy(sku, null)
+        if (hasPurchase(purchases.value, sku)) {
+            openPlayStoreSubscriptionsEvent.postValue(sku)
+        } else {
+            val oldSku = getActivePurchase(purchases.value)?.skus?.firstOrNull()
+            buy(sku, oldSku)
+        }
     }
 
     /**
