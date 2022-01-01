@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.6.0'
+    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         mavenCentral()
@@ -29,18 +29,18 @@ allprojects {
 ext {
     // Sdk and tools
     minSdkVersion = 19
-    targetSdkVersion = 30
-    compileSdkVersion = 30
+    targetSdkVersion = 31
+    compileSdkVersion = 31
     buildToolsVersion = '30.0.2'
 
     // App dependencies
 
     // Architecture Components dependencies
-    roomVersion = '2.4.0-alpha04'
+    roomVersion = '2.4.0'
     archLifecycleVersion = '2.2.0'
     navVersion = '2.3.5'
-    workVersion = '2.7.0-alpha05'
-    pagingVersion = '3.0.1'
+    workVersion = '2.7.1'
+    pagingVersion = '3.1.0'
     billingVersion = '4.0.0'
 
     //Testing

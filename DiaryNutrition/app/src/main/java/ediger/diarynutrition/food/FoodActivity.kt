@@ -168,7 +168,7 @@ class FoodActivity: AppCompatActivity() {
         binding.root.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_food, menu)
         return true
     }
