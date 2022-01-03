@@ -118,10 +118,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun billingSetup() {
-        lifecycle.addObserver(
-            (application as AppContext).billingClientLifecycle
-        )
-
         billingClientLifecycle = (application as AppContext).billingClientLifecycle
         lifecycle.addObserver(billingClientLifecycle)
 

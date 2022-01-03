@@ -121,7 +121,7 @@ class FoodActivity: AppCompatActivity() {
                 initialLayoutComplete = true
 
                 adView?.apply {
-                    // TODO: getString(R.string.banner_ad_inter_id)
+                    // TODO: Change adUnitId to getString(R.string.banner_ad_inter_id)
                     adUnitId = "ca-app-pub-3940256099942544/6300978111"
                     adSize = this@FoodActivity.adSize
                     loadAd(
@@ -135,7 +135,7 @@ class FoodActivity: AppCompatActivity() {
     private fun initRewardedAd() {
         val adRequest = AdRequest.Builder().build()
 
-        // TODO: getString(R.string.ad_rewarded_user_food)
+        // TODO: Change addUnitId to getString(R.string.ad_rewarded_user_food)
         RewardedAd.load(applicationContext, "ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
             override fun onAdLoaded(ad: RewardedAd) {
                 Log.d(TAG, "Rewarded ad was loaded")

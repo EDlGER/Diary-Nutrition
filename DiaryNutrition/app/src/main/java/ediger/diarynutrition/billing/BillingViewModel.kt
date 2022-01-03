@@ -39,7 +39,7 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
         }
         
         val oldSkuToBeReplaced = if (isSkuReplaceable(purchases.value, oldSku)) {
-            sku
+            oldSku
         } else {
             null
         }

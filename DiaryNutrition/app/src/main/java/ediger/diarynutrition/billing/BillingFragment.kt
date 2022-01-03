@@ -117,7 +117,8 @@ var mHelper: IabHelper? = null
             mHelper!!.queryInventoryAsync(mReceivedInventoryListener)
         })
         buyButton!!.setOnClickListener {
-            mHelper!!.launchPurchaseFlow(activity, SKU_REMOVE_ADS, 10001,
+            mHelper!!.launchPurchaseFlow(activity, SKU_REMOVE_ADS, 10001,shReportData calculate detail steps data
+01-02 13:02:30.532 30135  2143 W HiH_HiSyncControl: 1200012
                     mPurchaseFinishedListener, payload)
         }
         return rootview

@@ -4,16 +4,13 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.android.billingclient.api.*
 import ediger.diarynutrition.*
 
 class BillingClientLifecycle private constructor(
         private val app: Application
-) : LifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
+) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
     SkuDetailsResponseListener, PurchasesResponseListener {
 
     /**
@@ -45,30 +42,27 @@ class BillingClientLifecycle private constructor(
                 }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun create() {
+    override fun onCreate(owner: LifecycleOwner) {
         Log.d(TAG, "ON_CREATE")
 
         billingClient = BillingClient.newBuilder(app.applicationContext)
-                .setListener(this)
-                .enablePendingPurchases()
-                .build()
+            .setListener(this)
+            .enablePendingPurchases()
+            .build()
         if (!billingClient.isReady) {
             Log.d(TAG, "BillingClient: Start connection...")
             billingClient.startConnection(this)
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun resume() {
+    override fun onResume(owner: LifecycleOwner) {
         Log.d(TAG, "ON_RESUME")
         if (billingClient.isReady) {
             queryPurchases()
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun destroy() {
+    override fun onDestroy(owner: LifecycleOwner) {
         Log.d(TAG, "ON_DESTROY")
         if (billingClient.isReady) {
             Log.d(TAG, "BillingClient can only be used once -- closing connection")
@@ -226,7 +220,7 @@ class BillingClientLifecycle private constructor(
             Log.d(TAG, "processPurchases: Purchase list has not changed")
             return
         }
-        //val purchasesResult = mutableSetOf(*purchasesList.toTypedArray())
+        val purchasesResult = mutableSetOf(*purchasesList.toTypedArray())
 
         //  Multiple threads processing this. It somewhat results in race condition
         // Possible solution is not save any local purchases at all.
@@ -234,33 +228,33 @@ class BillingClientLifecycle private constructor(
 
 
         // Save local purchase if necessary
-//        purchases.value?.let { localPurchases ->
-//            val skuTypedList = when (skuType) {
-//                BillingClient.SkuType.SUBS -> INAPP_SKUS
-//                BillingClient.SkuType.INAPP -> SUBS_SKUS
-//                else -> null
-//            }
-//            if (skuTypedList.isNullOrEmpty()) {
-//                purchasesResult.addAll(localPurchases)
-//            } else {
-//                localPurchases.forEach {
-//                    if (it.skus.first() in skuTypedList) {
-//                        purchasesResult.add(it)
-//                    }
-//                }
-//            }
-//        }
-//
-//        purchases.postValue(purchasesResult.toList())
+        purchases.value?.let { localPurchases ->
+            val skuTypedList = when (skuType) {
+                BillingClient.SkuType.SUBS -> INAPP_SKUS
+                BillingClient.SkuType.INAPP -> SUBS_SKUS
+                else -> null
+            }
+            if (skuTypedList.isNullOrEmpty()) {
+                purchasesResult.addAll(localPurchases)
+            } else {
+                localPurchases.forEach {
+                    if (it.skus.first() in skuTypedList) {
+                        purchasesResult.add(it)
+                    }
+                }
+            }
+        }
+
+        purchases.postValue(purchasesResult.toList())
 
         // TODO: empty purchases list override local purchases even when it's not empty
 
         // TODO: Test or fix
-        if (skuType != null && purchases.value?.isNotEmpty() == true && purchasesList.isNotEmpty()) {
-            return
-        }
-
-        purchases.postValue(purchasesList)
+//        if (skuType != null && purchases.value?.isNotEmpty() == true && purchasesList.isNotEmpty()) {
+//            return
+//        }
+//
+//        purchases.postValue(purchasesList)
 
         updatePremiumStatus(isEntitled = !purchases.value.isNullOrEmpty())
 
