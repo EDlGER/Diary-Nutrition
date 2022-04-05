@@ -38,11 +38,7 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
             return
         }
         
-        val oldSkuToBeReplaced = if (isSkuReplaceable(purchases.value, oldSku)) {
-            oldSku
-        } else {
-            null
-        }
+        val oldSkuToBeReplaced = if (isSkuReplaceable(purchases.value, oldSku)) oldSku else null
 
         val skuDetails = skusWithDetails.value?.get(sku) ?: run {
             Log.e("Billing", "Could not find SkuDetails to make purchase.")
@@ -73,6 +69,11 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
             Log.e("Billing", "You cannot replace sku that is not already owned")
             return false
         }
+        if (!isSubscription(sku)) {
+            Log.e("Billing", "You cannot replace a one-time product")
+            return false
+        }
+
         return true
     }
     

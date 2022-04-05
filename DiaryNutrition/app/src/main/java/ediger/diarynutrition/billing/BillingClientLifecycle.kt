@@ -11,7 +11,7 @@ import ediger.diarynutrition.*
 class BillingClientLifecycle private constructor(
         private val app: Application
 ) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
-    SkuDetailsResponseListener, PurchasesResponseListener {
+    SkuDetailsResponseListener {
 
     /**
      * Purchases are observable. This list will be updated when the Billing Library
@@ -96,7 +96,6 @@ class BillingClientLifecycle private constructor(
 
     override fun onBillingServiceDisconnected() {
         Log.d(TAG, "onBillingServiceDisconnected")
-        // It is better to try connecting again with exponential backoff
         if (!billingClient.isReady) {
             billingClient.startConnection(this)
         }
@@ -207,10 +206,6 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    // TODO: Temporary
-    override fun onQueryPurchasesResponse(billingResult: BillingResult, list: MutableList<Purchase>) {
-        processPurchases(list, BillingClient.SkuType.SUBS)
-    }
 
     private fun processPurchases(
             purchasesList: List<Purchase>,
@@ -221,11 +216,6 @@ class BillingClientLifecycle private constructor(
             return
         }
         val purchasesResult = mutableSetOf(*purchasesList.toTypedArray())
-
-        //  Multiple threads processing this. It somewhat results in race condition
-        // Possible solution is not save any local purchases at all.
-        // But for that I need to find solution for querying both SUBS and INAPP
-
 
         // Save local purchase if necessary
         purchases.value?.let { localPurchases ->
@@ -246,15 +236,6 @@ class BillingClientLifecycle private constructor(
         }
 
         purchases.postValue(purchasesResult.toList())
-
-        // TODO: empty purchases list override local purchases even when it's not empty
-
-        // TODO: Test or fix
-//        if (skuType != null && purchases.value?.isNotEmpty() == true && purchasesList.isNotEmpty()) {
-//            return
-//        }
-//
-//        purchases.postValue(purchasesList)
 
         updatePremiumStatus(isEntitled = !purchases.value.isNullOrEmpty())
 
@@ -283,11 +264,16 @@ class BillingClientLifecycle private constructor(
     }
 
     private fun updatePremiumStatus(isEntitled: Boolean) {
-        app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
-            .edit()
-            .putBoolean(PREF_PREMIUM, isEntitled)
-            .apply()
-        Log.d(TAG, "${if (isEntitled) "Entitlement" else "Revoking"} Premium is done")
+        app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE).apply {
+            val premiumPref = getBoolean(PREF_PREMIUM, false)
+
+            if (isEntitled != premiumPref) {
+                edit()
+                    .putBoolean(PREF_PREMIUM, isEntitled)
+                    .apply()
+                Log.d(TAG, "${if (isEntitled) "Entitlement" else "Revoking"} Premium is done")
+            }
+        }
     }
 
     private fun acknowledgePurchase(purchaseToken: String) {

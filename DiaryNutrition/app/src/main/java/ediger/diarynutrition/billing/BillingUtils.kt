@@ -28,5 +28,9 @@ fun getActivePurchase(purchases: List<Purchase>?): Purchase? {
     return null
 }
 
+fun isSubscription(sku: String) =
+    sku in listOf(SKU_SUB_MONTHLY, SKU_SUB_SEASON, SKU_SUB_ANNUALLY)
+
+
 fun Purchase.isSubscription() =
     this.skus.first() in listOf(SKU_SUB_MONTHLY, SKU_SUB_SEASON, SKU_SUB_ANNUALLY)
