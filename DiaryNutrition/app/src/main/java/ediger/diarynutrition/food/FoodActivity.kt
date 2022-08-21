@@ -123,7 +123,7 @@ class FoodActivity: AppCompatActivity() {
                 adView?.apply {
                     // TODO: Change adUnitId to getString(R.string.banner_ad_inter_id)
                     adUnitId = "ca-app-pub-3940256099942544/6300978111"
-                    adSize = this@FoodActivity.adSize
+                    setAdSize(this@FoodActivity.adSize)
                     loadAd(
                             AdRequest.Builder().build()
                     )

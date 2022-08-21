@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.3'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath 'com.google.gms:google-services:4.3.10'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -29,19 +29,19 @@ allprojects {
 ext {
     // Sdk and tools
     minSdkVersion = 19
-    targetSdkVersion = 32
-    compileSdkVersion = 32
+    targetSdkVersion = 33
+    compileSdkVersion = 33
     buildToolsVersion = '30.0.2'
 
     // App dependencies
 
     // Architecture Components dependencies
-    roomVersion = '2.4.2'
+    roomVersion = '2.4.3'
     archLifecycleVersion = '2.2.0'
-    navVersion = '2.4.2'
+    navVersion = '2.5.1'
     workVersion = '2.7.1'
     pagingVersion = '3.1.1'
-    billingVersion = '4.1.0'
+    billingVersion = '5.0.0'
 
     //Testing
     atsl = '1.1.0-alpha4'
