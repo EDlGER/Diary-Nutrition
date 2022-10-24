@@ -58,33 +58,34 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.browser:browser:1.4.0'
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.activity:activity-ktx:1.5.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.2'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.5.4'
     implementation 'com.android.support:preference-v7:28.0.0'
     implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
     implementation 'com.github.paolorotolo:appintro:4.1.0'
-    implementation 'com.google.firebase:firebase-ads:21.1.0'
+    implementation 'com.google.firebase:firebase-ads:21.3.0'
     implementation 'com.github.aliab:circular-music-progressbar:v1.0'
     implementation 'com.klinkerapps:sliding-activity:1.5.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
-    implementation 'com.opencsv:opencsv:5.6'
-    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+    implementation 'com.opencsv:opencsv:5.7.1'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
     implementation 'com.google.code.gson:gson:2.9.1'
     implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
     implementation "com.android.billingclient:billing-ktx:$rootProject.billingVersion"
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     //Room components
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
@@ -97,7 +98,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
 
     //Kotlin
-    implementation 'androidx.core:core-ktx:1.9.0-beta01'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"

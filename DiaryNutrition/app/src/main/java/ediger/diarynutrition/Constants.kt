@@ -8,6 +8,8 @@ const val MILLIS_WEEK = 604800000
 
 const val ARG_DATE = "date"
 
+const val USER_PREFERENCES_NAME = "user_preferences"
+
 const val SKU_REMOVE_ADS = "com.ediger.removeads"
 const val SKU_PREMIUM_UNLIMITED = "com.ediger.premium.unlimited"
 const val SKU_SUB_MONTHLY = "com.ediger.premium.monthly"
