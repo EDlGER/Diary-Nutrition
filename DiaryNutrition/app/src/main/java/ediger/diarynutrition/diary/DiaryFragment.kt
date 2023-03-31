@@ -220,11 +220,11 @@ class DiaryFragment : Fragment() {
             }
         }
 
-        currentEntry.lifecycle.addObserver(observer)
+        currentEntry.getLifecycle().addObserver(observer)
 
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_DESTROY) {
-                currentEntry.lifecycle.removeObserver(observer)
+                currentEntry.getLifecycle().removeObserver(observer)
             }
         })
     }

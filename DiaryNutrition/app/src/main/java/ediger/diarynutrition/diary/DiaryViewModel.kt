@@ -69,8 +69,8 @@ class DiaryViewModel(app: Application) : AndroidViewModel(app) {
                 _recordsList.setValue(filteredList)
             }
         }
-        daySummary = Transformations.switchMap(_date) { date: Calendar -> summaryRepository.getDaySummary(date) }
-        water = Transformations.switchMap(_date) { date: Calendar -> waterRepository.getWaterSum(date) }
+        daySummary = _date.switchMap { date: Calendar -> summaryRepository.getDaySummary(date) }
+        water = _date.switchMap { date: Calendar -> waterRepository.getWaterSum(date) }
     }
 
     private fun reorderList(list: List<MealAndRecords>, mealsOrder: List<Int>): List<MealAndRecords> {

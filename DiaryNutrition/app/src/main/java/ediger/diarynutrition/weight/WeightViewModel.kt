@@ -22,8 +22,7 @@ class WeightViewModel(application: Application) : AndroidViewModel(application) 
     init {
         val from = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -8) }
         mDateSince.value = from
-        weightSinceDate = Transformations
-                .switchMap(mDateSince) { date: Calendar -> weightRepository.getWeight(date) }
+        weightSinceDate = mDateSince.switchMap { date: Calendar -> weightRepository.getWeight(date) }
     }
 
     fun addWeight(weight: Weight) = viewModelScope.launch {

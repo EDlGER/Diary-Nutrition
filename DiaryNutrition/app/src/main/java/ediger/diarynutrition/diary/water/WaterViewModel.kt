@@ -19,7 +19,7 @@ class WaterViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         date.value = Calendar.getInstance()
-        water = Transformations.switchMap(date) { day: Calendar -> waterRepository.getWaterList(day) }
+        water = date.switchMap { day: Calendar -> waterRepository.getWaterList(day) }
     }
 
     fun setDate(day: Calendar) {

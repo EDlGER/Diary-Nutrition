@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl"
@@ -18,9 +19,10 @@
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Rally.Button.IconOnly"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:id="@+id/image1"
-        android:layout_width="52dp"
+        android:layout_width="36dp"
         android:layout_height="52dp"
         app:icon="@drawable/ic_products"
         app:iconTint="@color/onBarPrimary"
@@ -29,9 +31,10 @@
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Rally.Button.IconOnly"
         android:id="@+id/image2"
-        android:layout_width="52dp"
+        android:layout_width="36dp"
         android:layout_height="52dp"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:icon="@drawable/ic_favorite"
         app:iconTint="@color/tabsScrollColor"
         tools:ignore="MissingConstraints"/>
@@ -39,9 +42,10 @@
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.Rally.Button.IconOnly"
         android:id="@+id/image3"
-        android:layout_width="52dp"
+        android:layout_width="36dp"
         android:layout_height="52dp"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:icon="@drawable/ic_user"
         app:iconTint="@color/tabsScrollColor"
         tools:ignore="MissingConstraints"/>
@@ -59,9 +63,9 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Products"
+        android:text="@string/tab_products"
         android:textColor="@color/onBarPrimary"
-        app:layout_constraintWidth_max="130dp"
+        app:layout_constraintWidth_max="140dp"
         tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,8 +16,6 @@ import androidx.transition.TransitionManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.button.MaterialButton
 import ediger.diarynutrition.R
-import kotlinx.android.synthetic.main.tabs_rally.view.*
-
 
 class RallyTab @JvmOverloads constructor(
         context: Context,
@@ -31,7 +29,7 @@ class RallyTab @JvmOverloads constructor(
 
     private val transition by lazy {
         AutoTransition().apply {
-            excludeTarget(textView, true)
+            excludeTarget(findViewById<TextView>(R.id.textView), true)
         }.apply {
             interpolator = FastOutSlowInInterpolator()
             duration = 300
@@ -39,16 +37,17 @@ class RallyTab @JvmOverloads constructor(
     }
 
     private val titleAlphaAnimator by lazy {
-        ObjectAnimator.ofFloat(textView, "alpha", 0f, 1f).apply {
+        ObjectAnimator.ofFloat(findViewById<TextView>(R.id.textView),
+            "alpha", 0f, 1f).apply {
             startDelay = duration  * 1 / 3
             duration = 300
         }
     }
 
     private val titleSlideAnimator by lazy {
-        val tvWidth = resources.displayMetrics.widthPixels - ( image1.width * 5 )
+        val tvWidth = resources.displayMetrics.widthPixels - (findViewById<View>(R.id.image1).width * 5)
         ObjectAnimator.ofFloat(
-                textView, "translationX", tvWidth.toFloat(), 0f
+            findViewById<TextView>(R.id.textView), "translationX", tvWidth.toFloat(), 0f
         ).apply {
             interpolator = FastOutSlowInInterpolator()
             duration = 300
@@ -64,15 +63,15 @@ class RallyTab @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.tabs_rally, this)
 
-        image1.setOnClickListener {
+        findViewById<View>(R.id.image1).setOnClickListener {
             viewPager?.setCurrentItem(0, true)
         }
 
-        image2.setOnClickListener {
+        findViewById<View>(R.id.image2).setOnClickListener {
             viewPager?.setCurrentItem(1, true)
         }
 
-        image3.setOnClickListener {
+        findViewById<View>(R.id.image3).setOnClickListener {
             viewPager?.setCurrentItem(2, true)
         }
     }
@@ -80,19 +79,20 @@ class RallyTab @JvmOverloads constructor(
     fun clickedItem(position: Int) {
         val flow = findViewById<Flow>(R.id.flow)
         val refs = flow.referencedIds.toMutableList()
+        val title = findViewById<TextView>(R.id.textView)
 
         if(refs.size < position){
             viewPager?.currentItem = 0
             return
         }
 
-        TransitionManager.beginDelayedTransition(cl, transition)
+        TransitionManager.beginDelayedTransition(findViewById<ConstraintLayout>(R.id.cl), transition)
         previousClickedPosition = lastClickedPosition
         lastClickedPosition = position
 
 
         if (lastClickedPosition != previousClickedPosition) {
-            textView.alpha = 0f
+            title.alpha = 0f
 
             refs.remove(R.id.textView)
 
@@ -115,7 +115,7 @@ class RallyTab @JvmOverloads constructor(
 
             requestLayout()
 
-            textView.text = tabNames[position]
+            title.text = tabNames[position]
 
             if (previousClickedPosition < lastClickedPosition) {
                 val set = AnimatorSet()
@@ -127,7 +127,7 @@ class RallyTab @JvmOverloads constructor(
 
             refs.add(position + 1, R.id.textView)
             flow.referencedIds = refs.toIntArray()
-            flow.removeView(stub)
+            flow.removeView(findViewById<TextView>(R.id.stub))
         }
 
     }
