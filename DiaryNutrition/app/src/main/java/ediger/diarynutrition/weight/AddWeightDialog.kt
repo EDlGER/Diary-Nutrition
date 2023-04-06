@@ -67,7 +67,9 @@ class AddWeightDialog : DialogFragment() {
         binding.edDate.setOnClickListener {
             DatePickerDialog(
                     requireActivity(),
-                    { _, _, _, dayOfMonth ->
+                    { _, year, month, dayOfMonth ->
+                        date[Calendar.YEAR] = year
+                        date[Calendar.MONTH] = month
                         date[Calendar.DAY_OF_MONTH] = dayOfMonth
                         binding.edDate.setText(dateFormat.format(date.time))
                     },

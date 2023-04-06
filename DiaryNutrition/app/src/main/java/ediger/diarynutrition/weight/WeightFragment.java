@@ -75,14 +75,10 @@ public class WeightFragment extends Fragment implements AdapterView.OnItemSelect
         mBinding.listWeight.setAdapter(mWeightAdapter);
         mBinding.listWeight.setLayoutManager(new LinearLayoutManager(getContext()));
         registerForContextMenu(mBinding.listWeight);
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(WeightViewModel.class);
 
-        mViewModel.getWeight().observe(this, weights -> {
+        mViewModel.getWeight().observe(getViewLifecycleOwner(), weights -> {
             mWeightAdapter.setWeightList(weights);
 
             Calendar since = Calendar.getInstance();
@@ -90,7 +86,7 @@ public class WeightFragment extends Fragment implements AdapterView.OnItemSelect
             mViewModel.setDate(since);
 
         });
-        mViewModel.getWeightSinceDate().observe(this, this::generateData);
+        mViewModel.getWeightSinceDate().observe(getViewLifecycleOwner(), this::generateData);
     }
 
     @Override
@@ -131,7 +127,7 @@ public class WeightFragment extends Fragment implements AdapterView.OnItemSelect
         }
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM", Locale.getDefault());
 
-        int numberOfPoints = weightData.size() > 7 ? weightData.size() : 7;
+        int numberOfPoints = Math.max(weightData.size(), 7);
         float maxWeightViewport = 0;
         float minWeightViewport = 200;
 
@@ -150,7 +146,7 @@ public class WeightFragment extends Fragment implements AdapterView.OnItemSelect
         }
 
         Line line = new Line(values);
-        line.setColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+        line.setColor(ContextCompat.getColor(requireActivity(), R.color.colorAccent));
         line.setShape(ValueShape.CIRCLE);
         line.setFilled(false);
         line.setHasLines(true);
