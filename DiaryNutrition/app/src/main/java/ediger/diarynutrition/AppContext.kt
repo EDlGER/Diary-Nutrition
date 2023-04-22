@@ -1,7 +1,6 @@
 package ediger.diarynutrition
 
 import android.content.Context
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import ediger.diarynutrition.billing.BillingClientLifecycle
@@ -37,10 +36,6 @@ class AppContext : MultiDexApplication() {
 
     val billingClientLifecycle: BillingClientLifecycle
         get() = BillingClientLifecycle.getInstance(this)
-
-    private val Context.dataStore by preferencesDataStore(
-        name = USER_PREFERENCES_NAME
-    )
 
     override fun onCreate() {
         super.onCreate()

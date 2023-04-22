@@ -55,36 +55,19 @@ class SummaryDaoTest {
         database.close()
     }
 
-//    @Test
-//    fun getSummaryForPeriod() = runBlockingTest {
-//        //One day ~ 87 000 000 millis
-//        val record = Record(1, 1, 150, 100000000)
-//        database.recordDao().populateRecords(listOf(RECORD, RECORD_2, record))
-//
-//        val summaryList = database.summaryDao().getMacroSummary(0, 200000000)
-//        assertThat(summaryList.size, `is`(3))
-//
-//        summaryList.find { it.cal == (FOOD.cal * record.serving / 100) }.also { secondDaySummary ->
-//            assertThat(secondDaySummary, notNullValue())
-//        }
-//
-//    }
+    @Test
+    fun getSummaryForPeriod() = runBlockingTest {
+        //One day ~ 87 000 000 millis
+        val record = Record(1, 1, 150, 100000000)
+        database.recordDao().populateRecords(listOf(RECORD, RECORD_2, record))
 
-    //    //One day ~ 87 000 000 millis
-    //    @Test
-    //    public void getSummaryForPeriod() {
-    //        mDatabase.recordDao().insertRecord(
-    //                new Record(1, 1, 200, 100_000_000));
-    //        List<Summary> summary = mSummaryDao.getMacroSummary(0, 200_000_000);
-    //
-    //        assertThat(summary, notNullValue());
-    //        assertThat(summary.size(), is(3));
-    //
-    //        Summary firstDaySummary = summary.get(0);
-    //        Summary secondDaySummary = summary.get(1);
-    //
-    //        assertSummary(firstDaySummary, 7.5F, 7.5F, 7.5F, 7.5F);
-    //        assertSummary(secondDaySummary, 2, 2,2,2);
-    //    }
+        val summaryList = database.summaryDao().getMacroSummary(0, 200000000)
+        assertThat(summaryList.size, `is`(3))
+
+        summaryList.find { it.cal == (FOOD.cal * record.serving / 100) }.also { secondDaySummary ->
+            assertThat(secondDaySummary, notNullValue())
+        }
+
+    }
 
 }
