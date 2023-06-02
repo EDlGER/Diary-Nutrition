@@ -1,7 +1,6 @@
 package ediger.diarynutrition.workers
 
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.gson.GsonBuilder
@@ -9,16 +8,14 @@ import ediger.diarynutrition.BACKUP_NAME
 import ediger.diarynutrition.DEFAULT_MEALS_COUNT
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.model.JsonDatabaseBackup
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.lang.Exception
 
 class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 
-    // Showing the notification about the worker progress will be useful for a user
-
-    override suspend fun doWork(): Result = coroutineScope {
-        // Need to use Hilt dependency injection
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val database = DiaryDatabase.getInstance(applicationContext)
         try {
             val backupFile = File(applicationContext.filesDir, BACKUP_NAME)
@@ -62,12 +59,15 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
                     database.recordDao().populateRecords(backupModel.recordList)
                     database.weightDao().populateWeight(backupModel.weightList)
                     database.waterDao().populateWater(backupModel.waterList)
+
+                    Result.success()
                 }
+            } else {
+                Result.failure()
             }
         } catch (e: Exception) {
             Result.failure()
         }
-        Result.success()
     }
 
 }

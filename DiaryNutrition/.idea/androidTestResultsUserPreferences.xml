@@ -35,6 +35,8 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="HUAWEI" value="120" />
+                  <entry key="HUAWEI&#10; JSN-L21" value="120" />
                   <entry key="Pixel_4_API_31" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
@@ -48,6 +50,8 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="HUAWEI&#10; JSN-L21" value="120" />
+                  <entry key="MUE4C18B07001972" value="120" />
                   <entry key="Pixel_4_API_31" value="120" />
                   <entry key="Tests" value="360" />
                 </map>

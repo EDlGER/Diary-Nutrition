@@ -11,21 +11,29 @@ import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.work.WorkInfo;
+
+import com.google.common.util.concurrent.ListenableFuture;
 
 import ediger.diarynutrition.Consts;
 import ediger.diarynutrition.MainActivity;
@@ -33,6 +41,7 @@ import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.intro.PolicyActivity;
 import ediger.diarynutrition.util.NutritionProgramUtils;
+import ediger.diarynutrition.util.SnackbarUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.
         OnSharedPreferenceChangeListener, DatePickerDialog.OnDateSetListener {
@@ -49,9 +58,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     private static final int REQ_WRITE_STORAGE = 112;
 
+    private SettingsViewModel viewModel;
+
     private Calendar birthday = Calendar.getInstance();
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private Date date = new Date();
+
+    private boolean isBackupRequested = false;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -59,6 +72,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
         PreferenceHelper.getPreferences().registerOnSharedPreferenceChangeListener(this);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         Preference heightPref = findPreference(Consts.KEY_HEIGHT);
         heightPref.setSummary(PreferenceHelper.getValue(Consts.KEY_HEIGHT, String.class, ""));
@@ -116,17 +131,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Preference backupData = findPreference(KEY_PREF_DATA_BACKUP);
         backupData.setOnPreferenceClickListener(preference -> {
-            boolean hasPermission = (ContextCompat.checkSelfPermission(requireActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-
-            if (!hasPermission) {
-                ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQ_WRITE_STORAGE);
-            }
-            // TODO: backup db
-            //AppContext.getDbDiary().backupDb();
+            viewModel.backupDatabase();
+            isBackupRequested = true;
             return false;
         });
 
@@ -150,6 +156,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         privacyPolicy.setOnPreferenceClickListener(preference -> {
             startActivity(new Intent(getActivity(), PolicyActivity.class));
             return false;
+        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel.getBackupStatus().observe(getViewLifecycleOwner(), listOfInfos -> {
+            if (listOfInfos == null || listOfInfos.isEmpty() || !isBackupRequested) {
+                return;
+            }
+            WorkInfo workInfo = listOfInfos.get(0);
+            if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                SnackbarUtils.showSnackbar(view, getString(R.string.message_data_backup));
+                isBackupRequested = false;
+            }
         });
     }
 

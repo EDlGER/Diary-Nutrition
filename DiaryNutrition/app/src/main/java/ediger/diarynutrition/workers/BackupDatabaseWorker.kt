@@ -7,12 +7,12 @@ import com.google.gson.GsonBuilder
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.BACKUP_NAME
 import ediger.diarynutrition.data.source.model.JsonDatabaseBackup
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import java.lang.Exception
 
 class BackupDatabaseWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
 
-    override suspend fun doWork(): Result = coroutineScope {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         try {
             val database = (applicationContext as AppContext).database
 
@@ -29,14 +29,13 @@ class BackupDatabaseWorker(appContext: Context, params: WorkerParameters) : Coro
                 it.write(gson.toJson(jsonBackup).toByteArray())
             }
 
+            Result.success()
         } catch (e: Exception) {
             Result.failure()
         }
-
-        Result.success()
     }
 
     companion object {
-        const val TAG = "BackupDatabaseWorker"
+        const val NAME = "BackupDatabaseWorker"
     }
 }
