@@ -22,7 +22,7 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
             if (backupFile.exists() && backupFile.length() > 0) {
                 applicationContext.openFileInput(BACKUP_NAME).use {
                     val gson = GsonBuilder().create()
-                    val backupModel = gson.fromJson<JsonDatabaseBackup>(it.reader(), JsonDatabaseBackup::class.java)
+                    val backupModel = gson.fromJson(it.reader(), JsonDatabaseBackup::class.java)
 
                     val oldFoodIds = backupModel.foodList.map { food -> food.id }
                     backupModel.foodList.toMutableList().forEach { food -> food.id = 0 }
@@ -37,14 +37,16 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
                                     ).toLong()
                                 } else id
                             }
+
                     backupModel.foodList.forEachIndexed { i, food ->
-                        if (food.favorite == 1) {
-                            database.foodDao().updateFavoriteFoodById(foodIds[i].toInt(), true)
-                        }
+                        database.foodDao().updateFavoriteFoodIfDiff(foodIds[i].toInt(), food.favorite)
+                        database.foodDao().updateUserFoodIfDiff(foodIds[i].toInt(), food.user)
                     }
 
                     database.recordDao().deleteAllRecords()
                     database.mealDao().deleteUserMeals()
+                    database.weightDao().deleteAllWeight()
+                    database.waterDao().deleteAllWater()
 
                     val mealIds = database.mealDao().populateMeals(backupModel.mealList)
 
@@ -68,6 +70,10 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
         } catch (e: Exception) {
             Result.failure()
         }
+    }
+
+    companion object {
+        const val NAME = "RestoreDatabaseWorker"
     }
 
 }

@@ -37,4 +37,7 @@ interface WeightDao {
 
     @Query("DELETE FROM weight WHERE id = :id")
     suspend fun deleteWeightById(id: Int): Int
+
+    @Query("DELETE FROM weight")
+    suspend fun deleteAllWeight()
 }

@@ -27,6 +27,9 @@ interface WaterDao {
     @Query("DELETE FROM water WHERE id = :id")
     suspend fun deleteWaterById(id: Int): Int
 
+    @Query("DELETE FROM water")
+    suspend fun deleteAllWater()
+
     @Query("SELECT " +
             "id, " +
             "sum(amount) AS amount, " +

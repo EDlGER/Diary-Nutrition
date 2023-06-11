@@ -64,7 +64,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
     private Date date = new Date();
 
+    // TODO: Get rid of this approach
     private boolean isBackupRequested = false;
+    private boolean isRestoreRequested = false;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -138,17 +140,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Preference restoreData = findPreference(KEY_PREF_DATA_RESTORE);
         restoreData.setOnPreferenceClickListener(preference -> {
-            boolean hasPermission = (ContextCompat.checkSelfPermission(requireActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-
-            if (!hasPermission) {
-                ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQ_WRITE_STORAGE);
-            }
-            // TODO: restore db
-            //AppContext.getDbDiary().restoreDb();
+            viewModel.restoreDatabase();
+            isRestoreRequested = true;
             return false;
         });
 
@@ -171,6 +164,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
             if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                 SnackbarUtils.showSnackbar(view, getString(R.string.message_data_backup));
                 isBackupRequested = false;
+            }
+        });
+
+        viewModel.getRestoreStatus().observe(getViewLifecycleOwner(), listOfInfos -> {
+            if (listOfInfos == null || listOfInfos.isEmpty() || !isRestoreRequested) {
+                return;
+            }
+            WorkInfo workInfo = listOfInfos.get(0);
+            if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                SnackbarUtils.showSnackbar(view, getString(R.string.message_data_restore));
+                isRestoreRequested = false;
             }
         });
     }

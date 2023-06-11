@@ -58,7 +58,7 @@ abstract class RecordDao {
     abstract suspend fun delRecordById(id: Int): Int
 
     @Query("DELETE FROM record")
-    abstract fun deleteAllRecords()
+    abstract suspend fun deleteAllRecords()
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun updateRecord(record: Record)

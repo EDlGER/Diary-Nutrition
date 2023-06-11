@@ -25,7 +25,7 @@ interface MealDao {
     suspend fun deleteMealById(id: Int): Int
 
     @Query("DELETE FROM meal WHERE user > 0")
-    fun deleteUserMeals()
+    suspend fun deleteUserMeals()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMeal(meal: Meal)

@@ -52,6 +52,12 @@ interface FoodDao {
     @Query("UPDATE food SET favorite = CASE WHEN :favorite THEN 1 ELSE 0 END WHERE id = :id")
     suspend fun updateFavoriteFoodById(id: Int, favorite: Boolean)
 
+    @Query("UPDATE food SET favorite = :favorite WHERE id = :id AND favorite != :favorite")
+    suspend fun updateFavoriteFoodIfDiff(id: Int, favorite: Int)
+
+    @Query("UPDATE food SET user = :user WHERE id = :id AND user != :user")
+    suspend fun updateUserFoodIfDiff(id: Int, user: Int)
+
     @Query("UPDATE food SET user = 2 WHERE id = :id")
     suspend fun hideUserFood(id: Int)
 
