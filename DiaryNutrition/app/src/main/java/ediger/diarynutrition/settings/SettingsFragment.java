@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -33,6 +34,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.work.WorkInfo;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import ediger.diarynutrition.Consts;
@@ -140,8 +142,17 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
         Preference restoreData = findPreference(KEY_PREF_DATA_RESTORE);
         restoreData.setOnPreferenceClickListener(preference -> {
-            viewModel.restoreDatabase();
-            isRestoreRequested = true;
+            new MaterialAlertDialogBuilder(requireActivity())
+                    .setTitle(getString(R.string.dialog_restore_title))
+                    .setMessage(getString(R.string.dialog_restore_message))
+                    .setNegativeButton(getString(R.string.dialog_cancel), (dialog, i) -> {
+
+                    })
+                    .setPositiveButton(getString(R.string.dialog_restore_positive), (dialog, i) -> {
+                        viewModel.restoreDatabase();
+                        isRestoreRequested = true;
+                    })
+                    .show();
             return false;
         });
 

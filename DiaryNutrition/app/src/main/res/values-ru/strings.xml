@@ -55,6 +55,9 @@
     <string name="dialog_title_change">Изменение продукта</string>
     <string name="dialog_food_title">Новый продукт</string>
     <string name="dialog_title_weight">Введите Ваш вес</string>
+    <string name="dialog_restore_title">Восстановить базу данных?</string>
+    <string name="dialog_restore_message">База данных будет восстановлена из резервной копии, а Ваши текущие данные будут удалены.</string>
+    <string name="dialog_restore_positive">Восстановить</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
     <string name="dialog_food_name">Название продукта</string>

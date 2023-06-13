@@ -108,6 +108,9 @@
     <string name="dialog_message_food_ad">You need to have Premium or watch an advertisement to add food further</string>
     <string name="dialog_watch_ad">Watch an ad</string>
     <string name="dialog_premium">Get Premium</string>
+    <string name="dialog_restore_title">Restore database?</string>
+    <string name="dialog_restore_message">Database will be restored from the backup and your current data will be removed</string>
+    <string name="dialog_restore_positive">Restore</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
     <string name="dialog_food_name">Food name</string>
