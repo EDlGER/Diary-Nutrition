@@ -20,9 +20,11 @@ const val PLAY_STORE_SUBSCRIPTION_URL
 const val PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL
         = "https://play.google.com/store/account/subscriptions?sku=%s&package=%s"
 
+//Long
+const val KEY_BIRTHDAY = "birthday"
+
 //String
 const val KEY_GENDER = "gender"
-const val KEY_BIRTHDAY = "birthday"
 const val KEY_HEIGHT = "height"
 const val KEY_PURPOSE = "purpose"
 const val KEY_ACTIVITY = "activity"
