@@ -246,6 +246,7 @@
     <string name="context_menu_copy">Копировать</string>
     <string name="context_menu_paste">Вставить</string>
     <string name="message_record_meal_copy">Прием пищи скопирован</string>
+    <string name="message_data_restore_fail">Произошла ошибка во время восстановления базы данных!</string>
     <string name="message_data_backup">Резервное копирование успешно завершено!</string>
     <string name="message_data_restore">База данных успешно восстановлена!</string>
     <string name="pref_data_backup">Резервное копирование</string>
@@ -255,6 +256,7 @@
     <string name="billing_ads_disable">Реклама отключена</string>
     <string name="billing_ads_enable">Реклама включена</string>
     <string name="billing_button_buy">Отключить</string>
+    <string name="message_data_backup_fail">Произошла ошибка во время выполнения резевного копирования!</string>
     <string name="message_billing_success">Покупка успешно завершена!</string>
     <string name="pref_data_language">Язык базы данных</string>
     <string name="pref_policy">Политика конфиденциальности</string>
@@ -321,5 +323,6 @@
     <string name="subscription_2">3 Месяца</string>
     <string name="subscription_3">6 Месяцев</string>
     <string name="action_subscribe">Подписаться</string>
+    <string name="message_data_restore_file_missing">Файл резервной копии не найден!</string>
 
 </resources>

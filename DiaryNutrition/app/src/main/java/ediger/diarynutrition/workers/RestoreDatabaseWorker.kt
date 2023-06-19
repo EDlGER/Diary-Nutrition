@@ -2,10 +2,12 @@ package ediger.diarynutrition.workers
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.google.gson.GsonBuilder
 import ediger.diarynutrition.BACKUP_NAME
 import ediger.diarynutrition.DEFAULT_MEALS_COUNT
+import ediger.diarynutrition.ERROR_RESTORE_FILE_MISSING
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.model.JsonDatabaseBackup
 import kotlinx.coroutines.Dispatchers
@@ -65,7 +67,10 @@ class RestoreDatabaseWorker(appContext: Context, params: WorkerParameters) : Cor
                     Result.success()
                 }
             } else {
-                Result.failure()
+                val resultData = Data.Builder()
+                    .putBoolean(ERROR_RESTORE_FILE_MISSING, true)
+                    .build()
+                Result.failure(resultData)
             }
         } catch (e: Exception) {
             Result.failure()

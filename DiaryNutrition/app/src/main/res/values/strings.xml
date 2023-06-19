@@ -202,12 +202,15 @@
     <string name="message_dialog_food_empty">Not all fields are filled</string>
     <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
     <string name="message_dialog_weight">Weight is not entered</string>
-    <string name="message_dialog_cal">Calories is not entered</string>
+    <string name="message_dialog_cal">Calories are not entered</string>
     <string name="message_dialog_water">Water is not entered</string>
     <string name="message_record_meal_copy">Meal was copied</string>
     <string name="message_record_meal_insert_fail">Meal was not copied</string>
-    <string name="message_data_restore">Restore database is successful!</string>
+    <string name="message_data_restore">Restore database is successful</string>
+    <string name="message_data_restore_file_missing">Backup file is not found!</string>
+    <string name="message_data_restore_fail">An error occurred while restoring the database!</string>
     <string name="message_data_backup">Backup database is successful!</string>
+    <string name="message_data_backup_fail">An error occurred while creating the backup!</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
     <string name="message_card_water">You didn\'t add water this day</string>
     <string name="message_ad_reward_success">Amount of food additions were increased</string>

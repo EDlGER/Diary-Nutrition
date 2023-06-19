@@ -10,12 +10,14 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.WorkInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.DATABASE_NAME
 import ediger.diarynutrition.KEY_ACTIVITY
 import ediger.diarynutrition.KEY_BIRTHDAY
@@ -30,6 +32,7 @@ import ediger.diarynutrition.R
 import ediger.diarynutrition.intro.PolicyActivity
 import ediger.diarynutrition.util.NutritionProgramUtils
 import ediger.diarynutrition.util.SnackbarUtils
+import ediger.diarynutrition.util.setupSnackbar
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -40,10 +43,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     private val dateFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
     private val date = Date()
-
-    // TODO: Get rid of this approach
-    private var isBackupRequested = false
-    private var isRestoreRequested = false
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
@@ -124,7 +123,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         findPreference(KEY_PREF_DATA_BACKUP).onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 viewModel.backupDatabase()
-                isBackupRequested = true
                 false
             }
 
@@ -136,7 +134,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     .setNegativeButton(getString(R.string.dialog_cancel)) { _, _ -> }
                     .setPositiveButton(getString(R.string.dialog_restore_positive)) { _, _ ->
                         viewModel.restoreDatabase()
-                        isRestoreRequested = true
                     }
                     .show()
                 false
@@ -151,25 +148,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.setupSnackbar(viewLifecycleOwner, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
+
         viewModel.backupStatus.observe(viewLifecycleOwner) { listOfInfos: List<WorkInfo>? ->
-            if (listOfInfos.isNullOrEmpty() || !isBackupRequested) {
-                return@observe
-            }
-            val workInfo = listOfInfos[0]
-            if (workInfo.state == WorkInfo.State.SUCCEEDED) {
-                SnackbarUtils.showSnackbar(view, getString(R.string.message_data_backup))
-                isBackupRequested = false
-            }
+            listOfInfos?.let { viewModel.concludeBackup(listOfInfos) }
         }
         viewModel.restoreStatus.observe(viewLifecycleOwner) { listOfInfos: List<WorkInfo>? ->
-            if (listOfInfos.isNullOrEmpty() || !isRestoreRequested) {
-                return@observe
-            }
-            val workInfo = listOfInfos[0]
-            if (workInfo.state == WorkInfo.State.SUCCEEDED) {
-                SnackbarUtils.showSnackbar(view, getString(R.string.message_data_restore))
-                isRestoreRequested = false
-            }
+            listOfInfos?.let { viewModel.concludeRestore(listOfInfos) }
         }
     }
 
