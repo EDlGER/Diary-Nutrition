@@ -12,6 +12,7 @@ import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -27,6 +28,7 @@ import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.KEY_PROGRAM_CAL
 import ediger.diarynutrition.KEY_PROGRAM_WATER
 import ediger.diarynutrition.KEY_PURPOSE
+import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
 import ediger.diarynutrition.intro.PolicyActivity
@@ -156,6 +158,13 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         viewModel.restoreStatus.observe(viewLifecycleOwner) { listOfInfos: List<WorkInfo>? ->
             listOfInfos?.let { viewModel.concludeRestore(listOfInfos) }
         }
+
+        val toggleProgressAction = Observer<Boolean> { toggle ->
+            (requireActivity() as MainActivity).toggleProgress(toggle)
+        }
+        viewModel.isBackupRequested.observe(viewLifecycleOwner, toggleProgressAction)
+        viewModel.isRestoreRequested.observe(viewLifecycleOwner, toggleProgressAction)
+
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {

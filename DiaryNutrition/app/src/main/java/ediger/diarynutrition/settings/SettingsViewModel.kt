@@ -21,8 +21,11 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
     val restoreStatus: LiveData<List<WorkInfo>> =
         workManager.getWorkInfosForUniqueWorkLiveData(RestoreDatabaseWorker.NAME)
 
-    private var isBackupRequested = false
-    private var isRestoreRequested = false
+    private val _isBackupRequested = MutableLiveData(false)
+    val isBackupRequested: LiveData<Boolean> = _isBackupRequested
+
+    private var _isRestoreRequested = MutableLiveData(false)
+    val isRestoreRequested: LiveData<Boolean> = _isRestoreRequested
 
     private val _snackbarMessage = MutableLiveData<Event<Int>>()
     val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
@@ -34,7 +37,7 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             ExistingWorkPolicy.KEEP,
             request
         )
-        isBackupRequested = true
+        _isBackupRequested.value = true
     }
 
     fun restoreDatabase() {
@@ -44,11 +47,11 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             ExistingWorkPolicy.KEEP,
             request
         )
-        isRestoreRequested = true
+        _isRestoreRequested.value = true
     }
 
     fun concludeBackup(listOfInfos: List<WorkInfo>) {
-        if (listOfInfos.isNotEmpty() && isBackupRequested) {
+        if (listOfInfos.isNotEmpty() && _isBackupRequested.value!!) {
             val message: Int? = when (listOfInfos[0].state) {
                 WorkInfo.State.SUCCEEDED -> R.string.message_data_backup
                 WorkInfo.State.FAILED -> R.string.message_data_backup_fail
@@ -56,13 +59,13 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             }
             message?.let {
                 _snackbarMessage.value = Event(it)
-                isBackupRequested = false
+                _isBackupRequested.value = false
             }
         }
     }
 
     fun concludeRestore(listOfInfos: List<WorkInfo>) {
-        if (listOfInfos.isNotEmpty() && isRestoreRequested) {
+        if (listOfInfos.isNotEmpty() && _isRestoreRequested.value!!) {
             val workInfo = listOfInfos[0]
             val message: Int? = when (workInfo.state) {
                 WorkInfo.State.SUCCEEDED -> R.string.message_data_restore
@@ -79,7 +82,7 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             }
             message?.let {
                 _snackbarMessage.value = Event(it)
-                isRestoreRequested = false
+                _isRestoreRequested.value = false
             }
 
         }

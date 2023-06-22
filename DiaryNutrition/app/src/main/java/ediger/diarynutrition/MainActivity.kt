@@ -22,6 +22,7 @@ import com.android.billingclient.api.*
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import ediger.diarynutrition.billing.BillingClientLifecycle
 import ediger.diarynutrition.billing.BillingViewModel
 import ediger.diarynutrition.diary.DiaryFragment
@@ -173,6 +174,14 @@ class MainActivity : AppCompatActivity() {
                 ?.primaryNavigationFragment
         if (activeFragment is DiaryFragment) {
             activeFragment.onContextMenuClosed()
+        }
+    }
+
+    fun toggleProgress(toggle: Boolean) {
+        val progress: LinearProgressIndicator = findViewById(R.id.progress)
+        when (toggle) {
+            true -> progress.show()
+            false -> progress.hide()
         }
     }
 
