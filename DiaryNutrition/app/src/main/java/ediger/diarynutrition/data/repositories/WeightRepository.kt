@@ -23,6 +23,8 @@ class WeightRepository(private val weightDao: WeightDao) {
         return weightDao.getWeightForDay(from, to)
     }
 
+    suspend fun getAllWeight(): List<Weight> = weightDao.getWeight()
+
     suspend fun addWeight(weight: Weight) = weightDao.insertWeight(weight)
 
     suspend fun updateWeight(weight: Weight) = weightDao.updateWeight(weight)

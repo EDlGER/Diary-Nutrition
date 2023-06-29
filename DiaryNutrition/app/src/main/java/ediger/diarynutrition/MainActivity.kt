@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -28,6 +29,7 @@ import ediger.diarynutrition.billing.BillingViewModel
 import ediger.diarynutrition.diary.DiaryFragment
 import ediger.diarynutrition.inapputil.IabHelper
 import ediger.diarynutrition.intro.IntroActivity
+import ediger.diarynutrition.settings.SettingsViewModel
 import ediger.diarynutrition.util.hideKeyboard
 
 class MainActivity : AppCompatActivity() {
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var billingClientLifecycle: BillingClientLifecycle
     private val billingViewModel: BillingViewModel by viewModels()
+
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     // TODO: redundant
     private var isAdsRemoved = false
@@ -62,7 +66,9 @@ class MainActivity : AppCompatActivity() {
                     Intent(this, IntroActivity::class.java)
             )
         }
-        PreferenceHelper.setValue(KEY_FIRST_RUN, false)
+
+        //Restore database after install if necessary
+        settingsViewModel.restoreIfNecessary()
 
         //Ads
         isAdsRemoved = getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)

@@ -15,6 +15,8 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
+                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debugAndroidTest/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_app_classes_jar/debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/6bd6c237f0c85203ae234b53e580e0b6/transformed/room-testing-2.5.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/dc7003162aa97d17e623f6e6bd0f3e9b/transformed/jetified-junit-1.1.5-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/cdde5444c46bc794b7eb5a12667bdbbf/transformed/jetified-core-1.5.0-api.jar</arg>
@@ -191,6 +193,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/1fb48ef404f3cb165d88fcb0f744d226/transformed/jetified-javax.inject-1.jar</arg>
                 <arg>$USER_HOME$/Android/Sdk/platforms/android-33/android.jar</arg>
                 <arg>$USER_HOME$/Android/Sdk/build-tools/30.0.3/core-lambda-stubs.jar</arg>
+                <arg>$MODULE_DIR$/../../../app/build/tmp/kapt3/classes/debugAndroidTest</arg>
               </args>
             </stringArg>
             <stringArg name="destination" arg="$MODULE_DIR$/../../../app/build/tmp/kotlin-classes/debugAndroidTest" />

@@ -1,5 +1,7 @@
 package ediger.diarynutrition.intro;
 
+import static ediger.diarynutrition.Consts.KEY_FIRST_RUN;
+
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
+import ediger.diarynutrition.PreferenceHelper;
 import ediger.diarynutrition.R;
 import ediger.diarynutrition.intro.NutritionSlide;
 import ediger.diarynutrition.intro.PersonSlide;
@@ -41,6 +44,7 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
+        PreferenceHelper.setValue(KEY_FIRST_RUN, false);
         finish();
     }
 }

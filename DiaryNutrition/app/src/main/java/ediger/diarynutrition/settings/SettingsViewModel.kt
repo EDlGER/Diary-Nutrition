@@ -4,12 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.work.*
+import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.ERROR_RESTORE_FILE_MISSING
 import ediger.diarynutrition.Event
+import ediger.diarynutrition.KEY_WEIGHT
+import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
 import ediger.diarynutrition.workers.BackupDatabaseWorker
 import ediger.diarynutrition.workers.RestoreDatabaseWorker
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(app: Application): AndroidViewModel(app) {
 
@@ -30,6 +35,8 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
     private val _snackbarMessage = MutableLiveData<Event<Int>>()
     val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
 
+    private val weightRepository = (app as AppContext).weightRepository
+
     fun backupDatabase() {
         val request = OneTimeWorkRequest.from(BackupDatabaseWorker::class.java)
         workManager.enqueueUniqueWork(
@@ -48,6 +55,17 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             request
         )
         _isRestoreRequested.value = true
+    }
+
+    // In case of the autoBackup feature
+    fun restoreIfNecessary() = viewModelScope.launch {
+        val sharedPrefWeight =
+            PreferenceHelper.getValue(KEY_WEIGHT, Float::class.javaObjectType, 0F)
+        val weightList = weightRepository.getAllWeight()
+        if (sharedPrefWeight != 0F && weightList.isEmpty()) {
+            restoreDatabase()
+            _isRestoreRequested.value = false
+        }
     }
 
     fun concludeBackup(listOfInfos: List<WorkInfo>) {
