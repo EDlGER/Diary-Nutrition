@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.annotations.SerializedName
 import ediger.diarynutrition.BuildConfig
+import ediger.diarynutrition.DATABASE_VERSION
 import ediger.diarynutrition.KEY_LOCAL_DB_VERSION
 import ediger.diarynutrition.KEY_ONLINE_DB_VERSION
 import ediger.diarynutrition.PreferenceHelper
@@ -38,7 +39,8 @@ class RemoteDatabaseVersionWorker(appContext: Context, params: WorkerParameters)
             val storageRef = Firebase.storage.reference
             val versionsRef = storageRef.child("versions.json")
             val localFile = File.createTempFile("versions", "json")
-            val localVersion = PreferenceHelper.getValue(KEY_LOCAL_DB_VERSION, Integer::class.java, 1)
+            val localVersion = PreferenceHelper
+                .getValue(KEY_LOCAL_DB_VERSION, Integer::class.java, DATABASE_VERSION)
 
             val callback = OnSuccessListener<FileDownloadTask.TaskSnapshot> {
                 try {

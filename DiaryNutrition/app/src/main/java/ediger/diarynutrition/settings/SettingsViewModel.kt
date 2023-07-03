@@ -9,10 +9,13 @@ import androidx.work.*
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.ERROR_RESTORE_FILE_MISSING
 import ediger.diarynutrition.Event
+import ediger.diarynutrition.KEY_LANGUAGE_DB
 import ediger.diarynutrition.KEY_WEIGHT
 import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
 import ediger.diarynutrition.workers.BackupDatabaseWorker
+import ediger.diarynutrition.workers.ChangeLanguagePreparationsWorker
+import ediger.diarynutrition.workers.FoodDatabaseWorker
 import ediger.diarynutrition.workers.RestoreDatabaseWorker
 import kotlinx.coroutines.launch
 
@@ -104,6 +107,26 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             }
 
         }
+    }
+
+    fun changeDbLanguage(language: String) {
+        val inputLanguage = workDataOf(KEY_LANGUAGE_DB to language)
+
+        val backup = OneTimeWorkRequest.from(BackupDatabaseWorker::class.java)
+        val prepare = OneTimeWorkRequestBuilder<ChangeLanguagePreparationsWorker>()
+            .setInputData(inputLanguage)
+            .build()
+        val insertFood = OneTimeWorkRequestBuilder<FoodDatabaseWorker>()
+            .setInputData(inputLanguage)
+            .build()
+        val restore = OneTimeWorkRequest.from(RestoreDatabaseWorker::class.java)
+
+        workManager
+            .beginUniqueWork(BackupDatabaseWorker.NAME, ExistingWorkPolicy.KEEP, backup)
+            .then(prepare)
+            .then(insertFood)
+            .then(restore)
+            .enqueue()
     }
 
 }

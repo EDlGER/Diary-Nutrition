@@ -8,6 +8,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import ediger.diarynutrition.KEY_LANGUAGE_DB
 import ediger.diarynutrition.KEY_LOCAL_DB_VERSION
 import ediger.diarynutrition.PreferenceHelper
@@ -15,13 +16,14 @@ import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.dao.*
 import ediger.diarynutrition.data.source.entities.*
 import ediger.diarynutrition.DATABASE_NAME
+import ediger.diarynutrition.DATABASE_VERSION
 import ediger.diarynutrition.util.NutritionProgramUtils
 import ediger.diarynutrition.workers.FoodDatabaseWorker
 import kotlinx.coroutines.*
 import java.util.*
 
 @Database(entities = [Record::class, Food::class, Meal::class, Water::class, Weight::class],
-        version = 3, exportSchema = true)
+        version = DATABASE_VERSION, exportSchema = true)
 abstract class DiaryDatabase : RoomDatabase() {
     abstract fun foodDao(): FoodDao
     abstract fun mealDao(): MealDao
@@ -44,38 +46,29 @@ abstract class DiaryDatabase : RoomDatabase() {
                     .addCallback(object: Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            PreferenceHelper.setValue(KEY_LOCAL_DB_VERSION, 3)
-                            defineDbLanguage()
 
                             CoroutineScope(Dispatchers.IO).launch {
                                 launch { populateMeals(appContext) }.join()
                             }
-                            val request = OneTimeWorkRequestBuilder<FoodDatabaseWorker>().build()
-                            WorkManager.getInstance(appContext).enqueue(request)
+                            val language = defineDbLanguage()
+                            val insertFoodRequest = OneTimeWorkRequestBuilder<FoodDatabaseWorker>()
+                                .setInputData(workDataOf(KEY_LANGUAGE_DB to language))
+                                .build()
+                            WorkManager.getInstance(appContext).enqueue(insertFoodRequest)
                         }
                     })
                     .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
         }
 
-        private fun defineDbLanguage() {
-            PreferenceHelper.setValue(
-                    KEY_LANGUAGE_DB,
-                    when (Locale.getDefault().language) {
-                        "ru", "uk" -> "ru"
-                        else -> "en"
-                    }
-            )
+        private fun defineDbLanguage() = when (Locale.getDefault().language) {
+            "ru", "uk" -> "ru"
+            else -> "en"
         }
 
         private suspend fun populateMeals(appContext: Context) {
-            val meals = listOf(
-                    Meal(appContext.resources.getString(R.string.meal1)),
-                    Meal(appContext.resources.getString(R.string.meal2)),
-                    Meal(appContext.resources.getString(R.string.meal3)),
-                    Meal(appContext.resources.getString(R.string.meal4)),
-                    Meal(appContext.resources.getString(R.string.meal5))
-            )
+            val meals = appContext.resources.getStringArray(R.array.meals)
+                .map { Meal(it) }
             instance?.mealDao()?.populateMeals(meals)
         }
 

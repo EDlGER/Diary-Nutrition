@@ -17,6 +17,7 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentMealUserBinding
+import ediger.diarynutrition.util.clickWithThrottle
 
 class UserMealFragment: Fragment() {
 
@@ -33,7 +34,9 @@ class UserMealFragment: Fragment() {
 
         initList()
 
-        binding.fabAddMeal.setOnClickListener { showAddMealDialog() }
+        binding.fabAddMeal.clickWithThrottle {
+            showAddMealDialog()
+        }
 
         return binding.root
     }

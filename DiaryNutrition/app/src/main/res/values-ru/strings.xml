@@ -216,6 +216,14 @@
         <item>Добавленные</item>
     </string-array>
 
+    <string-array name="meals">
+        <item>Завтрак</item>
+        <item>Второй завтрак</item>
+        <item>Обед</item>
+        <item>Полдник</item>
+        <item>Ужин</item>
+    </string-array>
+
     <string name="intro_activity_name_1">Сидячий</string>
     <string name="intro_activity_name_2">Малоактивный</string>
     <string name="intro_activity_name_3">Активный</string>

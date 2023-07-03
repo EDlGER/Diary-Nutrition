@@ -24,6 +24,7 @@ import ediger.diarynutrition.KEY_ACTIVITY
 import ediger.diarynutrition.KEY_BIRTHDAY
 import ediger.diarynutrition.KEY_GENDER
 import ediger.diarynutrition.KEY_HEIGHT
+import ediger.diarynutrition.KEY_LANGUAGE_DB
 import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.KEY_PROGRAM_CAL
 import ediger.diarynutrition.KEY_PROGRAM_WATER
@@ -175,16 +176,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             }
             KEY_PREF_UI_DEFAULT_TAB -> findPreference(key).summary = "%s"
             KEY_PREF_DATA_LANGUAGE -> {
-                // TODO: Require changes
-                val restartIntent = requireActivity().packageManager
-                    .getLaunchIntentForPackage(requireActivity().packageName)
-                val intent = PendingIntent.getActivity(
-                    requireActivity(), 0,
-                    restartIntent, PendingIntent.FLAG_CANCEL_CURRENT
-                )
-                val manager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                manager[AlarmManager.RTC, System.currentTimeMillis() + 10] = intent
-                System.exit(2)
+                sharedPreferences.getString(key, KEY_LANGUAGE_DB)?.let { language ->
+                    viewModel.changeDbLanguage(language)
+                }
             }
             KEY_BIRTHDAY -> {
                 date.time = sharedPreferences.getLong(key, 0L)

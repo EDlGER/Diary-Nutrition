@@ -52,7 +52,8 @@ class RemoteDatabaseUpdateWorker(context: Context, params: WorkerParameters): Li
                     }
                     val version = inputData.getInt(
                             KEY_ONLINE_DB_VERSION,
-                            PreferenceHelper.getValue(KEY_LOCAL_DB_VERSION, Integer::class.java, 0)
+                            PreferenceHelper
+                                .getValue(KEY_LOCAL_DB_VERSION, Integer::class.java, DATABASE_VERSION)
                     )
                     PreferenceHelper.setValue(KEY_LOCAL_DB_VERSION, version)
 

@@ -67,11 +67,6 @@
     <string name="subscription_2">3 Months</string>
     <string name="subscription_3">12 Months</string>
 
-    <string name="meal1">Breakfast</string>
-    <string name="meal2">Second breakfast</string>
-    <string name="meal3">Lunch</string>
-    <string name="meal4">Dinner</string>
-    <string name="meal5">Snacks</string>
     <string name="meal_choose">Select meal</string>
     <string name="meal_food_count">Selected %d</string>
 
@@ -255,7 +250,7 @@
     <string name="macro_carbo_short">C</string>
     <string name="macro_prot_short">P</string>
     <string name="macro_fat_short">F</string>
-
+meal
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -341,6 +336,21 @@
         <item>Month</item>
         <item>Two months</item>
     </string-array>
+
+    <string name="meal1">Breakfast</string>
+    <string name="meal2">Second breakfast</string>
+    <string name="meal3">Lunch</string>
+    <string name="meal4">Dinner</string>
+    <string name="meal5">Snacks</string>
+
+    <string-array name="meals">
+        <item>Breakfast</item>
+        <item>Second breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snacks</item>
+    </string-array>
+
     <string name="empty_list_weight">Add current weight</string>
     <string name="empty_list_food">No user food</string>
     <string name="empty_list_favor">No favorite food</string>

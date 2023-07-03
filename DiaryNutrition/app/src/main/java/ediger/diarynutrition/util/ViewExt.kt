@@ -1,5 +1,6 @@
 package ediger.diarynutrition.util
 
+import android.os.SystemClock
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -40,4 +41,17 @@ fun View.hitTest(x: Int, y: Int): Boolean {
     val bottom = bottom + ty
 
     return x in left..right && y >= top && y <= bottom
+}
+
+fun View.clickWithThrottle(throttleTime: Long = 600L, action: () -> Unit) {
+    this.setOnClickListener(object : View.OnClickListener {
+        private var lastClickTime: Long = 0
+
+        override fun onClick(v: View) {
+            if (SystemClock.elapsedRealtime() - lastClickTime < throttleTime) return
+            else action()
+
+            lastClickTime = SystemClock.elapsedRealtime()
+        }
+    })
 }

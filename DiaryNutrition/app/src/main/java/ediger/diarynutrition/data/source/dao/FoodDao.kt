@@ -81,4 +81,7 @@ interface FoodDao {
             "OR id IN (SELECT food_id FROM record)")
     suspend fun getBackupFood(): List<Food>
 
+    @Query("DELETE FROM food")
+    suspend fun deleteAllFood()
+
 }
