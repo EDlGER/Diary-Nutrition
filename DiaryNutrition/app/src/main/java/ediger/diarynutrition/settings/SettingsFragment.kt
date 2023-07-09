@@ -11,19 +11,24 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.WorkInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.DATABASE_NAME
+import ediger.diarynutrition.DEFAULT_LANGUAGE
 import ediger.diarynutrition.KEY_ACTIVITY
 import ediger.diarynutrition.KEY_BIRTHDAY
 import ediger.diarynutrition.KEY_GENDER
 import ediger.diarynutrition.KEY_HEIGHT
+import ediger.diarynutrition.KEY_LANGUAGE
 import ediger.diarynutrition.KEY_LANGUAGE_DB
 import ediger.diarynutrition.KEY_PREF_UI_DEFAULT_TAB
 import ediger.diarynutrition.KEY_PROGRAM_CAL
@@ -116,13 +121,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 false
             }
 
-        // TODO: Fix wrong path (Do I need it?)
-        val pathData = findPreference(KEY_PREF_DATA_PATH)
-        val path = Environment.getExternalStorageDirectory().path +
-                "/DiaryNutrition/" + DATABASE_NAME
-        pathData.summary = path
-
-
         findPreference(KEY_PREF_DATA_BACKUP).onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 viewModel.backupDatabase()
@@ -175,8 +173,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 NutritionProgramUtils.setToDefault()
             }
             KEY_PREF_UI_DEFAULT_TAB -> findPreference(key).summary = "%s"
-            KEY_PREF_DATA_LANGUAGE -> {
-                sharedPreferences.getString(key, KEY_LANGUAGE_DB)?.let { language ->
+            KEY_LANGUAGE -> {
+                sharedPreferences.getString(key, DEFAULT_LANGUAGE)?.let { language ->
+                    val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(language)
+                    AppCompatDelegate.setApplicationLocales(appLocale)
+                }
+            }
+            KEY_LANGUAGE_DB -> {
+                sharedPreferences.getString(key, DEFAULT_LANGUAGE)?.let { language ->
                     viewModel.changeDbLanguage(language)
                 }
             }
@@ -215,11 +219,10 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     }
 
     companion object {
-        const val KEY_PREF_DATA_LANGUAGE = "data_language"
-        const val KEY_PREF_DATA_PATH = "data_path"
-        const val KEY_PREF_DATA_BACKUP = "data_backup"
-        const val KEY_PREF_DATA_RESTORE = "data_restore"
-        const val KEY_PREF_POLICY = "policy"
+        private const val KEY_PREF_DATA_LANGUAGE = "data_language"
+        private const val KEY_PREF_DATA_BACKUP = "data_backup"
+        private const val KEY_PREF_DATA_RESTORE = "data_restore"
+        private const val KEY_PREF_POLICY = "policy"
         private const val KEY_PREF_PROGRAM_EDIT = "program_edit"
         private const val KEY_PREF_PROGRAM_RESET = "program_reset"
         private const val KEY_PREF_PROGRAM_MEALS = "program_meals"

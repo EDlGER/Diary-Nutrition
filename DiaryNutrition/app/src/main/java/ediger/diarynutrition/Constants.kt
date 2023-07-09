@@ -68,4 +68,6 @@ const val ARG_EXPANSION_TOP_OFFSET = "arg_top_offset"
 const val ARG_EXPANSION_VIEW_WIDTH = "arg_view_width"
 const val ARG_EXPANSION_VIEW_HEIGHT = "arg_view_height"
 
+const val DEFAULT_LANGUAGE = "en"
+
 const val ERROR_RESTORE_FILE_MISSING = "error_backup_file_missing"

@@ -17,6 +17,7 @@ import ediger.diarynutrition.data.source.dao.*
 import ediger.diarynutrition.data.source.entities.*
 import ediger.diarynutrition.DATABASE_NAME
 import ediger.diarynutrition.DATABASE_VERSION
+import ediger.diarynutrition.DEFAULT_LANGUAGE
 import ediger.diarynutrition.util.NutritionProgramUtils
 import ediger.diarynutrition.workers.FoodDatabaseWorker
 import kotlinx.coroutines.*
@@ -63,7 +64,7 @@ abstract class DiaryDatabase : RoomDatabase() {
 
         private fun defineDbLanguage() = when (Locale.getDefault().language) {
             "ru", "uk" -> "ru"
-            else -> "en"
+            else -> DEFAULT_LANGUAGE
         }
 
         private suspend fun populateMeals(appContext: Context) {

@@ -257,6 +257,7 @@
     <string name="message_data_restore_fail">Произошла ошибка во время восстановления базы данных!</string>
     <string name="message_data_backup">Резервное копирование успешно завершено!</string>
     <string name="message_data_restore">База данных успешно восстановлена!</string>
+    <string name="pref_ui_app_language">Язык приложения</string>
     <string name="pref_data_backup">Резервное копирование</string>
     <string name="pref_data_path">Путь</string>
     <string name="pref_data_restore">Восстановление</string>

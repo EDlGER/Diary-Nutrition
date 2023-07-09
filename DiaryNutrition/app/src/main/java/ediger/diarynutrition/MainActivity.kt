@@ -31,6 +31,7 @@ import ediger.diarynutrition.inapputil.IabHelper
 import ediger.diarynutrition.intro.IntroActivity
 import ediger.diarynutrition.settings.SettingsViewModel
 import ediger.diarynutrition.util.hideKeyboard
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,6 +67,10 @@ class MainActivity : AppCompatActivity() {
                     Intent(this, IntroActivity::class.java)
             )
         }
+
+        // Init language
+        val lang = PreferenceHelper.getValue(KEY_LANGUAGE, String::class.java, "")
+        if (lang.isEmpty()) PreferenceHelper.setValue(KEY_LANGUAGE, Locale.getDefault().language)
 
         //Restore database after install if necessary
         settingsViewModel.restoreIfNecessary()

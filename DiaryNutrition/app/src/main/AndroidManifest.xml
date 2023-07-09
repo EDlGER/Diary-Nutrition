@@ -15,9 +15,10 @@
         android:dataExtractionRules="@xml/extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:targetApi="s">
+        tools:targetApi="tiramisu">
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -73,6 +74,15 @@
             android:excludeFromRecents="true"
             android:taskAffinity=""
             android:theme="@style/Theme.Sliding.Light"/>
+
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
 
     </application>
 
