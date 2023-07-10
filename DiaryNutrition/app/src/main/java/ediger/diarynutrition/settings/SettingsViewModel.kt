@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import ediger.diarynutrition.AppContext
@@ -35,10 +36,16 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
     private var _isRestoreRequested = MutableLiveData(false)
     val isRestoreRequested: LiveData<Boolean> = _isRestoreRequested
 
+    private val _isChangeLangRequested = MutableLiveData(false)
+    val isChangeLangRequested: LiveData<Boolean> = _isChangeLangRequested
+
     private val _snackbarMessage = MutableLiveData<Event<Int>>()
     val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
 
     private val weightRepository = (app as AppContext).weightRepository
+
+    var changeLangOperation: Operation? = null
+    var changeLangObserver: Observer<Operation.State>? = null
 
     fun backupDatabase() {
         val request = OneTimeWorkRequest.from(BackupDatabaseWorker::class.java)
@@ -121,12 +128,34 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             .build()
         val restore = OneTimeWorkRequest.from(RestoreDatabaseWorker::class.java)
 
-        workManager
+        val operation = workManager
             .beginUniqueWork(BackupDatabaseWorker.NAME, ExistingWorkPolicy.KEEP, backup)
             .then(prepare)
             .then(insertFood)
             .then(restore)
             .enqueue()
+
+        val changeLangObserver = Observer<Operation.State> { state ->
+            when(state) {
+                is Operation.State.IN_PROGRESS -> _isChangeLangRequested.value = true
+                is Operation.State.SUCCESS -> {
+                    _snackbarMessage.value = Event(R.string.message_data_db_lang)
+                    _isChangeLangRequested.value = false
+                }
+                is Operation.State.FAILURE -> {
+                    _snackbarMessage.value = Event(R.string.message_data_db_lang_fail)
+                    _isChangeLangRequested.value = false
+                }
+            }
+        }
+        changeLangOperation = operation.also {
+            it.state.observeForever(changeLangObserver)
+        }
+
     }
 
+    override fun onCleared() {
+        changeLangObserver?.let { changeLangOperation?.state?.removeObserver(it) }
+        super.onCleared()
+    }
 }

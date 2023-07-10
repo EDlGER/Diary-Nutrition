@@ -1,28 +1,21 @@
 package ediger.diarynutrition.settings
 
-import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.WorkInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import ediger.diarynutrition.DATABASE_NAME
 import ediger.diarynutrition.DEFAULT_LANGUAGE
 import ediger.diarynutrition.KEY_ACTIVITY
 import ediger.diarynutrition.KEY_BIRTHDAY
@@ -39,7 +32,6 @@ import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
 import ediger.diarynutrition.intro.PolicyActivity
 import ediger.diarynutrition.util.NutritionProgramUtils
-import ediger.diarynutrition.util.SnackbarUtils
 import ediger.diarynutrition.util.setupSnackbar
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -163,7 +155,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
         viewModel.isBackupRequested.observe(viewLifecycleOwner, toggleProgressAction)
         viewModel.isRestoreRequested.observe(viewLifecycleOwner, toggleProgressAction)
-
+        viewModel.isChangeLangRequested.observe(viewLifecycleOwner, toggleProgressAction)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
