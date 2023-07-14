@@ -11,6 +11,7 @@ import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.work.WorkInfo
@@ -46,8 +47,6 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
-
-        PreferenceHelper.getPreferences().registerOnSharedPreferenceChangeListener(this)
 
         findPreference(KEY_HEIGHT).summary =
             PreferenceHelper.getValue(KEY_HEIGHT, String::class.java, "")
@@ -113,6 +112,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                 false
             }
 
+        (findPreference(KEY_PREF_DATA_LANGUAGE) as ListPreference).value = PreferenceHelper
+            .getValue(KEY_LANGUAGE_DB, String::class.java, DEFAULT_LANGUAGE)
+
         findPreference(KEY_PREF_DATA_BACKUP).onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 viewModel.backupDatabase()
@@ -155,7 +157,24 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         }
         viewModel.isBackupRequested.observe(viewLifecycleOwner, toggleProgressAction)
         viewModel.isRestoreRequested.observe(viewLifecycleOwner, toggleProgressAction)
-        viewModel.isChangeLangRequested.observe(viewLifecycleOwner, toggleProgressAction)
+        viewModel.isChangeLangRequested.observe(viewLifecycleOwner) {toggle ->
+            toggleProgressAction.onChanged(toggle)
+            if (toggle && viewModel.changeLangStatus?.hasObservers() == false) {
+                viewModel.changeLangStatus?.observe(viewLifecycleOwner) {
+                    viewModel.changeLangStateAltered(it)
+                }
+            } else if (!toggle) viewModel.changeLangStatus?.removeObservers(viewLifecycleOwner)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        PreferenceHelper.getPreferences().registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        PreferenceHelper.getPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -171,9 +190,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
                     AppCompatDelegate.setApplicationLocales(appLocale)
                 }
             }
-            KEY_LANGUAGE_DB -> {
+            KEY_PREF_DATA_LANGUAGE -> {
                 sharedPreferences.getString(key, DEFAULT_LANGUAGE)?.let { language ->
-                    viewModel.changeDbLanguage(language)
+                    val oldLang = PreferenceHelper
+                        .getValue(KEY_LANGUAGE_DB, String::class.java, DEFAULT_LANGUAGE)
+                    if (!oldLang.equals(language)) viewModel.changeDbLanguage(language)
                 }
             }
             KEY_BIRTHDAY -> {

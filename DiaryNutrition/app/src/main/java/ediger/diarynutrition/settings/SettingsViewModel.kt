@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import ediger.diarynutrition.AppContext
@@ -30,6 +30,8 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
     val restoreStatus: LiveData<List<WorkInfo>> =
         workManager.getWorkInfosForUniqueWorkLiveData(RestoreDatabaseWorker.NAME)
 
+    var changeLangStatus: LiveData<List<WorkInfo>>? = null
+
     private val _isBackupRequested = MutableLiveData(false)
     val isBackupRequested: LiveData<Boolean> = _isBackupRequested
 
@@ -43,9 +45,6 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
     val snackbarMessage: LiveData<Event<Int>> = _snackbarMessage
 
     private val weightRepository = (app as AppContext).weightRepository
-
-    var changeLangOperation: Operation? = null
-    var changeLangObserver: Observer<Operation.State>? = null
 
     fun backupDatabase() {
         val request = OneTimeWorkRequest.from(BackupDatabaseWorker::class.java)
@@ -128,34 +127,24 @@ class SettingsViewModel(app: Application): AndroidViewModel(app) {
             .build()
         val restore = OneTimeWorkRequest.from(RestoreDatabaseWorker::class.java)
 
-        val operation = workManager
+        val changeLangChain = workManager
             .beginUniqueWork(BackupDatabaseWorker.NAME, ExistingWorkPolicy.KEEP, backup)
             .then(prepare)
             .then(insertFood)
             .then(restore)
-            .enqueue()
+        changeLangChain.enqueue()
 
-        val changeLangObserver = Observer<Operation.State> { state ->
-            when(state) {
-                is Operation.State.IN_PROGRESS -> _isChangeLangRequested.value = true
-                is Operation.State.SUCCESS -> {
-                    _snackbarMessage.value = Event(R.string.message_data_db_lang)
-                    _isChangeLangRequested.value = false
-                }
-                is Operation.State.FAILURE -> {
-                    _snackbarMessage.value = Event(R.string.message_data_db_lang_fail)
-                    _isChangeLangRequested.value = false
-                }
-            }
-        }
-        changeLangOperation = operation.also {
-            it.state.observeForever(changeLangObserver)
-        }
-
+        changeLangStatus = changeLangChain.workInfosLiveData
+        _isChangeLangRequested.value = true
     }
 
-    override fun onCleared() {
-        changeLangObserver?.let { changeLangOperation?.state?.removeObserver(it) }
-        super.onCleared()
+    fun changeLangStateAltered(listOfInfos: List<WorkInfo>) {
+        if (listOfInfos.isNotEmpty() && listOfInfos.all { it.state == WorkInfo.State.SUCCEEDED }) {
+            _snackbarMessage.value = Event(R.string.message_data_db_lang)
+            _isChangeLangRequested.value = false
+        } else if (listOfInfos.any { it.state == WorkInfo.State.FAILED }) {
+            _snackbarMessage.value = Event(R.string.message_data_db_lang_fail)
+            _isChangeLangRequested.value = false
+        }
     }
 }

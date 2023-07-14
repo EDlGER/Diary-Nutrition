@@ -100,7 +100,7 @@
         android:title="@string/pref_title_data">
 
         <ListPreference
-            android:key="language_db"
+            android:key="data_language"
             android:title="@string/pref_data_language"
             android:entries="@array/pref_language_array"
             android:entryValues="@array/pref_language_values"
