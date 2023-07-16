@@ -1,13 +1,12 @@
 package ediger.diarynutrition
 
-import android.content.Context
 import androidx.multidex.MultiDexApplication
 import androidx.work.*
 import ediger.diarynutrition.billing.BillingClientLifecycle
 import ediger.diarynutrition.data.repositories.*
 import ediger.diarynutrition.data.source.DiaryDatabase
 import ediger.diarynutrition.data.source.DiaryDatabase.Companion.getInstance
-import ediger.diarynutrition.database.DbDiary
+import ediger.diarynutrition.workers.BackupDatabaseWorker
 import ediger.diarynutrition.workers.RemoteDatabaseVersionWorker
 import java.util.concurrent.TimeUnit
 
@@ -52,14 +51,16 @@ class AppContext : MultiDexApplication() {
                     ExistingPeriodicWorkPolicy.KEEP,
                     work
             )
+
+            val backupWork = PeriodicWorkRequestBuilder<BackupDatabaseWorker>(1, TimeUnit.DAYS)
+                .setConstraints(Constraints.Builder().setRequiresDeviceIdle(true).build())
+                .build()
+            WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                BackupDatabaseWorker.NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                backupWork
+            )
         }
     }
 
-    companion object {
-        //TODO delete
-        //Date of chosen day (begin of the day - 00:00) in milliseconds
-        // var date: Long = 0
-        val dbDiary: DbDiary? = null
-
-    }
 }
