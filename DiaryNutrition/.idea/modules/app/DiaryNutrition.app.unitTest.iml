@@ -16,6 +16,7 @@
             <stringArg name="classpath">
               <args>
                 <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar</arg>
+                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_app_classes_jar/debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/16084234725b41c29a2cad3ad2736ccc/transformed/databinding-runtime-8.0.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/8d7b8af896d0baa50d59f153617d6f7c/transformed/databinding-adapters-8.0.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/8.0.2/84ed411631d2c4113f4ad992669fe3f50a83f072/databinding-common-8.0.2.jar</arg>

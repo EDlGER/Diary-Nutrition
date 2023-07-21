@@ -103,6 +103,11 @@
     <string name="dialog_message_food_ad">You need to have Premium or watch an advertisement to add food further</string>
     <string name="dialog_watch_ad">Watch an ad</string>
     <string name="dialog_premium">Get Premium</string>
+    <string name="dialog_backup_title">Backup database</string>
+    <string name="dialog_backup_positive">Create</string>
+    <string name="dialog_backup_button_check">Check if enabled</string>
+    <string name="dialog_backup_info_1">This feature creates backup file, which will be uploaded to Google Drive by Google Backup. For this to happen, it must be enabled in the smartphone system settings.</string>
+    <string name="dialog_backup_info_2">Local backup version is created automatically approximately every day when device is idle.</string>
     <string name="dialog_restore_title">Restore database?</string>
     <string name="dialog_restore_message">Database will be restored from the backup and your current data will be removed</string>
     <string name="dialog_restore_positive">Restore</string>
