@@ -13,8 +13,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="489" />
-                            <option name="y" value="901" />
+                            <option name="x" value="491" />
+                            <option name="y" value="686" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="nav_dialog_backup">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="251" />
+                            <option name="y" value="858" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -25,8 +37,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="751" />
-                            <option name="y" value="602" />
+                            <option name="x" value="735" />
+                            <option name="y" value="406" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -37,8 +49,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="487" />
-                            <option name="y" value="599" />
+                            <option name="x" value="492" />
+                            <option name="y" value="404" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -148,6 +160,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_settings_to_dialog_backup">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -170,8 +187,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="246" />
-                            <option name="y" value="727" />
+                            <option name="x" value="250" />
+                            <option name="y" value="562" />
                           </Point>
                         </option>
                         <option name="myPositions">

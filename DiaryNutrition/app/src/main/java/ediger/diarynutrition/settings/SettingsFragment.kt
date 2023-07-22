@@ -9,6 +9,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import androidx.preference.ListPreference
@@ -31,6 +33,7 @@ import ediger.diarynutrition.KEY_PURPOSE
 import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.PreferenceHelper
 import ediger.diarynutrition.R
+import ediger.diarynutrition.diary.ChangeRecordDialog
 import ediger.diarynutrition.intro.PolicyActivity
 import ediger.diarynutrition.util.NutritionProgramUtils
 import ediger.diarynutrition.util.setupSnackbar
@@ -117,7 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
 
         findPreference(KEY_PREF_DATA_BACKUP).onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                viewModel.backupDatabase()
+                showBackupDialog()
                 false
             }
 
@@ -144,6 +147,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setupSnackbar(viewLifecycleOwner, viewModel.snackbarMessage, Snackbar.LENGTH_SHORT)
+
+        // If positive button of BackupDialog was pressed
+        observeBackupRequest()
 
         viewModel.backupStatus.observe(viewLifecycleOwner) { listOfInfos: List<WorkInfo>? ->
             listOfInfos?.let { viewModel.concludeBackup(listOfInfos) }
@@ -213,6 +219,32 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
             KEY_PROGRAM_WATER -> findPreference(key).summary =
                 sharedPreferences.getInt(key, NutritionProgramUtils.getDefaultWater()).toString()
         }
+    }
+
+    private fun observeBackupRequest() {
+        val currentEntry = NavHostFragment.findNavController(this)
+            .getBackStackEntry(R.id.nav_settings)
+
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME
+                && currentEntry.savedStateHandle.contains(BackupDialog.ARG_PERFORM_BACKUP)) {
+                currentEntry.savedStateHandle.get<Boolean>(BackupDialog.ARG_PERFORM_BACKUP)?.let { performBackup ->
+                    if (performBackup) viewModel.backupDatabase()
+                    currentEntry.savedStateHandle.remove<Boolean>(BackupDialog.ARG_PERFORM_BACKUP)
+                }
+            }
+        }
+        currentEntry.getLifecycle().addObserver(observer)
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                currentEntry.getLifecycle().removeObserver(observer)
+            }
+        })
+    }
+
+    private fun showBackupDialog() {
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_settings_to_dialog_backup)
     }
 
     private fun showDateDialog() {

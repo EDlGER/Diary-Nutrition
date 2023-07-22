@@ -58,6 +58,7 @@
     <string name="dialog_backup_title">Резерное копирование</string>
     <string name="dialog_backup_positive">Создать</string>
     <string name="dialog_backup_info_1">Эта функция создаёт файл резервной копии, который в дальнейшем будет загружен в Google Drive посредством Google Backup. Чтобы это произошло, он должен быть включен в системных настройках смартфона.</string>
+    <string name="dialog_backup_button_failure">Что-то пошло не так!</string>
     <string name="dialog_restore_title">Восстановить базу данных?</string>
     <string name="dialog_restore_message">База данных будет восстановлена из резервной копии, а Ваши текущие данные будут удалены.</string>
     <string name="dialog_restore_positive">Восстановить</string>

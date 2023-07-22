@@ -41,17 +41,20 @@
         android:id="@+id/nav_settings"
         android:name="ediger.diarynutrition.settings.SettingsFragment"
         android:label="@string/title_settings">
-
         <action
             android:id="@+id/action_setting_to_user_meal"
             app:destination="@+id/nav_user_meal"/>
+        <action
+            android:id="@+id/action_settings_to_dialog_backup"
+            app:destination="@+id/nav_dialog_backup" />
 
     </fragment>
 
     <fragment
         android:id="@+id/nav_user_meal"
         android:name="ediger.diarynutrition.usermeal.UserMealFragment"
-        android:label="@string/title_user_meal">
+        android:label="@string/title_user_meal"
+        tools:layout="@layout/fragment_meal_user">
         <action
             android:id="@+id/action_nav_user_meal_to_nav_dialog_meal_options"
             app:destination="@id/nav_dialog_meal_options" />
@@ -68,6 +71,17 @@
 
     <deepLink
         app:uri="http://play.google.com/store/apps/details?id=diarynutrition"/>
+
+    <dialog
+        android:id="@+id/nav_dialog_backup"
+        android:name="ediger.diarynutrition.settings.BackupDialog"
+        android:label="@string/dialog_backup_title"
+        tools:layout="@layout/dialog_backup">
+        <argument
+            android:name="performBackup"
+            android:defaultValue="false"
+            app:argType="boolean"/>
+    </dialog>
 
     <dialog
         android:id="@+id/nav_dialog_water"
