@@ -18,7 +18,7 @@ class ChangeMealDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext(), R.style.DialogStyle).apply {
-            binding = DialogChangeMealBinding.inflate(LayoutInflater.from(requireActivity()))
+            binding = DialogChangeMealBinding.inflate(layoutInflater)
 
             setView(binding.root)
             setTitle(getString(R.string.dialog_title_change_meal))

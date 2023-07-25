@@ -31,7 +31,6 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
         }
 
         binding.txtActionEdit.setOnClickListener { showChangeMealDialog() }
-
         binding.txtActionDelete.setOnClickListener { showDeleteAlertDialog() }
 
         return binding.root
@@ -51,18 +50,16 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
                 dialog?.dismiss()
             }
         }
-
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
     }
 
     private fun observeMealNameChange() {
         val currentEntry = NavHostFragment.findNavController(this)
-                .getBackStackEntry(R.id.nav_dialog_meal_options)
+            .getBackStackEntry(R.id.nav_dialog_meal_options)
 
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME
+            if (event == Lifecycle.Event.ON_START
                     && currentEntry.savedStateHandle.contains(ChangeMealDialog.ARG_MEAL_NAME)) {
                 currentEntry.savedStateHandle.get<String>(ChangeMealDialog.ARG_MEAL_NAME)?.let { mealName ->
                     viewModel.editMeal(mealName)
@@ -71,11 +68,11 @@ class MealOptionsBottomDialog: BottomSheetDialogFragment() {
             }
         }
 
-        currentEntry.getLifecycle().addObserver(observer)
+        currentEntry.lifecycle.addObserver(observer)
 
         viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_DESTROY) {
-                currentEntry.getLifecycle().removeObserver(observer)
+                currentEntry.lifecycle.removeObserver(observer)
             }
         })
     }
