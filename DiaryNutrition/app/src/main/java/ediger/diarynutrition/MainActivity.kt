@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -27,7 +26,6 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import ediger.diarynutrition.billing.BillingClientLifecycle
 import ediger.diarynutrition.billing.BillingViewModel
 import ediger.diarynutrition.diary.DiaryFragment
-import ediger.diarynutrition.inapputil.IabHelper
 import ediger.diarynutrition.intro.IntroActivity
 import ediger.diarynutrition.settings.SettingsViewModel
 import ediger.diarynutrition.util.hideKeyboard

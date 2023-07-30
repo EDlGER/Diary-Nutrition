@@ -14,6 +14,7 @@
         android:layout_marginTop="20dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
+        android:minEms="6"
         app:boxStrokeColor="@color/colorAccent"
         app:hintTextColor="@color/colorAccent">
 
@@ -21,7 +22,6 @@
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="8"
             android:maxLength="4"
             android:textSize="22sp"
             android:inputType="number"/>

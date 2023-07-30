@@ -217,7 +217,7 @@
     <string name="message_data_db_lang_fail">An error occurred while changing database language</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
     <string name="message_card_water">You didn\'t add water this day</string>
-    <string name="message_ad_reward_success">Amount of food additions were increased</string>
+    <string name="message_ad_reward_success">Amount of food additions was increased</string>
 
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 

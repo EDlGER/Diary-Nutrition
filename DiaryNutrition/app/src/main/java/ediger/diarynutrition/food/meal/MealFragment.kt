@@ -57,7 +57,7 @@ class MealFragment : Fragment() {
 
         listInit()
 
-        adInit()
+        if (!isAdRemoved) adInit()
 
         return binding.root
     }
@@ -149,7 +149,9 @@ class MealFragment : Fragment() {
     private fun listInit() {
         adapter = MealAdapter { id, serving ->
             val servingValue = when(serving) {
-                "", "0" -> 100 else -> serving.toInt() }
+                "", "0" -> 100
+                else -> serving.toInt()
+            }
             viewModel.updateServing(id, servingValue)
             val holder = binding.list.findViewHolderForItemId(id.toLong()) as MealFoodViewHolder
 
@@ -160,9 +162,6 @@ class MealFragment : Fragment() {
     }
 
     private fun adInit() {
-        if (isAdRemoved) {
-            return
-        }
         val adRequest = AdRequest.Builder().build()
 
         //TODO: getString(R.string.banner_ad_inter_id)

@@ -194,8 +194,9 @@ class FoodActivity: AppCompatActivity() {
                         .setNegativeButton(getString(R.string.action_back)) { dialog, _ -> dialog.dismiss()}
                         .show()
                 return false
+            } else {
+                showAddFoodDialog()
             }
-            showAddFoodDialog()
             return true
         }
         return super.onOptionsItemSelected(item)

@@ -86,6 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:minEms="7"
                     app:boxStrokeColor="@color/colorAccent"
                     app:hintTextColor="@color/colorAccent">
 
@@ -94,7 +95,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/intro_weight"
-                        android:ems="6"
                         android:maxLength="5"
                         android:inputType="numberDecimal" />
 

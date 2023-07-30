@@ -49,4 +49,10 @@ public class ChangeCaloriesDialog extends DialogFragment {
         builder.setCancelable(true);
         return builder.create();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireDialog().findViewById(R.id.edit).requestFocus();
+    }
 }

@@ -51,4 +51,10 @@ public class ChangeWaterDialog extends DialogFragment {
         return builder.create();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireDialog().findViewById(R.id.edit).requestFocus();
+    }
+
 }

@@ -40,6 +40,7 @@
                     android:layout_marginLeft="36dp"
                     android:layout_marginTop="34dp"
                     android:textColorHint="@color/onBarSecondary"
+                    android:minEms="5"
                     app:boxBackgroundColor="@color/colorPrimaryLight"
                     app:boxCornerRadiusTopStart="6dp"
                     app:boxCornerRadiusTopEnd="6dp"
@@ -51,7 +52,6 @@
                         android:id="@+id/ed_cal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="5"
                         android:text='@{String.format("%d", (int) viewModel.program.cal)}'
                         android:textSize="30sp"
                         android:hint="@string/macro_cal"
