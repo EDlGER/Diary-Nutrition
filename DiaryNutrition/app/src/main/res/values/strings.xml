@@ -193,7 +193,7 @@
     <string name="macronutrients">Macronutrients</string>
     <string name="water">Water</string>
 
-    <string name="message_backpress">Press back again to exit</string>
+    <string name="message_backpress">Repeat action again to exit</string>
     <string name="message_meal">Meal name is not entered</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_program_perc">Amount of percent must be equal 100</string>

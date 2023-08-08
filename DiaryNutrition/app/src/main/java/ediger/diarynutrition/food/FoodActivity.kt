@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -83,6 +84,19 @@ class FoodActivity: AppCompatActivity() {
             initBannerAd()
             initRewardedAd()
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val sheetBehavior = BottomSheetBehavior.from(binding.fragmentContainer)
+                if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
+                }
+            }
+        })
 
         this.showKeyboard(binding.edSearch)
     }
@@ -206,15 +220,6 @@ class FoodActivity: AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .add(android.R.id.content, AddFoodDialog())
                 .commit()
-    }
-
-
-    override fun onBackPressed() = with(BottomSheetBehavior.from(binding.fragmentContainer)) {
-        if (state == BottomSheetBehavior.STATE_EXPANDED) {
-            state = BottomSheetBehavior.STATE_COLLAPSED
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onResume() {

@@ -233,7 +233,7 @@
     <string name="intro_activity_name_3">Активный</string>
     <string name="intro_activity_name_4">Очень активный</string>
     <string name="intro_activity">Какой Ваш образ жизни?</string>
-    <string name="message_backpress">Нажмите еще раз для выхода</string>
+    <string name="message_backpress">Повторите еще раз для выхода</string>
     <string name="macronutrients">Макронутриенты</string>
     <string name="tab_day">День</string>
     <string name="tab_week">Неделя</string>

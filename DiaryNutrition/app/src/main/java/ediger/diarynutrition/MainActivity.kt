@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -80,6 +81,8 @@ class MainActivity : AppCompatActivity() {
 
         // Billing
         billingSetup()
+
+        onBackPressedSetup()
 
         setContentView(R.layout.activity_main)
         setupNavigation()
@@ -155,26 +158,6 @@ class MainActivity : AppCompatActivity() {
                 Navigation.findNavController(this, R.id.nav_host_fragment), drawerLayout)
     }
 
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else if (navigationView.menu.findItem(R.id.nav_diary).isChecked) {
-            val currentTime = System.currentTimeMillis()
-            if (currentTime - lastBackPress > 3000) {
-                backPressToast = Toast.makeText(this, R.string.message_backpress,
-                        Toast.LENGTH_LONG)
-                backPressToast?.show()
-
-                lastBackPress = currentTime
-            } else {
-                backPressToast?.cancel()
-                super.onBackPressed()
-            }
-        } else {
-            super.onBackPressed()
-        }
-    }
-
     override fun onContextMenuClosed(menu: Menu) {
         super.onContextMenuClosed(menu)
         val activeFragment = supportFragmentManager
@@ -192,6 +175,35 @@ class MainActivity : AppCompatActivity() {
             true -> progress.show()
             false -> progress.hide()
         }
+    }
+
+    private fun onBackPressedSetup() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                } else if (navigationView.menu.findItem(R.id.nav_diary).isChecked) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastBackPress > 3000) {
+                        backPressToast = Toast.makeText(
+                            this@MainActivity,
+                            R.string.message_backpress,
+                            Toast.LENGTH_LONG)
+                        backPressToast?.show()
+
+                        lastBackPress = currentTime
+                    } else {
+                        backPressToast?.cancel()
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                } else {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
+                }
+            }
+        })
     }
 
     companion object {
