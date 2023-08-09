@@ -1,7 +1,6 @@
 package ediger.diarynutrition.diary.water
 
 import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +15,6 @@ import com.google.android.material.textfield.TextInputEditText
 import ediger.diarynutrition.*
 import ediger.diarynutrition.databinding.DialogAddWaterBinding
 import ediger.diarynutrition.util.SnackbarUtils
-import ediger.diarynutrition.util.hideKeyboard
 import ediger.diarynutrition.util.showKeyboard
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +42,9 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.addTime = Calendar.getInstance().apply {
-            timeInMillis = arguments?.getLong(ARG_DATE, viewModel.addTime.timeInMillis) ?: viewModel.addTime.timeInMillis
+            timeInMillis = arguments
+                ?.getLong(ARG_DATE, viewModel.addTime.timeInMillis)
+                ?: viewModel.addTime.timeInMillis
             set(Calendar.HOUR_OF_DAY, viewModel.addTime[Calendar.HOUR_OF_DAY])
             set(Calendar.MINUTE, viewModel.addTime[Calendar.MINUTE])
         }
@@ -57,10 +57,7 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
             lifecycleOwner = viewLifecycleOwner
 
             toolbar.inflateMenu(R.menu.menu_dialog_water)
-            toolbar.setNavigationOnClickListener {
-                hideKeyboard()
-                dismiss()
-            }
+            toolbar.setNavigationOnClickListener { dismiss() }
             toolbar.setOnMenuItemClickListener {
                 addWater(edWater.text.toString())
                 true
@@ -68,7 +65,6 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
 
             edTime.setText(timeFormatter.format(viewModel.addTime.time))
             edTime.setOnClickListener {
-                hideKeyboard()
                 TimePickerDialog(
                         requireContext(),
                         { _, hourOfDay, minute ->
@@ -89,6 +85,9 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
             val width = ViewGroup.LayoutParams.MATCH_PARENT
             val height = ViewGroup.LayoutParams.MATCH_PARENT
             it.window?.setLayout(width, height)
+        }
+        with(binding.edWater) {
+            post { requireActivity().showKeyboard(this) }
         }
     }
 
@@ -113,25 +112,14 @@ class AddWaterDialog : DialogFragment(), View.OnClickListener, OnLongClickListen
         return false
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        activity?.showKeyboard(binding.edWater)
-    }
-
     private fun addWater(amount: String) {
         if (amount.isEmpty()
                 || amount.startsWith("0")) {
             Toast.makeText(activity, resources.getString(R.string.message_dialog_water), Toast.LENGTH_LONG).show()
         } else {
             viewModel.addWater(amount.toInt())
-            hideKeyboard()
             dismiss()
         }
-    }
-
-    private fun hideKeyboard() {
-        activity?.hideKeyboard(binding.root.findFocus())
     }
 
     private fun waterValuesInit() {

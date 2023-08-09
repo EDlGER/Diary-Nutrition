@@ -11,9 +11,10 @@ fun Activity.hideKeyboard(view: View?) = view?.let {
     }
 }
 
-fun Activity.showKeyboard(view: View? = null) {
-    view?.requestFocus()
-    (getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
-        toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+fun Activity.showKeyboard(view: View? = null) = view?.let {
+    if (it.requestFocus()) {
+        (getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
+            showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 }

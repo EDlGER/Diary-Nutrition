@@ -101,6 +101,11 @@ class FoodActivity: AppCompatActivity() {
         this.showKeyboard(binding.edSearch)
     }
 
+    fun requestSearch() {
+        binding.edSearch.setText("")
+        this.showKeyboard(binding.edSearch)
+    }
+
     private fun setupViewPager() {
         val tabs = generateTabs(this)
         binding.pager.adapter = FoodPagerAdapter(this@FoodActivity, tabs)
@@ -120,7 +125,7 @@ class FoodActivity: AppCompatActivity() {
                 }
 
                 binding.edSearch.setText("")
-                this@FoodActivity.hideKeyboard(binding.root)
+                //this@FoodActivity.hideKeyboard(binding.root)
             }
         })
     }

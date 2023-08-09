@@ -2,16 +2,12 @@ package ediger.diarynutrition.diary
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.NavHostFragment
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.DialogChangeRecordBinding
-import ediger.diarynutrition.util.hideKeyboard
 import ediger.diarynutrition.util.showKeyboard
 
 class ChangeRecordDialog: DialogFragment() {
@@ -20,7 +16,7 @@ class ChangeRecordDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext(), R.style.DialogStyle).apply {
-            binding = DialogChangeRecordBinding.inflate(LayoutInflater.from(requireActivity()))
+            binding = DialogChangeRecordBinding.inflate(layoutInflater)
 
             setView(binding.root)
             setTitle(getString(R.string.dialog_title_change_serving))
@@ -32,13 +28,9 @@ class ChangeRecordDialog: DialogFragment() {
                 } else {
                     Toast.makeText(requireContext(), R.string.message_serving, Toast.LENGTH_SHORT).show()
                 }
-                activity?.hideKeyboard(binding.root.findFocus())
                 dialog.dismiss()
             }
-            setNegativeButton(R.string.dialog_cancel) { dialog, _ ->
-                activity?.hideKeyboard(binding.root.findFocus())
-                dialog.dismiss()
-            }
+            setNegativeButton(R.string.dialog_cancel) { dialog, _ -> dialog.dismiss() }
         }.create()
     }
 
@@ -47,8 +39,10 @@ class ChangeRecordDialog: DialogFragment() {
         binding.apply {
             serving = arguments?.getInt(ARG_SERVING) ?: 100
             executePendingBindings()
-            edServing.requestFocus()
-            activity?.showKeyboard(edServing)
+            edServing.post {
+                requireActivity().showKeyboard(edServing)
+                edServing.setSelection(edServing.length())
+            }
         }
     }
 

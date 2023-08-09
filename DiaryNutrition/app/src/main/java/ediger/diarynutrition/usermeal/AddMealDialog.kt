@@ -2,14 +2,12 @@ package ediger.diarynutrition.usermeal
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.NavHostFragment
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.DialogAddMealBinding
-import ediger.diarynutrition.util.hideKeyboard
 import ediger.diarynutrition.util.showKeyboard
 
 class AddMealDialog: DialogFragment() {
@@ -18,7 +16,7 @@ class AddMealDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext(), R.style.DialogStyle).apply {
-            binding = DialogAddMealBinding.inflate(LayoutInflater.from(requireActivity()))
+            binding = DialogAddMealBinding.inflate(layoutInflater)
 
             setView(binding.root)
             setTitle(getString(R.string.dialog_title_meal_add))
@@ -30,20 +28,17 @@ class AddMealDialog: DialogFragment() {
                 } else {
                     Toast.makeText(requireContext(), R.string.message_meal, Toast.LENGTH_SHORT).show()
                 }
-                activity?.hideKeyboard(binding.root.findFocus())
                 dialog.dismiss()
             }
-            setNegativeButton(R.string.dialog_cancel) { dialog, _ ->
-                activity?.hideKeyboard(binding.root.findFocus())
-                dialog.dismiss()
-            }
+            setNegativeButton(R.string.dialog_cancel) { dialog, _ -> dialog.dismiss()}
         }.create()
     }
 
     override fun onStart() {
         super.onStart()
-        binding.edMeal.requestFocus()
-        activity?.showKeyboard(binding.edMeal)
+        with(binding.edMeal) {
+            post { requireActivity().showKeyboard(this) }
+        }
     }
 
     companion object {

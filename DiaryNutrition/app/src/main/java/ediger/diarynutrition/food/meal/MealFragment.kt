@@ -24,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ediger.diarynutrition.*
 import ediger.diarynutrition.data.source.entities.Meal
 import ediger.diarynutrition.databinding.FragmentMealBinding
+import ediger.diarynutrition.food.FoodActivity
 import ediger.diarynutrition.food.FoodViewModel
 import ediger.diarynutrition.util.hideKeyboard
 import java.text.SimpleDateFormat
@@ -109,13 +110,11 @@ class MealFragment : Fragment() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     when (newState) {
                         BottomSheetBehavior.STATE_COLLAPSED -> {
-                            activity?.hideKeyboard(binding.root.findFocus())
+                            requireActivity().hideKeyboard(binding.root.findFocus())
                             isDraggable = true
+                            (requireActivity() as FoodActivity).requestSearch()
                         }
-
-                        BottomSheetBehavior.STATE_EXPANDED ->
-                            isDraggable = false
-
+                        BottomSheetBehavior.STATE_EXPANDED -> isDraggable = false
                         else -> { }
                     }
                 }
@@ -138,10 +137,7 @@ class MealFragment : Fragment() {
 
         fabAddMeal.setOnClickListener {
             this@MealFragment.viewModel.addRecords()
-            requireActivity().hideKeyboard(view)
-
             interstitialAd?.show(requireActivity())
-
             navigateToDiary()
         }
     }

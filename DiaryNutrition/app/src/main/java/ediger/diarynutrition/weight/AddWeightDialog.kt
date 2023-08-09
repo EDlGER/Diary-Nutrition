@@ -3,7 +3,6 @@ package ediger.diarynutrition.weight
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
@@ -11,7 +10,6 @@ import androidx.fragment.app.viewModels
 import ediger.diarynutrition.R
 import ediger.diarynutrition.data.source.entities.Weight
 import ediger.diarynutrition.databinding.DialogAddWeightBinding
-import ediger.diarynutrition.util.hideKeyboard
 import ediger.diarynutrition.util.showKeyboard
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +25,7 @@ class AddWeightDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireActivity(), R.style.DialogStyle).apply {
-            binding = DialogAddWeightBinding.inflate(LayoutInflater.from(requireActivity()))
+            binding = DialogAddWeightBinding.inflate(layoutInflater)
 
             setView(binding.root)
             setTitle(getString(R.string.dialog_title_weight))
@@ -42,11 +40,9 @@ class AddWeightDialog : DialogFragment() {
                             Weight(weightAmount.toFloat(), date.timeInMillis)
                     )
                 }
-                activity?.hideKeyboard(binding.root.findFocus())
                 dialog.dismiss()
             }
             setNegativeButton(getString(R.string.dialog_cancel)) { dialog, _ ->
-                activity?.hideKeyboard(binding.root.findFocus())
                 dialog.dismiss()
             }
         }.create()
@@ -54,10 +50,14 @@ class AddWeightDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-
         dateSelectionInit()
-        binding.edWeight.requestFocus()
-        activity?.showKeyboard(binding.edWeight)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        with(binding.edWeight) {
+            post { requireActivity().showKeyboard(this) }
+        }
     }
 
     private fun dateSelectionInit() {
