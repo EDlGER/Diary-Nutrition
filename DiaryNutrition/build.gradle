@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.2'
+        classpath 'com.android.tools.build:gradle:8.1.0'
         classpath 'com.google.gms:google-services:4.3.15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -40,7 +40,7 @@ ext {
     archLifecycleVersion = '2.2.0'
     navVersion = '2.6.0'
     workVersion = '2.8.1'
-    pagingVersion = '3.1.1'
+    pagingVersion = '3.2.0'
     billingVersion = '6.0.1'
 
     //Testing
