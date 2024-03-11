@@ -17,6 +17,18 @@
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp">
 
+                <TextView
+                    android:id="@+id/txt_premium_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inactive"
+                    android:textSize="32sp"
+                    android:textColor="@color/text_high"
+                    app:layout_constraintBottom_toTopOf="@+id/crd_subscription_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/crd_subscription_1"
                     android:layout_width="match_parent"
@@ -45,7 +57,7 @@
                         android:textColor="@color/text_high" />
 
                     <TextView
-                        android:id="@+id/txt_price_1"
+                        android:id="@+id/txt_price_monthly"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -85,7 +97,7 @@
                         android:textColor="@color/text_high" />
 
                     <TextView
-                        android:id="@+id/txt_price_2"
+                        android:id="@+id/txt_price_seasonally"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
@@ -125,7 +137,7 @@
                         android:textColor="@color/text_high" />
 
                     <TextView
-                        android:id="@+id/txt_price_3"
+                        android:id="@+id/txt_price_annually"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"

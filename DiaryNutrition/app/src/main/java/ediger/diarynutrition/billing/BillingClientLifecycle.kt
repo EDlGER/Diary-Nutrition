@@ -7,32 +7,41 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.android.billingclient.api.*
 import ediger.diarynutrition.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class BillingClientLifecycle private constructor(
-        private val app: Application
+        private val app: Application,
+        private val externalScope: CoroutineScope =
+            CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener,
-    SkuDetailsResponseListener {
+    ProductDetailsResponseListener {
 
-    /**
-     * Purchases are observable. This list will be updated when the Billing Library
-     * detects new or existing purchases. All observers will be notified.
-     */
-    val purchases = MutableLiveData<List<Purchase>>()
+    private val _subscriptionPurchases = MutableStateFlow<List<Purchase>>(emptyList())
+    val subscriptionPurchases = _subscriptionPurchases.asStateFlow()
 
-    val skusWithSkuDetails = MutableLiveData<Map<String, SkuDetails>>()
+    private val _oneTimeProductPurchases = MutableStateFlow<List<Purchase>>(emptyList())
+    val oneTimeProductPurchases = _oneTimeProductPurchases.asStateFlow()
+
+    private var cachedPurchasesList: List<Purchase>? = null
+
+    private val _productWithProductDetails =
+        MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
+    val productWithProductDetails = _productWithProductDetails.asStateFlow()
 
     private lateinit var billingClient: BillingClient
+
+    private var retryAttempts = 3
 
     companion object {
         private const val TAG = "BillingLifecycle"
 
-        val SUBS_SKUS = listOf(
-            SKU_SUB_MONTHLY,
-            SKU_SUB_SEASON,
-            SKU_SUB_ANNUALLY
-        )
-
-        val INAPP_SKUS = listOf(SKU_PREMIUM_UNLIMITED, SKU_REMOVE_ADS)
+        val SUBS_LIST = listOf(PRODUCT_SUB_PREMIUM)
+        val INAPP_LIST = listOf(PRODUCT_PREMIUM_UNLIMITED, PRODUCT_REMOVE_ADS)
+        //val INAPP_LIST = listOf(PRODUCT_PREMIUM_UNLIMITED)
 
         private var INSTANCE: BillingClientLifecycle? = null
 
@@ -51,14 +60,17 @@ class BillingClientLifecycle private constructor(
             .build()
         if (!billingClient.isReady) {
             Log.d(TAG, "BillingClient: Start connection...")
+            retryAttempts = 3
             billingClient.startConnection(this)
         }
     }
 
     override fun onResume(owner: LifecycleOwner) {
         Log.d(TAG, "ON_RESUME")
+
         if (billingClient.isReady) {
-            queryPurchases()
+            querySubscriptionPurchases()
+            queryOneTimePurchases()
         }
     }
 
@@ -71,61 +83,76 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
-        if (!billingClient.isReady) {
-            Log.e(TAG, "launchBillingFlow: BillingClient is not ready")
-        }
-        val billingResult = billingClient.launchBillingFlow(activity, params)
-        val responseCode = billingResult.responseCode
-        val debugMessage = billingResult.debugMessage
-        Log.d(TAG, "launchBillingFlow: BillingResponse $responseCode $debugMessage")
-        return responseCode
-    }
-
     override fun onBillingSetupFinished(billingResult: BillingResult) {
         val responseCode = billingResult.responseCode
         val debugMessage = billingResult.debugMessage
         Log.d(TAG, "onBillingSetupFinished: $responseCode $debugMessage")
         if (responseCode == BillingClient.BillingResponseCode.OK) {
-            querySkuDetails(BillingClient.SkuType.SUBS, SUBS_SKUS)
-            querySkuDetails(BillingClient.SkuType.INAPP, INAPP_SKUS)
-
-            queryPurchases()
+            querySubscriptionProductDetails()
+            queryOneTimeProductDetails()
+            querySubscriptionPurchases()
+            queryOneTimePurchases()
         }
     }
 
     override fun onBillingServiceDisconnected() {
         Log.d(TAG, "onBillingServiceDisconnected")
         if (!billingClient.isReady) {
-            billingClient.startConnection(this)
+            if (retryAttempts > 0) {
+                retryAttempts--
+                Log.d(TAG, "Reconnecting attempts left: $retryAttempts")
+                billingClient.startConnection(this)
+            }
         }
     }
 
-    override fun onSkuDetailsResponse(
-            billingResult: BillingResult,
-            skuDetailsList: MutableList<SkuDetails>?
+    private fun querySubscriptionProductDetails() {
+        Log.d(TAG, "querySubscriptionProductDetails")
+        val params = QueryProductDetailsParams.newBuilder()
+
+        val productList: MutableList<QueryProductDetailsParams.Product> = arrayListOf()
+        for (subProduct in SUBS_LIST) {
+            productList.add(
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(subProduct)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
+            )
+        }
+        params.setProductList(productList)
+
+        Log.i(TAG, "queryProductDetailsAsync for subscriptions")
+        billingClient.queryProductDetailsAsync(params.build(), this)
+    }
+
+    private fun queryOneTimeProductDetails() {
+        Log.d(TAG, "queryOneTimeProductDetails")
+        val params = QueryProductDetailsParams.newBuilder()
+
+        val productList: MutableList<QueryProductDetailsParams.Product> = arrayListOf(
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_PREMIUM_UNLIMITED)
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+        )
+        params.setProductList(productList)
+
+        Log.i(TAG, "queryProductDetailsAsync for oneTimePurchase")
+        billingClient.queryProductDetailsAsync(params.build(), this)
+    }
+
+    override fun onProductDetailsResponse(
+        billingResult: BillingResult,
+        productDetailsList: List<ProductDetails>
     ) {
         val responseCode = billingResult.responseCode
         val debugMessage = billingResult.debugMessage
         when (responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                Log.i(TAG, "onSkuDetailsResponse: $responseCode $debugMessage")
-
-                skuDetailsList?.let { detailsList ->
-                    val oldSkusWithDetails = skusWithSkuDetails.value
-                    val postedList: HashMap<String, SkuDetails> = if (oldSkusWithDetails.isNullOrEmpty()) {
-                        hashMapOf()
-                    } else {
-                        HashMap(oldSkusWithDetails)
-                    }
-
-                    skusWithSkuDetails.postValue(postedList.apply {
-                        for (details in detailsList) {
-                            put(details.sku, details)
-                        }
-                    })
-                }
+                Log.i(TAG, "onProductDetailsResponse: $debugMessage")
+                processProductDetails(productDetailsList)
             }
+
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
             BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
@@ -134,6 +161,7 @@ class BillingClientLifecycle private constructor(
             BillingClient.BillingResponseCode.ERROR -> {
                 Log.e(TAG, "onSkuDetailsResponse: $responseCode $debugMessage")
             }
+
             BillingClient.BillingResponseCode.USER_CANCELED,
             BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED,
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED,
@@ -144,14 +172,62 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
+    private fun processProductDetails(productDetailsList: List<ProductDetails>) {
+        val expectedProductDetailsCount = SUBS_LIST.size + INAPP_LIST.size - 1
+        var newMap = emptyMap<String, ProductDetails>()
+        if (productDetailsList.isEmpty()) {
+            Log.e(TAG,"processProductDetails: " +
+                    "Expected ${expectedProductDetailsCount}, " +
+                    "Found null ProductDetails. ")
+        } else {
+            newMap = productDetailsList.associateBy { it.productId }
+        }
+        _productWithProductDetails.value = newMap
+    }
+
+    private fun querySubscriptionPurchases() {
+        if (!billingClient.isReady) {
+            Log.e(TAG, "querySubscriptionPurchases: BillingClient is not ready")
+            billingClient.startConnection(this)
+        }
+
+        Log.d(TAG, "queryPurchases: SUBS")
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.SUBS)
+        billingClient.queryPurchasesAsync(params.build()) { _, list ->
+            processPurchases(list, BillingClient.ProductType.SUBS)
+        }
+    }
+
+    private fun queryOneTimePurchases() {
+        if (!billingClient.isReady) {
+            Log.e(TAG, "querySubscriptionPurchases: BillingClient is not ready")
+            billingClient.startConnection(this)
+        }
+
+        Log.d(TAG, "queryPurchases: INAPP")
+
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.INAPP)
+        billingClient.queryPurchasesAsync(params.build()) { _, list ->
+            processPurchases(list, BillingClient.ProductType.INAPP)
+        }
+    }
+
+    override fun onPurchasesUpdated(
+        billingResult: BillingResult,
+        purchases: MutableList<Purchase>?
+    ) {
         val responseCode = billingResult.responseCode
         val debugMessage = billingResult.debugMessage
         Log.d(TAG, "onPurchasesUpdated: $responseCode $debugMessage")
         when (responseCode) {
             BillingClient.BillingResponseCode.OK -> {
-                purchases?.let {
-                    processPurchases(it, null)
+                if (purchases == null) {
+                    Log.d(TAG, "onPurchasesUpdated: null purchase list")
+                    processPurchases(null)
+                } else {
+                    processPurchases(purchases)
                 }
             }
             BillingClient.BillingResponseCode.USER_CANCELED -> {
@@ -159,7 +235,6 @@ class BillingClientLifecycle private constructor(
             }
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 Log.i(TAG, "onPurchasesUpdated: The user already owns this item")
-                queryPurchases()
             }
             BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> {
                 if (!billingClient.isReady) {
@@ -177,93 +252,66 @@ class BillingClientLifecycle private constructor(
         }
     }
 
-    private fun querySkuDetails(
-            @BillingClient.SkuType skuType: String,
-            skuList: List<String>
-    ) {
-        Log.d(TAG, "querySkuDetails")
-        val params = SkuDetailsParams.newBuilder()
-                .setType(skuType)
-                .setSkusList(skuList)
-                .build()
-        Log.i(TAG, "querySkuDetailsAsync")
-        billingClient.querySkuDetailsAsync(params, this)
-    }
-
-    private fun queryPurchases() {
-        if (!billingClient.isReady) {
-            Log.e(TAG, "queryPurchases: BillingClient is not ready")
-        }
-
-        Log.d(TAG, "queryPurchases: SUBS")
-        billingClient.queryPurchasesAsync(BillingClient.SkuType.SUBS) { _, list ->
-            processPurchases(list, BillingClient.SkuType.SUBS)
-        }
-
-        Log.d(TAG, "queryPurchases: INAPP")
-        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP) { _, list ->
-            processPurchases(list, BillingClient.SkuType.INAPP)
-        }
-    }
-
-
     private fun processPurchases(
-            purchasesList: List<Purchase>,
-            @BillingClient.SkuType skuType: String?) {
-        Log.d(TAG, "processPurchases: ${purchasesList.size} purchase(s)")
-        if (isUnchangedPurchaseList(purchasesList)) {
-            Log.d(TAG, "processPurchases: Purchase list has not changed")
-            return
-        }
-        val purchasesResult = mutableSetOf(*purchasesList.toTypedArray())
-
-        // Save local purchase if necessary
-        purchases.value?.let { localPurchases ->
-            val skuTypedList = when (skuType) {
-                BillingClient.SkuType.SUBS -> INAPP_SKUS
-                BillingClient.SkuType.INAPP -> SUBS_SKUS
-                else -> null
+        purchasesList: List<Purchase>?,
+        @BillingClient.ProductType productType: String? = null
+    ) {
+        Log.d(TAG, "processPurchases: ${purchasesList?.size} purchase(s)")
+        purchasesList?.let { list ->
+            if (isUnchangedPurchaseList(purchasesList)) {
+                Log.d(TAG, "processPurchases: Purchase list has not changed")
+                return
             }
-            if (skuTypedList.isNullOrEmpty()) {
-                purchasesResult.addAll(localPurchases)
-            } else {
-                localPurchases.forEach {
-                    if (it.skus.first() in skuTypedList) {
-                        purchasesResult.add(it)
-                    }
+            val subscriptionPurchaseList = list.filter { purchase ->
+                purchase.products.any { product ->
+                    product in SUBS_LIST
                 }
             }
-        }
-
-        purchases.postValue(purchasesResult.toList())
-
-        updatePremiumStatus(isEntitled = !purchases.value.isNullOrEmpty())
-
-        // Acknowledge purchase
-        purchases.value?.forEach { purchase ->
-            if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED
-                && !purchase.isAcknowledged) {
-                acknowledgePurchase(purchase.purchaseToken)
+            val oneTimeProductPurchaseList = list.filter { purchase ->
+                purchase.products.any { product ->
+                    product in INAPP_LIST
+                }
             }
+            when (productType) {
+                BillingClient.ProductType.SUBS ->
+                    _subscriptionPurchases.value = subscriptionPurchaseList
+                BillingClient.ProductType.INAPP ->
+                    _oneTimeProductPurchases.value = oneTimeProductPurchaseList
+                else -> {
+                    _subscriptionPurchases.value = subscriptionPurchaseList
+                    _oneTimeProductPurchases.value = oneTimeProductPurchaseList
+                }
+            }
+
+            logAcknowledgementStatus(list)
+
+            // Acknowledge purchase
+            purchasesList.forEach { purchase ->
+                if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED
+                    && !purchase.isAcknowledged) {
+                    acknowledgePurchase(purchase.purchaseToken)
+                }
+            }
+
+            updatePremiumStatus()
         }
     }
 
-    private fun isUnchangedPurchaseList(newPurchases: List<Purchase>?): Boolean {
-        if (purchases.value.isNullOrEmpty() && newPurchases.isNullOrEmpty()) {
-            return true
+    private fun isUnchangedPurchaseList(purchasesList: List<Purchase>): Boolean {
+        val isUnchanged = purchasesList == cachedPurchasesList
+        if (!isUnchanged) {
+            cachedPurchasesList = purchasesList
         }
-        purchases.value?.let { localPurchases ->
-            if (localPurchases.size == newPurchases?.size) {
-                return newPurchases.all { newPurchase ->
-                    // TODO: check if acknowledged and unacknowledged purchases are considered the same
-                    newPurchase in localPurchases
-                }
-            }
-        }
-        return false
+        return isUnchanged
     }
 
-    private fun updatePremiumStatus(isEntitled: Boolean) {
+    private fun updatePremiumStatus(isJustAcknowledged: Boolean = false) {
+        val purchases = subscriptionPurchases.value + oneTimeProductPurchases.value
+        val isEntitled = isJustAcknowledged || purchases.isNotEmpty()
+                && purchases.any {
+                    it.isAcknowledged && it.purchaseState == Purchase.PurchaseState.PURCHASED
+                }
+
         app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE).apply {
             val premiumPref = getBoolean(PREF_PREMIUM, false)
 
@@ -276,6 +324,17 @@ class BillingClientLifecycle private constructor(
         }
     }
 
+    fun launchBillingFlow(activity: Activity, params: BillingFlowParams): Int {
+        if (!billingClient.isReady) {
+            Log.e(TAG, "launchBillingFlow: BillingClient is not ready")
+        }
+        val billingResult = billingClient.launchBillingFlow(activity, params)
+        val responseCode = billingResult.responseCode
+        val debugMessage = billingResult.debugMessage
+        Log.d(TAG, "launchBillingFlow: BillingResponse $responseCode $debugMessage")
+        return responseCode
+    }
+
     private fun acknowledgePurchase(purchaseToken: String) {
         Log.d(TAG, "acknowledgePurchase")
         val params = AcknowledgePurchaseParams.newBuilder()
@@ -284,8 +343,29 @@ class BillingClientLifecycle private constructor(
         billingClient.acknowledgePurchase(params) { billingResult ->
             val responseCode = billingResult.responseCode
             val debugMessage = billingResult.debugMessage
+
             Log.d(TAG, "acknowledgePurchase: $responseCode $debugMessage")
+            if (responseCode == BillingClient.BillingResponseCode.OK) {
+                updatePremiumStatus(isJustAcknowledged = true)
+            }
         }
+    }
+
+    private fun logAcknowledgementStatus(purchasesList: List<Purchase>) {
+        var acknowledgedCounter = 0
+        var unacknowledgedCounter = 0
+        for (purchase in purchasesList) {
+            if (purchase.isAcknowledged) {
+                acknowledgedCounter++
+            } else {
+                unacknowledgedCounter++
+            }
+        }
+        Log.d(
+            TAG,
+            "logAcknowledgementStatus: acknowledged=$acknowledgedCounter " +
+                    "unacknowledged=$unacknowledgedCounter"
+        )
     }
 
 }

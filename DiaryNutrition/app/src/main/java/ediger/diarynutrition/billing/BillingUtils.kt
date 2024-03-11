@@ -1,9 +1,8 @@
 package ediger.diarynutrition.billing
 
+import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.Purchase
-import ediger.diarynutrition.SKU_SUB_ANNUALLY
-import ediger.diarynutrition.SKU_SUB_MONTHLY
-import ediger.diarynutrition.SKU_SUB_SEASON
 
 fun purchaseForSku(purchases: List<Purchase>?, sku: String): Purchase? {
     purchases?.let {
@@ -28,9 +27,10 @@ fun getActivePurchase(purchases: List<Purchase>?): Purchase? {
     return null
 }
 
-fun isSubscription(sku: String) =
-    sku in listOf(SKU_SUB_MONTHLY, SKU_SUB_SEASON, SKU_SUB_ANNUALLY)
+
+//fun isSubscription(sku: String) =
+//    sku in listOf(PRODUCT_SUB_MONTHLY, PRODUCT_SUB_SEASON, PRODUCT_SUB_ANNUALLY)
 
 
-fun Purchase.isSubscription() =
-    this.skus.first() in listOf(SKU_SUB_MONTHLY, SKU_SUB_SEASON, SKU_SUB_ANNUALLY)
+//fun Purchase.isSubscription() =
+//    this.skus.first() in listOf(PRODUCT_SUB_MONTHLY, PRODUCT_SUB_SEASON, PRODUCT_SUB_ANNUALLY)

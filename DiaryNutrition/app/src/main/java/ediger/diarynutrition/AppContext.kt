@@ -36,6 +36,10 @@ class AppContext : MultiDexApplication() {
     val billingClientLifecycle: BillingClientLifecycle
         get() = BillingClientLifecycle.getInstance(this)
 
+    val billingRepository: BillingRepository
+        get() = BillingRepository.getInstance(billingClientLifecycle)
+
+
     override fun onCreate() {
         super.onCreate()
         PreferenceHelper.init(applicationContext)

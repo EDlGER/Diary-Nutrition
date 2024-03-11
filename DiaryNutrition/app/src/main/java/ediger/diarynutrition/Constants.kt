@@ -11,11 +11,16 @@ const val ARG_DATE = "date"
 
 const val USER_PREFERENCES_NAME = "user_preferences"
 
-const val SKU_REMOVE_ADS = "com.ediger.removeads"
-const val SKU_PREMIUM_UNLIMITED = "com.ediger.premium.unlimited"
-const val SKU_SUB_MONTHLY = "com.ediger.premium.monthly"
-const val SKU_SUB_SEASON = "com.ediger.premium.season"
-const val SKU_SUB_ANNUALLY = "com.ediger.premium.annually"
+// Product IDs
+const val PRODUCT_REMOVE_ADS = "com.ediger.removeads"
+const val PRODUCT_PREMIUM_UNLIMITED = "com.ediger.premium.unlimited"
+const val PRODUCT_SUB_PREMIUM = "com.ediger.premium"
+
+// Plan tags
+const val PLAN_PREMIUM_MONTHLY = "premium-monthly"
+const val PLAN_PREMIUM_SEASONALLY = "premium-seasonally"
+const val PLAN_PREMIUM_ANNUALLY = "premium-annually"
+
 const val PLAY_STORE_SUBSCRIPTION_URL
         = "https://play.google.com/store/account/subscriptions"
 const val PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL
