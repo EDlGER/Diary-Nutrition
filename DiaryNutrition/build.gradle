@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.8.20'
+    ext.kotlin_version = '1.9.23'
     repositories {
         google()
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath 'com.android.tools.build:gradle:8.3.0'
         classpath 'com.google.gms:google-services:4.3.15'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -28,20 +28,20 @@ allprojects {
 
 ext {
     // Sdk and tools
-    minSdkVersion = 19
-    targetSdkVersion = 33
-    compileSdkVersion = 33
-    buildToolsVersion = '30.0.2'
+    minSdkVersion = 26
+    targetSdkVersion = 34
+    compileSdkVersion = 34
+    buildToolsVersion = '34.0.0'
 
     // App dependencies
 
     // Architecture Components dependencies
-    roomVersion = '2.5.2'
+    roomVersion = '2.6.1'
     archLifecycleVersion = '2.2.0'
-    navVersion = '2.6.0'
-    workVersion = '2.8.1'
-    pagingVersion = '3.2.0'
-    billingVersion = '6.0.1'
+    navVersion = '2.7.7'
+    workVersion = '2.9.0'
+    pagingVersion = '3.2.1'
+    billingVersion = '6.2.0'
 
     //Testing
     atsl = '1.1.0-alpha4'

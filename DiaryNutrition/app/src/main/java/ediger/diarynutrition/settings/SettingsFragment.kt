@@ -183,7 +183,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeLis
         PreferenceHelper.getPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             KEY_GENDER, KEY_ACTIVITY, KEY_PURPOSE -> {
                 findPreference(key).summary = "%s"
