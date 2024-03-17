@@ -20,17 +20,7 @@ class BillingRepository(
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) {
 
-    val oneTimeProductDetails: StateFlow<ProductDetails?> =
-        billingClientLifecycle.productWithProductDetails.filter {
-            it.containsKey(PRODUCT_PREMIUM_UNLIMITED)
-        }.map { it[PRODUCT_PREMIUM_UNLIMITED]!! }
-            .stateIn(externalScope, SharingStarted.WhileSubscribed(), null)
 
-    val subscriptionProductDetails: StateFlow<ProductDetails?> =
-        billingClientLifecycle.productWithProductDetails.filter {
-            it.containsKey(PRODUCT_SUB_PREMIUM)
-        }.map { it[PRODUCT_SUB_PREMIUM]!! }
-            .stateIn(externalScope, SharingStarted.WhileSubscribed(), null)
 
     companion object {
         @Volatile private var instance: BillingRepository? = null

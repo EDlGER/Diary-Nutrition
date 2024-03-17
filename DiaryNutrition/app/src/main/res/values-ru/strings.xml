@@ -268,6 +268,7 @@
     <string name="pref_title_data">Данные</string>
     <string name="billing_ads_disable">Реклама отключена</string>
     <string name="billing_ads_enable">Реклама включена</string>
+    <string name="action_buy">Купить</string>
     <string name="billing_button_buy">Отключить</string>
     <string name="message_data_backup_fail">Произошла ошибка во время выполнения резервного копирования!</string>
     <string name="message_data_db_lang">Язык базы данных был изменен</string>
@@ -341,6 +342,7 @@
     <string name="message_data_restore_file_missing">Файл резервной копии не найден!</string>
     <string name="dialog_backup_info_2">Локальная версия резервной копии создаётся автоматически примерно каждый день, когда устройство не используется.</string>
     <string name="dialog_backup_button_check">Проверить, что включен</string>
+    <string name="action_manage">Управление</string>
 
 
 </resources>

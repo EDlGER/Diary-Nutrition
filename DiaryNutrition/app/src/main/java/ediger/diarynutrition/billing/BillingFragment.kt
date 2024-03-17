@@ -14,6 +14,7 @@ import com.google.android.material.card.MaterialCardView
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
 import ediger.diarynutrition.PLAN_PREMIUM_SEASONALLY
+import ediger.diarynutrition.PRODUCT_PREMIUM_UNLIMITED
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentBillingBinding
 import kotlinx.coroutines.launch
@@ -22,16 +23,17 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentBillingBinding
 
-    private lateinit var subsCards: List<MaterialCardView>
+    private lateinit var productCards: List<MaterialCardView>
 
     private val billingViewModel: BillingViewModel by activityViewModels()
 
-    private var selectedSubId = 1
+    private var selectedProductId = 1
 
     private val productList = listOf(
         PLAN_PREMIUM_MONTHLY,
         PLAN_PREMIUM_SEASONALLY,
-        PLAN_PREMIUM_ANNUALLY
+        PLAN_PREMIUM_ANNUALLY,
+        PRODUCT_PREMIUM_UNLIMITED
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,14 +41,21 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
         with(binding) {
             lifecycleOwner = viewLifecycleOwner
-            subsCards = listOf(crdSubscription1, crdSubscription2, crdSubscription3)
-            toggleSubState(crdSubscription2)
+            productCards = listOf(crdSubscription1, crdSubscription2, crdSubscription3, crdOnetime)
+            toggleProductCardState(crdSubscription2)
         }
 
-        subsCards.forEach { it.setOnClickListener(this) }
+        productCards.forEach { it.setOnClickListener(this) }
 
         binding.fabPayment.setOnClickListener {
-            billingViewModel.buySubscription(productList[selectedSubId])
+            val selectedProduct = productList[selectedProductId]
+
+            if (selectedProduct == PRODUCT_PREMIUM_UNLIMITED) {
+                billingViewModel.buyOneTimeProduct()
+            } else {
+                billingViewModel.buySubscription(selectedProduct)
+            }
+
         }
 
         return binding.root
@@ -55,23 +64,27 @@ class BillingFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                billingViewModel.subscriptionProductDetails.collect {
-                    it?.let {product ->
-                        val prices = billingViewModel.getSubscriptionPrices(product)
-                        with(binding) {
-                            txtPriceMonthly.text = prices[PLAN_PREMIUM_MONTHLY] ?: ""
-                            txtPriceSeasonally.text = prices[PLAN_PREMIUM_SEASONALLY] ?: ""
-                            txtPriceAnnually.text = prices[PLAN_PREMIUM_ANNUALLY] ?: ""
-                        }
-                    }
+        billingViewModel.subscriptionProductDetails.observe(viewLifecycleOwner) {
+            it?.let { product ->
+                val prices = billingViewModel.getSubscriptionPrices(product)
+                with(binding) {
+                    txtPriceMonthly.text = prices[PLAN_PREMIUM_MONTHLY] ?: ""
+                    txtPriceSeasonally.text = prices[PLAN_PREMIUM_SEASONALLY] ?: ""
+                    txtPriceAnnually.text = prices[PLAN_PREMIUM_ANNUALLY] ?: ""
+                }
+            }
+        }
+        billingViewModel.oneTimeProductDetails.observe(viewLifecycleOwner) {
+            it?.let { product ->
+                if (product.productId == PRODUCT_PREMIUM_UNLIMITED) {
+                    val price = product.oneTimePurchaseOfferDetails?.formattedPrice
+                    binding.txtPriceOnetime.text = price ?: ""
                 }
             }
         }
 
         // TODO: Temporary for testing
-        billingViewModel.isPremiumActive.observe(viewLifecycleOwner) {isPremiumActive ->
+        billingViewModel.isPremiumActive.observe(viewLifecycleOwner) { isPremiumActive ->
             binding.txtPremiumStatus.text =
                 if (isPremiumActive) "Active" else "Inactive"
         }
@@ -80,18 +93,25 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     // Subscription cards
     override fun onClick(v: View?) {
-        val selectedSub = v as? MaterialCardView
-        if (selectedSub?.isChecked == false) {
-            toggleSubState(selectedSub)
+        val selectedProductCard = v as? MaterialCardView
+        if (selectedProductCard?.isChecked == false) {
+            toggleProductCardState(selectedProductCard)
         }
-        selectedSubId = subsCards.indexOf(selectedSub)
+        selectedProductId = productCards.indexOf(selectedProductCard)
 
-        toggleSubState(
-                subsCards.find { it != selectedSub && it.isChecked }
+        toggleProductCardState(
+                productCards.find { it != selectedProductCard && it.isChecked }
         )
+
+        if (selectedProductId == 3) {
+            // OneTimePurchase Card
+            binding.fabPayment.text = getString(R.string.action_buy)
+        } else {
+            binding.fabPayment.text = getString(R.string.action_subscribe)
+        }
     }
 
-    private fun toggleSubState(card: MaterialCardView?) {
+    private fun toggleProductCardState(card: MaterialCardView?) {
         val scale = requireContext().resources.displayMetrics.density
 
         card?.apply {

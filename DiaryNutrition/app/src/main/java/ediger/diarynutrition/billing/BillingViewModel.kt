@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
@@ -14,6 +15,7 @@ import ediger.diarynutrition.PREF_FILE_PREMIUM
 import ediger.diarynutrition.PREF_PREMIUM
 import ediger.diarynutrition.objects.SingleLiveEvent
 import ediger.diarynutrition.util.SharedPreferenceBooleanLiveData
+import kotlinx.coroutines.flow.StateFlow
 
 class BillingViewModel(app: Application): AndroidViewModel(app) {
 
@@ -24,8 +26,8 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
     private val oneTimeProductPurchases =
         (app as AppContext).billingClientLifecycle.oneTimeProductPurchases
 
-    val oneTimeProductDetails = billingRepository.oneTimeProductDetails
-    val subscriptionProductDetails = billingRepository.subscriptionProductDetails
+    val oneTimeProductDetails = (app as AppContext).billingClientLifecycle.oneTimeProductDetails
+    val subscriptionProductDetails = (app as AppContext).billingClientLifecycle.subscriptionProductDetails
 
     val buyEvent = SingleLiveEvent<BillingFlowParams>()
 
@@ -49,6 +51,26 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
             }
         }
         return pricesMap
+    }
+
+    fun buyOneTimeProduct() {
+        if (subscriptionPurchases.value.isNotEmpty()) {
+            Log.e(TAG, "OneTimePurchase is found. Cannot make subscription purchase")
+            return
+        }
+        val productDetails: ProductDetails = oneTimeProductDetails.value ?: run {
+            Log.e(TAG, "Could not find ProductDetails to make purchase.")
+            return
+        }
+        val billingParams = BillingFlowParams.newBuilder().setProductDetailsParamsList(
+            listOf(
+                BillingFlowParams.ProductDetailsParams.newBuilder()
+                    .setProductDetails(productDetails)
+                    .build()
+            )
+        ).build()
+
+        buyEvent.postValue(billingParams)
     }
 
     fun buySubscription(productTag: String) {

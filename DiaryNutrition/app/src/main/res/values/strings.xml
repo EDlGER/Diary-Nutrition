@@ -13,6 +13,8 @@
     <string name="action_hide">Hide</string>
     <string name="action_show">Show</string>
     <string name="action_subscribe">Subscribe</string>
+    <string name="action_buy">Buy</string>
+    <string name="action_manage">Manage</string>
 
     <string name="ad_app_id" translatable="false">ca-app-pub-2180848868226246~4003747218</string>
     <string name="ad_rewarded_user_food" translatable="false">ca-app-pub-2180848868226246/4738143943</string>

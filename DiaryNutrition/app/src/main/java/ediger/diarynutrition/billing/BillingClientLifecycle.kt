@@ -6,6 +6,7 @@ import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import androidx.lifecycle.*
 import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient.ProductType
 import ediger.diarynutrition.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,11 +27,10 @@ class BillingClientLifecycle private constructor(
     private val _oneTimeProductPurchases = MutableStateFlow<List<Purchase>>(emptyList())
     val oneTimeProductPurchases = _oneTimeProductPurchases.asStateFlow()
 
-    private var cachedPurchasesList: List<Purchase>? = null
+    val subscriptionProductDetails = MutableLiveData<ProductDetails?>()
+    val oneTimeProductDetails = MutableLiveData<ProductDetails?>()
 
-    private val _productWithProductDetails =
-        MutableStateFlow<Map<String, ProductDetails>>(emptyMap())
-    val productWithProductDetails = _productWithProductDetails.asStateFlow()
+    private var cachedPurchasesList: List<Purchase>? = null
 
     private lateinit var billingClient: BillingClient
 
@@ -41,7 +41,6 @@ class BillingClientLifecycle private constructor(
 
         val SUBS_LIST = listOf(PRODUCT_SUB_PREMIUM)
         val INAPP_LIST = listOf(PRODUCT_PREMIUM_UNLIMITED, PRODUCT_REMOVE_ADS)
-        //val INAPP_LIST = listOf(PRODUCT_PREMIUM_UNLIMITED)
 
         private var INSTANCE: BillingClientLifecycle? = null
 
@@ -173,16 +172,22 @@ class BillingClientLifecycle private constructor(
     }
 
     private fun processProductDetails(productDetailsList: List<ProductDetails>) {
-        val expectedProductDetailsCount = SUBS_LIST.size + INAPP_LIST.size - 1
-        var newMap = emptyMap<String, ProductDetails>()
         if (productDetailsList.isEmpty()) {
             Log.e(TAG,"processProductDetails: " +
-                    "Expected ${expectedProductDetailsCount}, " +
                     "Found null ProductDetails. ")
+            postProductDetails(emptyList())
         } else {
-            newMap = productDetailsList.associateBy { it.productId }
+            postProductDetails(productDetailsList)
         }
-        _productWithProductDetails.value = newMap
+    }
+
+    private fun postProductDetails(productDetailsList: List<ProductDetails>) {
+        productDetailsList.forEach { productDetails ->
+            when (productDetails.productType) {
+                ProductType.SUBS -> subscriptionProductDetails.postValue(productDetails)
+                ProductType.INAPP -> oneTimeProductDetails.postValue(productDetails)
+            }
+        }
     }
 
     private fun querySubscriptionPurchases() {
@@ -193,9 +198,9 @@ class BillingClientLifecycle private constructor(
 
         Log.d(TAG, "queryPurchases: SUBS")
         val params = QueryPurchasesParams.newBuilder()
-            .setProductType(BillingClient.ProductType.SUBS)
+            .setProductType(ProductType.SUBS)
         billingClient.queryPurchasesAsync(params.build()) { _, list ->
-            processPurchases(list, BillingClient.ProductType.SUBS)
+            processPurchases(list, ProductType.SUBS)
         }
     }
 
@@ -208,9 +213,9 @@ class BillingClientLifecycle private constructor(
         Log.d(TAG, "queryPurchases: INAPP")
 
         val params = QueryPurchasesParams.newBuilder()
-            .setProductType(BillingClient.ProductType.INAPP)
+            .setProductType(ProductType.INAPP)
         billingClient.queryPurchasesAsync(params.build()) { _, list ->
-            processPurchases(list, BillingClient.ProductType.INAPP)
+            processPurchases(list, ProductType.INAPP)
         }
     }
 
@@ -254,7 +259,7 @@ class BillingClientLifecycle private constructor(
 
     private fun processPurchases(
         purchasesList: List<Purchase>?,
-        @BillingClient.ProductType productType: String? = null
+        @ProductType productType: String? = null
     ) {
         Log.d(TAG, "processPurchases: ${purchasesList?.size} purchase(s)")
         purchasesList?.let { list ->
@@ -273,9 +278,9 @@ class BillingClientLifecycle private constructor(
                 }
             }
             when (productType) {
-                BillingClient.ProductType.SUBS ->
+                ProductType.SUBS ->
                     _subscriptionPurchases.value = subscriptionPurchaseList
-                BillingClient.ProductType.INAPP ->
+                ProductType.INAPP ->
                     _oneTimeProductPurchases.value = oneTimeProductPurchaseList
                 else -> {
                     _subscriptionPurchases.value = subscriptionPurchaseList
