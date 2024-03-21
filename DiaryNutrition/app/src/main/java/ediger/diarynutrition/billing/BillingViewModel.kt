@@ -4,9 +4,11 @@ import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.Purchase
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
@@ -15,9 +17,9 @@ import ediger.diarynutrition.PREF_FILE_PREMIUM
 import ediger.diarynutrition.PREF_PREMIUM
 import ediger.diarynutrition.objects.SingleLiveEvent
 import ediger.diarynutrition.util.SharedPreferenceBooleanLiveData
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class BillingViewModel(app: Application): AndroidViewModel(app) {
+class BillingViewModel(val app: Application): AndroidViewModel(app) {
 
     private val billingRepository = (app as AppContext).billingRepository
 
@@ -36,6 +38,9 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
     val isPremiumActive = SharedPreferenceBooleanLiveData(
         app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE), PREF_PREMIUM, false)
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getSubscriptionPrices(productDetails: ProductDetails): Map<String, String> {
         val pricesMap = mutableMapOf<String, String>()
         productDetails.subscriptionOfferDetails?.forEach {
@@ -51,6 +56,14 @@ class BillingViewModel(app: Application): AndroidViewModel(app) {
             }
         }
         return pricesMap
+    }
+
+    fun refreshPurchases() = viewModelScope.launch {
+            _isLoading.postValue(true)
+
+            (app as AppContext).billingClientLifecycle.refreshPurchases()
+
+            _isLoading.postValue(false)
     }
 
     fun buyOneTimeProduct() {

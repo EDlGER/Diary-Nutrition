@@ -343,6 +343,7 @@
     <string name="dialog_backup_info_2">Локальная версия резервной копии создаётся автоматически примерно каждый день, когда устройство не используется.</string>
     <string name="dialog_backup_button_check">Проверить, что включен</string>
     <string name="action_manage">Управление</string>
+    <string name="action_refresh">Обновить</string>
 
 
 </resources>

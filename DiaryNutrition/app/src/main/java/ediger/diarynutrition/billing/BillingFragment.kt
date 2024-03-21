@@ -2,22 +2,25 @@ package ediger.diarynutrition.billing
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.card.MaterialCardView
+import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
 import ediger.diarynutrition.PLAN_PREMIUM_SEASONALLY
 import ediger.diarynutrition.PRODUCT_PREMIUM_UNLIMITED
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentBillingBinding
-import kotlinx.coroutines.launch
 
 class BillingFragment : Fragment(), View.OnClickListener {
 
@@ -38,6 +41,8 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentBillingBinding.inflate(inflater, container, false)
+
+        addOptionsMenu()
 
         with(binding) {
             lifecycleOwner = viewLifecycleOwner
@@ -83,6 +88,10 @@ class BillingFragment : Fragment(), View.OnClickListener {
             }
         }
 
+        billingViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            (requireActivity() as MainActivity).toggleProgress(isLoading)
+        }
+
         // TODO: Temporary for testing
         billingViewModel.isPremiumActive.observe(viewLifecycleOwner) { isPremiumActive ->
             binding.txtPremiumStatus.text =
@@ -123,6 +132,25 @@ class BillingFragment : Fragment(), View.OnClickListener {
                 ContextCompat.getColor(requireActivity(), R.color.stroke)
             }
         }
+    }
+
+    private fun addOptionsMenu() {
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.fragment_billing, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                if (menuItem.itemId == R.id.action_refresh) {
+                    billingViewModel.refreshPurchases()
+                    return true
+                }
+                return false
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
 }

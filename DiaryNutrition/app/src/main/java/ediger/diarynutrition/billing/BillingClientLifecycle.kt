@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
 
 class BillingClientLifecycle private constructor(
         private val app: Application,
@@ -338,6 +339,15 @@ class BillingClientLifecycle private constructor(
         val debugMessage = billingResult.debugMessage
         Log.d(TAG, "launchBillingFlow: BillingResponse $responseCode $debugMessage")
         return responseCode
+    }
+
+    suspend fun refreshPurchases() = withContext(Dispatchers.Default) {
+        if (billingClient.isReady) {
+            queryOneTimeProductDetails()
+            querySubscriptionProductDetails()
+            queryOneTimePurchases()
+            querySubscriptionPurchases()
+        }
     }
 
     private fun acknowledgePurchase(purchaseToken: String) {
