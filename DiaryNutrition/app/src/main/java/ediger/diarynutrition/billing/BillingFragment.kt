@@ -1,5 +1,6 @@
 package ediger.diarynutrition.billing
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,7 +19,10 @@ import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
 import ediger.diarynutrition.PLAN_PREMIUM_SEASONALLY
+import ediger.diarynutrition.PREF_FILE_PREMIUM
+import ediger.diarynutrition.PREF_PREMIUM_SUB_ACTIVE
 import ediger.diarynutrition.PRODUCT_PREMIUM_UNLIMITED
+import ediger.diarynutrition.PRODUCT_SUB_PREMIUM
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentBillingBinding
 
@@ -30,7 +34,9 @@ class BillingFragment : Fragment(), View.OnClickListener {
 
     private val billingViewModel: BillingViewModel by activityViewModels()
 
-    private var selectedProductId = 1
+    private var selectedProductIndex = 1
+
+    private var activeProductIndex = -1
 
     private val productList = listOf(
         PLAN_PREMIUM_MONTHLY,
@@ -53,14 +59,11 @@ class BillingFragment : Fragment(), View.OnClickListener {
         productCards.forEach { it.setOnClickListener(this) }
 
         binding.fabPayment.setOnClickListener {
-            val selectedProduct = productList[selectedProductId]
-
-            if (selectedProduct == PRODUCT_PREMIUM_UNLIMITED) {
+            val selectedProduct = productList[selectedProductIndex]
+            if (selectedProduct == PRODUCT_PREMIUM_UNLIMITED)
                 billingViewModel.buyOneTimeProduct()
-            } else {
-                billingViewModel.buySubscription(selectedProduct)
-            }
-
+            else
+                billingViewModel.manageSubscription(selectedProduct)
         }
 
         return binding.root
@@ -92,8 +95,25 @@ class BillingFragment : Fragment(), View.OnClickListener {
             (requireActivity() as MainActivity).toggleProgress(isLoading)
         }
 
-        // TODO: Temporary for testing
         billingViewModel.isPremiumActive.observe(viewLifecycleOwner) { isPremiumActive ->
+            val purchaseList = billingViewModel.getAllPurchases()
+
+            if (purchaseList.isNotEmpty()) {
+                var productId = purchaseList.first().products.first()
+                if (productId == PRODUCT_SUB_PREMIUM) {
+                    productId = requireActivity().applicationContext
+                        .getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
+                        .getString(PREF_PREMIUM_SUB_ACTIVE, "")
+                }
+
+                activeProductIndex = productList.indexOf(productId)
+                if (activeProductIndex != -1) {
+                    productCards[activeProductIndex].setCardBackgroundColor(
+                        ContextCompat.getColor(requireActivity(), R.color.colorAccentSecondary)
+                    )
+                }
+            }
+            // TODO: Temporary for testing
             binding.txtPremiumStatus.text =
                 if (isPremiumActive) "Active" else "Inactive"
         }
@@ -106,17 +126,19 @@ class BillingFragment : Fragment(), View.OnClickListener {
         if (selectedProductCard?.isChecked == false) {
             toggleProductCardState(selectedProductCard)
         }
-        selectedProductId = productCards.indexOf(selectedProductCard)
+        selectedProductIndex = productCards.indexOf(selectedProductCard)
 
         toggleProductCardState(
                 productCards.find { it != selectedProductCard && it.isChecked }
         )
 
-        if (selectedProductId == 3) {
-            // OneTimePurchase Card
-            binding.fabPayment.text = getString(R.string.action_buy)
-        } else {
-            binding.fabPayment.text = getString(R.string.action_subscribe)
+        when (selectedProductIndex) {
+            activeProductIndex ->
+                binding.fabPayment.text = getString(R.string.action_manage)
+            productList.indexOf(PRODUCT_PREMIUM_UNLIMITED) ->
+                binding.fabPayment.text = getString(R.string.action_buy)
+            else ->
+                binding.fabPayment.text = getString(R.string.action_subscribe)
         }
     }
 

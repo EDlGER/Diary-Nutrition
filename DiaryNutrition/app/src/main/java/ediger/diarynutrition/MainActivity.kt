@@ -140,12 +140,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        billingViewModel.openPlayStoreSubscriptionsEvent.observe(this) {
-            val sku = it
-            val url = if (sku == null) {
+        billingViewModel.openPlayStoreSubscriptionsEvent.observe(this) { product ->
+            val url = if (product == null) {
                 PLAY_STORE_SUBSCRIPTION_URL
             } else {
-                String.format(PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL, sku, packageName)
+                String.format(PLAY_STORE_SUBSCRIPTION_DEEPLINK_URL, product, packageName)
             }
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(url)

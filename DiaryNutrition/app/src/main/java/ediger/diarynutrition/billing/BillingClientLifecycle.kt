@@ -321,6 +321,17 @@ class BillingClientLifecycle private constructor(
         app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE).apply {
             val premiumPref = getBoolean(PREF_PREMIUM, false)
 
+            // Make pending subscription the active one
+            if (isEntitled && purchases.first().products.contains(PRODUCT_SUB_PREMIUM)) {
+                val pendingSub = getString(PREF_PREMIUM_SUB_PENDING, "")
+                if (pendingSub?.isNotEmpty() == true) {
+                    edit()
+                        .putString(PREF_PREMIUM_SUB_ACTIVE, pendingSub)
+                        .remove(PREF_PREMIUM_SUB_PENDING)
+                        .apply()
+                }
+            }
+
             if (isEntitled != premiumPref) {
                 edit()
                     .putBoolean(PREF_PREMIUM, isEntitled)

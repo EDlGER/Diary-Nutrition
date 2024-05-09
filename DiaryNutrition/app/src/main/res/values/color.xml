@@ -6,6 +6,7 @@
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#FFA000</color>
     <color name="colorAccentPressed">#FF8F00</color>
+    <color name="colorAccentSecondary">#FFF3E0</color>
     <color name="tabsScrollColor">#004D40</color>
     <color name="background_standard">#FAFAFA</color>
     <color name="background_standard_pressed">#F5F5F5</color>

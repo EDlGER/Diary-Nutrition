@@ -9,12 +9,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
 import ediger.diarynutrition.AppContext
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
 import ediger.diarynutrition.PLAN_PREMIUM_SEASONALLY
 import ediger.diarynutrition.PREF_FILE_PREMIUM
 import ediger.diarynutrition.PREF_PREMIUM
+import ediger.diarynutrition.PREF_PREMIUM_SUB_ACTIVE
+import ediger.diarynutrition.PREF_PREMIUM_SUB_PENDING
+import ediger.diarynutrition.PRODUCT_SUB_PREMIUM
 import ediger.diarynutrition.objects.SingleLiveEvent
 import ediger.diarynutrition.util.SharedPreferenceBooleanLiveData
 import kotlinx.coroutines.launch
@@ -58,12 +62,27 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
         return pricesMap
     }
 
+    fun getAllPurchases(): List<Purchase> =
+        subscriptionPurchases.value + oneTimeProductPurchases.value
+
     fun refreshPurchases() = viewModelScope.launch {
             _isLoading.postValue(true)
 
             (app as AppContext).billingClientLifecycle.refreshPurchases()
 
             _isLoading.postValue(false)
+    }
+
+    fun manageSubscription(productToken: String) {
+        if (subscriptionPurchases.value.isNotEmpty()) {
+            val activeSubscriptionToken = app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
+                .getString(PREF_PREMIUM_SUB_ACTIVE, "")
+            if (productToken == activeSubscriptionToken) {
+                openPlayStoreSubscriptionsEvent.postValue(PRODUCT_SUB_PREMIUM)
+            }
+        } else {
+            buySubscription(productToken)
+        }
     }
 
     fun buyOneTimeProduct() {
@@ -86,7 +105,7 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
         buyEvent.postValue(billingParams)
     }
 
-    fun buySubscription(productTag: String) {
+    private fun buySubscription(productTag: String) {
         if (oneTimeProductPurchases.value.isNotEmpty()) {
             Log.e(TAG, "OneTimePurchase is found. Cannot make subscription purchase")
             return
@@ -128,6 +147,12 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
             buyEvent.postValue(
                 billingFlowParamsBuilder(productDetails, offerToken)
             )
+            // Mark chosen plan
+            app.getSharedPreferences(PREF_FILE_PREMIUM, MODE_PRIVATE)
+                .edit()
+                .putString(PREF_PREMIUM_SUB_PENDING, productTag)
+                .apply()
+
         }
     }
 

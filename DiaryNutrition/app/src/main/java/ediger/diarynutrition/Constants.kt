@@ -40,6 +40,8 @@ const val KEY_LANGUAGE_DB = "language_db"
 const val KEY_PREF_UI_DEFAULT_TAB = "default_tab"
 const val KEY_MEAL_ORDER = "meal_order"
 const val KEY_MEAL_HIDDEN = "hidden_meals"
+const val PREF_PREMIUM_SUB_ACTIVE = "premium_sub_active"
+const val PREF_PREMIUM_SUB_PENDING = "premium_sub_pending"
 
 //Float
 const val KEY_WEIGHT = "weight"
