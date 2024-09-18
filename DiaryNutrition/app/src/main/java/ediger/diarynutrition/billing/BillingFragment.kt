@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.snackbar.Snackbar
 import ediger.diarynutrition.MainActivity
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
@@ -25,6 +26,7 @@ import ediger.diarynutrition.PRODUCT_PREMIUM_UNLIMITED
 import ediger.diarynutrition.PRODUCT_SUB_PREMIUM
 import ediger.diarynutrition.R
 import ediger.diarynutrition.databinding.FragmentBillingBinding
+import ediger.diarynutrition.util.setupSnackbar
 
 class BillingFragment : Fragment(), View.OnClickListener {
 
@@ -72,6 +74,8 @@ class BillingFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        view.setupSnackbar(viewLifecycleOwner, billingViewModel.snackbarText, Snackbar.LENGTH_SHORT)
+
         billingViewModel.subscriptionProductDetails.observe(viewLifecycleOwner) {
             it?.let { product ->
                 val prices = billingViewModel.getSubscriptionPrices(product)
@@ -104,6 +108,10 @@ class BillingFragment : Fragment(), View.OnClickListener {
                     productId = requireActivity().applicationContext
                         .getSharedPreferences(PREF_FILE_PREMIUM, Context.MODE_PRIVATE)
                         .getString(PREF_PREMIUM_SUB_ACTIVE, "")
+                } else {
+                    binding.crdSubscription1.visibility = View.GONE
+                    binding.crdSubscription2.visibility = View.GONE
+                    binding.crdSubscription3.visibility = View.GONE
                 }
 
                 activeProductIndex = productList.indexOf(productId)

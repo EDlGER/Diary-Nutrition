@@ -21,173 +21,184 @@
                     android:id="@+id/txt_premium_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="72dp"
                     android:text="Inactive"
                     android:textSize="32sp"
                     android:textColor="@color/text_high"
-                    app:layout_constraintBottom_toTopOf="@+id/crd_subscription_1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/crd_subscription_1"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="200dp"
-                    android:checkable="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/list_background"
-                    app:cardForegroundColor="@null"
-                    app:cardCornerRadius="8dp"
-                    app:checkedIcon="@null"
-                    app:strokeColor="@color/stroke"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/stroke">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="72dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_premium_status"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/crd_subscription_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:checkable="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/list_background"
+                        app:cardForegroundColor="@null"
+                        app:cardCornerRadius="8dp"
+                        app:checkedIcon="@null"
+                        app:strokeColor="@color/stroke"
+                        app:strokeWidth="1dp"
+                        app:rippleColor="@color/stroke">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/subscription_1"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_high" />
+
+                        <TextView
+                            android:id="@+id/txt_price_monthly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            tools:text="79 РУБ"/>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/crd_subscription_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:text="@string/subscription_1"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_high" />
+                        android:checkable="true"
+                        app:layout_constraintTop_toBottomOf="@+id/crd_subscription_1"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/list_background"
+                        app:cardForegroundColor="@null"
+                        app:cardCornerRadius="8dp"
+                        app:checkedIcon="@null"
+                        app:strokeColor="@color/stroke"
+                        app:strokeWidth="1dp"
+                        app:rippleColor="@color/stroke">
 
-                    <TextView
-                        android:id="@+id/txt_price_monthly"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorAccent"
-                        tools:text="79 РУБ"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/subscription_2"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_high" />
 
-                </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/txt_price_seasonally"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            tools:text="220 РУБ"/>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/crd_subscription_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="16dp"
-                    android:checkable="true"
-                    app:layout_constraintTop_toBottomOf="@+id/crd_subscription_1"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/list_background"
-                    app:cardForegroundColor="@null"
-                    app:cardCornerRadius="8dp"
-                    app:checkedIcon="@null"
-                    app:strokeColor="@color/stroke"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/stroke">
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/crd_subscription_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:text="@string/subscription_2"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_high" />
+                        android:checkable="true"
+                        app:layout_constraintTop_toBottomOf="@+id/crd_subscription_2"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/list_background"
+                        app:cardForegroundColor="@null"
+                        app:cardCornerRadius="8dp"
+                        app:checkedIcon="@null"
+                        app:strokeColor="@color/stroke"
+                        app:strokeWidth="1dp"
+                        app:rippleColor="@color/stroke">
 
-                    <TextView
-                        android:id="@+id/txt_price_seasonally"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorAccent"
-                        tools:text="220 РУБ"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="@string/subscription_3"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_high" />
 
-                </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/txt_price_annually"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            tools:text="799 РУБ"/>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/crd_subscription_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="16dp"
-                    android:checkable="true"
-                    app:layout_constraintTop_toBottomOf="@+id/crd_subscription_2"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/list_background"
-                    app:cardForegroundColor="@null"
-                    app:cardCornerRadius="8dp"
-                    app:checkedIcon="@null"
-                    app:strokeColor="@color/stroke"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/stroke">
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:text="@string/subscription_3"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_high" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/crd_onetime"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="64dp"
+                        android:checkable="true"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/list_background"
+                        app:cardForegroundColor="@null"
+                        app:cardCornerRadius="8dp"
+                        app:checkedIcon="@null"
+                        app:strokeColor="@color/stroke"
+                        app:strokeWidth="1dp"
+                        app:rippleColor="@color/stroke">
 
-                    <TextView
-                        android:id="@+id/txt_price_annually"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorAccent"
-                        tools:text="799 РУБ"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_gravity="start|center_vertical"
+                            android:text="Premium Upgrade"
+                            android:textSize="18sp"
+                            android:textColor="@color/text_high" />
 
-                </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/txt_price_onetime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:layout_gravity="end|center_vertical"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            tools:text="999 РУБ"/>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/crd_onetime"
-                    android:layout_width="match_parent"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="64dp"
-                    android:checkable="true"
-                    app:layout_constraintTop_toBottomOf="@+id/crd_subscription_3"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/list_background"
-                    app:cardForegroundColor="@null"
-                    app:cardCornerRadius="8dp"
-                    app:checkedIcon="@null"
-                    app:strokeColor="@color/stroke"
-                    app:strokeWidth="1dp"
-                    app:rippleColor="@color/stroke">
+                    </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:text="Premium Upgrade"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_high" />
+                </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_price_onetime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorAccent"
-                        tools:text="999 РУБ"/>
 
-                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

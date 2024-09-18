@@ -11,6 +11,7 @@ import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import ediger.diarynutrition.AppContext
+import ediger.diarynutrition.Event
 import ediger.diarynutrition.PLAN_PREMIUM_ANNUALLY
 import ediger.diarynutrition.PLAN_PREMIUM_MONTHLY
 import ediger.diarynutrition.PLAN_PREMIUM_SEASONALLY
@@ -19,6 +20,7 @@ import ediger.diarynutrition.PREF_PREMIUM
 import ediger.diarynutrition.PREF_PREMIUM_SUB_ACTIVE
 import ediger.diarynutrition.PREF_PREMIUM_SUB_PENDING
 import ediger.diarynutrition.PRODUCT_SUB_PREMIUM
+import ediger.diarynutrition.R
 import ediger.diarynutrition.objects.SingleLiveEvent
 import ediger.diarynutrition.util.SharedPreferenceBooleanLiveData
 import kotlinx.coroutines.launch
@@ -44,6 +46,9 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     fun getSubscriptionPrices(productDetails: ProductDetails): Map<String, String> {
         val pricesMap = mutableMapOf<String, String>()
@@ -80,6 +85,7 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
             if (productToken == activeSubscriptionToken) {
                 openPlayStoreSubscriptionsEvent.postValue(PRODUCT_SUB_PREMIUM)
             }
+            // else -- UpDowngradeSubscription
         } else {
             buySubscription(productToken)
         }
@@ -87,7 +93,10 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
 
     fun buyOneTimeProduct() {
         if (subscriptionPurchases.value.isNotEmpty()) {
-            Log.e(TAG, "OneTimePurchase is found. Cannot make subscription purchase")
+            Log.e(TAG, "SubscriptionPurchase is found. Cannot make subscription purchase")
+            _snackbarText.postValue(
+                Event(R.string.message_billing_onetime_fail)
+            )
             return
         }
         val productDetails: ProductDetails = oneTimeProductDetails.value ?: run {
@@ -130,10 +139,9 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
             Log.e(TAG, "Invalid offer token")
             return
         }
-        val currentPurchases = subscriptionPurchases.value
 
-        if (currentPurchases.isNotEmpty() && currentPurchases.size == 1) {
-            val currentPurchase = currentPurchases.first()
+        if (subscriptionPurchases.value.isNotEmpty()) {
+            val currentPurchase = subscriptionPurchases.value.first()
             val oldPurchaseToken = currentPurchase.purchaseToken
 
             val billingParams =
@@ -143,7 +151,7 @@ class BillingViewModel(val app: Application): AndroidViewModel(app) {
                     oldToken = oldPurchaseToken
                 )
             buyEvent.postValue(billingParams)
-        } else if (currentPurchases.isEmpty()) {
+        } else {
             buyEvent.postValue(
                 billingFlowParamsBuilder(productDetails, offerToken)
             )

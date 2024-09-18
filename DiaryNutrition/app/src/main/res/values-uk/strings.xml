@@ -276,6 +276,7 @@
     <string name="message_billing_success">Покупка успешно завершена!</string>
     <string name="pref_data_language">Язык базы данных</string>
     <string name="pref_policy">Политика конфиденциальности</string>
+    <string name="message_billing_onetime_fail">Для приобритения неоходимо сначала отменить текущую подписку</string>
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
     <string name="menu_action_water">Вода</string>
     <string name="dialog_amount_water">Количество, мл</string>
