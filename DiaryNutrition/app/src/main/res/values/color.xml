@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="grey_transpanent">#20000000</color>
-    <color name="black_semi_transparent">#B2000000</color>
     <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796b</color>
-    <color name="colorAccent">#ffa000</color>
-    <color name="colorAccentPressed">#ff8f00</color>
+    <color name="colorPrimaryLight">#26A69A</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorAccent">#FFA000</color>
+    <color name="colorAccentPressed">#FF8F00</color>
+    <color name="colorAccentSecondary">#FFF3E0</color>
     <color name="tabsScrollColor">#004D40</color>
-    <color name="layout_standart_background">#FAFAFA</color>
-    <color name="listview_background">#EEEEEE</color>
-    <color name="listview_primary_text">#DE000000</color>
-    <color name="listview_second_text">#99000000</color>
+    <color name="background_standard">#FAFAFA</color>
+    <color name="background_standard_pressed">#F5F5F5</color>
+    <color name="background_list_record">#EEEEEE</color>
+    <color name="list_primary_text">#DE000000</color>
+    <color name="list_second_text">#99000000</color>
     <color name="chart_label_color">#BDBDBD</color>
 
+    <color name="list_background">#FFFFFF</color>
+    <color name="stroke">#1F000000</color>
+    <color name="divider">#1F000000</color>
+
     <color name="bg_record_list_item">#FAFAFA</color>
+
+    <color name="dialog_background">#FAFAFA</color>
+
+    <color name="onBarPrimary">#FFFFFF</color>
+    <color name="onBarSecondary">#94FFFFFF</color> <!-- opacity 58% -->
+    <color name="onBackground">#99000000</color>
+
+    <color name="text_inactive">#61000000</color>
+    <color name="text_normal">#B2000000</color>
+    <color name="text_medium">#99000000</color> <!-- opacity of 60% -->
+    <color name="text_high">#DE000000</color> <!-- opacity of 87% -->
+
 
     <color name="grey100">#F5F5F5</color>
     <color name="grey200">#EEEEEE</color>
@@ -25,10 +42,12 @@
     <color name="black_opacity_54">#8A000000</color>
     <color name="black_opacity_38">#61000000</color>
     <color name="black_opacity_12">#1F000000</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="grey_transpanent">#20000000</color>
 
-    <color name="chart_red">#FF4444</color>
-    <color name="chart_green">#99CC00</color>
-    <color name="chart_orange">#FFBB33</color>
+    <color name="chart_fat">#FF4444</color>
+    <color name="chart_protein">#99CC00</color>
+    <color name="chart_carbo">#FFBB33</color>
 
     <color name="expandable_item_indicator_color">#42000000</color>
 

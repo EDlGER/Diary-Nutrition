@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="file" path="backupFile.json"/>
+        <include domain="sharedpref" path="."/>
+        <exclude domain="sharedpref" path="premium_data.xml"/>
+    </cloud-backup>
+</data-extraction-rules>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewModel"
+            type="ediger.diarynutrition.usermeal.MealOptionsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/txt_action_edit"
+            style="@style/BottomSheetItem"
+            android:text="@string/action_edit"
+            android:textSize="16sp"
+            android:textColor="@{viewModel.isUserMeal() ? @color/text_normal : @color/text_inactive}"
+            android:drawablePadding="32dp"
+            android:enabled="@{viewModel.isUserMeal() ? true : false}"
+            android:foreground="?attr/selectableItemBackground"
+            app:drawableStartCompat="@drawable/ic_edit"
+            app:drawableTint="@color/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_action_hide"
+            style="@style/BottomSheetItem"
+            android:text="@string/action_hide"
+            android:textSize="16sp"
+            android:textColor="@color/text_normal"
+            android:drawablePadding="32dp"
+            android:visibility="@{viewModel.isHidden() ? View.INVISIBLE : View.VISIBLE}"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.hideMeal()}"
+            app:drawableStartCompat="@drawable/ic_visibility_off"
+            app:drawableTint="@color/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_action_edit"/>
+
+
+        <TextView
+            android:id="@+id/txt_action_show"
+            style="@style/BottomSheetItem"
+            android:text="@string/action_show"
+            android:textSize="16sp"
+            android:textColor="@color/text_normal"
+            android:drawablePadding="32dp"
+            android:visibility="@{viewModel.isHidden() ? View.VISIBLE : View.INVISIBLE}"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.showMeal()}"
+            app:drawableStartCompat="@drawable/ic_visibility"
+            app:drawableTint="@color/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_action_edit"
+            tools:visibility="invisible"/>
+
+
+        <TextView
+            android:id="@+id/txt_action_delete"
+            style="@style/BottomSheetItem"
+            android:enabled="@{viewModel.isUserMeal() ? true : false}"
+            android:text="@string/action_delete"
+            android:textSize="16sp"
+            android:textColor="@{viewModel.isUserMeal() ? @color/text_normal : @color/text_inactive}"
+            android:drawablePadding="32dp"
+            android:foreground="?attr/selectableItemBackground"
+            app:drawableStartCompat="@drawable/ic_delete"
+            app:drawableTint="@color/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_action_hide"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -6,8 +6,19 @@
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
     <string name="action_back">Back</string>
+    <string name="action_add_food">Add food</string>
+    <string name="action_add_meal">Add meal</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_hide">Hide</string>
+    <string name="action_show">Show</string>
+    <string name="action_subscribe">Subscribe</string>
+    <string name="action_buy">Buy</string>
+    <string name="action_manage">Manage</string>
+    <string name="action_refresh">Refresh</string>
 
     <string name="ad_app_id" translatable="false">ca-app-pub-2180848868226246~4003747218</string>
+    <string name="ad_rewarded_user_food" translatable="false">ca-app-pub-2180848868226246/4738143943</string>
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-2180848868226246/4304798415</string>
     <string name="banner_ad_inter_id" translatable="false">ca-app-pub-2180848868226246/9729746416</string>
     <string name="banner_ad_inter_water_id" translatable="false">ca-app-pub-2180848868226246/2409214497</string>
@@ -17,6 +28,8 @@
     <string name="billing_ads_enable">Ads is enabled</string>
 
     <string name="diary_date_today">Today</string>
+    <string name="diary_date_yesterday">Yesterday</string>
+    <string name="diary_date_tomorrow">Tomorrow</string>
     <string name="diary_header_remain">Remaining</string>
     <string name="diary_header_total">Total</string>
 
@@ -25,24 +38,26 @@
     <string name="menu_action_water">Water</string>
     <string name="menu_action_switch">Remaining/Total</string>
 
-    <string name="title_sec1">Diary</string>
-    <string name="title_sec2">Settings</string>
-    <string name="title_sec3">Weight</string>
-    <string name="title_sec4">Summary</string>
-    <string name="title_sec5">Rate app</string>
-    <string name="title_sec6">Remove ads</string>
-    <string name="tittle_search">Food search</string>
-    <string name="title_activity_program">Nutrition program</string>
+    <string name="title_diary">Diary</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_weight">Weight</string>
+    <string name="title_summary">Summary</string>
+    <string name="title_rate">Rate app</string>
+    <string name="title_premium">Premium</string>
+    <string name="title_search">Food search</string>
+    <string name="title_program">Nutrition program</string>
+    <string name="title_user_meal">Meals</string>
+
+    <string name="text_helper_optional">optional</string>
 
     <string name="card_button_more">View more</string>
 
-    <string name="food_tab1">Custom</string>
-    <string name="food_tab2">Favorites</string>
-
-    <string name="record_carbo">CRB</string>
-    <string name="record_prot">PRT</string>
-    <string name="record_fat">FAT</string>
-    <string name="record_cal">CAL</string>
+    <string name="food_carbo">CRB</string>
+    <string name="food_prot">PRT</string>
+    <string name="food_fat">FAT</string>
+    <string name="food_cal">CAL</string>
+    <string name="food_verified">Verified</string>
+    <string name="food_gi">Glycemic index</string>
 
     <string name="weight_week">Week</string>
     <string name="weight_month">Month</string>
@@ -51,12 +66,12 @@
     <string name="sum_total">Total</string>
     <string name="sum_goal">Goal</string>
 
-    <string name="meal1">Breakfast</string>
-    <string name="meal2">Second breakfast</string>
-    <string name="meal3">Lunch</string>
-    <string name="meal4">Dinner</string>
-    <string name="meal5">Snacks</string>
+    <string name="subscription_1">1 Month</string>
+    <string name="subscription_2">3 Months</string>
+    <string name="subscription_3">12 Months</string>
+
     <string name="meal_choose">Select meal</string>
+    <string name="meal_food_count">Selected %d</string>
 
     <string name="radio_gender_male">Male</string>
     <string name="radio_gender_female">Female</string>
@@ -66,25 +81,46 @@
 
     <string name="dialog_cancel">Back</string>
     <string name="dialog_add">Add</string>
-    <string name="dialog_time">Time</string>
-    <string name="dialog_serv">Serving</string>
-    <string name="dialog_meal">Meal</string>
+    <string name="time">Time</string>
+    <string name="serving">Serving</string>
+    <string name="meal">Meal</string>
+    <string name="name">Name</string>
 
     <string name="serv_nstd" translatable="false">1</string>
     <string name="dialog_serv_std" translatable="false">100</string>
+    <string name="dialog_title_delete_alert">Delete the meal?</string>
+    <string name="dialog_message_delete_alert">Entries added to this meal will be moved to </string>
     <string name="dialog_change_date">Select</string>
-    <string name="dialog_tittle_date">Select date</string>
-    <string name="dialog_tittle_change">Food change</string>
-    <string name="dialog_tittle_f">Adding food</string>
-    <string name="dialog_tittle_w">Type your weight, kg</string>
-    <string name="dialog_title_c">Enter the goal calories</string>
-    <string name="dialog_title_water_edit">Enter the goal amount of water, ml</string>
+    <string name="dialog_title_date">Select date</string>
+    <string name="dialog_title_change">Food change</string>
+    <string name="dialog_title_change_serving">Change serving size</string>
+    <string name="dialog_title_change_meal">Change meal name</string>
+    <string name="dialog_food_title">New product</string>
+    <string name="dialog_title_weight">Type your weight</string>
+    <string name="dialog_title_c">Enter calories</string>
+    <string name="dialog_title_water_edit">Enter amount of water, ml</string>
     <string name="dialog_title_water_serving">Enter amount of water</string>
     <string name="dialog_title_water">Adding water</string>
+    <string name="dialog_title_meal_add">Enter meal name</string>
+    <string name="dialog_title_food_reward_ad">User food limit reached</string>
+    <string name="dialog_message_food_ad">You need to have Premium or watch an advertisement to add food further</string>
+    <string name="dialog_watch_ad">Watch an ad</string>
+    <string name="dialog_premium">Get Premium</string>
+    <string name="dialog_backup_title">Backup database</string>
+    <string name="dialog_backup_positive">Create</string>
+    <string name="dialog_backup_button_check">Check if enabled</string>
+    <string name="dialog_backup_info_1">This feature creates backup file, which will be uploaded to Google Drive by Google Backup. For this to happen, it must be enabled in the smartphone system settings.</string>
+    <string name="dialog_backup_info_2">Local backup version is created automatically approximately every day when device is idle.</string>
+    <string name="dialog_backup_button_failure">Something has gone wrong!</string>
+    <string name="dialog_restore_title">Restore database?</string>
+    <string name="dialog_restore_message">Database will be restored from the backup and your current data will be removed</string>
+    <string name="dialog_restore_positive">Restore</string>
     <string name="dialog_add_f">Add</string>
     <string name="dialog_cancel_f">Back</string>
-    <string name="dialog_name_f">Food name</string>
+    <string name="dialog_food_name">Food name</string>
     <string name="dialog_weight">Weight</string>
+    <string name="dialog_weight_add">Add weight</string>
+    <string name="dialog_date">Date</string>
     <string name="dialog_change">Change</string>
     <string name="dialog_amount_water">Amount, ml</string>
     <string name="dialog_ml">ml</string>
@@ -94,16 +130,22 @@
     <string name="dialog_water_value4" translatable="false">1000</string>
     <string name="dialog_water_help">Hold to change values</string>
 
-    <string name="empty_list_weight">Add current weight</string>
-    <string name="empty_list_food">No food added</string>
-    <string name="empty_list_favor">No favorites food</string>
+    <string name="description_filter_result">Filter result</string>
+    <string name="description_drag_handle">Drag item</string>
+    <string name="description_meal_user">User meal</string>
+    <string name="description_meal_default">Default meal</string>
 
     <string name="context_menu_del">Delete</string>
     <string name="context_menu_change">Change</string>
+    <string name="context_menu_change_serving">Change serving</string>
+    <string name="context_menu_change_time">Change time</string>
     <string name="context_menu_favor">To favorite</string>
     <string name="context_menu_favor_del">Remove</string>
+    <string name="context_menu_remove">Remove</string>
     <string name="context_menu_copy">Copy</string>
     <string name="context_menu_paste">Paste</string>
+
+    <string name="calendar">Calendar</string>
 
     <string name="pref_title_user">Personal data</string>
     <string name="pref_title_program">Nutrition program</string>
@@ -115,9 +157,12 @@
     <string name="pref_activity">Activity</string>
     <string name="pref_purpose">Goal</string>
     <string name="pref_program_edit">Customize PFC</string>
+    <string name="pref_program_meals">Customize meals</string>
+    <string name="pref_program_meals_user_hide">Hide empty user meals</string>
     <string name="pref_program_reset">Reset program</string>
     <string name="pref_ui_tab_default">Default tab</string>
     <string name="pref_ui_water_card">Water counter</string>
+    <string name="pref_ui_app_language">Application language</string>
     <string name="pref_data_backup">Backup</string>
     <string name="pref_data_restore">Restore</string>
     <string name="pref_data_path">Path</string>
@@ -129,6 +174,7 @@
     <string name="intro_gender">Choose gender</string>
     <string name="intro_birthday">Birthday</string>
     <string name="intro_height">Height, cm</string>
+    <string name="intro_height_default" translatable="false">170</string>
     <string name="intro_height_error">Type your height</string>
     <string name="intro_weight">Weight, kg</string>
     <string name="intro_weight_error">Type your weight</string>
@@ -145,30 +191,37 @@
     <string name="intro_nutrition_cal">kcal</string>
     <string name="intro_nutrition_consume">You should consume</string>
     <string name="intro_nutrition_ratio">Recommended ratio of PFC</string>
-    <string name="intro_nutrition_info">You can change this values in settings</string>
+    <string name="intro_nutrition_info">You can change these values in settings</string>
 
     <string name="macronutrients">Macronutrients</string>
     <string name="water">Water</string>
 
-    <string name="message_backpress">Press back again to exit</string>
+    <string name="message_backpress">Repeat action again to exit</string>
+    <string name="message_meal">Meal name is not entered</string>
     <string name="message_serving">Serving size is not entered</string>
     <string name="message_program_perc">Amount of percent must be equal 100</string>
-    <string name="message_program_gram">Amount of calories and ratio of PFC will change while editing of macronutrients</string>
-    <string name="message_program_null">Amount of macro must be above zero</string>
-    <string name="message_favorite">Added to favorite</string>
+    <string name="message_program_gram">Calories amount and PFC ratio will change while editing of macronutrients</string>
+    <string name="message_program_null">Macronutrients amount must be above zero</string>
+    <string name="message_favorite_add">Added to favorite</string>
     <string name="message_food_del">Product will not appear next time</string>
     <string name="message_dialog_food_empty">Not all fields are filled</string>
     <string name="message_dialog_food_point">One or more fields contain invalid number format</string>
     <string name="message_dialog_weight">Weight is not entered</string>
-    <string name="message_dialog_cal">Calories is not entered</string>
+    <string name="message_dialog_cal">Calories are not entered</string>
     <string name="message_dialog_water">Water is not entered</string>
-    <string name="message_record_meal_copy">Meal is copied</string>
-    <string name="message_record_meal_insert">Inserting is successful</string>
-    <string name="message_record_meal_insert_fail">Meal is not copied</string>
-    <string name="message_data_restore">Restore database is successful!</string>
+    <string name="message_record_meal_copy">Meal was copied</string>
+    <string name="message_record_meal_insert_fail">Meal was not copied</string>
+    <string name="message_data_restore">Restore database is successful</string>
+    <string name="message_data_restore_file_missing">Backup file is not found!</string>
+    <string name="message_data_restore_fail">An error occurred while restoring the database!</string>
     <string name="message_data_backup">Backup database is successful!</string>
+    <string name="message_data_backup_fail">An error occurred while creating the backup!</string>
+    <string name="message_data_db_lang">Database language was changed</string>
+    <string name="message_data_db_lang_fail">An error occurred while changing database language</string>
     <string name="message_billing_success">Purchase for disabling ads done</string>
     <string name="message_card_water">You didn\'t add water this day</string>
+    <string name="message_ad_reward_success">Amount of food additions was increased</string>
+    <string name="message_billing_onetime_fail">"You must cancel the current subscription to buy this"</string>
 
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
 
@@ -182,14 +235,14 @@
     </string-array>
 
     <string-array name="pref_tab_array">
-        <item>Database</item>
-        <item>Favorites</item>
-        <item>Custom</item>
+        <item>@string/tab_products</item>
+        <item>@string/tab_favorite</item>
+        <item>@string/tab_user</item>
     </string-array>
 
-    <string name="tab_database">Database</string>
+    <string name="tab_products">Products</string>
     <string name="tab_favorite">Favorites</string>
-    <string name="tab_user">Custom</string>
+    <string name="tab_user">User</string>
     <string name="tab_day">Day</string>
     <string name="tab_week">Week</string>
     <string name="tab_month">Month</string>
@@ -200,8 +253,8 @@
     <string name="add_food">Add food</string>
     <string name="add_food_more">Add more food</string>
 
-    <string name="elv_gram"> g</string>
-    <string name="percent" translatable="false">%</string>
+    <string name="gram">%dg</string>
+    <string name="percent" translatable="false">%d%%</string>
 
     <string name="macro_cal">Calories</string>
     <string name="macro_carbo">Carbohydrates</string>
@@ -210,9 +263,11 @@
     <string name="macro_carbo_short">C</string>
     <string name="macro_prot_short">P</string>
     <string name="macro_fat_short">F</string>
-
+meal
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="unit_kilogram">kg</string>
 
     <string-array name="values">
         <item>1</item>
@@ -294,5 +349,23 @@
         <item>Month</item>
         <item>Two months</item>
     </string-array>
+
+    <string name="meal1">Breakfast</string>
+    <string name="meal2">Second breakfast</string>
+    <string name="meal3">Lunch</string>
+    <string name="meal4">Dinner</string>
+    <string name="meal5">Snacks</string>
+
+    <string-array name="meals">
+        <item>Breakfast</item>
+        <item>Second breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snacks</item>
+    </string-array>
+
+    <string name="empty_list_weight">Add current weight</string>
+    <string name="empty_list_food">No user food</string>
+    <string name="empty_list_favor">No favorite food</string>
 
 </resources>

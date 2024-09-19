@@ -3,7 +3,7 @@
     <string name="act_food">Продукты</string>
 
     <string name="action_search">Поиск</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
     <string name="action_back">Назад</string>
 
     <string name="diary_date_today">Сегодня</string>
@@ -12,19 +12,16 @@
     <string name="menu_action_food">Еда</string>
     <string name="menu_action_weight">Вес</string>
 
-    <string name="title_sec1">Дневник</string>
-    <string name="title_sec2">Настройки</string>
-    <string name="title_sec3">Вес</string>
-    <string name="title_sec4">Сводка</string>
-    <string name="tittle_search">Поиск продукта</string>
+    <string name="title_diary">Дневник</string>
+    <string name="title_settings">Настройки</string>
+    <string name="title_weight">Вес</string>
+    <string name="title_summary">Сводка</string>
+    <string name="title_search">Поиск продукта</string>
 
-    <string name="food_tab1">Добавленные</string>
-    <string name="food_tab2">Избранные</string>
-
-    <string name="record_carbo">УГЛ</string>
-    <string name="record_prot">БЛК</string>
-    <string name="record_fat">ЖИР</string>
-    <string name="record_cal">КАЛ</string>
+    <string name="food_carbo">УГЛ</string>
+    <string name="food_prot">БЛК</string>
+    <string name="food_fat">ЖИР</string>
+    <string name="food_cal">КАЛ</string>
 
     <string name="weight_week">Неделя</string>
     <string name="weight_month">Месяц</string>
@@ -48,19 +45,26 @@
 
     <string name="dialog_cancel">Назад</string>
     <string name="dialog_add">Добавить</string>
-    <string name="dialog_time">Время</string>
-    <string name="dialog_serv">Порция</string>
-    <string name="dialog_meal">Прием пищи</string>
+    <string name="time">Время</string>
+    <string name="serving">Порция</string>
+    <string name="meal">Прием пищи</string>
 
     <string name="dialog_change_date">Выбрать</string>
-    <string name="dialog_tittle_date">Выберите дату</string>
+    <string name="dialog_title_date">Выберите дату</string>
 
-    <string name="dialog_tittle_change">Изменение продукта</string>
-    <string name="dialog_tittle_f">Добавление своего продукта</string>
-    <string name="dialog_tittle_w">Введите Ваш вес, кг</string>
+    <string name="dialog_title_change">Изменение продукта</string>
+    <string name="dialog_food_title">Новый продукт</string>
+    <string name="dialog_title_weight">Введите Ваш вес</string>
+    <string name="dialog_backup_title">Резерное копирование</string>
+    <string name="dialog_backup_positive">Создать</string>
+    <string name="dialog_backup_info_1">Эта функция создаёт файл резервной копии, который в дальнейшем будет загружен в Google Drive посредством Google Backup. Чтобы это произошло, он должен быть включен в системных настройках смартфона.</string>
+    <string name="dialog_backup_button_failure">Что-то пошло не так!</string>
+    <string name="dialog_restore_title">Восстановить базу данных?</string>
+    <string name="dialog_restore_message">База данных будет восстановлена из резервной копии, а Ваши текущие данные будут удалены.</string>
+    <string name="dialog_restore_positive">Восстановить</string>
     <string name="dialog_add_f">Добавить</string>
     <string name="dialog_cancel_f">Назад</string>
-    <string name="dialog_name_f">Название продукта</string>
+    <string name="dialog_food_name">Название продукта</string>
     <string name="macro_cal">Калории</string>
     <string name="macro_carbo">Углеводы</string>
     <string name="macro_prot">Белки</string>
@@ -104,12 +108,12 @@
     <string name="intro_nutrition_ratio">Рекомендованное соотношение БЖУ</string>
 
     <string name="message_serving">Количество порции не введено</string>
-    <string name="message_favorite">Добавлено в избранное</string>
+    <string name="message_favorite_add">Добавлено в избранное</string>
     <string name="message_dialog_food_empty">Не все поля заполнены</string>
     <string name="message_dialog_food_point">Одно или несколько полей содежат неправильный формат числа</string>
     <string name="message_dialog_weight">Вес не введен</string>
 
-    <string name="tab_database">База данных</string>
+    <string name="tab_products">Продукты</string>
     <string name="tab_user">Добавленные</string>
     <string name="tab_favorite">Избранные</string>
 
@@ -118,7 +122,7 @@
 
     <string name="add_food">Добавить продукт</string>
 
-    <string name="elv_gram"> г</string>
+    <string name="gram">%dг</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -216,12 +220,20 @@
         <item>Добавленные</item>
     </string-array>
 
+    <string-array name="meals">
+        <item>Завтрак</item>
+        <item>Второй завтрак</item>
+        <item>Обед</item>
+        <item>Полдник</item>
+        <item>Ужин</item>
+    </string-array>
+
     <string name="intro_activity_name_1">Сидячий</string>
     <string name="intro_activity_name_2">Малоактивный</string>
     <string name="intro_activity_name_3">Активный</string>
     <string name="intro_activity_name_4">Очень активный</string>
     <string name="intro_activity">Какой Ваш образ жизни?</string>
-    <string name="message_backpress">Нажмите еще раз для выхода</string>
+    <string name="message_backpress">Повторите еще раз для выхода</string>
     <string name="macronutrients">Макронутриенты</string>
     <string name="tab_day">День</string>
     <string name="tab_week">Неделя</string>
@@ -231,33 +243,40 @@
     <string name="dialog_title_c">Введите целевые калории</string>
     <string name="dialog_change">Изменить</string>
     <string name="message_dialog_cal">Калории не введены</string>
-    <string name="title_activity_program">Программа питания</string>
+    <string name="title_program">Программа питания</string>
     <string name="message_program_perc">Сумма процентов должна быть 100</string>
     <string name="message_program_gram">При изменении макронутриентов изменится количество калорий и соотношение БЖУ</string>
     <string name="macro_carbo_short">У</string>
     <string name="macro_fat_short">Ж</string>
     <string name="macro_prot_short">Б</string>
     <string name="intro_nutrition_info">Вы можете изменить эти значения в настройках</string>
-    <string name="title_sec5">Оценить приложение</string>
+    <string name="title_rate">Оценить приложение</string>
     <string name="message_program_null">Количество макронутриентов должно быть больше нуля</string>
-    <string name="title_sec6">Убрать рекламу</string>
+    <string name="title_premium">Премиум</string>
     <string name="message_food_del">Продукт не появится в следующий раз</string>
     <string name="add_food_more">Добавить еще продукт</string>
     <string name="context_menu_copy">Копировать</string>
     <string name="context_menu_paste">Вставить</string>
     <string name="message_record_meal_copy">Прием пищи скопирован</string>
+    <string name="message_data_restore_fail">Произошла ошибка во время восстановления базы данных!</string>
     <string name="message_data_backup">Резервное копирование успешно завершено!</string>
     <string name="message_data_restore">База данных успешно восстановлена!</string>
+    <string name="pref_ui_app_language">Язык приложения</string>
     <string name="pref_data_backup">Резервное копирование</string>
     <string name="pref_data_path">Путь</string>
     <string name="pref_data_restore">Восстановление</string>
     <string name="pref_title_data">Данные</string>
     <string name="billing_ads_disable">Реклама отключена</string>
     <string name="billing_ads_enable">Реклама включена</string>
+    <string name="action_buy">Купить</string>
     <string name="billing_button_buy">Отключить</string>
+    <string name="message_data_backup_fail">Произошла ошибка во время выполнения резервного копирования!</string>
+    <string name="message_data_db_lang">Язык базы данных был изменен</string>
+    <string name="message_data_db_lang_fail">Произошла ошибка при изменении языка базы данных!</string>
     <string name="message_billing_success">Покупка успешно завершена</string>
     <string name="pref_data_language">Язык базы данных</string>
     <string name="pref_policy">Политика конфиденциальности</string>
+    <string name="message_billing_onetime_fail">Для приобритения неоходимо сначала отменить текущую подписку</string>
     <string name="link_privacy_policy"><a href="https://edlger.github.io">Privacy Policy</a></string>
     <string name="menu_action_water">Вода</string>
     <string name="dialog_amount_water">Количество, мл</string>
@@ -279,7 +298,53 @@
     <string name="diary_header_total">Всего</string>
     <string name="menu_action_switch">Осталось/Всего</string>
     <string name="message_record_meal_insert_fail">Прием пищи не скопирован</string>
-    <string name="message_record_meal_insert">"Вставка успешна "</string>
+    <string name="calendar">Календарь</string>
+    <string name="dialog_weight_add">Добавить вес</string>
+    <string name="dialog_date">Дата</string>
+    <string name="action_add_food">Добавить продукт</string>
+    <string name="food_verified">Проверенный</string>
+    <string name="food_gi">Гликемический индекс</string>
+    <string name="description_filter_result">Результат фильтрации</string>
+    <string name="text_helper_optional">необязательно</string>
+    <string name="action_add_meal">Добавить прием пиши</string>
+    <string name="meal_food_count">Выбрано %d</string>
+    <string name="context_menu_remove">Убрать</string>
+    <string name="diary_date_yesterday">Вчера</string>
+    <string name="diary_date_tomorrow">Завтра</string>
+    <string name="dialog_title_change_serving">Изменение порции</string>
+    <string name="context_menu_change_serving">Изменить порцию</string>
+    <string name="context_menu_change_time">Изменить время</string>
+    <string name="unit_kilogram">кг</string>
+    <string name="description_drag_handle">Перетянуть элемент</string>
+    <string name="description_meal_user">Пользовательский прием пищи</string>
+    <string name="description_meal_default">Стандартный прием пищи</string>
+    <string name="dialog_title_change_meal">Изменение названия</string>
+    <string name="message_meal">Название приема пищи не введено</string>
+    <string name="action_edit">Изменить</string>
+    <string name="action_delete">Удалить</string>
+    <string name="action_hide">Скрыть</string>
+    <string name="action_show">Показать</string>
+    <string name="title_user_meal">Приемы пищи</string>
+    <string name="pref_program_meals">Настроить приемы пищи</string>
+    <string name="dialog_title_meal_add">Введите название приема пищи</string>
+    <string name="name">Название</string>
+    <string name="dialog_title_delete_alert">Удалить прием пищи?</string>
+    <string name="dialog_message_delete_alert">"Записи, добавленные в этот прием пищи, будут перенесены на "</string>
+    <string name="pref_program_meals_user_hide">Скрывать пустые пользовательские приемы пищи</string>
+    <string name="message_ad_reward_success">Количество добавлений еды было увеличено</string>
+    <string name="dialog_title_food_reward_ad">Лимит своих продуктов достигнут</string>
+    <string name="dialog_message_food_ad">Для дальнейшего добавления своих продуктов необходимо иметь Премиум или посмотреть рекламу</string>
+    <string name="dialog_watch_ad">Посмотреть рекламу</string>
+    <string name="dialog_premium">Получить Премиум</string>
+    <string name="subscription_1">1 Месяц</string>
+    <string name="subscription_2">3 Месяца</string>
+    <string name="subscription_3">6 Месяцев</string>
+    <string name="action_subscribe">Подписаться</string>
+    <string name="message_data_restore_file_missing">Файл резервной копии не найден!</string>
+    <string name="dialog_backup_info_2">Локальная версия резервной копии создаётся автоматически примерно каждый день, когда устройство не используется.</string>
+    <string name="dialog_backup_button_check">Проверить, что включен</string>
+    <string name="action_manage">Управление</string>
+    <string name="action_refresh">Обновить</string>
 
 
 </resources>

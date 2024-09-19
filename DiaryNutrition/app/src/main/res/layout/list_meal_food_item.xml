@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="food" type="ediger.diarynutrition.data.source.entities.Food" />
+        <variable
+            name="serving" type="int" />
+        <variable
+            name="onServingChangedCallback" type="ediger.diarynutrition.food.meal.OnServingChangedCallback" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:background="@color/list_background"
+        android:clickable="true"
+        android:focusable="true"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/stroke"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/foodName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{food.name}"
+                android:textSize="14sp"
+                android:textColor="@color/text_high"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@{String.format(`%d`, (int) food.cal)}"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tilServing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tilServing" />
+
+            <TextView
+                android:id="@+id/txt_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:gravity="center_horizontal"
+                android:text="@{String.format(`%.1f`, food.carbo)}"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tilServing"
+                app:layout_constraintEnd_toStartOf="@+id/txt_cal"
+                app:layout_constraintTop_toTopOf="@+id/tilServing" />
+
+            <TextView
+                android:id="@+id/txt_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@{String.format(`%.1f`, food.fat)}"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tilServing"
+                app:layout_constraintEnd_toStartOf="@+id/txt_carbo"
+                app:layout_constraintTop_toTopOf="@+id/tilServing" />
+
+            <TextView
+                android:id="@+id/txt_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@{String.format(`%.1f`, food.prot)}"
+                android:textColor="@color/text_high"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tilServing"
+                app:layout_constraintEnd_toStartOf="@+id/txt_fat"
+                app:layout_constraintTop_toTopOf="@+id/tilServing" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle"
+                android:id="@+id/tilServing"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:suffixText="@string/add_rec_gram1"
+                app:suffixTextColor="@color/text_inactive"
+                app:hintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/foodName"
+                app:layout_constraintTop_toBottomOf="@+id/foodName">
+
+                <!--suppress AndroidUnknownAttribute -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edServing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="@string/dialog_serv_std"
+                    android:textColor="@color/text_high"
+                    android:textSize="14sp"
+                    android:text=""
+                    android:maxLength="3"
+                    android:inputType="number"
+                    android:onTextChanged="@{(text,start,before,count) -> onServingChangedCallback.onChange(food.id, text.toString())}"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="food"
+            type="ediger.diarynutrition.data.source.entities.Food" />
+
+        <variable name="isDefaultQuery" type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_height"
+        android:background="@drawable/food_item_background">
+
+        <ImageView
+            android:id="@+id/im_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/description_filter_result"
+            android:src="@drawable/ic_history_24dp"
+            android:visibility="@{isDefaultQuery ? View.VISIBLE : View. GONE }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/im_verified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/food_verified"
+            android:src="@drawable/ic_verified_24dp"
+            android:visibility="@{food.verified == 1 &amp;&amp; !isDefaultQuery? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_food_name"
+            style="?android:textAppearanceListItemSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:lines="1"
+            android:text="@{food.name}"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/horIconBottom"
+            app:layout_constraintEnd_toStartOf="@+id/txt_cal"
+            app:layout_constraintStart_toEndOf="@+id/vertIconEnd"
+            app:layout_constraintTop_toTopOf="@+id/horIconTop"
+            tools:text="Some food" />
+
+        <TextView
+            android:id="@+id/txt_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:paddingStart="8dp"
+            android:text="@{String.format(`%d`, (int) food.cal)}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_food_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_food_name"
+            tools:text="300" />
+
+        <TextView
+            android:id="@+id/txt_carbo"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:text="@{String.format(`%.1f`, food.carbo)}"
+            android:textColor="@color/text_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="99.9" />
+
+        <TextView
+            android:id="@+id/txt_fat"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:text="@{String.format(`%.1f`, food.fat)}"
+            android:textColor="@color/text_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_carbo"
+            tools:text="99.9" />
+
+        <TextView
+            android:id="@+id/txt_prot"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:text="@{String.format(`%.1f`, food.prot)}"
+            android:textColor="@color/text_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_fat"
+            tools:text="99.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertIconEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="40dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horIconTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horIconBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="24dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

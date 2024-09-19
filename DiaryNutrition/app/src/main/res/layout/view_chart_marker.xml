@@ -46,9 +46,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_prot"
+            android:text="@string/food_prot"
             android:textSize="12sp"
-            android:textColor="@color/chart_green"/>
+            android:textColor="@color/chart_protein"/>
 
         <TextView
             android:id="@+id/marker_prot"
@@ -57,7 +57,7 @@
             android:layout_marginLeft="16dp"
             android:text="240"
             android:textStyle="bold"
-            android:textColor="@color/chart_green"
+            android:textColor="@color/chart_protein"
             android:maxLength="3"/>
 
     </LinearLayout>
@@ -75,9 +75,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_fat"
+            android:text="@string/food_fat"
             android:textSize="12sp"
-            android:textColor="@color/chart_red" />
+            android:textColor="@color/chart_fat" />
 
         <TextView
             android:id="@+id/marker_fat"
@@ -86,7 +86,7 @@
             android:layout_marginLeft="16dp"
             android:text="240"
             android:textStyle="bold"
-            android:textColor="@color/chart_red"
+            android:textColor="@color/chart_fat"
             android:maxLength="3"/>
 
     </LinearLayout>
@@ -104,9 +104,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/record_carbo"
+            android:text="@string/food_carbo"
             android:textSize="12sp"
-            android:textColor="@color/chart_orange" />
+            android:textColor="@color/chart_carbo" />
 
         <TextView
             android:id="@+id/marker_carbo"
@@ -115,7 +115,7 @@
             android:layout_marginLeft="16dp"
             android:text="240"
             android:textStyle="bold"
-            android:textColor="@color/chart_orange"
+            android:textColor="@color/chart_carbo"
             android:maxLength="3"/>
 
     </LinearLayout>

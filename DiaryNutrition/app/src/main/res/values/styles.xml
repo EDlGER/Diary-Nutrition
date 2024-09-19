@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,13 +14,17 @@
         <item name="windowNoTitle">true</item>
     </style>
     <!-- Fullscreen application theme. -->
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    <style name="FullscreenTheme" parent="AppTheme.NoActionBar">
+        <item name="materialButtonStyle">@style/IntroButtonStyle</item>
     </style>
 
-    <style name="ToolbarTextColor" parent="AppTheme">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#FFFFFF</item>
+    <style name="IntroButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/intro_bar</item>
+    </style>
+
+    <style name="ToolbarTextColor" parent="AppTheme.NoActionBar">
+        <item name="android:textColorSecondary">@color/onBarPrimary</item>
+        <item name="actionMenuTextColor">@color/text_normal</item>
 
     </style>
 
@@ -37,20 +41,63 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="content_background">@color/listview_background</item>
+        <item name="content_background">@color/background_list_record</item>
         <item name="popup_theme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
+    <style name="FullscreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/background_standard</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButton</item>
+        <item name="android:background">@color/dialog_background</item>
+    </style>
+
+    <style name="DialogButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/dialog_background</item>
+    </style>
+    
     <style name="ButtonCardStyle" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:clickable">false</item>
     </style>
-
-    <style name="commonListItemStyle">
+    
+    <style name="BarTextInput" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:textColorHint">@color/onBarPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
+
+    <style name="Widget.Rally.Button.IconOnly" parent="@style/Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+    </style>
+
+    <style name="commonListItemStyle"/>
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/onBarPrimary</item>
+    </style>
+
+    <style name="BottomSheetItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
     </style>
 
     <style name="title_text" parent="@android:style/TextAppearance.Medium" />

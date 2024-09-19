@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/nav_diary">
+
+    <fragment
+        android:id="@+id/nav_diary"
+        android:name="ediger.diarynutrition.diary.DiaryFragment"
+        android:label="@string/title_diary"
+        tools:layout="@layout/fragment_diary">
+        <action
+            android:id="@+id/action_diary_to_add_water_dialog"
+            app:destination="@+id/nav_dialog_water"/>
+        <action
+            android:id="@+id/action_diary_to_add_weight_dialog"
+            app:destination="@+id/nav_dialog_weight"/>
+        <action android:id="@+id/action_diary_to_change_record_dialog"
+            app:destination="@+id/nav_dialog_record_change"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_weight"
+        android:name="ediger.diarynutrition.weight.WeightFragment"
+        android:label="@string/title_weight"
+        tools:layout="@layout/fragment_weight">
+        <action
+            android:id="@+id/action_weight_to_action_add_weight_dialog"
+            app:destination="@+id/nav_dialog_weight"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_summary"
+        android:name="ediger.diarynutrition.summary.SummaryFragment"
+        android:label="@string/title_summary"
+        tools:layout="@layout/fragment_summary_main"/>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="ediger.diarynutrition.settings.SettingsFragment"
+        android:label="@string/title_settings">
+        <action
+            android:id="@+id/action_setting_to_user_meal"
+            app:destination="@+id/nav_user_meal"/>
+        <action
+            android:id="@+id/action_settings_to_dialog_backup"
+            app:destination="@+id/nav_dialog_backup" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_user_meal"
+        android:name="ediger.diarynutrition.usermeal.UserMealFragment"
+        android:label="@string/title_user_meal"
+        tools:layout="@layout/fragment_meal_user">
+        <action
+            android:id="@+id/action_nav_user_meal_to_nav_dialog_meal_options"
+            app:destination="@id/nav_dialog_meal_options" />
+        <action
+            android:id="@+id/action_nav_user_meal_to_nav_dialog_add_meal"
+            app:destination="@id/nav_dialog_add_meal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_premium"
+        android:name="ediger.diarynutrition.billing.BillingFragment"
+        android:label="@string/title_premium"
+        tools:layout="@layout/fragment_billing"/>
+
+    <deepLink
+        app:uri="http://play.google.com/store/apps/details?id=diarynutrition"/>
+
+    <dialog
+        android:id="@+id/nav_dialog_backup"
+        android:name="ediger.diarynutrition.settings.BackupDialog"
+        android:label="@string/dialog_backup_title"
+        tools:layout="@layout/dialog_backup">
+        <argument
+            android:name="performBackup"
+            android:defaultValue="false"
+            app:argType="boolean"/>
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_water"
+        android:name="ediger.diarynutrition.diary.water.AddWaterDialog"
+        android:label="@string/dialog_title_water"
+        tools:layout="@layout/dialog_add_water">
+        <argument
+            android:name="date"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_weight"
+        android:name="ediger.diarynutrition.weight.AddWeightDialog"
+        android:label="@string/dialog_weight"
+        tools:layout="@layout/dialog_add_weight">
+        <argument
+            android:name="date"
+            android:defaultValue="0L"
+            app:argType="long"/>
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_record_change"
+        android:name="ediger.diarynutrition.diary.ChangeRecordDialog"
+        android:label="@string/serving"
+        tools:layout="@layout/dialog_change_record">
+        <argument
+            android:name="serving"
+            android:defaultValue="100"
+            app:argType="integer"/>
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_meal_options"
+        android:name="ediger.diarynutrition.usermeal.MealOptionsBottomDialog"
+        tools:layout="@layout/dialog_bottom_meal_options">
+        <action
+            android:id="@+id/action_nav_dialog_meal_options_to_nav_dialog_change_meal"
+            app:destination="@id/nav_dialog_change_meal" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/nav_dialog_change_meal"
+        android:name="ediger.diarynutrition.usermeal.ChangeMealDialog"
+        android:label="@string/dialog_title_change_meal"
+        tools:layout="@layout/dialog_change_meal"/>
+
+    <dialog
+        android:id="@+id/nav_dialog_add_meal"
+        android:name="ediger.diarynutrition.usermeal.AddMealDialog"
+        android:label="@string/dialog_title_meal_add"
+        tools:layout="@layout/dialog_add_meal"/>
+
+</navigation>

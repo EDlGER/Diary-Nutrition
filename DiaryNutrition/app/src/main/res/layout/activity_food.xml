@@ -1,101 +1,172 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="ediger.diarynutrition.food.FoodViewModel" />
+    </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/header"
-        android:background="#FAFAFA"
-        android:elevation="5dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:theme="@style/ToolbarTextColor"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:background="?attr/colorPrimary" />
-
-
-        <ediger.diarynutrition.SlidingTabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/colorPrimary"
-            android:id="@+id/linearLayout"
-            android:gravity="right">
-
-            <TextView
-                android:id="@+id/info_prot"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:text="@string/record_prot"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-                android:id="@+id/info_fat"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:text="@string/record_fat"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"/>
-
-            <TextView
-                android:id="@+id/info_carbo"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:text="@string/record_carbo"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"
-                 />
-
-            <TextView
-                android:id="@+id/info_cal"
-                android:layout_width="32dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:text="@string/record_cal"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/header">
+        android:background="@color/colorPrimary">
 
-    </androidx.viewpager.widget.ViewPager>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/list_background">
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        app:adSize="SMART_BANNER"
-        app:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
+            <View
+                android:id="@+id/app_bar_background"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/colorPrimary"
+                app:layout_constraintBottom_toTopOf="@+id/pager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                app:constraint_referenced_ids="app_bar_background, toolbar, textInputLayout, lb_cal, lb_fat, lb_carbo, lb_prot"
+                tools:targetApi="LOLLIPOP"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ToolbarTextColor"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ediger.diarynutrition.widgets.RallyTab
+                    android:id="@+id/tabs_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:textColorHint="@color/onBarSecondary"
+                android:theme="@style/BarTextInput"
+                app:hintTextColor="@color/onBarSecondary"
+                app:boxStrokeColor="@color/onBarPrimary"
+                app:boxBackgroundColor="@color/colorPrimaryLight"
+                app:boxCornerRadiusTopEnd="6dp"
+                app:boxCornerRadiusTopStart="6dp"
+                app:endIconDrawable="@drawable/ic_cancel_white_24dp"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/onBarPrimary"
+                app:startIconDrawable="@drawable/ic_search_white_24dp"
+                app:startIconTint="@color/onBarPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/onBarPrimary"
+                    android:textSize="16sp"
+                    android:hint="@string/action_search" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/lb_cal"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/food_cal"
+                android:textColor="@color/onBarPrimary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <TextView
+                android:id="@+id/lb_carbo"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center_horizontal"
+                android:text="@string/food_carbo"
+                android:textColor="@color/onBarPrimary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/lb_cal"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <TextView
+                android:id="@+id/lb_fat"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/food_fat"
+                android:textColor="@color/onBarPrimary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/lb_carbo"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <TextView
+                android:id="@+id/lb_prot"
+                android:layout_width="32dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/food_prot"
+                android:textColor="@color/onBarPrimary"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/lb_fat"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/list_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lb_cal" />
+
+            <FrameLayout
+                android:id="@+id/ad_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:show="@{viewModel.isAdVisible &amp;&amp; !viewModel.isSheetActive() ? true : false}"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="56dp" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-</RelativeLayout>
+</layout>

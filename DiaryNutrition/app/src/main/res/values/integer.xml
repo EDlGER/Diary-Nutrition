@@ -4,4 +4,16 @@
     <integer name="numSideItems">1</integer>
     <integer name="expandable_item_indicator_anim_duration">200</integer>
 
+    <integer name="action_context_favorite_add">1</integer>
+    <integer name="action_context_favorite_remove">2</integer>
+    <integer name="action_context_change">3</integer>
+    <integer name="action_context_delete">4</integer>
+    <integer name="action_context_remove">5</integer>
+
+    <integer name="action_context_change_serving">6</integer>
+    <integer name="action_context_change_time">7</integer>
+
+    <integer name="action_context_copy">1</integer>
+    <integer name="action_context_paste">2</integer>
+
 </resources>

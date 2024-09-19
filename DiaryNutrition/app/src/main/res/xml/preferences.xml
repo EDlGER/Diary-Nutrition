@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
             android:title="@string/pref_title_user">
@@ -43,7 +43,7 @@
         android:title="@string/pref_title_program">
 
         <Preference
-            android:key="calories"
+            android:key="program_calories"
             android:title="@string/macro_cal" />
 
         <Preference
@@ -53,6 +53,15 @@
         <Preference
             android:key="program_edit"
             android:title="@string/pref_program_edit"/>
+
+        <Preference
+            android:key="program_meals"
+            android:title="@string/pref_program_meals"/>
+
+        <SwitchPreference
+            android:key="meals_user_hide"
+            android:title="@string/pref_program_meals_user_hide"
+            android:defaultValue="true"/>
 
         <Preference
             android:key="program_reset"
@@ -78,6 +87,13 @@
             android:summary="%s"
             android:defaultValue="0"/>
 
+        <ListPreference
+            android:key="language"
+            android:title="@string/pref_ui_app_language"
+            android:entries="@array/pref_language_array"
+            android:entryValues="@array/pref_language_values"
+            android:summary="%s"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -89,10 +105,6 @@
             android:entries="@array/pref_language_array"
             android:entryValues="@array/pref_language_values"
             android:summary="%s"/>
-
-        <Preference
-            android:key="data_path"
-            android:title="@string/pref_data_path" />
 
         <Preference
             android:key="data_backup"
