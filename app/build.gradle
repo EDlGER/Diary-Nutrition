@@ -1,6 +1,14 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('release-keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     compileSdk rootProject.ext.compileSdkVersion
@@ -25,8 +33,18 @@ android {
         }
         resConfigs "en", "ru"
     }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -42,6 +60,19 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
+
+    testOptions {
+        managedDevices {
+            devices {
+                pixel6api31(ManagedVirtualDevice) {
+                    device = "Pixel 6"
+                    apiLevel = 31
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/AL2.0'
         exclude 'META-INF/LGPL2.1'

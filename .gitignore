@@ -26,9 +26,16 @@ render.experimental.xml
 # Keystore files
 *.jks
 *.keystore
+release-keystore.properties
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+play-store-credentials.json
 
 # Android Profiling
 *.hprof
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
